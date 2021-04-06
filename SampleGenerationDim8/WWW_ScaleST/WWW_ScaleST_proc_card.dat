@@ -17,4 +17,4 @@ define vl = ve vm vt
 define vl~ = ve~ vm~ vt~
 generate p p > w+ w+ w- NP=1
 add process p p > w- w- w+ NP=1
-output WWW 
+output WWW_ScaleST 
