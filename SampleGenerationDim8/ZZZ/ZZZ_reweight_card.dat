@@ -3618,8 +3618,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -3e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3643,8 +3643,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -1.5e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3668,8 +3668,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -1e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3693,8 +3693,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -8e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3718,8 +3718,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -4e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3743,8 +3743,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 -2e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3768,8 +3768,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 2e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3793,8 +3793,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 4e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3818,8 +3818,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 8e-13 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3843,8 +3843,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 1e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3868,8 +3868,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 1.5e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3893,8 +3893,8 @@ set anoinputs 9 0.0e-12 # FM5
 set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
-set anoinputs 13 0.0e-12 # FT1
 set anoinputs 13 3e-12 # FT1
+set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
@@ -3919,8 +3919,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -3e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -3944,8 +3944,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -1.5e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -3969,8 +3969,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -1e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -3994,8 +3994,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -8e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4019,8 +4019,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -4e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4044,8 +4044,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 -2e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4069,8 +4069,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 2e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4094,8 +4094,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 4e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4119,8 +4119,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 8e-13 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4144,8 +4144,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 1e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4169,8 +4169,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 1.5e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4194,8 +4194,8 @@ set anoinputs 10 0.0e-12 # FM6
 set anoinputs 11 0.0e-12 # FM7
 set anoinputs 12 0.0e-12 # FT0
 set anoinputs 13 0.0e-12 # FT1
-set anoinputs 14 0.0e-12 # FT2
 set anoinputs 14 3e-12 # FT2
+set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
@@ -4222,7 +4222,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -3e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4248,7 +4247,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -1.5e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4274,7 +4272,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -1e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4300,7 +4297,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -8e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4326,7 +4322,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -4e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4352,7 +4347,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 -2e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4378,7 +4372,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 2e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4404,7 +4397,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 4e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4430,7 +4422,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 8e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4456,7 +4447,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 1e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4482,7 +4472,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 1.5e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4508,7 +4497,6 @@ set anoinputs 13 0.0e-12 # FT1
 set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
-set anoinputs 17 0.0e-12 # FT5
 set anoinputs 17 3e-11 # FT5
 set anoinputs 18 0.0e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
@@ -4535,7 +4523,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -3e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4561,7 +4548,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -1.5e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4587,7 +4573,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -1e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4613,7 +4598,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -8e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4639,7 +4623,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -4e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4665,7 +4648,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 -2e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4691,7 +4673,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 2e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4717,7 +4698,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 4e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4743,7 +4723,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 8e-12 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4769,7 +4748,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 1e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4795,7 +4773,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 1.5e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4821,7 +4798,6 @@ set anoinputs 14 0.0e-12 # FT2
 set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
-set anoinputs 18 0.0e-12 # FT6
 set anoinputs 18 3e-11 # FT6
 set anoinputs 19 0.0e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
@@ -4848,7 +4824,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -3e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -4874,7 +4849,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -1.5e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -4900,7 +4874,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -1e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -4926,7 +4899,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -8e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -4952,7 +4924,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -4e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -4978,7 +4949,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 -2e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5004,7 +4974,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 2e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5030,7 +4999,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 4e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5056,7 +5024,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 8e-12 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5082,7 +5049,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 1e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5108,7 +5074,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 1.5e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
@@ -5134,7 +5099,6 @@ set anoinputs 15 0.0e-12 # FT3
 set anoinputs 16 0.0e-12 # FT4
 set anoinputs 17 0.0e-12 # FT5
 set anoinputs 18 0.0e-12 # FT6
-set anoinputs 19 0.0e-12 # FT7
 set anoinputs 19 3e-11 # FT7
 set anoinputs 20 0.0e-12 # FT8
 set anoinputs 21 0.0e-12 # FT9
