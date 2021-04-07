@@ -297,10 +297,10 @@ for i in range(0, len(FT0)):
   file1.write(L[19])
   file1.write(L[20])
 
-for j in range(0, len(FT1)):
+for i in range(0, len(FT1)):
   file1.write("\n")
   file1.write("\n")
-  file1.write("#[" + str(j+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)) + "/" + str(total) + "] FT1:" + str(FT1[j])+"\n")
+  file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)) + "/" + str(total) + "] FT1:" + str(FT1[i])+"\n")
   if(FT1[i] < 0.0):
     file1.write("launch --rwgt_name=EFT__FT1_m"+"{:1.2g}".format(math.fabs(FT1[i]))+"\n")
   else:
@@ -317,7 +317,7 @@ for j in range(0, len(FT1)):
   file1.write(L[9])
   file1.write(L[10])
   file1.write(L[11])
-  file1.write("set anoinputs 13 " + str(FT1[j]) + " # FT1\n")
+  file1.write("set anoinputs 13 " + str(FT1[i]) + " # FT1\n")
   file1.write(L[13])
   file1.write(L[14])
   file1.write(L[15])
@@ -327,10 +327,10 @@ for j in range(0, len(FT1)):
   file1.write(L[19])
   file1.write(L[20])
 
-for j in range(0, len(FT2)):
+for i in range(0, len(FT2)):
   file1.write("\n")
   file1.write("\n")
-  file1.write("#[" + str(j+1 + len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)+len(FT1)) + "/" + str(total) + "] FT2:" + str(FT2[j])+"\n")
+  file1.write("#[" + str(i+1 + len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)+len(FT1)) + "/" + str(total) + "] FT2:" + str(FT2[i])+"\n")
   if(FT2[i] < 0.0):
     file1.write("launch --rwgt_name=EFT__FT2_m"+"{:1.2g}".format(math.fabs(FT2[i]))+"\n")
   else:
@@ -348,7 +348,7 @@ for j in range(0, len(FT2)):
   file1.write(L[10])
   file1.write(L[11])
   file1.write(L[12])
-  file1.write("set anoinputs 14 " + str(FT2[j]) + " # FT2\n")
+  file1.write("set anoinputs 14 " + str(FT2[i]) + " # FT2\n")
   file1.write(L[14])
   file1.write(L[15])
   file1.write(L[16])
