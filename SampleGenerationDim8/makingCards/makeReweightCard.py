@@ -52,6 +52,9 @@ FT0 = [-3.0e-12, -1.5e-12, -1e-12, -0.8e-12, -0.4e-12, -0.2e-12, 0.2e-12, 0.4e-1
 FT1 = [-3.0e-12, -1.5e-12, -1e-12, -0.8e-12, -0.4e-12, -0.2e-12, 0.2e-12, 0.4e-12, 0.8e-12, 1e-12, 1.5e-12, 3.0e-12]
 FT2 = [-3.0e-12, -1.5e-12, -1e-12, -0.8e-12, -0.4e-12, -0.2e-12, 0.2e-12, 0.4e-12, 0.8e-12, 1e-12, 1.5e-12, 3.0e-12]
 
+
+Fname = [-30, -15, -10, -8, -4, -2, 2, 4, 8, 10, 15, 30]
+
 total = len(FS0) + len(FS1) + len(FS2) + len(FM0) + len(FM1) + len(FM6) + len(FM7) + len(FT0) + len(FT1) + len(FT2)
 
 for i in range(0, len(FS0)):
@@ -59,9 +62,9 @@ for i in range(0, len(FS0)):
   file1.write("\n")
   file1.write("#[" + str(i+1) + "/" + str(total) + "] FS0:" + str(FS0[i])+"\n")
   if(FS0[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FS0_m"+"{:1.2g}".format(math.fabs(FS0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS0_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FS0_p"+"{:1.2g}".format(math.fabs(FS0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS0_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write("set anoinputs 1 " + str(FS0[i]) + " # FS0\n")
   file1.write(L[1])
   file1.write(L[2])
@@ -89,9 +92,9 @@ for i in range(0, len(FS1)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)) + "/" + str(total) + "] FS1:" + str(FS1[i])+"\n")
   if(FS1[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FS1_m"+"{:1.2g}".format(math.fabs(FS1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS1_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FS1_p"+"{:1.2g}".format(math.fabs(FS1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS1_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write("set anoinputs 2 " + str(FS1[i]) + " # FS1\n")
   file1.write(L[2])
@@ -119,9 +122,9 @@ for i in range(0, len(FS2)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)) + "/" + str(total) + "] FS2:" + str(FS2[i])+"\n")
   if(FS2[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FS2_m"+"{:1.2g}".format(math.fabs(FS2[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS2_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FS2_p"+"{:1.2g}".format(math.fabs(FS2[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FS2_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write("set anoinputs 3 " + str(FS2[i]) + " # FS2\n")
@@ -150,9 +153,9 @@ for i in range(0, len(FM0)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)) + "/" + str(total) + "] FM0:" + str(FM0[i])+"\n")
   if(FM0[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FM0_m"+"{:1.2g}".format(math.fabs(FM0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM0_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FM0_p"+"{:1.2g}".format(math.fabs(FM0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM0_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -180,9 +183,9 @@ for i in range(0, len(FM1)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)) + "/" + str(total) + "] FM1:" + str(FM1[i])+"\n")
   if(FM1[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FM1_m"+"{:1.2g}".format(math.fabs(FM1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM1_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FM1_p"+"{:1.2g}".format(math.fabs(FM1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM1_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -210,9 +213,9 @@ for i in range(0, len(FM6)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)) + "/" + str(total) + "] FM6:" + str(FM6[i])+"\n")
   if(FM6[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FM6_m"+"{:1.2g}".format(math.fabs(FM6[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM6_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FM6_p"+"{:1.2g}".format(math.fabs(FM6[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM6_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -240,9 +243,9 @@ for i in range(0, len(FM7)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)) + "/" + str(total) + "] FM7:" + str(FM7[i])+"\n")
   if(FM7[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FM7_m"+"{:1.2g}".format(math.fabs(FM7[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FM7_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FM7_p"+"{:1.2g}".format(math.fabs(FM7[i]))+"\n") 
+    file1.write("launch --rwgt_name=EFT__FM7_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n") 
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -270,9 +273,9 @@ for i in range(0, len(FT0)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)) + "/" + str(total) + "] FT0:" + str(FT0[i]) + "\n")
   if(FT0[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FT0_m"+"{:1.2g}".format(math.fabs(FT0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT0_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FT0_p"+"{:1.2g}".format(math.fabs(FT0[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT0_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -302,9 +305,9 @@ for i in range(0, len(FT1)):
   file1.write("\n")
   file1.write("#[" + str(i+1+len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)) + "/" + str(total) + "] FT1:" + str(FT1[i])+"\n")
   if(FT1[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FT1_m"+"{:1.2g}".format(math.fabs(FT1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT1_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FT1_p"+"{:1.2g}".format(math.fabs(FT1[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT1_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
@@ -332,9 +335,9 @@ for i in range(0, len(FT2)):
   file1.write("\n")
   file1.write("#[" + str(i+1 + len(FS0)+len(FS1)+len(FS2)+len(FM0)+len(FM1)+len(FM6)+len(FM7)+len(FT0)+len(FT1)) + "/" + str(total) + "] FT2:" + str(FT2[i])+"\n")
   if(FT2[i] < 0.0):
-    file1.write("launch --rwgt_name=EFT__FT2_m"+"{:1.2g}".format(math.fabs(FT2[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT2_m"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   else:
-    file1.write("launch --rwgt_name=EFT__FT2_p"+"{:1.2g}".format(math.fabs(FT2[i]))+"\n")
+    file1.write("launch --rwgt_name=EFT__FT2_p"+"{:1.2g}".format(math.fabs(Fname[i]))+"\n")
   file1.write(L[0])
   file1.write(L[1])
   file1.write(L[2])
