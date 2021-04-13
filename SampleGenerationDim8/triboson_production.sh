@@ -28,7 +28,7 @@ You can get this list with the dasgoclient:
         # e.g. 2016, 2017, 2018
         ;;
     s)  SAMPLE=$OPTARG
-        # e.g. WWW, WZZ_dim8, WWZ_dim8 or ZZZ_dim8
+        # e.g. WWW_dim8, WZZ_dim8, WWZ_dim8 or ZZZ_dim8
         ;;
     p)  PILEUP_FILES=$OPTARG
         ;;
@@ -117,14 +117,14 @@ CMSSW_VERSION=CMSSW_10_2_22
 ERA=Run2_${YEAR}
 NANOERA=$ERA,run2_nanoAOD_102Xv1
 
-FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta
+FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/
 #FRAGMENT_BASE_URL=https://rembserj.web.cern.ch/rembserj/genproduction/fragments
+GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim8/DefaultMG5Scale/
 #GRIDPACK_BASE_URL=https://rembserj.web.cern.ch/rembserj/genproduction/gridpacks
-GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim8/DefaultMG5Scale
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}.py
-#GRIDPACK=${SAMPLE}_20200605_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
 GRIDPACK=${SAMPLE}_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
+#${SAMPLE}_20200605_slc7_amd64_gcc630_CMSSW_9_3_16_tarball.tar.xz
 
 OUTNAME=$SAMPLE-${CAMPAIGN}wmLHEGS
 
