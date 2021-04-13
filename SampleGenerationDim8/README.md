@@ -16,10 +16,22 @@
 
 dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAutumn18_102X_upgrade2018_realistic_v15-v1/GEN-SIM-DIGI-RAW" > pileup_files.txt
 
+## Instructions for a pilot run (will work on UCSD cluster, for other clusters the relevant files need to be copied over):
+
+1. login to ucsd uaf-10 
+2. create or mkdir EFTSignalGenerationApr2021
+3. cd EFTSignalGenerationApr2021
+4. cp /home/users/sapta/public_html/ForLisa/pileup_files.txt .
+5. cp /home/users/sapta/public_html/ForLisa/triboson_production.sh .
+6. cp /home/users/sapta/public_html/ForLisa/pr.sh .
+7. source pr.sh
+8. sh triboson_production.sh -p pileup_files.txt -s WWW -c -o $PWD -a 1 -n 10
+
 ## Submission of jobs at the LPC cluster:
 
 1. Use the script submitCondorJob.sh
 2. To submit several jobs simply use submitCondorJob.sh in a loop as done here: submitJob.sh
+3. Update the script triboson_production.sh with the correct url for procuring gridpacks and fragments
 
 ## Lepton filters:
 
