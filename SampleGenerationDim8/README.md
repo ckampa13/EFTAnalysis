@@ -41,4 +41,16 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 2. Dilepton (Dilepton/wmLHEGS-fragment-2018.py)
 3. FourLepton (FourLepton/wmLHEGS-fragment-2018.py)
 
- 
+## Samples to generate
+
+
+| Process            | `No filter` | `Two lepton filtered` | `Four lepton filtered`  |   `Events per lepton filter scenario` |
+|--------------------|-------------|-----------------------|-------------------------|---------------------------------------|
+| WWW                | ✅          | ✅                    | ❌                      |  1M				     |	
+| WWZ                | ✅          | ✅                    | ✅                      |  1M				     |
+| WZZ                | ✅          | ✅                    | ✅                      |  1M				     |
+| ZZZ                | ✅          | ✅                    | ✅                      |  1M				     |
+
+#### Near term goal 
+
+To have the first two rows of productio done first.
