@@ -53,4 +53,4 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 
 #### Near term goal 
 
-To have the first two rows of productio done first.
+To have the first two rows of production done first.
