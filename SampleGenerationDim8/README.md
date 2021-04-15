@@ -41,6 +41,19 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 2. Dilepton (Dilepton/wmLHEGS-fragment-2018.py)
 3. FourLepton (FourLepton/wmLHEGS-fragment-2018.py)
 
+## To generate samples with the use of specific filters, please use the version of scripts in this directory: ScriptWithLeptonFilterArg
+
+For running an interactive test, please do:
+
+sh triboson_production.sh -p pileup_files.txt -s WWZ_ScaleST -c -o $PWD -a 1 -l DileptonFilter -n 10
+
+1. For DileptonFilter, -l argument is set to DileptonFilter
+2. For DileptonFilter, -l argument is set to FourleptonFilter
+3. For inclusive or no lepton filter, -l argument is set to NoFilter
+
+Consistent set of condor scripts should be in ScriptWithLeptonFilterArg and has been tested
+
+
 ## Samples to generate
 
 
