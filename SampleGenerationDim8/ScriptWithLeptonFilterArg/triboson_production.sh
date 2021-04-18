@@ -11,7 +11,7 @@ NTHREADS=1 #8 default
 while getopts "h?y:s:n:o:a:l:dcp:" opt; do
     case "$opt" in
     h|\?)
-        echo 'triboson-production -y YEAR -s SAMPLE -n NEVENTS -o OUTPUT_DIR -p PILEUP_FILES [-d -c] -a NPART -l LEPTONFILTER
+        echo 'triboson-production -y YEAR -s SAMPLE -n NEVENTS -o OUTPUT_DIR -p PILEUP_FILES [-d -c] -a NPART -l LEPTONFILTER 
 
 If the -d (dry run) flag is set, only the environment and the config file will be created.
 otherwise, the cmsRun command will be executed.
@@ -179,7 +179,7 @@ STEP3_NAME=${SAMPLE}-${CAMPAIGN}MiniAOD_${NPART}
 STEP4_NAME=${SAMPLE}-${CAMPAIGN}NanoEDMAODv7_${NPART}
 STEP5_NAME=${SAMPLE}-${CAMPAIGN}NanoAODv7_${NPART}
 #
-seed=$(($(date +%s)))
+seed=$(($(date +%s) % 90000000))$NPART
 cmsDriver.py Configuration/GenProduction/python/$FRAGMENT \
     --fileout file:${STEP0_NAME}.root \
     --mc \
