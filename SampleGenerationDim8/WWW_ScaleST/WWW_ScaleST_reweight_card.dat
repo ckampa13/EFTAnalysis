@@ -2,7 +2,7 @@ change mode NLO       # Define type of Reweighting. For LO sample this command
                       # has no effect since only LO mode is allowed. 
 change helicity False # has also been done in the example I got from Kenneth 
 change rwgt_dir rwgt
-
+#Default weight in customize cards
 
 #[1/120] FS0:-3e-08
 launch --rwgt_name=EFT__FS0_m30
