@@ -1,0 +1,4 @@
+#/usr/bin/python readWWW.py unweighted_events_WWW_dim6_cHWB_All.lhe  test_unweighted_events_WWW_dim6_cHWB_All.root
+/usr/bin/python readWWW.py unweighted_events_WWW_dim6_cHWB_1_BSM.lhe  test_unweighted_events_WWW_dim6_cHWB_1_BSM.root
+/usr/bin/python readWWW.py unweighted_events_WWW_dim6_cHWB_1_Interference.lhe  test_unweighted_events_WWW_dim6_cHWB_1_Interference.root
+

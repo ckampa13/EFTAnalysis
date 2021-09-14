@@ -1,0 +1,4 @@
+/usr/bin/python readWWW.py unweighted_events_WWW_Onshell_All.lhe test_unweighted_events_WWW_Onshell_All.root
+/usr/bin/python readWWW.py unweighted_events_WWW_Onshell_Interference.lhe test_unweighted_events_WWW_Onshell_Interference.root
+/usr/bin/python readWWW.py unweighted_events_WWW_Onshell_BSM.lhe test_unweighted_events_WWW_Onshell_BSM.root 
+/usr/bin/python readWWW.py unweighted_events_WWW_Onshell_SM.lhe test_unweighted_events_WWW_Onshell_SM.root 

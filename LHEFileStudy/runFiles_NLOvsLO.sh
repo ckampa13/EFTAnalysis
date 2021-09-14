@@ -1,0 +1,2 @@
+/usr/bin/python readWWW.py unweighted_events_WWW_dim6_EWdim6NLO_All.lhe test_unweighted_events_WWW_dim6_EWdim6NLO_All.root
+/usr/bin/python readWWW.py unweighted_events_WWW_dim6_All.lhe test_unweighted_events_WWW_dim6_All.root
