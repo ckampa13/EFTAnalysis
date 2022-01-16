@@ -16,6 +16,9 @@
 
 dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" > pileup_files.txt
 
+It can also be produced by running [pr.sh][https://github.com/Saptaparna/EFTAnalysis/blob/master/SignalGenerationNewModel/pr.sh] 
+
+
 ## Submission of jobs at the LPC cluster:
 
 1. Use the script submitCondorJob.sh
