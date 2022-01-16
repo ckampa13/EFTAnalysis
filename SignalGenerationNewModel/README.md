@@ -14,7 +14,7 @@
 
 #### Create the minimum bias file: 
 
-dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAutumn18_102X_upgrade2018_realistic_v15-v1/GEN-SIM-DIGI-RAW" > pileup_files.txt
+dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" > pileup_files.txt
 
 ## Instructions for a pilot run (will work on UCSD cluster, for other clusters the relevant files need to be copied over):
 
