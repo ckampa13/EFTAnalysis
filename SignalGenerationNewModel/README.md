@@ -60,6 +60,3 @@ sh triboson_production.sh -p pileup_files.txt -s WWW -c -o $PWD -a 1 -n 10 -b 12
 | WZZ                | ✅          | ✅                    | ✅                      |  1M				     |
 | ZZZ                | ✅          | ✅                    | ✅                      |  1M				     |
 
-#### Near term goal 
-
-To have the first two rows of production done first.
