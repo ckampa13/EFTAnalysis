@@ -1,14 +1,14 @@
 
 ## Relevant operators:
 
-|                    | `WWWW` | `WWZZ` | `ZZZZ`  | 
-|--------------------|--------|--------|---------|
-| LS0, LS1, LS2      | ✅     | ✅     | ✅      |
-| LM0, LM1, LM6, LM7 | ✅     | ✅     | ✅      | 
-| LM2, LM3, LM4, LM5 | ❌     | ✅     | ✅      |
-| LT0, LT1, LT2      | ✅     | ✅     | ✅      |
-| LT5, LT6, LT7      | ❌     | ✅     | ✅      |
-| LT8, LT9           | ❌     | ❌     | ✅      | 
+|                              | `WWWW` | `WWZZ` | `ZZZZ`  | 
+|------------------------------|--------|--------|---------|
+| LS0, LS1, LS2                | ✅     | ✅     | ✅      |
+| LM0, LM1, LM6, LM7           | ✅     | ✅     | ✅      | 
+| LM2, LM3, LM4, LM5           | ❌     | ✅     | ✅      |
+| LT0, LT1, LT2                | ✅     | ✅     | ✅      |
+| LT3, LT4, LT5, LT6, LT7      | ❌     | ✅     | ✅      |
+| LT8, LT9                     | ❌     | ❌     | ✅      | 
 
 ## Instructions for sample submission:
 
@@ -41,17 +41,13 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 2. Dilepton (Dilepton/wmLHEGS-fragment-2018.py)
 3. FourLepton (FourLepton/wmLHEGS-fragment-2018.py)
 
-## To generate samples with the use of specific filters, please use the version of scripts in this directory: ScriptWithLeptonFilterArg
-
-For running an interactive test, please do:
+## For running an interactive test, please do:
 
 sh triboson_production.sh -p pileup_files.txt -s WWZ_ScaleST -c -o $PWD -a 1 -l DileptonFilter -n 10
 
 1. For DileptonFilter, -l argument is set to DileptonFilter
 2. For DileptonFilter, -l argument is set to FourleptonFilter
 3. For inclusive or no lepton filter, -l argument is set to NoFilter
-
-Consistent set of condor scripts should be in ScriptWithLeptonFilterArg and has been tested
 
 
 ## Samples to generate
