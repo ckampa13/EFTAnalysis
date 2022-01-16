@@ -43,7 +43,7 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 
 ## For running an interactive test, please do:
 
-sh triboson_production.sh -p pileup_files.txt -s WWZ_ScaleST -c -o $PWD -a 1 -l DileptonFilter -n 10
+sh triboson_production.sh -p pileup_files.txt -s WWW -c -o $PWD -a 1 -n 10 -b 12345 -l NoFilter 
 
 1. For DileptonFilter, -l argument is set to DileptonFilter
 2. For DileptonFilter, -l argument is set to FourleptonFilter
