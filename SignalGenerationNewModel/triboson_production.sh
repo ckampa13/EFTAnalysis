@@ -447,15 +447,6 @@ cmsRun ${STEP6_NAME}_cfg.py
 # ============= NANOAODSIM ==============
 
 
-# Validate the config files
-python2 ${STEP0_NAME}_cfg.py
-python2 ${STEP1_NAME}_cfg.py
-python2 ${STEP2_NAME}_cfg.py
-python2 ${STEP3_NAME}_cfg.py
-python2 ${STEP4_NAME}_cfg.py
-python2 ${STEP5_NAME}_cfg.py
-python2 ${STEP6_NAME}_cfg.py
-
 if [ "$DRY_RUN" ]
 then
       exit 1
