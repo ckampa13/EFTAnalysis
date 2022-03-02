@@ -1,0 +1,16 @@
+universe = vanilla
+Executable = Job.sh
+Arguments = EGamma_Run2018A-UL2018_MiniAODv2_NanoAODv9-v1_NANOAOD $(Cluster) $(Process)
+Requirements = OpSys == "LINUX" && (Arch != "DUMMY" )
+request_disk = 10000000
+request_memory = 6000
+Should_Transfer_Files = YES
+WhenToTransferOutput = ON_EXIT
+transfer_input_files = Job.sh, EGamma_Run2018A-UL2018_MiniAODv2_NanoAODv9-v1_NANOAOD.txt
+notification = Never
+Output = /STDOUT_$(Cluster)$(Process)EGamma_Run2018A-UL2018_MiniAODv2_NanoAODv9-v1_NANOAOD.stdout
+Error = /STDERR_$(Cluster)$(Process)EGamma_Run2018A-UL2018_MiniAODv2_NanoAODv9-v1_NANOAOD.stderr
+Log = /LOG_$(Cluster)$(Process)EGamma_Run2018A-UL2018_MiniAODv2_NanoAODv9-v1_NANOAOD.log
+x509userproxy = /uscms/home/sapta/x509up_u43229
++MaxRuntime           = 86400
+Queue 1
