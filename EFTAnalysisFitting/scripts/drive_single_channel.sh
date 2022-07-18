@@ -17,6 +17,6 @@ do
     for bin in 1 2 3 4
     do
         echo "bin: $bin"
-        python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y
+        python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
     done
 done
