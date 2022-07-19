@@ -63,13 +63,6 @@ if __name__=='__main__':
     # channel specific things
     if args.Channel == '1Lepton':
         file_channel = '1lepton'
-    # SYSTEMATICS ON OR OFF (add as arg) FIXME!
-    SYST = True
-    # SYST = False
-    if SYST:
-        syst_str = ''
-    else:
-        syst_str = '-S 0'
     # construct filename from arguments
     cardfile_base = (f'datacard1opWithBkg_FT0_'+
                      f'bin{args.Bin}_{file_channel}_{args.SubChannel}')
@@ -87,7 +80,7 @@ if __name__=='__main__':
     print('Determining appropriate POI range and steps:')
     # first run combine using a coarse scan
     # FIXME! Allow changing range or original step size
-    _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points 201 --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeParameters r --setParameters r=1 --setParameterRanges k_cG=-50,50 {syst_str} --verbose -1 -n _{cardfile_base}_coarse', stdout=stdout, shell=True)
+    _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points 201 --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeParameters r --setParameters r=1 --setParameterRanges k_cG=-50,50 --verbose -1 -n _{cardfile_base}_coarse', stdout=stdout, shell=True)
     # assuming for now we always want a 95% CL, so threshold always 4.
     # FIXME! Add this as a flag in argparse.
     rangescript = os.path.join(datacard_dir, 'scripts', 'find_POI_range.py')
@@ -104,6 +97,10 @@ if __name__=='__main__':
     print(f'LL + (steps-1) * {prec} = {poi_dict["LL"] + (poi_dict["steps"]-1) * prec}')
     # run combine using appropriate range and steps
     print('Running combine with appropriate range & steps:')
-    _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points {poi_dict["steps"]} --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeParameters r --setParameters r=1 --setParameterRanges k_cG={poi_dict["LL"]},{poi_dict["UL"]} {syst_str} --verbose -1 -n _{cardfile_base}', stdout=stdout, shell=True)
+    print('With systematics:')
+    _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points {poi_dict["steps"]} --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeNuisanceGroups nosyst --freezeParameters r --setParameters r=1 --setParameterRanges k_cG={poi_dict["LL"]},{poi_dict["UL"]} --verbose -1 -n _{cardfile_base}', stdout=stdout, shell=True)
     print(f'Finished running combine. Expected file output: higgsCombine_{cardfile_base}.MultiDimFit.mH120.root')
+    print('Without systematics:')
+    _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points {poi_dict["steps"]} --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeNuisanceGroups allsyst --freezeParameters r --setParameters r=1 --setParameterRanges k_cG={poi_dict["LL"]},{poi_dict["UL"]} --verbose -1 -n _{cardfile_base}_nosyst', stdout=stdout, shell=True)
+    print(f'Finished running combine. Expected file output: higgsCombine_{cardfile_base}_nosyst.MultiDimFit.mH120.root')
 
