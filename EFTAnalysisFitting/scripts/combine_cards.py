@@ -56,8 +56,8 @@ def combine_channel_subchannels(channel, version, datacard_dict):
         dc_name = f'ch{sname_ch}'
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis',
-                             f'datacard1opWithBkg_FT0_binAll_channelsAll_{version}.txt')
+    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel',
+                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}All_{version}.txt')
     cmd_str += f'> {comb_file}'
     # run combine script
     # stdout = subprocess.PIPE
@@ -80,8 +80,8 @@ def combine_all_channels(version, datacard_dict):
         dc_name = f'all' # ???
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel',
-                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}All_{version}.txt')
+    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis',
+                             f'datacard1opWithBkg_FT0_binAll_channelsAll_{version}.txt')
     cmd_str += f'> {comb_file}'
     # run combine script
     # stdout = subprocess.PIPE
