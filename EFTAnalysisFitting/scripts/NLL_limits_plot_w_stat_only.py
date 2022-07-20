@@ -2,7 +2,6 @@
 # note: this requires uproot, and is typically ran on the GPU machine, rather than the LPC.
 import os
 import numpy as np
-import uproot
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator

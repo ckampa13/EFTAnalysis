@@ -1,7 +1,6 @@
 # note: this requires uproot, and is typically ran on the GPU machine, rather than the LPC.
 import os
 import numpy as np
-import uproot
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
@@ -17,7 +16,7 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, add_hrule=True,
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
     fig = plt.figure(figsize=(16, 8))
-    ax = fig.add_axes([0.1, 0.1, 0.55, 0.8])
+    ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
     # loop through files to plot
     LLs_all = []
     ULs_all = []
