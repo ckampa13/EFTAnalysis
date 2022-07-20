@@ -1,0 +1,161 @@
+# note: this requires uproot, and is typically ran on the GPU machine, rather than the LPC.
+import os
+import numpy as np
+import uproot
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+from matplotlib.ticker import AutoMinorLocator
+
+# local imports
+from extract_limits import get_lims, get_lims_w_best, CL_1sigma
+from plotting import config_plots, ticks_in, ticks_sizes
+
+config_plots()
+
+
+def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=True, savefile=None):
+    # bottom to top, plots 0, 1, 2, 3, ....
+    # plot
+    fig = plt.figure(figsize=(16, 8))
+    ax = fig.add_axes([0.1, 0.1, 0.55, 0.8])
+    # loop through files to plot
+    LLs_all = []
+    ULs_all = []
+    ylabels_all = []
+    text_annot_all = []
+    var_annot_all = []
+    for i, item in enumerate(sorted(root_file_dict_full.items())):
+        if i==0:
+            label_total = r'Proj. (stat. $\bigoplus$ syst.)'
+            label_stat = 'stat. only'
+        else:
+            label_total = None
+            label_stat = None
+        yval, info_dict = item
+        root_file_dict = info_dict['root_file_dict']
+        ylabels_all.append(info_dict['ylabel'])
+        var_of_choice = info_dict['variable_of_choice']
+        # get limits and plot
+        # total
+        FT0, NLL, CL_list, NLL_cuts, LLs, ULs, FT0_best, NLL_best = get_lims_w_best([CL], FT0=None, NLL=None, root_file=root_file_dict['total'])
+        err_low = FT0_best - LLs[0]
+        err_high = ULs[0] - FT0_best
+        ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
+        LLs_all.append(LLs[0])
+        ULs_all.append(ULs[0])
+        if abs(np.round(FT0_best, 3)) < 0.001:
+            best_str = f'{0.0:0.3f}'
+        else:
+            best_str = f'{FT0_best:0.3f}'
+        text_annot = rf'   ${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
+        # stat only
+        if plot_stat_only:
+            FT0, NLL, CL_list, NLL_cuts, LLs, ULs, FT0_best_stat, NLL_best = get_lims_w_best([CL], FT0=None, NLL=None, root_file=root_file_dict['stat_only'])
+            err_low = FT0_best - LLs[0]
+            err_high = ULs[0] - FT0_best
+            # ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='blue', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+            ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+            text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
+        text_annot_all.append(text_annot)
+        var_annot_all.append(rf'                                       {var_of_choice}')
+    # axis labels
+    ax.set_xlabel(r'Sensitivity to F$_{T0} / \Lambda^4$ [TeV]$^{-4}$')
+    ax.set_title(title)
+    # set xlim to be symmetric
+    LLs_all = np.array(LLs_all)
+    ULs_all = np.array(ULs_all)
+    xlim = 1.1*np.max(np.abs([LLs_all, ULs_all]))
+    ax.set_xlim([-xlim, xlim])
+    # add dummy point above top for label space
+    yvals = sorted(root_file_dict_full.keys())
+    yrange = np.max(yvals) - np.min(yvals)
+    ax.scatter([0.], [np.max(yvals) + 0.30 * yrange], s=0., alpha=0.)
+    # annotations for sensitivity
+    for yval, text_annot, var_annot in zip(yvals, text_annot_all, var_annot_all):
+        ax.annotate(text_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
+        ax.annotate(var_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
+    # additional annotations
+    # total, stat
+    if plot_stat_only:
+        header_str = '               total   stat.'
+    else:
+        header_str = '               total'
+    ax.annotate(header_str, (1.00*xlim, np.max(yvals)+0.5), xycoords='data')
+    # var of choice header
+    var_header_str = ('                                       Variable of\n'+
+                      '                                       choice')
+    ax.annotate(var_header_str, (1.00*xlim, np.max(yvals)+0.5), xycoords='data')
+    # formatting
+    ax = ticks_in(ax)
+    ax = ticks_sizes(ax, major={'L':10,'W':1.1}, minor={'L':8,'W':1})
+    ax.set_yticks(yvals)
+    ax.set_yticklabels(ylabels_all)
+    ax.grid(axis='y')
+    # ax.legend(loc='upper left', bbox_to_anchor=(1,1))
+    ax.legend(loc='upper left')
+    # save?
+    if not savefile is None:
+        fig.savefig(savefile+'.pdf')
+        fig.savefig(savefile+'.png')
+    return fig, ax
+
+'''
+def run_lim_plot(bin_info, root_file_dict=None):
+    if root_file_dict is None:
+        root_file_all = os.path.join(bin_info['output_dir'],
+                                     f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+        root_file_stat = os.path.join(bin_info['output_dir'],
+                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+        root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat}
+    # plot
+    savefile = os.path.join(bin_info['plot_dir'], f'{bin_info["channel"]}_{bin_info["subchannel"]}_bin{bin_info["bin_"]}_NLL_vs_FT0_w_stat_only')
+    fig, ax = make_limit_plot(root_file_dict, bin_info=bin_info, CL_list=[0.95, CL_1sigma], savefile=savefile)
+
+    # return fig, ax
+'''
+
+if __name__=='__main__':
+    # electron or muon?
+    SUBCHANNEL = 'electron'
+    # SUBCHANNEL = 'muon'
+    # confidence level
+    CL = 0.95
+    # file globals
+    CHANNEL = '1lepton'
+    CHANNEL_DIR = '1Lepton'
+    VERSION = 'v1'
+    datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
+    output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'single_channel_single_bin', 'include_stat_only')
+    # make paths absolute
+    datacard_dir = os.path.abspath(datacard_dir)
+    output_dir = os.path.abspath(output_dir)
+    plot_dir = os.path.abspath(plot_dir)
+    # loop through all bins to fill root file dictionary
+    root_file_dict_full = {}
+    # for sc in ["electron", "muon"]:
+    for b in [1, 2, 3, 4]:
+        # construct bin_info dict
+        bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
+                    'channel': CHANNEL, 'subchannel': SUBCHANNEL,
+                    'version': VERSION, 'bin_': b,
+                    }
+        root_file_all = os.path.join(bin_info['output_dir'],
+                                     f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+        root_file_stat = os.path.join(bin_info['output_dir'],
+                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+        root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+        root_file_dict_full[b] = {'root_file_dict': root_file_dict, 'ylabel': f'Bin {bin_info["bin_"]}', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
+        # run analysis / plotting func
+        # run_lim_plot(bin_info)
+
+    plotfile = os.path.join(plot_dir, f'sensitivity_summary_bin_by_bin_{CHANNEL}_{SUBCHANNEL}')
+    fig, ax = make_limit_summary_plot(root_file_dict_full, title=f'Bin-by-bin {int(CL*100)}% CL Sensitivity: {CHANNEL_DIR}, {SUBCHANNEL}',
+                                      CL=CL, plot_stat_only=True, savefile=plotfile)
+
+    # plt.show()
+
