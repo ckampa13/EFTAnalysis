@@ -1,4 +1,4 @@
-Combination of all=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/combined_datacards/channel/datacard1opWithBkg_FT0_binAll_1leptonAll.txt
+Combination of all=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/combined_datacards/channel/datacard1opWithBkg_FT0_binAll_1leptonAll_v1.txt
 imax 0 number of bins
 jmax -1 number of processes minus 1
 kmax 0 number of nuisance parameters

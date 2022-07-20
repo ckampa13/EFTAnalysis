@@ -57,7 +57,7 @@ def combine_channel_subchannels(channel, version, datacard_dict):
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis',
-                             f'datacard1opWithBkg_FT0_binAll_channelsAll.txt')
+                             f'datacard1opWithBkg_FT0_binAll_channelsAll_{version}.txt')
     cmd_str += f'> {comb_file}'
     # run combine script
     # stdout = subprocess.PIPE
@@ -76,18 +76,17 @@ def combine_all_channels(version, datacard_dict):
         else:
             print(ch,', ', end='')
         fname_ch = datacard_dict[channel]['info']['file_name']
-        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_binAll_{fname_ch}All.txt')
+        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_binAll_{fname_ch}All_{version}.txt')
         dc_name = f'all' # ???
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel',
-                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}All.txt')
+                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}All_{version}.txt')
     cmd_str += f'> {comb_file}'
     # run combine script
     # stdout = subprocess.PIPE
     stdout = None
     proc = subprocess.run(cmd_str, shell=True, stdout=stdout)
-
 
 
 if __name__=='__main__':
