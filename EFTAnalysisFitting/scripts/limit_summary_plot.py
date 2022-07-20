@@ -13,7 +13,7 @@ from plotting import config_plots, ticks_in, ticks_sizes
 config_plots()
 
 
-def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=True, savefile=None):
+def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True, savefile=None):
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
     fig = plt.figure(figsize=(16, 8))
@@ -21,6 +21,7 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=
     # loop through files to plot
     LLs_all = []
     ULs_all = []
+    yvals_all = []
     ylabels_all = []
     text_annot_all = []
     var_annot_all = []
@@ -32,6 +33,7 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=
             label_total = None
             label_stat = None
         yval, info_dict = item
+        yvals_all.append(yval)
         root_file_dict = info_dict['root_file_dict']
         ylabels_all.append(info_dict['ylabel'])
         var_of_choice = info_dict['variable_of_choice']
@@ -70,6 +72,10 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=
     yvals = sorted(root_file_dict_full.keys())
     yrange = np.max(yvals) - np.min(yvals)
     ax.scatter([0.], [np.max(yvals) + 0.30 * yrange], s=0., alpha=0.)
+    # add rule between combined and others
+    if add_hrule:
+        yhrule = (yvals[-1] + yvals[-2]) / 2.
+        ax.plot(ax.get_xlim(), [yhrule, yhrule], '--', c='gray', alpha=0.8)
     # annotations for sensitivity
     for yval, text_annot, var_annot in zip(yvals, text_annot_all, var_annot_all):
         ax.annotate(text_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
@@ -86,8 +92,9 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=
                       '                                       choice')
     ax.annotate(var_header_str, (1.00*xlim, np.max(yvals)+0.5), xycoords='data')
     # formatting
+    ax.xaxis.set_minor_locator(AutoMinorLocator(5))
     ax = ticks_in(ax)
-    ax = ticks_sizes(ax, major={'L':10,'W':1.1}, minor={'L':8,'W':1})
+    ax = ticks_sizes(ax, major={'L':10,'W':1.1}, minor={'L':4,'W':0.8})
     ax.set_yticks(yvals)
     ax.set_yticklabels(ylabels_all)
     ax.grid(axis='y')
@@ -99,32 +106,14 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, plot_stat_only=
         fig.savefig(savefile+'.png')
     return fig, ax
 
-'''
-def run_lim_plot(bin_info, root_file_dict=None):
-    if root_file_dict is None:
-        root_file_all = os.path.join(bin_info['output_dir'],
-                                     f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
-        root_file_stat = os.path.join(bin_info['output_dir'],
-                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
-        root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat}
-    # plot
-    savefile = os.path.join(bin_info['plot_dir'], f'{bin_info["channel"]}_{bin_info["subchannel"]}_bin{bin_info["bin_"]}_NLL_vs_FT0_w_stat_only')
-    fig, ax = make_limit_plot(root_file_dict, bin_info=bin_info, CL_list=[0.95, CL_1sigma], savefile=savefile)
-
-    # return fig, ax
-'''
 
 if __name__=='__main__':
-    # electron or muon?
-    SUBCHANNEL = 'electron'
-    # SUBCHANNEL = 'muon'
     # confidence level
     CL = 0.95
     # file globals
     CHANNEL = '1lepton'
     CHANNEL_DIR = '1Lepton'
+    SUBCHANNELS = ['electron', 'muon']
     VERSION = 'v1'
     datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
     output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin')
@@ -135,27 +124,41 @@ if __name__=='__main__':
     plot_dir = os.path.abspath(plot_dir)
     # loop through all bins to fill root file dictionary
     root_file_dict_full = {}
-    # for sc in ["electron", "muon"]:
-    for b in [1, 2, 3, 4]:
-        # construct bin_info dict
-        bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
+    for SUBCHANNEL in SUBCHANNELS:
+        for b in [1, 2, 3, 4]:
+            # construct bin_info dict
+            bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
+                        'channel': CHANNEL, 'subchannel': SUBCHANNEL,
+                        'version': VERSION, 'bin_': b,
+                        }
+            root_file_all = os.path.join(bin_info['output_dir'],
+                                         f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                         f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+            root_file_stat = os.path.join(bin_info['output_dir'],
+                                          f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                          f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+            root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+            root_file_dict_full[b] = {'root_file_dict': root_file_dict, 'ylabel': f'Bin {bin_info["bin_"]}', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
+            # run analysis / plotting func
+            # run_lim_plot(bin_info)
+        # add combined
+        output_dir_comb = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
+        bin_info = {'output_dir': output_dir_comb, 'plot_dir': plot_dir,
                     'channel': CHANNEL, 'subchannel': SUBCHANNEL,
                     'version': VERSION, 'bin_': b,
                     }
         root_file_all = os.path.join(bin_info['output_dir'],
-                                     f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+                                     f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
+                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
         root_file_stat = os.path.join(bin_info['output_dir'],
-                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+                                      f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
+                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
         root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
-        root_file_dict_full[b] = {'root_file_dict': root_file_dict, 'ylabel': f'Bin {bin_info["bin_"]}', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
-        # run analysis / plotting func
-        # run_lim_plot(bin_info)
-
-    plotfile = os.path.join(plot_dir, f'sensitivity_summary_bin_by_bin_{CHANNEL}_{SUBCHANNEL}')
-    fig, ax = make_limit_summary_plot(root_file_dict_full, title=f'Bin-by-bin {int(CL*100)}% CL Sensitivity: {CHANNEL_DIR}, {SUBCHANNEL}',
-                                      CL=CL, plot_stat_only=True, savefile=plotfile)
+        root_file_dict_full[5.25] = {'root_file_dict': root_file_dict, 'ylabel': f'Combined', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
+        # plot!
+        plotfile = os.path.join(plot_dir, f'sensitivity_summary_bin_by_bin_{CHANNEL}_{SUBCHANNEL}')
+        fig, ax = make_limit_summary_plot(root_file_dict_full, title=f'Bin-by-bin {int(CL*100)}% CL Sensitivity: {CHANNEL_DIR}, {SUBCHANNEL}',
+                                          CL=CL, add_hrule=True, plot_stat_only=True, savefile=plotfile)
 
     # plt.show()
 
