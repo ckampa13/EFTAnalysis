@@ -101,7 +101,7 @@ void makePlots_BW()
   hNP_BW100000->GetYaxis()->SetTitleOffset(1.3);
   hNP_BW100000->Draw("HIST");
 
-  TFile* fileNP_1_BW100000 = new TFile("test_unweighted_events_FT0_1.root");
+  TFile* fileNP_1_BW100000 = new TFile("test_unweighted_events_Realistic_FT0_OldModel.root");
   TH1F *hNP_1_BW100000 = (TH1F*)fileNP_1_BW100000->Get("M_elnu");
   hNP_1_BW100000->SetFillColor(kBlue);
   hNP_1_BW100000->SetFillStyle(3004);
