@@ -75,7 +75,7 @@ def combine_all_channels(version, datacard_dict):
             print(ch)
         else:
             print(ch,', ', end='')
-        fname_ch = datacard_dict[channel]['info']['file_name']
+        fname_ch = datacard_dict[ch]['info']['file_name']
         dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_binAll_{fname_ch}All_{version}.txt')
         dc_name = f'all' # ???
         cmd_str += f'{dc_name}={dc_file} '
