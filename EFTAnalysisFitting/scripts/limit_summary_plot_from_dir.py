@@ -135,10 +135,10 @@ def run_plot_channel(channel, datacard_dict, version, CL, plot_stat_only, xlim_f
                     }
         root_file_all = os.path.join(bin_info['output_dir'],
                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
+                                     f'{bin_info["channel"]}{fname_sch}_{bin_info["version"]}.MultiDimFit.mH120.root')
         root_file_stat = os.path.join(bin_info['output_dir'],
                                       f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
+                                      f'{bin_info["channel"]}{fname_sch}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
         root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
         root_file_dict_full[i] = {'root_file_dict': root_file_dict, 'ylabel': datacard_dict[channel]['subchannels'][subch]['info']['ylabel_name'],
                                   'variable_of_choice': datacard_dict[channel]['info']['variable_of_choice']}

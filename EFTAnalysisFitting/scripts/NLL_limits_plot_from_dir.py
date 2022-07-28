@@ -83,10 +83,10 @@ def run_lim_plot_subchannel(channel, subchannel, datacard_dict, version, CL_list
     # construct root file name
     root_file_all = os.path.join(bin_info['output_dir'],
                                  f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                 f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
+                                 f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
     root_file_stat = os.path.join(bin_info['output_dir'],
                                   f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                  f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
+                                  f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
     root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
     # plot
     if plot_stat_only:
@@ -94,7 +94,7 @@ def run_lim_plot_subchannel(channel, subchannel, datacard_dict, version, CL_list
     else:
         stat_str = ''
     plotfile = os.path.join(plot_dir, f'NLL_vs_FT0_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}')
-    title = f'Channel: {bin_info["channel"]}, {bin_info["subchannel"]}; Bin: {bin_info["bin_"]}'
+    title = f'Channel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
     return fig, ax
 
