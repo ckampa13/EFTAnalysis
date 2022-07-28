@@ -49,7 +49,7 @@ datacard_dict = {
             'short_name': '2SSL',
             'file_name': 'SS',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
-            'ylabel_name': '2 Leptons          \n(same signed)',
+            'ylabel_name': '2 Leptons          \n(same signed)   ',
         }
     },
 }
