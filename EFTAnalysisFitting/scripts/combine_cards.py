@@ -26,12 +26,12 @@ def combine_subchannel_bins(channel, subchannel, version, datacard_dict):
             print(b)
         else:
             print(b,', ', end='')
-        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_bin{b}_{fname_ch}_{fname_sch}.txt')
+        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_bin{b}_{fname_ch}{fname_sch}.txt')
         dc_name = f'sch{sname_ch}{sname_sch}_b{b}_{version}'
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'subchannel',
-                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}_{fname_sch}_{version}.txt')
+                             f'datacard1opWithBkg_FT0_binAll_{fname_ch}{fname_sch}_{version}.txt')
     cmd_str += f'> {comb_file}'
     # run combine script
     # stdout = subprocess.PIPE
@@ -52,7 +52,7 @@ def combine_channel_subchannels(channel, version, datacard_dict):
         else:
             print(subch,', ', end='')
         fname_sch = datacard_dict[channel]['subchannels'][subch]['info']['file_name']
-        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_binAll_{fname_ch}_{fname_sch}_{version}.txt')
+        dc_file = os.path.join(dcdir, f'datacard1opWithBkg_FT0_binAll_{fname_ch}{fname_sch}_{version}.txt')
         dc_name = f'ch{sname_ch}'
         cmd_str += f'{dc_name}={dc_file} '
     # construct output file

@@ -13,7 +13,7 @@ datacard_dict = {
                 'bins': [1, 2, 3, 4],
                 'info': {
                     'short_name': 'e',
-                    'file_name': 'electron',
+                    'file_name': '_electron',
                     'ylabel_name': r'1 Lepton, $e$',
                 },
             },
@@ -21,7 +21,7 @@ datacard_dict = {
                 'bins': [1, 2, 3, 4],
                 'info': {
                     'short_name': 'mu',
-                    'file_name': 'muon',
+                    'file_name': '_muon',
                     'ylabel_name': r'1 Lepton, $\mu$',
                 },
             },
@@ -32,7 +32,7 @@ datacard_dict = {
             'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
             'ylabel_name': '1 Lepton           \n(2 boosted jets)',
         }
-    }
+    },
     # channel 2
     '2SSLepton': {
         'subchannels': {
@@ -51,5 +51,5 @@ datacard_dict = {
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}$',
             'ylabel_name': '2 Leptons          \n(same signed)',
         }
-    }
+    },
 }
