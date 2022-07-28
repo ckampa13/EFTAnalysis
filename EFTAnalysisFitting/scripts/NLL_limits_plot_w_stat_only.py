@@ -82,8 +82,8 @@ if __name__=='__main__':
     CHANNEL_DIR = '1Lepton'
     VERSION = 'v1'
     datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
-    output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'single_channel_single_bin', 'include_stat_only')
+    output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', CHANNEL_DIR)
+    plot_dir = os.path.join(datacard_dir, 'plots', 'single_channel_single_bin', CHANNEL_DIR, 'include_stat_only')
     # make paths absolute
     datacard_dir = os.path.abspath(datacard_dir)
     output_dir = os.path.abspath(output_dir)

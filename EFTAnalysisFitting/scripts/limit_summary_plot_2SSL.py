@@ -110,9 +110,9 @@ if __name__=='__main__':
     # confidence level
     CL = 0.95
     # file globals
-    CHANNEL = '1lepton'
-    CHANNEL_DIR = '1Lepton'
-    SUBCHANNELS = ['electron', 'muon']
+    CHANNEL = 'SS'
+    CHANNEL_DIR = '2SSLepton'
+    SUBCHANNELS = ['1Jet']
     VERSION = 'v1'
     datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
     output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', CHANNEL_DIR)
@@ -124,7 +124,7 @@ if __name__=='__main__':
     # loop through all bins to fill root file dictionary
     root_file_dict_full = {}
     for SUBCHANNEL in SUBCHANNELS:
-        for b in [1, 2, 3, 4]:
+        for b in [1, 2, 3]:
             # construct bin_info dict
             bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
                         'channel': CHANNEL, 'subchannel': SUBCHANNEL,
@@ -132,32 +132,33 @@ if __name__=='__main__':
                         }
             root_file_all = os.path.join(bin_info['output_dir'],
                                          f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                         f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+                                         f'{bin_info["channel"]}{bin_info["subchannel"]}.MultiDimFit.mH120.root')
             root_file_stat = os.path.join(bin_info['output_dir'],
                                           f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                          f'{bin_info["channel"]}_{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+                                          f'{bin_info["channel"]}{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
             root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
-            root_file_dict_full[b] = {'root_file_dict': root_file_dict, 'ylabel': f'Bin {bin_info["bin_"]}', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
+            root_file_dict_full[b] = {'root_file_dict': root_file_dict, 'ylabel': f'Bin {bin_info["bin_"]}', 'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$'}
             # run analysis / plotting func
             # run_lim_plot(bin_info)
         # add combined
-        output_dir_comb = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
-        bin_info = {'output_dir': output_dir_comb, 'plot_dir': plot_dir,
-                    'channel': CHANNEL, 'subchannel': SUBCHANNEL,
-                    'version': VERSION, 'bin_': b,
-                    }
-        root_file_all = os.path.join(bin_info['output_dir'],
-                                     f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
-                                     f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
-        root_file_stat = os.path.join(bin_info['output_dir'],
-                                      f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
-                                      f'{bin_info["channel"]}_{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
-        root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
-        root_file_dict_full[5.25] = {'root_file_dict': root_file_dict, 'ylabel': f'Combined', 'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$'}
+        # output_dir_comb = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
+        # bin_info = {'output_dir': output_dir_comb, 'plot_dir': plot_dir,
+        #             'channel': CHANNEL, 'subchannel': SUBCHANNEL,
+        #             'version': VERSION, 'bin_': b,
+        #             }
+        # root_file_all = os.path.join(bin_info['output_dir'],
+        #                              f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
+        #                              f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
+        # root_file_stat = os.path.join(bin_info['output_dir'],
+        #                               f'higgsCombine_datacard1opWithBkg_FT0_binAll_'+
+        #                               f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
+        # root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+        # root_file_dict_full[5.25] = {'root_file_dict': root_file_dict, 'ylabel': f'Combined', 'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$'}
         # plot!
-        plotfile = os.path.join(plot_dir, f'sensitivity_summary_bin_by_bin_{CHANNEL}_{SUBCHANNEL}')
+        plotfile = os.path.join(plot_dir, f'sensitivity_summary_bin_by_bin_{CHANNEL}{SUBCHANNEL}')
         fig, ax = make_limit_summary_plot(root_file_dict_full, title=f'Bin-by-bin {int(CL*100)}% CL Sensitivity: {CHANNEL_DIR}, {SUBCHANNEL}',
-                                          CL=CL, add_hrule=True, plot_stat_only=True, savefile=plotfile)
+                                          # CL=CL, add_hrule=True, plot_stat_only=True, savefile=plotfile)
+                                          CL=CL, add_hrule=False, plot_stat_only=True, savefile=plotfile)
 
     # plt.show()
 

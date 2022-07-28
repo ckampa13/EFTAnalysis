@@ -58,17 +58,17 @@ def run_lim_plot(bin_info, root_file=None):
     if root_file is None:
         root_file = os.path.join(bin_info['output_dir'],
                                  f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                 f'{bin_info["channel"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+                                 f'{bin_info["channel"]}{bin_info["subchannel"]}.MultiDimFit.mH120.root')
     # plot
-    savefile = os.path.join(bin_info['plot_dir'], f'{bin_info["channel"]}_{bin_info["subchannel"]}_bin{bin_info["bin_"]}_NLL_vs_FT0')
+    savefile = os.path.join(bin_info['plot_dir'], f'{bin_info["channel"]}{bin_info["subchannel"]}_bin{bin_info["bin_"]}_NLL_vs_FT0')
     fig, ax = make_limit_plot(root_file, bin_info=bin_info, CL_list=[0.95, CL_1sigma], savefile=savefile)
 
     # return fig, ax
 
 if __name__=='__main__':
     # file globals
-    CHANNEL = '1lepton'
-    CHANNEL_DIR = '1Lepton'
+    CHANNEL = 'SS'
+    CHANNEL_DIR = '2SSLepton'
     VERSION = 'v1'
     datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
     output_dir = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', CHANNEL_DIR)
@@ -78,8 +78,8 @@ if __name__=='__main__':
     output_dir = os.path.abspath(output_dir)
     plot_dir = os.path.abspath(plot_dir)
     # loop through all bins, all channels
-    for sc in ["electron", "muon"]:
-        for b in [1, 2, 3, 4]:
+    for sc in ["1Jet"]:
+        for b in [1, 2, 3]:
             # construct bin_info dict
             bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
                         'channel': CHANNEL, 'subchannel': sc,
@@ -87,22 +87,6 @@ if __name__=='__main__':
                         }
             # run analysis / plotting func
             run_lim_plot(bin_info)
-    # special run of all channels (from Sapta)
-    bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
-                'channel': CHANNEL, 'subchannel': 'electron_muon',
-                'version': VERSION, 'bin_': 'All',
-                }
-    root_file = os.path.join(datacard_dir, CHANNEL_DIR, VERSION, f'higgsCombineTest.MultiDimFit.mH125_{bin_info["bin_"]}bins_{bin_info["subchannel"]}.root')
-    # run analysis / plotting func
-    run_lim_plot(bin_info, root_file)
-    # no syst (muon bin4), --freezeParameters
-    # bin_info = {'output_dir': output_dir, 'plot_dir': plot_dir,
-    #             'channel': CHANNEL, 'subchannel': 'muon_nosyst',
-    #             'version': VERSION, 'bin_': '4',
-    #             }
-    # root_file = os.path.join(output_dir, f'higgsCombine_bin{bin_info["bin_"]}_{bin_info["subchannel"]}.MultiDimFit.mH120.root')
-    # run analysis / plotting func
-    run_lim_plot(bin_info, root_file)
 
     # plt.show()
 
