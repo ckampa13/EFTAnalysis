@@ -2,7 +2,7 @@
 
 # vars
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
-CHANNEL="1Lepton"
+
 
 # first, setup cmsenv
 cd ${CMSSW_BASE}/src/
@@ -10,13 +10,44 @@ cmsenv
 # go back to script directory
 cd ${SCRIPT_DIR}
 
-# run command, in a loop
-for subch in electron muon
+# cmdline args
+# option for running a single channel
+channel="all"
+while getopts c: flag
 do
-    echo "Subchannel: $subch"
-    for bin in 1 2 3 4
+    case "${flag}" in
+        c) channel=${OPTARG};;
+    esac
+done
+
+echo "Running on the following channel(s): $channel"
+
+# 1Lepton
+CHANNEL="1Lepton"
+# if single channel arg, check if this is the channel
+if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
+    echo "Channel: $CHANNEL"
+    # run command, in a loop
+    for subch in electron muon
+    do
+        echo "Subchannel: $subch"
+        for bin in 1 2 3 4
+        do
+            echo "bin: $bin"
+            python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        done
+    done
+fi
+
+# 2SSLepton
+CHANNEL="2SSLepton"
+# if single channel arg, check if this is the channel
+if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
+    echo "Channel: $CHANNEL"
+    # run command, in a loop
+    for bin in 1 2 3
     do
         echo "bin: $bin"
-        python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        python3 combine_single_channel_single_bin_2SSL.py -c ${CHANNEL} -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
     done
-done
+fi

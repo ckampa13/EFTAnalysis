@@ -8,7 +8,7 @@ if __name__=='__main__':
     datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                 '..')
     output_base = 'output'
-    output_sub = 'single_channel_single_bin/1Lepton/'
+    output_sub = 'single_channel_single_bin/2SSLepton/'
     output_dir = os.path.join(datacard_dir, output_base, output_sub)
     # make paths absolute
     datacard_dir = os.path.abspath(datacard_dir)
@@ -18,10 +18,9 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which VVV channel? ["1Lepton" (default),]')
+                        help='Which VVV channel? ["2SSLepton" (default),]')
     parser.add_argument('-s', '--SubChannel',
-                        help='Which (if any) subchannel? ["" (default),'+
-                        '"muon", "electron"]')
+                        help='Which (if any) subchannel? ["1Jet" (default),])')
     parser.add_argument('-b', '--Bin', help='Which bin? ["1", "2", ... "N"]')
     parser.add_argument('-v', '--Version', help='Which datacard version? ["1" (default), ...]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
@@ -31,9 +30,9 @@ if __name__=='__main__':
     args = parser.parse_args()
     # fill defauls if necessary
     if args.Channel is None:
-        args.Channel = '1Lepton'
+        args.Channel = '2SSLepton'
     if args.SubChannel is None:
-        args.SubChannel = ''
+        args.SubChannel = '1Jet'
     if args.Bin is None:
         args.Bin = "1"
     if args.Version is None:
@@ -61,11 +60,11 @@ if __name__=='__main__':
     else:
         stdout = subprocess.PIPE
     # channel specific things
-    if args.Channel == '1Lepton':
-        file_channel = '1lepton'
+    if args.Channel == '2SSLepton':
+        file_channel = 'SS'
     # construct filename from arguments
     cardfile_base = (f'datacard1opWithBkg_FT0_'+
-                     f'bin{args.Bin}_{file_channel}_{args.SubChannel}')
+                     f'bin{args.Bin}_{file_channel}{args.SubChannel}')
     cardfile = os.path.join(datacard_dir, args.Channel, f'v{args.Version}', f'{cardfile_base}.txt')
     workspacefile = os.path.join(output_dir,'workspace_'+cardfile_base+f'_v{args.Version}.root')
     print(f"Attempting to read the following datacard: {cardfile}")

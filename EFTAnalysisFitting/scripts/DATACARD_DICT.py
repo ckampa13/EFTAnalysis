@@ -33,4 +33,23 @@ datacard_dict = {
             'ylabel_name': '1 Lepton           \n(2 boosted jets)',
         }
     }
+    # channel 2
+    '2SSLepton': {
+        'subchannels': {
+            '1Jet': {
+                'bins': [1, 2, 3],
+                'info': {
+                    'short_name': '1J',
+                    'file_name': '1Jet',
+                    'ylabel_name': r'2 SS Leptons, 1 Jet',
+                }
+            }
+        },
+        'info': {
+            'short_name': '2SSL',
+            'file_name': 'SS',
+            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}$',
+            'ylabel_name': '2 Leptons          \n(same signed)',
+        }
+    }
 }
