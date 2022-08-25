@@ -22,6 +22,19 @@ done
 
 echo "Running on the following channel(s): $channel"
 
+# 0Lepton
+CHANNEL="0Lepton"
+# if single channel arg, check if this is the channel
+if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
+    echo "Channel: $CHANNEL"
+    # run command, in a loop
+    for bin in 1 2 3
+    do
+        echo "bin: $bin"
+        python3 combine_single_channel_single_bin_0L.py -c ${CHANNEL} -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+    done
+fi
+
 # 1Lepton
 CHANNEL="1Lepton"
 # if single channel arg, check if this is the channel
