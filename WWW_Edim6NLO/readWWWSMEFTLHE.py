@@ -50,6 +50,9 @@ if __name__ == '__main__':
     h_nu_pT.Sumw2()
     M_www = rt.TH1D("M_www", "M_www", 200, 0.0, 2000.0)
     M_www.Sumw2()
+    DeltaR_qq_pT_no_Cut = rt.TH2D("DeltaR_qq_pT_no_Cut", "DeltaR_qq_pT_no_Cut", 1000, 0.0, 10.0, 5000, 0.0, 500.0);
+    DeltaR_qq_pT_s_hat_100 = rt.TH2D("DeltaR_qq_pT_s_hat_100", "DeltaR_qq_pT_s_hat_100", 1000, 0.0, 10.0, 5000, 0.0, 500.0);
+    DeltaR_qq_pT_s_hat_500 = rt.TH2D("DeltaR_qq_pT_s_hat_500", "DeltaR_qq_pT_s_hat_500", 1000, 0.0, 10.0, 5000, 0.0, 500.0);
 
     # find events in file
     myLHEfile = LHEfile(sys.argv[1])
@@ -89,6 +92,9 @@ if __name__ == '__main__':
               if n_q==4: EW_qq.Fill((q1_lv+q2_lv).E());
               if n_q==4: DeltaR_qq.Fill(q1_lv.DeltaR(q2_lv)); #q1_lv.Pt() > 180.0 and q2_lv.Pt() > 180.0): DeltaR_qq.Fill(q1_lv.DeltaR(q2_lv));
               if n_q==4: DeltaR_qq_pT.Fill(q1_lv.DeltaR(q2_lv), (q1_lv.Pt()+q2_lv.Pt())/2.0)
+              if n_q==4 and (el_lv+nuel_lv+mu_lv+numu_lv+q1_lv+q2_lv).M() > 0.0: DeltaR_qq_pT_no_Cut.Fill(q1_lv.DeltaR(q2_lv), (q1_lv.Pt()+q2_lv.Pt())/2.0) 
+              if n_q==4 and (el_lv+nuel_lv+mu_lv+numu_lv+q1_lv+q2_lv).M() > 100.0: DeltaR_qq_pT_s_hat_100.Fill(q1_lv.DeltaR(q2_lv), (q1_lv.Pt()+q2_lv.Pt())/2.0)
+              if n_q==4 and (el_lv+nuel_lv+mu_lv+numu_lv+q1_lv+q2_lv).M() > 500.0: DeltaR_qq_pT_s_hat_500.Fill(q1_lv.DeltaR(q2_lv), (q1_lv.Pt()+q2_lv.Pt())/2.0)
               if n_q==4 and ((q1_lv+q2_lv).M() > 70.0 and (q1_lv+q2_lv).M() < 90.0): DeltaR_qq_pT_Wmass.Fill(q1_lv.DeltaR(q2_lv), (q1_lv.Pt()+q2_lv.Pt())/2.0) 
               if (q1_lv+q2_lv).M() > 0.0: gamma_qq.Fill((q1_lv+q2_lv).E()/(q1_lv+q2_lv).M());
               #M_www.Fill((el_lv+nuel_lv).M())
@@ -116,4 +122,7 @@ if __name__ == '__main__':
     h_el_pT.Write()
     h_nu_pT.Write() 
     M_www.Write() 
+    DeltaR_qq_pT_no_Cut.Write()
+    DeltaR_qq_pT_s_hat_100.Write()
+    DeltaR_qq_pT_s_hat_500.Write()
     histoFILE.Close()
