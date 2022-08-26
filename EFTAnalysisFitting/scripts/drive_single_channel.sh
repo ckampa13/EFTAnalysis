@@ -58,7 +58,7 @@ CHANNEL="2OSLepton"
 if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     echo "Channel: $CHANNEL"
     # run command, in a loop
-    for subch in _OF
+    for subch in _OF _SFnoZ
     do
         echo "Subchannel: $subch"
         for bin in 1 2 3

@@ -63,6 +63,14 @@ datacard_dict = {
                     'ylabel_name': r'2 OS Lepton, OF',
                 },
             },
+            'SFnoZ': {
+                'bins': [1, 2, 3],
+                'info': {
+                    'short_name': 'SFnoZ',
+                    'file_name': '_SFnoZ',
+                    'ylabel_name': r'2 OS Lepton, SF (no Z)',
+                },
+            },
         },
         'info': {
             'short_name': '2OSL',
