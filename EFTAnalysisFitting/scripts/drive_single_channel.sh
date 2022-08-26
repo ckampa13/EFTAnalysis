@@ -31,7 +31,7 @@ if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     for bin in 1 2 3
     do
         echo "bin: $bin"
-        python3 combine_single_channel_single_bin_0L.py -c ${CHANNEL} -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        python3 combine_single_channel_single_bin.py -c ${CHANNEL} -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
     done
 fi
 
@@ -41,10 +41,27 @@ CHANNEL="1Lepton"
 if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     echo "Channel: $CHANNEL"
     # run command, in a loop
-    for subch in electron muon
+    for subch in _electron _muon
     do
         echo "Subchannel: $subch"
         for bin in 1 2 3 4
+        do
+            echo "bin: $bin"
+            python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        done
+    done
+fi
+
+# 2OSLepton
+CHANNEL="2OSLepton"
+# if single channel arg, check if this is the channel
+if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
+    echo "Channel: $CHANNEL"
+    # run command, in a loop
+    for subch in _OF
+    do
+        echo "Subchannel: $subch"
+        for bin in 1 2 3
         do
             echo "bin: $bin"
             python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
@@ -61,6 +78,6 @@ if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     for bin in 1 2 3
     do
         echo "bin: $bin"
-        python3 combine_single_channel_single_bin_2SSL.py -c ${CHANNEL} -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s 1Jet -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
     done
 fi

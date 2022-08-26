@@ -1,27 +1,17 @@
 import os
 import subprocess
 import argparse
+# local imports
+from DATACARD_DICT import datacard_dict
 
 
 if __name__=='__main__':
-    # file globals
-    datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                '..')
-    output_base = 'output'
-    output_sub = 'single_channel_single_bin/1Lepton/'
-    output_dir = os.path.join(datacard_dir, output_base, output_sub)
-    # make paths absolute
-    datacard_dir = os.path.abspath(datacard_dir)
-    output_dir = os.path.abspath(output_dir)
-    print(f"Datacard base directory: {datacard_dir}")
-    # print(f"Output directory: {output_dir}")
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which VVV channel? ["1Lepton" (default),]')
+                        help='Which VVV channel? ["0Lepton" (default), "1Lepton", "2OSLepton", "2SSLepton"]')
     parser.add_argument('-s', '--SubChannel',
-                        help='Which (if any) subchannel? ["" (default),'+
-                        '"muon", "electron"]')
+                        help='Which (if any) subchannel? ["" (default),...]')
     parser.add_argument('-b', '--Bin', help='Which bin? ["1", "2", ... "N"]')
     parser.add_argument('-v', '--Version', help='Which datacard version? ["1" (default), ...]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
@@ -31,7 +21,7 @@ if __name__=='__main__':
     args = parser.parse_args()
     # fill defauls if necessary
     if args.Channel is None:
-        args.Channel = '1Lepton'
+        args.Channel = '0Lepton'
     if args.SubChannel is None:
         args.SubChannel = ''
     if args.Bin is None:
@@ -60,12 +50,22 @@ if __name__=='__main__':
         stdout = None
     else:
         stdout = subprocess.PIPE
-    # channel specific things
-    if args.Channel == '1Lepton':
-        file_channel = '1lepton'
+    # file globals
+    datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                '..')
+    output_base = 'output'
+    output_sub = f'single_channel_single_bin/{args.Channel}/'
+    output_dir = os.path.join(datacard_dir, output_base, output_sub)
+    # make paths absolute
+    datacard_dir = os.path.abspath(datacard_dir)
+    output_dir = os.path.abspath(output_dir)
+    print(f"Datacard base directory: {datacard_dir}")
+    # print(f"Output directory: {output_dir}")
+    # grab filename from dictionary
+    file_channel = datacard_dict[args.Channel]['info']['file_name']
     # construct filename from arguments
     cardfile_base = (f'datacard1opWithBkg_FT0_'+
-                     f'bin{args.Bin}_{file_channel}_{args.SubChannel}')
+                     f'bin{args.Bin}_{file_channel}{args.SubChannel}')
     cardfile = os.path.join(datacard_dir, args.Channel, f'v{args.Version}', f'{cardfile_base}.txt')
     workspacefile = os.path.join(output_dir,'workspace_'+cardfile_base+f'_v{args.Version}.root')
     print(f"Attempting to read the following datacard: {cardfile}")

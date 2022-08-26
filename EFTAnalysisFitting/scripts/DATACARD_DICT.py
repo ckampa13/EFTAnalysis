@@ -53,6 +53,25 @@ datacard_dict = {
         }
     },
     # channel 2
+    '2OSLepton': {
+        'subchannels': {
+            'OF': {
+                'bins': [1, 2, 3],
+                'info': {
+                    'short_name': 'OF',
+                    'file_name': '_OF',
+                    'ylabel_name': r'2 OS Lepton, OF',
+                },
+            },
+        },
+        'info': {
+            'short_name': '2OSL',
+            'file_name': 'OS1Jet',
+            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+            'ylabel_name': '2 Leptons          \n(opposite signed)   ',
+        }
+    },
+    # channel 3
     '2SSLepton': {
         'subchannels': {
             '1Jet': {
