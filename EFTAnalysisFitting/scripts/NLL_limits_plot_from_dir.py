@@ -71,6 +71,34 @@ def make_limit_plot(root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_stat_
         fig.savefig(savefile+'.png')
     return fig, ax
 
+def run_lim_plot_bin(channel, subchannel, bin_, datacard_dict, version, CL_list, plot_stat_only):
+    output_dir_ch = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', channel)
+    plot_dir = os.path.join(datacard_dir, 'plots', 'single_channel_single_bin', channel)
+    fname_ch = datacard_dict[channel]['info']['file_name']
+    fname_sch = datacard_dict[channel]['subchannels'][subchannel]['info']['file_name']
+    bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
+                'channel': fname_ch, 'subchannel': fname_sch,
+                'version': version, 'bin_': bin_,
+                }
+    # construct root file name
+    # note version number not in single bin single channel output ROOT files. FIXME! Make this consistent.
+    root_file_all = os.path.join(bin_info['output_dir'],
+                                 f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                 f'{bin_info["channel"]}{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+    root_file_stat = os.path.join(bin_info['output_dir'],
+                                  f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                  f'{bin_info["channel"]}{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+    root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+    # plot
+    if plot_stat_only:
+        stat_str = '_w_stat_only'
+    else:
+        stat_str = ''
+    plotfile = os.path.join(plot_dir, f'NLL_vs_FT0_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}')
+    title = f'Channel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
+    fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
+    return fig, ax
+
 def run_lim_plot_subchannel(channel, subchannel, datacard_dict, version, CL_list, plot_stat_only):
     output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
     plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'subchannel')
@@ -97,7 +125,6 @@ def run_lim_plot_subchannel(channel, subchannel, datacard_dict, version, CL_list
     title = f'Channel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
     return fig, ax
-
 
 def run_lim_plot_channel(channel, datacard_dict, version, CL_list, plot_stat_only):
     output_dir_ch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'channel')
@@ -149,6 +176,20 @@ if __name__=='__main__':
     # confidence level
     CL_list = [0.95, CL_1sigma]
     VERSION = 'v1'
+    # loop through all bins and plot
+    print("=========================================================")
+    print("Making likelihood plots for each bin...")
+    for pstat in [True, False]:
+        print(f'Include stat-only? {pstat}')
+        for ch in datacard_dict.keys():
+            print(f'Channel: {ch}')
+            for sch in datacard_dict[ch]['subchannels'].keys():
+                print(f'{sch}: ', end='')
+                for bin_ in datacard_dict[ch]['subchannels'][sch]['bins']:
+                    print(f'{bin_} ', end='')
+                    fig, ax = run_lim_plot_bin(ch, sch, bin_, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
+                print()
+    print("=========================================================\n")
     # loop through all subchannels and plot
     print("=========================================================")
     print("Making likelihood plots for each subchannel...")
