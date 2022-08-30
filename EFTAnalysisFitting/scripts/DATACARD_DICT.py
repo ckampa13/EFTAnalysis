@@ -22,7 +22,7 @@ datacard_dict = {
             'short_name': '0L',
             'file_name': '0Lep',
             'variable_of_choice': r'$\mathrm{H}_{\mathrm{T}}$',
-            'ylabel_name': '0 Lepton           \n(2 boosted jets)',
+            'ylabel_name': '0 Lepton              \n(2 boosted jets)   ',
         }
     },
     # channel 1
@@ -49,7 +49,7 @@ datacard_dict = {
             'short_name': '1L',
             'file_name': '1lepton',
             'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
-            'ylabel_name': '1 Lepton           \n(2 boosted jets)',
+            'ylabel_name': '1 Lepton              \n(2 boosted jets)   ',
         }
     },
     # channel 2
@@ -68,7 +68,7 @@ datacard_dict = {
                 'info': {
                     'short_name': 'SFnoZ',
                     'file_name': '_SFnoZ',
-                    'ylabel_name': r'2 OS Lepton, SF (no Z)',
+                    'ylabel_name': '2 OS Lepton,\nSF (no Z)',
                 },
             },
         },
@@ -76,7 +76,7 @@ datacard_dict = {
             'short_name': '2OSL',
             'file_name': 'OS1Jet',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
-            'ylabel_name': '2 Leptons          \n(opposite signed)   ',
+            'ylabel_name': '2 Leptons            \n(opposite signed)',
         }
     },
     # channel 3
@@ -95,7 +95,7 @@ datacard_dict = {
             'short_name': '2SSL',
             'file_name': 'SS',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
-            'ylabel_name': '2 Leptons          \n(same signed)   ',
+            'ylabel_name': '2 Leptons            \n(same signed)     ',
         }
     },
 }

@@ -120,10 +120,60 @@ def make_limit_summary_plot(root_file_dict_full, title, CL=0.95, add_hrule=True,
         fig.savefig(savefile+'.png')
     return fig, ax
 
+def run_plot_subchannel(channel, subchannel, datacard_dict, version, CL, plot_stat_only, xlim_factor, fixed_xlim):
+    output_dir_bin = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', channel)
+    output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'subchannel')
+    root_file_dict_full = {}
+    fname_ch = datacard_dict[channel]['info']['file_name']
+    fname_sch = datacard_dict[channel]['subchannels'][subchannel]['info']['file_name']
+    # construct root file for each subchannel
+    for i, bin_ in enumerate(datacard_dict[channel]['subchannels'][subchannel]['bins']):
+        bin_info = {'output_dir': output_dir_bin, 'plot_dir': plot_dir,
+                    'channel': fname_ch, 'subchannel': fname_sch,
+                    'version': version, 'bin_': bin_,
+                    }
+        # note version number not in single bin single channel output ROOT files. FIXME! Make this consistent.
+        root_file_all = os.path.join(bin_info['output_dir'],
+                                     f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                     f'{bin_info["channel"]}{bin_info["subchannel"]}.MultiDimFit.mH120.root')
+        root_file_stat = os.path.join(bin_info['output_dir'],
+                                      f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                      f'{bin_info["channel"]}{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
+        root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+        root_file_dict_full[i] = {'root_file_dict': root_file_dict, 'ylabel': f'{bin_}',
+                                  'variable_of_choice': ''}
+                                  # 'variable_of_choice': datacard_dict[channel]['info']['variable_of_choice']}
+    # construct root file for subchannel (combined)
+    N = len(datacard_dict[channel]['subchannels'][subchannel]['bins'])-1
+    bin_info = {'output_dir': output_dir_sch, 'plot_dir': plot_dir,
+                'channel': fname_ch, 'subchannel': fname_sch,
+                'version': version, 'bin_': 'All',
+                }
+    root_file_all = os.path.join(bin_info['output_dir'],
+                                 f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                 f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}.MultiDimFit.mH120.root')
+    root_file_stat = os.path.join(bin_info['output_dir'],
+                                  f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
+                                  f'{bin_info["channel"]}{bin_info["subchannel"]}_{bin_info["version"]}_nosyst.MultiDimFit.mH120.root')
+    root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+    root_file_dict_full[N+1.25] = {'root_file_dict': root_file_dict, 'ylabel': 'combined',
+                                   'variable_of_choice': datacard_dict[channel]['info']['variable_of_choice']}
+    # plot
+    if plot_stat_only:
+        stat_str = '_w_stat_only'
+    else:
+        stat_str = ''
+    plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}_subchannel-{subchannel}{stat_str}')
+    title = f'{int(CL*100)}% CL Sensitivity: {channel}, {subchannel}'
+    fig, ax = make_limit_summary_plot(root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
+                                      xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
+    return fig, ax
+
 def run_plot_channel(channel, datacard_dict, version, CL, plot_stat_only, xlim_factor, fixed_xlim):
     output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
     output_dir_ch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'channel')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'subchannel')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'channel')
     root_file_dict_full = {}
     fname_ch = datacard_dict[channel]['info']['file_name']
     # construct root file for each subchannel
@@ -172,7 +222,7 @@ def run_plot_analysis(datacard_dict, version, CL, plot_stat_only, xlim_factor, f
     # output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
     output_dir_ch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'combined_datacards', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'channel')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'full_analysis')
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -221,6 +271,18 @@ if __name__=='__main__':
     # confidence level
     CL = 0.95
     VERSION = 'v1'
+    # loop through all subchannels and plot
+    print("=========================================================")
+    print("Making sensitivity plots for each subchannel...")
+    for pstat in [True, False]:
+        print(f'Include stat-only? {pstat}')
+        for ch in datacard_dict.keys():
+            print(ch)
+            for sch in datacard_dict[ch]['subchannels'].keys():
+                print(sch)
+                fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
+                # fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
+    print("=========================================================\n")
     # loop through all channels and plot
     print("=========================================================")
     print("Making sensitivity plots for each channel...")
