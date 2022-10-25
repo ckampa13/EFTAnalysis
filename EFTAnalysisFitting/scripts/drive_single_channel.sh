@@ -41,7 +41,7 @@ CHANNEL="1Lepton"
 if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     echo "Channel: $CHANNEL"
     # run command, in a loop
-    for subch in _electron _muon
+    for subch in electron muon
     do
         echo "Subchannel: $subch"
         for bin in 1 2 3 4
@@ -58,10 +58,20 @@ CHANNEL="2OSLepton"
 if [ "$channel" = "all" ] || [ "$channel" = "$CHANNEL" ]; then
     echo "Channel: $CHANNEL"
     # run command, in a loop
-    for subch in _OF _SFnoZ
+    for subch in OF SFnoZ
     do
         echo "Subchannel: $subch"
         for bin in 1 2 3
+        do
+            echo "bin: $bin"
+            python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0
+        done
+    done
+    # treating 2FatJets diff, since there are only 2 bins...FIXME!
+    for subch in 2FatJets
+    do
+        echo "Subchannel: $subch"
+        for bin in 1 2
         do
             echo "bin: $bin"
             python3 combine_single_channel_single_bin.py -c ${CHANNEL} -s $subch -b $bin -v 1 -a y -p 0.001 -pc 0.01 -V 0

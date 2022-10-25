@@ -63,9 +63,10 @@ if __name__=='__main__':
     # print(f"Output directory: {output_dir}")
     # grab filename from dictionary
     file_channel = datacard_dict[args.Channel]['info']['file_name']
+    file_subchannel = datacard_dict[args.Channel]['subchannels'][args.SubChannel]['info']['file_name']
     # construct filename from arguments
     cardfile_base = (f'datacard1opWithBkg_FT0_'+
-                     f'bin{args.Bin}_{file_channel}{args.SubChannel}')
+                     f'bin{args.Bin}_{file_channel}{file_subchannel}')
     cardfile = os.path.join(datacard_dir, args.Channel, f'v{args.Version}', f'{cardfile_base}.txt')
     workspacefile = os.path.join(output_dir,'workspace_'+cardfile_base+f'_v{args.Version}.root')
     print(f"Attempting to read the following datacard: {cardfile}")

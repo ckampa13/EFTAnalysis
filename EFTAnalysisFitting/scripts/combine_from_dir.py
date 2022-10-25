@@ -72,6 +72,7 @@ if __name__=='__main__':
         # first run combine using a coarse scan
         # FIXME! Allow changing range or original step size
         _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points 201 --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeParameters r --setParameters r=1 --setParameterRanges k_cG=-50,50 --verbose -1 -n _{cardfile_base}_coarse', stdout=stdout, shell=True)
+        # _ = subprocess.run(f'combine -M MultiDimFit {workspacefile} --algo=grid --points 201 --alignEdges 1 {asi_str} --redefineSignalPOIs k_cG --freezeParameters r --setParameters r=1 --setParameterRanges k_cG=-100,100 --verbose -1 -n _{cardfile_base}_coarse', stdout=stdout, shell=True)
         # assuming for now we always want a 95% CL, so threshold always 4.
         # FIXME! Add this as a flag in argparse.
         rangescript = os.path.join(datacard_dir, 'scripts', 'find_POI_range.py')

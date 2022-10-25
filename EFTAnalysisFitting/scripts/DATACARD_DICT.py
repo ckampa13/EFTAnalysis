@@ -59,7 +59,7 @@ datacard_dict = {
                 'bins': [1, 2, 3],
                 'info': {
                     'short_name': 'OF',
-                    'file_name': '_OF',
+                    'file_name': '1Jet_OF',
                     'ylabel_name': r'2 OS Lepton, OF',
                 },
             },
@@ -67,14 +67,22 @@ datacard_dict = {
                 'bins': [1, 2, 3],
                 'info': {
                     'short_name': 'SFnoZ',
-                    'file_name': '_SFnoZ',
+                    'file_name': '1Jet_SFnoZ',
                     'ylabel_name': '2 OS Lepton,\nSF (no Z)',
+                },
+            },
+            '2FatJets': {
+                'bins': [1, 2],
+                'info': {
+                    'short_name': '2FatJets',
+                    'file_name': '2FatJets',
+                    'ylabel_name': '2 OS Lepton,\n2 FatJet',
                 },
             },
         },
         'info': {
             'short_name': '2OSL',
-            'file_name': 'OS1Jet',
+            'file_name': 'OS',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
             'ylabel_name': '2 Leptons            \n(opposite signed)',
         }
@@ -98,4 +106,24 @@ datacard_dict = {
             'ylabel_name': '2 Leptons            \n(same signed)     ',
         }
     },
+    # channel 4 -- may remove?
+    # THIS IS A SKETCH IN CASE WE WANT TO ADD THIS AS IT'S OWN CHANNEL
+    # '2OSLepton2J': {
+    #     'subchannels': {
+    #         '': {
+    #             'bins': [1, 2],
+    #             'info': {
+    #                 'short_name': '',
+    #                 'file_name': '',
+    #                 'ylabel_name': '2 OS Lepton,\n2 FatJet',
+    #             },
+    #         },
+    #     },
+    #     'info': {
+    #         'short_name': '2OSL2FJ',
+    #         'file_name': 'OS2FatJets',
+    #         'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+    #         'ylabel_name': '2 Leptons            \n(opposite signed)',
+    #     }
+    # },
 }
