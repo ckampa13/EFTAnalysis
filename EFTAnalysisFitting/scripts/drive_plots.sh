@@ -7,4 +7,4 @@ conda activate HCOMB
 # run NLL plots
 python NLL_limits_plot_from_dir.py
 # run limit summary plots
-python NLL_limits_plot_from_dir.py
+python limit_summary_plot_from_dir.py
