@@ -16,6 +16,8 @@ dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer17PrePremix-PUAut
 
 ### Running the production script
 
+All code for the production can be found under the SubmittingJobs directory
+
 1. sh triboson_production.sh -p pileup_files.txt -s WWW -c -o $PWD -a 1 -n 10
 
 ## Submission of jobs at the LPC cluster:
