@@ -1,7 +1,7 @@
 import decimal
 import math
 
-file1 = open("WWW_Dim6_cW_cHd_cHWB_cHW_reweight_card.dat","w+")
+file1 = open("WZZ_Dim6_cW_cHd_cHWB_cHW_reweight_card.dat","w+")
 
 L = [
 "change mode NLO       # Define type of Reweighting. For LO sample this command\n", 
