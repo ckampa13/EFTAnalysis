@@ -4,25 +4,24 @@ echo $PWD
 echo ${1} 
 
 # this is used for transfer the out put, should be consistant with the output name in the triboson_production.sh
-SAMPLE=WWZ
+SAMPLE=WWW
 CAMPAIGN=RunIISummer20UL18
 NPART=${1}
 STEP5_NAME=${SAMPLE}-${CAMPAIGN}MiniAODv2_${NPART}.root
 STEP6_NAME=${SAMPLE}-${CAMPAIGN}NanoAODv9_${NPART}.root
 
 OUTPUTDIR=$PWD
-#OUTPUTDIR=/stash/user/qilongguo/work/aQGC_Production/Output/UL/2018/ST_Scale/V1/WWW
 
 LogDir=CondorJobs
 [ -d $LogDir ] || mkdir ${LogDir};
 
 
-Nevents=1000
+Nevents=10
    
 # if run on the cmsplc, can not use remap, use -f options here to copy the file
 cat>Job_${1}.sh<<EOF
 #!/bin/bash
-sh triboson_production.sh -p pileup_files.txt -s ${SAMPLE} -c -o $PWD -a ${1} -n ${Nevents} -b \${2}\${3} -l FourleptonFilter -f
+sh triboson_production.sh -p pileup_files.txt -s ${SAMPLE} -c -o $PWD -a ${1} -n ${Nevents} -b \${2}\${3} -l DileptonFilter -f
 EOF
 
 chmod 775 Job_${1}.sh

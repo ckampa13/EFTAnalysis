@@ -27,7 +27,7 @@ You can get this list with the dasgoclient:
         # e.g. 2016, 2017, 2018
         ;;
     s)  SAMPLE=$OPTARG
-        # e.g. WWZ_dim8, WZZ_dim8, WWZ_dim8 or ZZZ_dim8
+        # e.g. WZZ_dim8, WZZ_dim8, WZZ_dim8 or ZZZ_dim8
         ;;
     p)  PILEUP_FILES=$OPTARG
         ;;
@@ -127,10 +127,10 @@ fi
 
 # The following part should not be manually configured
 FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter
-GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim8/ModelAugust2021/Scale_ST
+GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim6/Scale_ST
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}_${LEPTONFILTER}.py
-GRIDPACK=WWZ_ScaleST_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
+GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
 
 STEP0_NAME=${SAMPLE}-${CAMPAIGN}wmLHEGEN_${NPART}
 STEP1_NAME=${SAMPLE}-${CAMPAIGN}SIM_${NPART}
@@ -455,11 +455,11 @@ fi
 ## copy file
 if [ "$CopyToEos" ]
 then
-#eosmkdir /store/user/lpcvvv/ULSignalSamples/WWZ_FourleptonFilter/
-#echo ${SAMPLE}
-#echo ${LEPTONFILTER}
-xrdcp -r -f ${STEP5_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/WWZ_FourleptonFilter_FilterFix/
-xrdcp -r -f ${STEP6_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/WWZ_FourleptonFilter_FilterFix
+#eosmkdir /store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
+echo ${SAMPLE}
+echo ${LEPTONFILTER}
+xrdcp -r -f ${STEP5_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
+xrdcp -r -f ${STEP6_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
 fi
 
 ## cleanup temporary working directories
