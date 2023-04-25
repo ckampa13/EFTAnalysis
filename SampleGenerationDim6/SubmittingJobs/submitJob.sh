@@ -1,4 +1,4 @@
-max=1
+max=500
 
 for i in `seq 1 $max`
 do

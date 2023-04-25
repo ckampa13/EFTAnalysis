@@ -16,7 +16,7 @@ LogDir=CondorJobs
 [ -d $LogDir ] || mkdir ${LogDir};
 
 
-Nevents=10
+Nevents=1000
    
 # if run on the cmsplc, can not use remap, use -f options here to copy the file
 cat>Job_${1}.sh<<EOF

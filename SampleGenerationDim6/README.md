@@ -40,7 +40,6 @@ For running an interactive test, please do:
 sh triboson_production.sh -p pileup_files.txt -s WWW -c -o $PWD -a 1 -n 10 -b 12345 -l NoFilter
 
 1. For DileptonFilter, -l argument is set to DileptonFilter
-2. For DileptonFilter, -l argument is set to FourleptonFilter
 
 ## Samples to generate
 
