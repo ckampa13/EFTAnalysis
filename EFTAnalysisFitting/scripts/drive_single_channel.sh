@@ -3,6 +3,9 @@
 # vars
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
 
+# Asimov?
+# ASI="y"
+# ASI="n"
 
 # first, setup cmsenv
 cd ${CMSSW_BASE}/src/
