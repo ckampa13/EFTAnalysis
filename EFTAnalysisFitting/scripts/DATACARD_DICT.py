@@ -29,7 +29,7 @@ datacard_dict = {
     '0Lepton_3FJ': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3],
+                'bins': [1, 2, 3, 4],
                 'info': {
                     'short_name': '',
                     'file_name': '',
