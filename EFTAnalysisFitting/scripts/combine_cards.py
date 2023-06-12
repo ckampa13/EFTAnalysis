@@ -55,15 +55,20 @@ def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType):
     print(f'Channel: {channel}; Subchannel: ', end='')
     for i, subch in enumerate(subchannels):
         if i == (len(subchannels)-1):
-            print(subch)
+            print(subch, end='')
         else:
             print(subch,', ', end='')
         fname_sch = datacard_dict[channel]['subchannels'][subch]['info']['file_name']
         sname_sch = datacard_dict[channel]['subchannels'][subch]['info']['short_name']
+        # update subchannel name if there is rescaling
+        if versions_dict[channel]['lumi'] == '2018':
+            sname_sch += '_2018_scaled'
+            print(' (2018 scaled)', end='')
         tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, proc='', version=version, file_type='txt')
         dc_file = os.path.join(dcdir, channel, version, tfile)
         dc_name = f'ch{sname_ch}'
         cmd_str += f'{dc_name}={dc_file} '
+    print()
     # construct output file
     tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, proc='', version=version, file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel', tfile_comb)

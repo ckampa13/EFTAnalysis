@@ -87,7 +87,7 @@ datacard_dict = {
                 'info': {
                     'short_name': '_SFnoZ',
                     'file_name': '1Jet_SFnoZ',
-                    'ylabel_name': '2 OS Lepton,\nSF (no Z)',
+                    'ylabel_name': '2 OS Leptons,\nSF (no Z)',
                 },
             },
             # '2FatJets': {
@@ -103,7 +103,7 @@ datacard_dict = {
                 'info': {
                     'short_name': '_SFZ',
                     'file_name': '1Jet_SFZ',
-                    'ylabel_name': '2 OS Lepton,\nSF (Z)',
+                    'ylabel_name': '2 OS Leptons,\nSF (Z)',
                 },
             },
         },
@@ -115,25 +115,24 @@ datacard_dict = {
         }
     },
     # channel 4
-# NEED TO ADD LUMI SCALING
-    # '2Lepton_SS': {
-    #     'subchannels': {
-    #         '1Jet': {
-    #             'bins': [1, 2, 3],
-    #             'info': {
-    #                 'short_name': '_1J',
-    #                 'file_name': '1Jet',
-    #                 'ylabel_name': r'2 SS Leptons, 1 Jet',
-    #             }
-    #         }
-    #     },
-    #     'info': {
-    #         'short_name': '2L_SS',
-    #         'file_name': '2Lep_SS',
-    #         'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
-    #         'ylabel_name': '2 Leptons            \n(same signed)     ',
-    #     }
-    # },
+    '2Lepton_SS': {
+        'subchannels': {
+            '1FJ': {
+                'bins': [1, 2, 3],
+                'info': {
+                    'short_name': '_1FJ',
+                    'file_name': '1FatJet',
+                    'ylabel_name': r'2 SS Leptons, 1 fat jet',
+                }
+            }
+        },
+        'info': {
+            'short_name': '2L_SS',
+            'file_name': '2Lep_SS',
+            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+            'ylabel_name': '2 Leptons            \n(same signed)     ',
+        }
+    },
     # channel 4 -- may remove?
     # THIS IS A SKETCH IN CASE WE WANT TO ADD THIS AS IT'S OWN CHANNEL
     # '2OSLepton2J': {

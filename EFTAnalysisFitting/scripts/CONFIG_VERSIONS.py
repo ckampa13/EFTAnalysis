@@ -5,7 +5,7 @@ versions_dict = {
     '0Lepton_3FJ': {'v': 4, 'lumi': 'Run2'},
     # '1Lepton': {'v': 1, 'lumi': 'Run2'},
     '2Lepton_OS': {'v': 2, 'lumi': 'Run2'},
-    # '2Lepton_SS': {'v': 1, 'lumi': '2018'},
+    '2Lepton_SS': {'v': 1, 'lumi': '2018'},
 }
 
 L_2018 = 59.83 # fb^-1
