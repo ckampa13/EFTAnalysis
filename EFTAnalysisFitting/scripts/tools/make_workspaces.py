@@ -40,6 +40,8 @@ def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1
             sname_sch_b = sname_sch + f'_bin{bin_n}'
             cmd_str = 'text2workspace.py '
             tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+            # TEST
+            print(tfile)
             dc_file = os.path.join(dcdir, channel, version, tfile)
             cmd_str += f'{dc_file} {str_module} '
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc='', version=version, file_type='root')
@@ -180,6 +182,8 @@ if __name__=='__main__':
         args.Verbose = 1
     else:
         args.Verbose = int(args.Verbose)
+    # TEST
+    print(args.WC, args.ScanType)
     #########################
     # bins workspaces
     print('Generating bin workspaces:')
@@ -187,6 +191,7 @@ if __name__=='__main__':
     for channel in datacard_dict.keys():
         v = versions_dict[channel]['v']
         VERSION = f'v{v}'
+        print(channel, VERSION)
         make_workspace_bins(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType, verbose=args.Verbose)
     print('=================================================\n')
     #########################
@@ -198,6 +203,7 @@ if __name__=='__main__':
         VERSION = f'v{v}'
         make_workspace_subchannels(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType, verbose=args.Verbose)
     print('=================================================\n')
+    '''
     #########################
     # channel workspaces
     print('Generating channel workspaces:')
@@ -211,3 +217,4 @@ if __name__=='__main__':
     make_workspace_full_analysis(WC=args.WC, ScanType=args.ScanType, verbose=args.Verbose)
     print('=================================================\n')
     #########################
+    '''
