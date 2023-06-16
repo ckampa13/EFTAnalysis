@@ -8,18 +8,18 @@ import numpy as np
 import ROOT
 
 
-def check_file_threshold(dcdir, rootfile, NLL_threshold, stepsize, stepsize_coarse):
+def check_file_threshold(rootfile, WC, NLL_threshold, stepsize, stepsize_coarse):
     # read file
-    inFile = ROOT.TFile.Open(os.path.join(dcdir,rootfile), "READ")
+    inFile = ROOT.TFile.Open(rootfile, "READ")
     limit = inFile.Get("limit")
     # loop over tree, skipping the first entry
-    ft0s = []
+    cs = []
     nlls = []
     for entryNum in range(1, limit.GetEntries()):
         limit.GetEntry(entryNum);
-        ft0s.append(getattr(limit, 'k_cG'))
+        cs.append(getattr(limit, 'k_'+WC))
         nlls.append(getattr(limit, 'deltaNLL'))
-    ft0s = np.array(ft0s)
+    cs = np.array(cs)
     nlls = np.array(nlls)
     nlls[np.isnan(nlls)] = 1000.
     # using a mask, find LL and UL (to be adjusted)
@@ -30,8 +30,8 @@ def check_file_threshold(dcdir, rootfile, NLL_threshold, stepsize, stepsize_coar
         ilow = 0
     if ihigh > len(nlls) -1:
         ihigh = len(nlls)-1
-    LL = ft0s[ilow]
-    UL = ft0s[ihigh]
+    LL = cs[ilow]
+    UL = cs[ihigh]
     # calculate number of steps and adjust UL
     range_ = UL - LL
     if range_ > 10:
@@ -58,8 +58,9 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--File',
-                        help='Name of ROOT file. Assumes directory is EFTAnalaysis/EFTAnalysisFitting/'+
-                        'e.g. "output/single_channel_single_bin/higgsCombine_datacard1opWithBkg_FT0_bin4_1lepton_electron.MultiDimFit.mH120.root"')
+                        help='Name of ROOT file (including full path!).')
+    parser.add_argument('-w', '--WC',
+                        help='Which Wilson Coefficient to study for 1D limits? ["cW" (default),]')
     parser.add_argument('-T', '--ThresholdDeltaNLL',
                         help='What is the deltaNLL threshold? e.g. "4.0" (default) works well for 95% CL.')
     parser.add_argument('-s', '--StepSize',
@@ -68,6 +69,8 @@ if __name__=='__main__':
                         help='What is the desired precision / step size for limit setting when range of POI > 10? e.g. "0.01" (default)')
     args = parser.parse_args()
     # fill defauls if necessary
+    if args.WC is None:
+        args.WC = 'cW'
     if args.ThresholdDeltaNLL is None:
         args.ThresholdDeltaNLL = 4.0
     else:
@@ -83,4 +86,4 @@ if __name__=='__main__':
     ### check file
     # note that driving script will parse the information as printed in the function
     # so the return values are not strictly necessary here.
-    LL, UL, steps = check_file_threshold(datacard_dir, args.File, args.ThresholdDeltaNLL, args.StepSize, args.StepSizeCoarse)
+    LL, UL, steps = check_file_threshold(args.File, args.WC, args.ThresholdDeltaNLL, args.StepSize, args.StepSizeCoarse)
