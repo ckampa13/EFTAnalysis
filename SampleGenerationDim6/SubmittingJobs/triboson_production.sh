@@ -126,11 +126,11 @@ fi
 
 
 # The following part should not be manually configured
-FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter
-GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim6/Scale_ST
+FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter/OneJet/
+GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim6/OneJet/
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}_${LEPTONFILTER}.py
-GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
+GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_4F_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
 
 STEP0_NAME=${SAMPLE}-${CAMPAIGN}wmLHEGEN_${NPART}
 STEP1_NAME=${SAMPLE}-${CAMPAIGN}SIM_${NPART}
@@ -452,26 +452,27 @@ then
       exit 1
 fi
 
-## copy file
+# copy file
 if [ "$CopyToEos" ]
 then
-#eosmkdir /store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
+xrdfs root://cmseos.fnal.gov mkdir /store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}
+
 echo ${SAMPLE}
 echo ${LEPTONFILTER}
 xrdcp -r -f ${STEP5_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
 xrdcp -r -f ${STEP6_NAME}.root root://cmseos.fnal.gov//store/user/lpcvvv/ULSignalSamples/Dim6_${SAMPLE}_${LEPTONFILTER}/
 fi
 
-## cleanup temporary working directories
+# cleanup temporary working directories
 if [ "$CLEANUP" ]
 then
-    # The full event after the premixig before recuding it to AOD is too large and too easy to recalculate to justify saving it
-    rm ${STEP0_NAME}.root
-    rm ${STEP1_NAME}.root
-    rm ${STEP2_NAME}.root
-    rm ${STEP3_NAME}.root
-    rm ${STEP4_NAME}.root
+   # The full event after the premixig before recuding it to AOD is too large and too easy to recalculate to justify saving it
+   rm ${STEP0_NAME}.root
+   rm ${STEP1_NAME}.root
+   rm ${STEP2_NAME}.root
+   rm ${STEP3_NAME}.root
+   rm ${STEP4_NAME}.root
 
-    rm -rf rm -rf CMSSW_*
-    rm -rf *_cfg.py
+   rm -rf rm -rf CMSSW_*
+   rm -rf *_cfg.py
 fi
