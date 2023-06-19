@@ -354,7 +354,6 @@ if __name__=='__main__':
                          Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                          stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
-    '''
     #########################
     # channel calculations
     print('Running combine for each channel:')
@@ -374,4 +373,3 @@ if __name__=='__main__':
                      stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
     #########################
-    '''
