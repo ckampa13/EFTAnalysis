@@ -24,3 +24,4 @@ statonly                lnN          1.0001          1.0001          1.0001     
 trigger_weight_         shape        -               -               1.0             1.0             -               1.0             1.0             1.0             1.0             1.0             1.0           
 allsyst group = jer_ pu_weight_ jmr_ jms_ trigger_weight_ prefire_weight_ jes_
 nosyst group = statonly
+sch autoMCStats 0 0 1

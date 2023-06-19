@@ -203,7 +203,6 @@ if __name__=='__main__':
         VERSION = f'v{v}'
         make_workspace_subchannels(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType, verbose=args.Verbose)
     print('=================================================\n')
-    '''
     #########################
     # channel workspaces
     print('Generating channel workspaces:')
@@ -217,4 +216,3 @@ if __name__=='__main__':
     make_workspace_full_analysis(WC=args.WC, ScanType=args.ScanType, verbose=args.Verbose)
     print('=================================================\n')
     #########################
-    '''
