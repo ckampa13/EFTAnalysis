@@ -346,7 +346,7 @@ if __name__=='__main__':
     # subchannel calculations
     print('Running combine for each subchannel:')
     print('=================================================')
-    for channel in datacard_dict.keys():
+    for channel in channels:
         v = versions_dict[channel]['v']
         VERSION = f'v{v}'
         run_combine_subchannels(channel, VERSION, datacard_dict, WC=args.WC,
@@ -354,6 +354,7 @@ if __name__=='__main__':
                          Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                          stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
+    '''
     #########################
     # channel calculations
     print('Running combine for each channel:')
@@ -373,3 +374,4 @@ if __name__=='__main__':
                      stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
     #########################
+    '''
