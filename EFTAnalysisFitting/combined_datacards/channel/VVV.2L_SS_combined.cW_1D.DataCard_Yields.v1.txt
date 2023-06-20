@@ -7,7 +7,7 @@ shapes *                    sch_1FJ_2018_scaled  /uscms_data/d3/ckampa/EFTAnalys
 shapes data_obs             sch_1FJ_2018_scaled  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_SS/v1/VVV.2L_SS_1FJ_2018_scaled.cW_1D.DataCard_Yields_Cleaned.v1.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch_1FJ_2018_scaled
-observation  45.9038001113      
+observation  45.9037995189      
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                                   sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled  sch_1FJ_2018_scaled
 process                               sm                   quad_cW              ZZ                   sm_lin_quad_cW       ttV                  WW                   WJets                DY                   TTbar                WZ                 
@@ -25,3 +25,4 @@ statonly                lnN           1.0001               1.0001               
 trigger_weight_         shape         -                    -                    1.0                  -                    1.0                  1.0                  1.0                  1.0                  1.0                  1.0                
 allsyst group = pu_weight_ trigger_weight_ btag_sf_medium_ lep_sf_el_tight_ lep_sf_mu_tight_ jer_ jes_ prefire_weight_
 nosyst group = statonly
+sch_1FJ_2018_scaled autoMCStats 0 0 1

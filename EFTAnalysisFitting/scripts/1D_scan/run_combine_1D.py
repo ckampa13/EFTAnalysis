@@ -354,7 +354,7 @@ if __name__=='__main__':
                          Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                          stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
-    '''
+    # '''
     #########################
     # channel calculations
     print('Running combine for each channel:')
@@ -366,7 +366,7 @@ if __name__=='__main__':
     print('=================================================\n')
     #########################
     # full analysis calculation
-    print('Generating full analysis workspace:')
+    print('Running combine for full analysis:')
     print('=================================================')
     run_combine_full_analysis(WC=args.WC,
                      ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
@@ -374,4 +374,4 @@ if __name__=='__main__':
                      stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
     #########################
-    '''
+    # '''
