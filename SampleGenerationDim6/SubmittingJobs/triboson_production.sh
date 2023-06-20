@@ -130,7 +130,8 @@ FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter/OneJet/
 GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim6/OneJet/
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}_${LEPTONFILTER}.py
-GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_4F_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
+#GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_4F_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
+GRIDPACK=${SAMPLE}_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
 
 STEP0_NAME=${SAMPLE}-${CAMPAIGN}wmLHEGEN_${NPART}
 STEP1_NAME=${SAMPLE}-${CAMPAIGN}SIM_${NPART}
