@@ -12,7 +12,7 @@ observation -1
 ----------------------------------------------------------------------------------------------------
 bin                        bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ
 process                    sm                            quad_cW                       sm_lin_quad_cW                DY                            restbkg
-process                    0                             1                             2                             3                             4
+process                    0                             -1                            -2                             3                             4
 rate                       -1                            -1                            -1                            -1                            -1
 ----------------------------------------------------------------------------------------------------
 datadriven_DYSFnoZ_  shape -                             -                             -                             1                             -

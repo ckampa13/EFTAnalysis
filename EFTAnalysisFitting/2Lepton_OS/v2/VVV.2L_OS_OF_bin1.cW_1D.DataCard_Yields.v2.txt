@@ -12,7 +12,7 @@ observation -1
 ----------------------------------------------------------------------------------------------------
 bin                        bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF
 process                    sm                            quad_cW                       sm_lin_quad_cW                TTbar                         restbkg
-process                    0                             1                             2                             3                             4
+process                    0                             -1                             -2                             3                             4
 rate                       -1                            -1                            -1                            -1                            -1
 ----------------------------------------------------------------------------------------------------
 datadriven_TTbarOF_  shape -                             -                             -                             1                             -
