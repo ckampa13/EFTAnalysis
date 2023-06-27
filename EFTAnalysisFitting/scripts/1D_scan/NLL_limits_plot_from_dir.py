@@ -7,44 +7,52 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 
 # local imports
+import sys
+fpath = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from extract_limits import get_lims, CL_1sigma
-from plotting import config_plots, ticks_in, ticks_sizes
+from CONFIG_VERSIONS import versions_dict
+from MISC_CONFIGS import (
+    datacard_dir,
+    #template_filename,
+    template_outfilename,
+    #template_outfilename_stub,
+    dim6_ops,
+)
+from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+from tools.plotting import config_plots, ticks_in, ticks_sizes
 
 config_plots()
 
-datacard_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
-# make paths absolute
-datacard_dir = os.path.abspath(datacard_dir)
 
-def make_limit_plot(root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_stat_only=True, savefile=None):
+def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_stat_only=True, savefile=None):
     # plot
     fig = plt.figure(figsize=(16, 8))
     ax = fig.add_axes([0.1, 0.1, 0.55, 0.8])
     # get limits and plot
     # total
-    FT0, NLL, CL_list, NLL_cuts, LLs, ULs = get_lims(CL_list, FT0=None, NLL=None, root_file=root_file_dict['total'])
-    ax.plot(FT0, NLL, c='blue', linestyle='-', linewidth=2, label='Expected')
+    Cs, NLL, CL_list, NLL_cuts, LLs, ULs = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+    ax.plot(Cs, NLL, c='blue', linestyle='-', linewidth=2, label='Expected')
     # stat only
     if plot_stat_only:
-        FT0_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, LLs_stat, ULs_stat = get_lims(CL_list, FT0=None, NLL=None, root_file=root_file_dict['stat_only'])
-        ax.plot(FT0_stat, NLL_stat, c='blue', linestyle='-.', linewidth=2, label='Expected (stat. only)')
+        Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, LLs_stat, ULs_stat = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+        ax.plot(Cs_stat, NLL_stat, c='blue', linestyle='-.', linewidth=2, label='Expected (stat. only)')
     # loop through CLs to determine limits
-    xmin = np.min(FT0)
-    xmax = np.max(FT0)
+    xmin = np.min(Cs)
+    xmax = np.max(Cs)
     if plot_stat_only:
         for CL, NLL_cut, LL, UL, LL_s, UL_s in zip(CL_list, NLL_cuts, LLs, ULs, LLs_stat, ULs_stat):
             # build label
-            label = f'FT0@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
+            label = f'{WC}@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
             # add to the plot
             ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
     else:
         for CL, NLL_cut, LL, UL, in zip(CL_list, NLL_cuts, LLs, ULs):
             # build label
-            label = f'FT0@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]'
+            label = f'{WC}@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]'
             # add to the plot
             ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
-    ax.set_xlabel('FT0', fontweight ='bold', loc='right', fontsize=20.)
+    ax.set_xlabel(WC, fontweight ='bold', loc='right', fontsize=20.)
     ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top', fontsize=20.)
     ax.set_title(title)
     # ticks
@@ -71,32 +79,41 @@ def make_limit_plot(root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_stat_
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_lim_plot_bin(channel, subchannel, bin_, datacard_dict, version, CL_list, plot_stat_only):
-    output_dir_ch = os.path.join(datacard_dir, 'output', 'single_channel_single_bin', channel)
-    plot_dir = os.path.join(datacard_dir, 'plots', 'single_channel_single_bin', channel)
+def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, plot_stat_only):
+    output_dir_bin = os.path.join(datacard_dir, 'output', 'single_bin')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'single_bin')
     fname_ch = datacard_dict[channel]['info']['file_name']
+    sname_ch = datacard_dict[channel]['info']['short_name']
     fname_sch = datacard_dict[channel]['subchannels'][subchannel]['info']['file_name']
-    bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
+    sname_sch = datacard_dict[channel]['subchannels'][subchannel]['info']['short_name']
+    # update subchannel name if there is rescaling
+    if versions_dict[channel]['lumi'] == '2018':
+        sname_sch += '_2018_scaled'
+        print(' (2018 scaled)', end='')
+    # version number
+    v = versions_dict[channel]['v']
+    version = f'v{v}'
+    # plotting info
+    bin_info = {'output_dir': output_dir_bin, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': fname_sch,
                 'version': version, 'bin_': bin_,
                 }
+    sname_sch_b = sname_sch + f'_bin{bin_}'
     # construct root file name
     # note version number not in single bin single channel output ROOT files. FIXME! Make this consistent.
-    root_file_all = os.path.join(bin_info['output_dir'],
-                                 f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                 f'{bin_info["channel"]}{bin_info["subchannel"]}.MultiDimFit.mH120.root')
-    root_file_stat = os.path.join(bin_info['output_dir'],
-                                  f'higgsCombine_datacard1opWithBkg_FT0_bin{bin_info["bin_"]}_'+
-                                  f'{bin_info["channel"]}{bin_info["subchannel"]}_nosyst.MultiDimFit.mH120.root')
-    root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': bin_info}
+    file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType='_1D',version=version, syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType='_1D',version=version, syst='nosyst', method='MultiDimFit')
+    root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
+    root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
+    root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
     # plot
     if plot_stat_only:
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_FT0_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}')
     title = f'Channel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
-    fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
+    fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
     return fig, ax
 
 def run_lim_plot_subchannel(channel, subchannel, datacard_dict, version, CL_list, plot_stat_only):
@@ -173,9 +190,11 @@ def run_lim_plot_analysis(datacard_dict, version, CL_list, plot_stat_only):
 
 
 if __name__=='__main__':
+    # FIX ME! make these command line args
+    WC = 'cW'
     # confidence level
     CL_list = [0.95, CL_1sigma]
-    VERSION = 'v1'
+    # VERSION = 'v1'
     # loop through all bins and plot
     print("=========================================================")
     print("Making likelihood plots for each bin...")
@@ -187,9 +206,10 @@ if __name__=='__main__':
                 print(f'{sch}: ', end='')
                 for bin_ in datacard_dict[ch]['subchannels'][sch]['bins']:
                     print(f'{bin_} ', end='')
-                    fig, ax = run_lim_plot_bin(ch, sch, bin_, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
+                    fig, ax = run_lim_plot_bin(WC, ch, sch, bin_, datacard_dict, CL_list, plot_stat_only=pstat)
                 print()
     print("=========================================================\n")
+    '''
     # loop through all subchannels and plot
     print("=========================================================")
     print("Making likelihood plots for each subchannel...")
@@ -217,6 +237,6 @@ if __name__=='__main__':
         print(f'Include stat-only? {pstat}')
         fig, ax = run_lim_plot_analysis(datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
     print("=========================================================\n")
-
+    '''
     # plt.show()
 
