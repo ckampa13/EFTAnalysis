@@ -1,18 +1,10 @@
 #!/usr/bin/env bash
 
 # vars
-BASE_DIR="$(git rev-parse --show-toplevel)/EFTAnalysisFitting/"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
 
-# test
-echo $BASE_DIR
-echo $SCRIPT_DIR
+# first split yields using uproot (conda)
+bash ${SCRIPT_DIR}/split_yields1.sh
 
-# activate conda
-source $BASE_DIR/scripts/init_conda.sh
-
-echo $(which python)
-
-# run python script
-# FIXME! Add command line arguments to shell script (different WC)
-python $SCRIPT_DIR/split_yields.py
+# then update the errors in the new files (pyroot)
+bash ${SCRIPT_DIR}/split_yields2.sh
