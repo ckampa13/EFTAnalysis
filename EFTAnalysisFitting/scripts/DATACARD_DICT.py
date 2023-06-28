@@ -76,7 +76,8 @@ datacard_dict = {
     '2Lepton_OS': {
         'subchannels': {
             'OF': {
-                'bins': [1, 2, 3],
+                # 'bins': [1, 2, 3], # v2
+                'bins': [1, 2, 3, 4], # v3
                 'info': {
                     'short_name': '_OF',
                     'file_name': '1Jet_OF',
@@ -84,7 +85,8 @@ datacard_dict = {
                 },
             },
             'SFnoZ': {
-                'bins': [1, 2, 3],
+                # 'bins': [1, 2, 3], # v2
+                'bins': [1, 2, 3, 4], # v3
                 'info': {
                     'short_name': '_SFnoZ',
                     'file_name': '1Jet_SFnoZ',
@@ -100,7 +102,8 @@ datacard_dict = {
             #     },
             #},
             'SFZ': {
-                'bins': [1, 2, 3],
+                # 'bins': [1, 2, 3], # v2
+                'bins': [1, 2, 3, 4], # v3
                 'info': {
                     'short_name': '_SFZ',
                     'file_name': '1Jet_SFZ',
