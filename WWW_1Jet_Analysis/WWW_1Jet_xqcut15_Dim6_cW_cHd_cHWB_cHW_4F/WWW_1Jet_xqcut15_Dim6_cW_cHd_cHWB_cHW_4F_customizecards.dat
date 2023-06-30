@@ -1,5 +1,12 @@
-set param_card SMEFT 2 1
-set param_card SMEFT 5 1
-set param_card SMEFT 7 1
-set param_card SMEFT 8 1
-set param_card SMEFT 9 1
+set param_card SMEFT 2 1 # cW
+set param_card SMEFT 4 1 # cHbox
+set param_card SMEFT 5 1 # cHDD 
+set param_card SMEFT 7 1 # cHW
+set param_card SMEFT 8 1 # cHB
+set param_card SMEFT 9 1 # cHWB
+set param_card SMEFT 22 1 # cHl3
+set param_card SMEFT 24 1 # cHq1
+set param_card SMEFT 25 1 # cHq3
+set param_card SMEFT 26 1 # cHu
+set param_card SMEFT 27 1 # cHd
+set param_card SMEFT 30 1 # cll1
