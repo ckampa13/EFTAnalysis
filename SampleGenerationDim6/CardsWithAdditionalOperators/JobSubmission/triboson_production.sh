@@ -127,7 +127,7 @@ fi
 
 # The following part should not be manually configured
 FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter/OneJet/
-GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/GridpacksDim6/OneJet/
+GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/1JetGridpacks
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}_${LEPTONFILTER}.py
 #GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_4F_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
