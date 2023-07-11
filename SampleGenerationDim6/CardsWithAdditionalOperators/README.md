@@ -12,8 +12,8 @@
 | cHq3               | ✅     | ✅     | ✅      |
 | cHl3               | ✅     | ✅     | ✅      |
 | cll1               | ✅     | ✅     | ✅      |
-| cHu                |        |        |         |
-| cHd                |        |        |         |
+| cHu                | ❌     | ✅     | ✅      |
+| cHd                | ❌     | ✅     | ✅      |
 
 ## Instructions for sample submission:
 
