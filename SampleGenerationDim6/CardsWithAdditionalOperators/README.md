@@ -35,7 +35,7 @@ All code for the production can be found under the SubmittingJobs directory
 
 ## Lepton filters:
 
-#### We plan on submitting jobs in three modes:
+#### We plan on submitting jobs in two modes:
 
 1. Nofilter (NoFilter/wmLHEGS-fragment-2018.py)
 2. Dilepton (Dilepton/wmLHEGS-fragment-2018.py)
