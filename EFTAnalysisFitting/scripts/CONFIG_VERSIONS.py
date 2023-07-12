@@ -1,9 +1,10 @@
 # store version of each channel to use when running combine
 # also track what integrated luminosity is in that version of the yield file
 versions_dict = {
-    # '0Lepton_2J': {'v': 1, 'lumi': 'Run2', 'EFT_type', 'points'},
-    '0Lepton_3FJ': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points'},
+    '0Lepton_2FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points'}, # no systematics
+    # '0Lepton_3FJ': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points'},
     # '0Lepton_3FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points'}, # rebinning test, no systematics, more 1D scans
+    '0Lepton_3FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points'}, # no systematics
     # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points'},
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},

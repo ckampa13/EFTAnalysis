@@ -7,30 +7,30 @@ Nested dictionary structure:
 
 datacard_dict = {
     # channel 0
-    # '0Lepton_2J': {
-    #     'subchannels': {
-    #         '': {
-    #             'bins': [1, 2, 3],
-    #             'info': {
-    #                 'short_name': '',
-    #                 'file_name': '',
-    #                 'ylabel_name': r'0 Lepton, 2 Jet',
-    #             }
-    #         }
-    #     },
-    #     'info': {
-    #         'short_name': '0L_2J',
-    #         'file_name': '0Lep_2J',
-    #         'variable_of_choice': r'$\mathrm{H}_{\mathrm{T}}$',
-    #         'ylabel_name': '0 Lepton              \n(2 boosted jets)   ',
-    #     }
-    # },
+    '0Lepton_2FJ': {
+        'subchannels': {
+            '': {
+                'bins': [1, 2, 3],
+                'info': {
+                    'short_name': '',
+                    'file_name': '',
+                    'ylabel_name': r'0 Lepton, 2 FatJet',
+                }
+            }
+        },
+        'info': {
+            'short_name': '0L_2FJ',
+            'file_name': '0Lep_2FJ',
+            'variable_of_choice': r'$\mathrm{H}_{\mathrm{T}}$',
+            'ylabel_name': '0 Lepton              \n(2 fat jets)   ',
+        }
+    },
     # channel 1
     '0Lepton_3FJ': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3, 4], # v4
-                # 'bins': [1, 2, 3, 4, 5, 6], # v6
+                # 'bins': [1, 2, 3, 4], # v4
+                'bins': [1, 2, 3, 4, 5, 6], # v6, v10
                 'info': {
                     'short_name': '',
                     'file_name': '',
