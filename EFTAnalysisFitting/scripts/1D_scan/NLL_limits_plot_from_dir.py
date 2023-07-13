@@ -20,7 +20,7 @@ from MISC_CONFIGS import (
     dim6_ops,
 )
 from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting import config_plots, ticks_in, ticks_sizes
+from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
@@ -29,6 +29,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_s
     # plot
     fig = plt.figure(figsize=(16, 8))
     ax = fig.add_axes([0.1, 0.1, 0.55, 0.8])
+    CMSify_title(ax, lumi='137.64', lumi_unit='fb', energy='13 TeV', prelim=True)
     # get limits and plot
     # total
     Cs, NLL, CL_list, NLL_cuts, LLs, ULs = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
@@ -54,7 +55,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_s
             ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
     ax.set_xlabel(WC, fontweight ='bold', loc='right', fontsize=20.)
     ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top', fontsize=20.)
-    ax.set_title(title)
+    ax.set_title(title+'\n', pad=3.)
     # ticks
     ax = ticks_in(ax)
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))

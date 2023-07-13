@@ -37,3 +37,13 @@ def get_label(data, bins):
     label = f'mean: {mean:>15}\nstddev: {std:>15}\nIntegral: {len(data):>17}\n'\
     +f'Underflow: {under:>16}\nOverflow: {over:>16}'
     return label
+
+# CMS wrapper for title
+def CMSify_title(ax, lumi='137.64', lumi_unit='fb', energy='13 TeV', prelim=True):
+    lefttitle=r'$\bf{CMS}$'
+    if prelim:
+        lefttitle += r' $\it{Preliminary}$'
+    righttitle = rf'{lumi} {lumi_unit}$^{{-1}}$ ({energy})'
+    # ax.set_title(lefttitle, fontweight ='bold', loc='left')
+    ax.set_title(lefttitle, loc='left')
+    ax.set_title(righttitle, loc='right')

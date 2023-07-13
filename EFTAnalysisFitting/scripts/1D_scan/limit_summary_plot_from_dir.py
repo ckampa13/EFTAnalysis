@@ -19,7 +19,7 @@ from MISC_CONFIGS import (
     dim6_ops,
 )
 from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting import config_plots, ticks_in, ticks_sizes
+from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
@@ -30,6 +30,7 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
     # plot
     fig = plt.figure(figsize=(16, 8))
     ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
+    CMSify_title(ax, lumi='137.64', lumi_unit='fb', energy='13 TeV', prelim=True)
     # loop through files to plot
     LLs_all = []
     ULs_all = []
@@ -63,13 +64,14 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
             best_str = f'{C_best:0.3f}'
         text_annot = rf'   ${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
         # stat only
+        # add to label either way
+        Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+        err_low = C_best - LLs[0]
+        err_high = ULs[0] - C_best
+        text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
         if plot_stat_only:
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
-            err_low = C_best - LLs[0]
-            err_high = ULs[0] - C_best
             # ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='blue', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
             ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
-            text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
         text_annot_all.append(text_annot)
         var_annot_all.append(rf'                                       {var_of_choice}')
     # axis labels
@@ -78,7 +80,7 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
     else:
         suff = r'$ / \Lambda^4$ [TeV]$^{-4}$'
     ax.set_xlabel(f'Sensitivity to {WC}'+suff)
-    ax.set_title(title)
+    ax.set_title(title+'\n', pad=3.)
     # set xlim to be symmetric
     LLs_all = np.array(LLs_all)
     ULs_all = np.array(ULs_all)
@@ -104,10 +106,11 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
         ax.annotate(var_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
     # additional annotations
     # total, stat
-    if plot_stat_only:
-        header_str = '               total   stat.'
-    else:
-        header_str = '               total'
+    header_str = '               total   stat.'
+    # if plot_stat_only:
+    #     header_str = '               total   stat.'
+    # else:
+    #     header_str = '               total'
     header_y = np.min([np.max(yvals) + 0.5, np.max(yvals) + 0.30 * yrange])
     ax.annotate(header_str, (1.00*xlim, header_y), xycoords='data')
     # var of choice header
