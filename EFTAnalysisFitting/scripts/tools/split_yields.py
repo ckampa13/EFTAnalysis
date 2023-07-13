@@ -40,7 +40,9 @@ def split_func(ddir, fname, sname_sch, dc_file):
                 bin_edges_new = bin_edges[i:i+2]
                 file_[k] = (n_new, bin_edges_new)
         # also want to update the datacard
-        update_datacard(ddir, dc_file, bin_n)
+        for StatOnly, SO_str in zip([False, True], ['', '_StatOnly']):
+            dc_file_ = dc_file.replace(f'DataCard_Yields', f'DataCard_Yields{SO_str}')
+            update_datacard(ddir, dc_file_, bin_n)
 
 # new datacard
 def update_datacard(ddir, dc_name, bin_n):
