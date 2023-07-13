@@ -42,4 +42,9 @@ statonly2               lnN              1.0001                      1.0001     
 trigger_weight_         shape            -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           -                           1.0                         -                           1.0                         1.0                         1.0                         1.0                         1.0                         1.0                       
 allsyst group = datadriven_DYSFZ_ pu_weight_ datadriven_DYSFnoZ_ trigger_weight_ jes_ btag_sf_medium_ lep_sf_el_tight_ lep_sf_mu_tight_ norm_restbkgSFZ_ norm_restbkgSFnoZ_ norm_restbkgOF_ jer_ datadriven_TTbarOF_ prefire_weight_ statonly2
 nosyst group = statonly
+ch0L_3FJsch autoMCStats 0 0 1
 ch2L_SSsch_1FJ_2018_scaled autoMCStats 0 0 1
+ch2L_OSsch_SFnoZ autoMCStats 0 0 1
+ch2L_OSsch_SFZ autoMCStats 0 0 1
+ch2L_OSsch_OF autoMCStats 0 0 1
+ch0L_2FJsch autoMCStats 0 0 1

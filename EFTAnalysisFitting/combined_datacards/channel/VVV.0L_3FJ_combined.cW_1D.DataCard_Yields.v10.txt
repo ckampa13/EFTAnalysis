@@ -18,3 +18,4 @@ statonly                lnN     1.0001          1.0001          1.0001          
 statonly2               lnN     1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001        
 allsyst group = statonly2
 nosyst group = statonly
+sch autoMCStats 0 0 1

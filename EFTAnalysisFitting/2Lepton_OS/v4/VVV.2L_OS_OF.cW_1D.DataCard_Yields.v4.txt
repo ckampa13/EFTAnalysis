@@ -10,15 +10,17 @@ bin          bin_2L_OS_OF
 # ROOT did not contain "data_obs". Using Asimov value.
 observation  225.38333633801278
 ----------------------------------------------------------------------------------------------------
-bin                        bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  
-process                    sm                            quad_cW                       sm_lin_quad_cW                TTbar                         restbkg                       
-process                    0                             1                             2                             3                             4                             
-rate                       -1                            -1                            -1                            -1                            -1                            
+bin                        bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF
+process                    sm                            quad_cW                       sm_lin_quad_cW                TTbar                         restbkg
+process                    0                             1                             2                             3                             4
+rate                       -1                            -1                            -1                            -1                            -1
 ----------------------------------------------------------------------------------------------------
-datadriven_TTbarOF_  shape -                             -                             -                             1                             -                             
-norm_restbkgOF_      shape -                             -                             -                             -                             1                             
+datadriven_TTbarOF_  shape -                             -                             -                             1                             -
+norm_restbkgOF_      shape -                             -                             -                             -                             1
 # systematics "off" (very very small)
-statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001
 # nuisance groups (for stat-only vs. with systematics)
 allsyst group = datadriven_TTbarOF_ norm_restbkgOF_
 nosyst group = statonly
+# statistical uncertainties
+* autoMCStats 0

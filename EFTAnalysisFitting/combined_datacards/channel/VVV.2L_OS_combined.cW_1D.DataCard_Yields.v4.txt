@@ -27,3 +27,6 @@ norm_restbkgSFnoZ_      shape            -               -               -      
 statonly                lnN              1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001        
 allsyst group = datadriven_DYSFZ_ norm_restbkgSFnoZ_ norm_restbkgSFZ_ norm_restbkgOF_ datadriven_DYSFnoZ_ datadriven_TTbarOF_
 nosyst group = statonly
+sch_OF autoMCStats 0 0 1
+sch_SFZ autoMCStats 0 0 1
+sch_SFnoZ autoMCStats 0 0 1

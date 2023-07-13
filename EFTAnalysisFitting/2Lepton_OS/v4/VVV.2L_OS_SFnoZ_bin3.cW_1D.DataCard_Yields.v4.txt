@@ -22,3 +22,5 @@ statonly             lnN   1.0001                        1.0001                 
 # nuisance groups (for stat-only vs. with systematics)
 allsyst group = datadriven_DYSFnoZ_ norm_restbkgSFnoZ_
 nosyst group = statonly
+# statistical uncertainties
+* autoMCStats 0

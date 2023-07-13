@@ -22,3 +22,5 @@ statonly2            lnN   1.0001                        1.0001                 
 # nuisance groups (for stat-only vs. with systematics)
 allsyst group = statonly2
 nosyst group = statonly
+# statistical uncertainties
+* autoMCStats 0
