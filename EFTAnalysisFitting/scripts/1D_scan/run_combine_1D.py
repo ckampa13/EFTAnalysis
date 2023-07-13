@@ -100,7 +100,8 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             print(f'bin{bin_n}, ', end='')
             # construct workspace filename
             sname_sch_b = sname_sch + f'_bin{bin_n}'
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc='', version=version, file_type='root')
+            SO_lab = ''
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             # copy workspace to current dir
             # shutil.copyfile(wsfile, os.path.join('.', 'workspace.root'))
@@ -122,8 +123,11 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
             grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
             # loop through stat/syst
-            for syst_bool, syst_label in zip([True, False], ['syst', 'nosyst']):
+            for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
                 print(f'Running "{syst_label}"')
+                # update to the appropriate workspace file (stat only or with syst)
+                wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+                wsfile = os.path.join(wsdir, wsfile)
                 name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
                 cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                     name_str, with_syst=syst_bool, method=METHOD)
@@ -156,7 +160,8 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
             sname_sch += '_2018_scaled'
             print(' (2018 scaled)', end='')
         # construct workspace filename
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc='', version=version, file_type='root')
+        SO_lab = ''
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         syst = 'syst_coarse'
@@ -175,8 +180,11 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
         grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
         # loop through stat/syst
-        for syst_bool, syst_label in zip([True, False], ['syst', 'nosyst']):
+        for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print(f'Running "{syst_label}"')
+            # update to the appropriate workspace file (stat only or with syst)
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+            wsfile = os.path.join(wsdir, wsfile)
             name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD)
@@ -205,7 +213,8 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         version = f'v{v}'
         sname_ch = datacard_dict[ch]['info']['short_name']
         sname_sch = '_combined'
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc='', version=version, file_type='root')
+        SO_lab = ''
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         syst = 'syst_coarse'
@@ -224,8 +233,11 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
         grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
         # loop through stat/syst
-        for syst_bool, syst_label in zip([True, False], ['syst', 'nosyst']):
+        for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print(f'Running "{syst_label}"')
+            # update to the appropriate workspace file (stat only or with syst)
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+            wsfile = os.path.join(wsdir, wsfile)
             name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD)
@@ -251,7 +263,8 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     sname_ch = 'all'
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'
-    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc='', version=version, file_type='root')
+    SO_lab = ''
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # coarse scan (using syst)
     syst = 'syst_coarse'
@@ -270,8 +283,11 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
     grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
     # loop through stat/syst
-    for syst_bool, syst_label in zip([True, False], ['syst', 'nosyst']):
+    for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print(f'Running "{syst_label}"')
+        # update to the appropriate workspace file (stat only or with syst)
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+        wsfile = os.path.join(wsdir, wsfile)
         name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                             name_str, with_syst=syst_bool, method=METHOD)
