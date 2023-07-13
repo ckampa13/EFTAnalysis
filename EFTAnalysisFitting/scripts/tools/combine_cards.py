@@ -10,7 +10,11 @@ from CONFIG_VERSIONS import versions_dict
 from MISC_CONFIGS import template_filename, datacard_dir
 
 # combine subchannels in a channel
-def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType):
+def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType, StatOnly):
+    if StatOnly:
+        SO_lab = '_StatOnly'
+    else:
+        SO_lab = ''
     dcdir = datacard_dir
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
@@ -26,13 +30,13 @@ def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType):
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
             print(' (2018 scaled)', end='')
-        tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+        tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
         dc_file = os.path.join(dcdir, channel, version, tfile)
         dc_name = f' sch{sname_sch}'
         cmd_str += f'{dc_name}={dc_file}'
     print()
     # construct output file
-    tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+    tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel', tfile_comb)
     cmd_str += f'> {comb_file}'
     # run combine script
@@ -41,7 +45,11 @@ def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType):
     proc = subprocess.run(cmd_str, shell=True, stdout=stdout)
 
 # combine all channels
-def combine_all_channels(datacard_dict, WC, ScanType):
+def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
+    if StatOnly:
+        SO_lab = '_StatOnly'
+    else:
+        SO_lab = ''
     dcdir = datacard_dir
     channels = datacard_dict.keys()
     cmd_str = 'combineCards.py'
@@ -65,7 +73,7 @@ def combine_all_channels(datacard_dict, WC, ScanType):
             if versions_dict[ch]['lumi'] == '2018':
                 sname_sch += '_2018_scaled'
                 # print(' (2018 scaled)', end='')
-            tfile_ch = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+            tfile_ch = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
             dc_file = os.path.join(dcdir, ch, version, tfile_ch)
             dc_name = f' ch{sname_ch}sch{sname_sch}'
             cmd_str += f'{dc_name}={dc_file}'
@@ -73,7 +81,7 @@ def combine_all_channels(datacard_dict, WC, ScanType):
             print(', ', end='')
     print()
     # construct output file
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
     cmd_str += f'> {comb_file}'
     # run combine script
@@ -101,12 +109,16 @@ if __name__=='__main__':
     for channel in datacard_dict.keys():
         v = versions_dict[channel]['v']
         VERSION = f'v{v}'
-        combine_channel_subchannels(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType)
+        for StatOnly in [False, True]:
+            print('Stat only? ', StatOnly)
+            combine_channel_subchannels(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType, StatOnly=StatOnly)
     print('=================================================\n')
     #########################
     # combine all channels
     print('Combining all channels (complete analysis):')
     print('=================================================')
-    combine_all_channels(datacard_dict, WC=args.WC, ScanType=args.ScanType)
+    for StatOnly in [False, True]:
+        print('Stat only? ', StatOnly)
+        combine_all_channels(datacard_dict, WC=args.WC, ScanType=args.ScanType, StatOnly=StatOnly)
     print('=================================================\n')
     #########################
