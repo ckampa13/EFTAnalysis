@@ -5,7 +5,7 @@ echo ${1}
 
 # this is used for transfer the out put, should be consistant with the output name in the triboson_production.sh
 #SAMPLE=WWW
-SAMPLE=WWW_Dim6_cW_cHd_cHWB_cHW_4F
+SAMPLE=WWZ_1Jet_xqcut15_12Operators_4F
 CAMPAIGN=RunIISummer20UL18
 NPART=${1}
 STEP5_NAME=${SAMPLE}-${CAMPAIGN}MiniAODv2_${NPART}.root
