@@ -6,7 +6,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict
+from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import template_filename, datacard_dir
 
 # combine subchannels in a channel
@@ -54,7 +54,13 @@ def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
     channels = datacard_dict.keys()
     cmd_str = 'combineCards.py'
     print(f'Channel: ', end='')
+    n_ch_added = 0
     for i, ch in enumerate(channels):
+        WCs = versions_dict[ch]['EFT_ops']
+        if not WC in WCs:
+            continue
+        else:
+            n_ch_added += 1
         print(ch, end='')
         # if i == (len(channels)-1):
         #     print(ch)
@@ -80,6 +86,10 @@ def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
         if i != (len(channels) - 1):
             print(', ', end='')
     print()
+    # stop here if there weren't any WC matches
+    if n_ch_added == 0:
+        print('No channels have the following WC: '+WC+', combineCards.py will not be run!')
+        return
     # construct output file
     tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
@@ -93,32 +103,52 @@ def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
 if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--Channel',
+                        help=f'Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
-                        help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default),]')
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW" (default), ...]')
     parser.add_argument('-s', '--ScanType',
                         help=f'What type of EFT scan was included in this file? ["_1D" (default),]')
     args = parser.parse_args()
+    # list of channels
+    if args.Channel is None:
+        args.Channel = 'all'
+    if args.Channel == 'all':
+        channels = datacard_dict.keys()
+    else:
+        channels = [args.Channel]
     if args.WC is None:
-        args.WC = 'cW'
+        args.WC = 'all'
+    if args.WC == 'all':
+        WCs_loop = WC_ALL
+    else:
+        WCs_loop = [args.WC]
     if args.ScanType is None:
         args.ScanType = '_1D'
     #########################
-    # combine channel subchannels
-    print('Combining subchannels for each available channel:')
-    print('=================================================')
-    for channel in datacard_dict.keys():
-        v = versions_dict[channel]['v']
-        VERSION = f'v{v}'
+    # outer loop (over WC)
+    for WC in WCs_loop:
+        print(f'WC: '+WC)
+        #########################
+        # combine channel subchannels
+        print('Combining subchannels for each available channel:')
+        print('=================================================')
+        for channel in channels:
+            WCs = versions_dict[channel]['EFT_ops']
+            if not WC in WCs:
+                continue
+            v = versions_dict[channel]['v']
+            VERSION = f'v{v}'
+            for StatOnly in [False, True]:
+                print('Stat only? ', StatOnly)
+                combine_channel_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly)
+        print('=================================================\n')
+        #########################
+        # combine all channels
+        print('Combining all channels (complete analysis):')
+        print('=================================================')
         for StatOnly in [False, True]:
             print('Stat only? ', StatOnly)
-            combine_channel_subchannels(channel, VERSION, datacard_dict, WC=args.WC, ScanType=args.ScanType, StatOnly=StatOnly)
-    print('=================================================\n')
-    #########################
-    # combine all channels
-    print('Combining all channels (complete analysis):')
-    print('=================================================')
-    for StatOnly in [False, True]:
-        print('Stat only? ', StatOnly)
-        combine_all_channels(datacard_dict, WC=args.WC, ScanType=args.ScanType, StatOnly=StatOnly)
-    print('=================================================\n')
-    #########################
+            combine_all_channels(datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly)
+        print('=================================================\n')
+        #########################

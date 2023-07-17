@@ -3,12 +3,12 @@ imax 3 number of bins
 jmax 5 number of processes minus 1
 kmax 7 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *          sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_OF.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs   sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_OF.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS
-shapes *          sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFZ.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs   sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFZ.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS
-shapes *          sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFnoZ.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs   sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFnoZ.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS
+shapes *          sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_OF.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_OF.DataCard_Yields_Cleaned.v4.root h_$PROCESS
+shapes *          sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFZ.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFZ.DataCard_Yields_Cleaned.v4.root h_$PROCESS
+shapes *          sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFnoZ.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v4/VVV.2L_OS_SFnoZ.DataCard_Yields_Cleaned.v4.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch_OF          sch_SFnoZ       sch_SFZ       
 observation  225.383336338   656.7951065435  3344.174038838

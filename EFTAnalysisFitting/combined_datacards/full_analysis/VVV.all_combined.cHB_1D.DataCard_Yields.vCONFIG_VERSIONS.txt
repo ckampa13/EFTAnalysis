@@ -1,0 +1,24 @@
+Combination of ch0L_2FJsch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v10/VVV.0L_2FJ.cHB_1D.DataCard_Yields.v10.txt  ch0L_3FJsch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v10/VVV.0L_3FJ.cHB_1D.DataCard_Yields.v10.txt
+imax 2 number of bins
+jmax 10 number of processes minus 1
+kmax 2 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *            ch0L_2FJsch  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v10/VVV.0L_2FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs     ch0L_2FJsch  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v10/VVV.0L_2FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS
+shapes *            ch0L_3FJsch  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v10/VVV.0L_3FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs     ch0L_3FJsch  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v10/VVV.0L_3FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch0L_2FJsch       ch0L_3FJsch     
+observation  20000.0055819781  595.338046753   
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_2FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch       ch0L_3FJsch     
+process                         sm                quad_cHB          ZZ                QCD               ttV               WW                WJets             DY                sm_lin_quad_cHB   TTbar             WZ                sm                quad_cHB          ZZ                QCD               ttV               WW                WJets             DY                sm_lin_quad_cHB   TTbar             WZ              
+process                         0                 1                 2                 3                 4                 5                 6                 7                 8                 9                 10                0                 1                 2                 3                 4                 5                 6                 7                 8                 9                 10              
+rate                            -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1              
+----------------------------------------------------------------------------------------------------------------------------------
+statonly                lnN     1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001          
+statonly2               lnN     1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001          
+allsyst group = statonly2
+nosyst group = statonly
+ch0L_3FJsch autoMCStats 0 0 1
+ch0L_2FJsch autoMCStats 0 0 1

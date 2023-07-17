@@ -3,8 +3,8 @@ imax    1 number of bins
 jmax    * number of processes minus 1
 kmax    * number of nuisance parameters
 ----------------------------------------------------------------------------------------------------
-shapes * * VVV.2L_OS_SFZ_bin2.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs * VVV.2L_OS_SFZ_bin2.cW_1D.DataCard_Yields_Cleaned.v4.root h_$PROCESS
+shapes * * VVV.2L_OS_SFZ_bin2.DataCard_Yields_Cleaned.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.2L_OS_SFZ_bin2.DataCard_Yields_Cleaned.v4.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------
 bin          bin_2L_OS_SFZ
 # ROOT did not contain "data_obs". Using Asimov value.
@@ -22,5 +22,3 @@ statonly             lnN   1.0001                        1.0001                 
 # nuisance groups (for stat-only vs. with systematics)
 allsyst group = datadriven_DYSFZ_ norm_restbkgSFZ_
 nosyst group = statonly
-# statistical uncertainties
-#* autoMCStats 0

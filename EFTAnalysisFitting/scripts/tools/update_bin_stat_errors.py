@@ -58,23 +58,11 @@ if __name__=='__main__':
                         help='Name of bin ROOT file (including full path!).')
     parser.add_argument('-b', '--BinNum',
                         help='Bin number (should match ROOT file name). [1 (default),...]')
-    # parser.add_argument('-w', '--WC',
-    #                     help='Which Wilson Coefficient to study for 1D limits? ["cW" (default),]')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
         raise ValueError("Please supply a valid channel name!")
     WCs = versions_dict[args.Channel]['EFT_ops']
-    # print(args.Channel, ': ',)
-    # print(WCs)
-    # if args.Channel == 'all':
-    #     channels = datacard_dict.keys()
-    # else:
-    #     channels = [args.Channel]
-    # if args.WC is None:
-    # fill defauls if necessary
-    # if args.WC is None:
-    #     args.WC = 'cW'
     if args.BinNum is None:
         args.BinNum = '1'
     # run function

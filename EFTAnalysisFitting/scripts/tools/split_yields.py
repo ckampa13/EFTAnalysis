@@ -102,8 +102,6 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
                         help=f'Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
-    # parser.add_argument('-w', '--WC',
-    #                     help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default),]')
     parser.add_argument('-s', '--ScanType',
                         help=f'What type of EFT scan was included in this file? ["_1D" (default),]')
     args = parser.parse_args()
@@ -114,21 +112,14 @@ if __name__=='__main__':
         channels = datacard_dict.keys()
     else:
         channels = [args.Channel]
-    # if args.WC is None:
-    #     args.WC = 'cW'
     if args.ScanType is None:
         args.ScanType = '_1D'
     #########################
     # split channel subchannels
     print('Splitting subchannels into single bins for each available channel:')
     print('=================================================')
-    # for channel in datacard_dict.keys():
     for channel in channels:
-        # check in WC available
-        # if args.WC not in versions_dict[channel]['EFT_ops']:
-        #     continue
         WCs = versions_dict[channel]['EFT_ops']
-        # print(f'{channel}: {WCs}, ', end='')
         v = versions_dict[channel]['v']
         VERSION = f'v{v}'
         split_channel_subchannels(channel, VERSION, datacard_dict, WCs, ScanType=args.ScanType)
