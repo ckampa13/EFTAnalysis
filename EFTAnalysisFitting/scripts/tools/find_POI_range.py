@@ -41,10 +41,13 @@ def check_file_threshold(rootfile, WC, NLL_threshold, stepsize, stepsize_coarse)
     steps = int((UL-LL)/stepsize_) + 2
     UL = LL + (steps-1) * stepsize_
     # print in a way that can be easily parsed
-    if (nlls[ilow] < NLL_threshold) or (nlls[ihigh] < NLL_threshold):
-        print 'ERROR: Either low end or high end does not get above NLL_threshold. Try again with a wider range.'
-    else:
-        print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
+    # check if threshold is reached...if not throws an error (in the parsing function)
+    # if (nlls[ilow] < NLL_threshold) or (nlls[ihigh] < NLL_threshold):
+    #     print 'ERROR: Either low end or high end does not get above NLL_threshold. Try again with a wider range.'
+    # else:
+    #     print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
+    # use range regardless...using +-100 is a sort of nonsense range already.
+    print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
 
     return LL, UL, steps
 

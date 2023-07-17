@@ -20,7 +20,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict
+from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import (
     datacard_dir,
     template_filename,
@@ -109,11 +109,12 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             syst = 'syst_coarse'
             # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
             # No need to scan a wide range if we know it's narrow.
-            grid_dict = {'LL':-75, 'UL':75, 'steps': 301}
+            # grid_dict = {'LL':-75, 'UL':75, 'steps': 301}
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
             # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-            name_str = '_coarse'
+            name_str = f'_coarse_{WC}'
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-            outfile_ = f'higgsCombine_coarse.{METHOD}.mH120.root'
+            outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
             outfile_ = os.path.join(outdir, outfile_)
             # cmd_str = construct_combine_cmd_str(WC, 'workspace.root', grid_dict, asi_str,
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
@@ -167,11 +168,12 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         syst = 'syst_coarse'
         # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
         # No need to scan a wide range if we know it's narrow.
-        grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+        # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+        grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = '_coarse'
+        name_str = f'_coarse_{WC}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-        outfile_ = f'higgsCombine_coarse.{METHOD}.mH120.root'
+        outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD)
@@ -208,6 +210,9 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
     os.chdir(outdir)
     channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
+        WCs = versions_dict[ch]['EFT_ops']
+        if not WC in WCs:
+            continue
         print(f'Channel: {ch}', end=': ')
         v = versions_dict[ch]['v']
         version = f'v{v}'
@@ -220,11 +225,12 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         syst = 'syst_coarse'
         # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
         # No need to scan a wide range if we know it's narrow.
-        grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+        # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+        grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = '_coarse'
+        name_str = f'_coarse_{WC}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-        outfile_ = f'higgsCombine_coarse.{METHOD}.mH120.root'
+        outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD)
@@ -270,11 +276,12 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     syst = 'syst_coarse'
     # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
     # No need to scan a wide range if we know it's narrow.
-    grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+    # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
+    grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
     # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-    name_str = '_coarse'
+    name_str = f'_coarse_{WC}'
     outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-    outfile_ = f'higgsCombine_coarse.{METHOD}.mH120.root'
+    outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                         name_str, with_syst=True, method=METHOD)
@@ -305,7 +312,7 @@ if __name__=='__main__':
     parser.add_argument('-c', '--Channel',
                         help=f'Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
-                        help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default),]')
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
     parser.add_argument('-s', '--ScanType',
                         help=f'What type of EFT scan was included in this file? ["_1D" (default),]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
@@ -321,7 +328,11 @@ if __name__=='__main__':
     else:
         channels = [args.Channel]
     if args.WC is None:
-        args.WC = 'cW'
+        args.WC = 'all'
+    if args.WC == 'all':
+        WCs_loop = WC_ALL
+    else:
+        WCs_loop = [args.WC]
     if args.ScanType is None:
         args.ScanType = '_1D'
     if args.Asimov is None:
@@ -347,47 +358,57 @@ if __name__=='__main__':
     else:
         stdout = subprocess.PIPE
     #########################
-    # bin calculations
-    print('Running combine for each bin:')
-    print('=================================================')
-    for channel in channels:
-        v = versions_dict[channel]['v']
-        VERSION = f'v{v}'
-        run_combine_bins(channel, VERSION, datacard_dict, WC=args.WC,
+    # outer loop (over WC)
+    for WC in WCs_loop:
+        print(f'WC: '+WC)
+        #########################
+        # bin calculations
+        print('Running combine for each bin:')
+        print('=================================================')
+        for channel in channels:
+            WCs = versions_dict[channel]['EFT_ops']
+            if not WC in WCs:
+                continue
+            v = versions_dict[channel]['v']
+            VERSION = f'v{v}'
+            run_combine_bins(channel, VERSION, datacard_dict, WC=WC,
+                             ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
+                             Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
+                             stdout=stdout, verbose=args.Verbose)
+        print('=================================================\n')
+        #########################
+        # subchannel calculations
+        print('Running combine for each subchannel:')
+        print('=================================================')
+        for channel in channels:
+            WCs = versions_dict[channel]['EFT_ops']
+            if not WC in WCs:
+                continue
+            v = versions_dict[channel]['v']
+            VERSION = f'v{v}'
+            run_combine_subchannels(channel, VERSION, datacard_dict, WC=WC,
+                             ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
+                             Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
+                             stdout=stdout, verbose=args.Verbose)
+        print('=================================================\n')
+        # '''
+        #########################
+        # channel calculations
+        print('Running combine for each channel:')
+        print('=================================================')
+        run_combine_channels(datacard_dict, WC=WC,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                          Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                          stdout=stdout, verbose=args.Verbose)
-    print('=================================================\n')
-    #########################
-    # subchannel calculations
-    print('Running combine for each subchannel:')
-    print('=================================================')
-    for channel in channels:
-        v = versions_dict[channel]['v']
-        VERSION = f'v{v}'
-        run_combine_subchannels(channel, VERSION, datacard_dict, WC=args.WC,
+        print('=================================================\n')
+        #########################
+        # full analysis calculation
+        print('Running combine for full analysis:')
+        print('=================================================')
+        run_combine_full_analysis(WC=WC,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                          Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                          stdout=stdout, verbose=args.Verbose)
-    print('=================================================\n')
-    # '''
-    #########################
-    # channel calculations
-    print('Running combine for each channel:')
-    print('=================================================')
-    run_combine_channels(datacard_dict, WC=args.WC,
-                     ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
-                     Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
-                     stdout=stdout, verbose=args.Verbose)
-    print('=================================================\n')
-    #########################
-    # full analysis calculation
-    print('Running combine for full analysis:')
-    print('=================================================')
-    run_combine_full_analysis(WC=args.WC,
-                     ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
-                     Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
-                     stdout=stdout, verbose=args.Verbose)
-    print('=================================================\n')
-    #########################
-    # '''
+        print('=================================================\n')
+        #########################
+        # '''
