@@ -60,6 +60,7 @@ def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1
                 stdout = subprocess.PIPE
             if verbose > 0:
                 print('generating workspace...')
+                print(cmd_str)
             _ = subprocess.run(cmd_str, shell=True, stdout=stdout)
             if verbose > 0:
                 print('\ndone.\n')
@@ -102,6 +103,7 @@ def make_workspace_subchannels(channel, version, datacard_dict, WC, ScanType, ve
             stdout = subprocess.PIPE
         if verbose > 0:
             print('generating workspace...')
+            print(cmd_str)
         _ = subprocess.run(cmd_str, shell=True, stdout=stdout)
         if verbose > 0:
             print('\ndone.\n')
@@ -139,6 +141,7 @@ def make_workspace_channels(datacard_dict, WC, ScanType, verbose=1, StatOnly=Fal
             stdout = subprocess.PIPE
         if verbose > 0:
             print('generating workspace...')
+            print(cmd_str)
         _ = subprocess.run(cmd_str, shell=True, stdout=stdout)
         if verbose > 0:
             print('\ndone.\n')
@@ -173,6 +176,7 @@ def make_workspace_full_analysis(WC, ScanType, verbose=1, StatOnly=False):
         stdout = subprocess.PIPE
     if verbose > 0:
         print('generating workspace...')
+        print(cmd_str)
     _ = subprocess.run(cmd_str, shell=True, stdout=stdout)
     if verbose > 0:
         print('\ndone.\n')

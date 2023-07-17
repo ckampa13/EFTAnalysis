@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+# get cmdline args
+# first set defaults
+channel="all"
+while getopts c: flag
+do
+    case "${flag}" in
+        c) channel=${OPTARG}
+    esac
+done
+echo ${channel}
+
 # vars
 # BASE_DIR="$(git rev-parse --show-toplevel)/EFTAnalysisFitting/"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
@@ -14,5 +25,4 @@ echo $SCRIPT_DIR
 echo $(which python)
 
 # run python script
-# FIXME! Add command line arguments to shell script (different WC)
-python3 $SCRIPT_DIR/split_yields_bin_errors.py
+python3 $SCRIPT_DIR/split_yields_bin_errors.py -c ${channel}
