@@ -1,5 +1,6 @@
 # note: this requires uproot, and is typically ran on the GPU machine, rather than the LPC.
 import os
+import argparse
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
@@ -10,7 +11,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict
+from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import (
     datacard_dir,
     #template_filename,
@@ -253,6 +254,9 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
+        WCs = versions_dict[ch]['EFT_ops']
+        if not WC in WCs:
+            continue
         fname_ch = datacard_dict[ch]['info']['file_name']
         sname_ch = datacard_dict[ch]['info']['short_name']
         v = versions_dict[ch]['v']
@@ -297,38 +301,59 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
 
 if __name__=='__main__':
     # FIXME! make these cmd line args
-    WC = 'cW'
+    #WC = 'cW'
     CL = 0.95
+    # parse commmand line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--WC',
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+    args = parser.parse_args()
+    if args.WC is None:
+        args.WC = 'all'
+    if args.WC == 'all':
+        WCs_loop = WC_ALL
+    else:
+        WCs_loop = [args.WC]
     # VERSION = 'v1'
-    # loop through all subchannels and plot
-    print("=========================================================")
-    print("Making sensitivity plots for each subchannel...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        for ch in datacard_dict.keys():
-            print(ch)
-            for sch in datacard_dict[ch]['subchannels'].keys():
-                print(sch)
-                fig, ax = run_plot_subchannel(WC, ch, sch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
-                # fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
-    print("=========================================================\n")
-    # loop through all channels and plot
-    print("=========================================================")
-    print("Making sensitivity plots for each channel...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        for ch in datacard_dict.keys():
-            print(ch)
-            fig, ax = run_plot_channel(WC, ch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
-            # fig, ax = run_plot_channel(ch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
-    print("=========================================================\n")
-    #####
-    print("=========================================================")
-    print("Making sensitivity plots for full analysis...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
-        # fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-0.5., 0.5])
-    print("=========================================================\n")
+    #########################
+    # outer loop (over WC)
+    for WC in WCs_loop:
+        print(f'WC: '+WC)
+        # loop through all subchannels and plot
+        print("=========================================================")
+        print("Making sensitivity plots for each subchannel...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            for ch in datacard_dict.keys():
+                WCs = versions_dict[ch]['EFT_ops']
+                if not WC in WCs:
+                    continue
+                print(ch)
+                for sch in datacard_dict[ch]['subchannels'].keys():
+                    print(sch)
+                    fig, ax = run_plot_subchannel(WC, ch, sch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
+                    # fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
+        print("=========================================================\n")
+        # loop through all channels and plot
+        print("=========================================================")
+        print("Making sensitivity plots for each channel...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            for ch in datacard_dict.keys():
+                WCs = versions_dict[ch]['EFT_ops']
+                if not WC in WCs:
+                    continue
+                print(ch)
+                fig, ax = run_plot_channel(WC, ch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
+                # fig, ax = run_plot_channel(ch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
+        print("=========================================================\n")
+        #####
+        print("=========================================================")
+        print("Making sensitivity plots for full analysis...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
+            # fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-0.5., 0.5])
+        print("=========================================================\n")
 
-    # plt.show()
+        # plt.show()

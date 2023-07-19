@@ -11,7 +11,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict
+from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import (
     datacard_dir,
     #template_filename,
