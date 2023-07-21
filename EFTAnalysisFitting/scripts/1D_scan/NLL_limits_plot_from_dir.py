@@ -29,7 +29,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_s
     # plot
     fig = plt.figure(figsize=(16, 8))
     ax = fig.add_axes([0.1, 0.1, 0.55, 0.8])
-    CMSify_title(ax, lumi='137.64', lumi_unit='fb', energy='13 TeV', prelim=True)
+    CMSify_title(ax, lumi='137', lumi_unit='fb', energy='13 TeV', prelim=True)
     # get limits and plot
     # total
     Cs, NLL, CL_list, NLL_cuts, LLs, ULs = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)

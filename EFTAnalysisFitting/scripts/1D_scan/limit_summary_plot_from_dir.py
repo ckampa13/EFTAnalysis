@@ -31,7 +31,7 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
     # plot
     fig = plt.figure(figsize=(16, 8))
     ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
-    CMSify_title(ax, lumi='137.64', lumi_unit='fb', energy='13 TeV', prelim=True)
+    CMSify_title(ax, lumi='137', lumi_unit='fb', energy='13 TeV', prelim=True)
     # loop through files to plot
     LLs_all = []
     ULs_all = []
