@@ -72,6 +72,25 @@ datacard_dict = {
     #         'ylabel_name': '1 Lepton              \n(2 boosted jets)   ',
     #     }
     # },
+    # e and mu merged
+    '1Lepton': {
+        'subchannels': {
+            '': {
+                'bins': [1, 2, 3, 4], # v1
+                'info': {
+                    'short_name': '',
+                    'file_name': '',
+                    'ylabel_name': r'1 Lepton, 2 FatJet',
+                },
+            },
+        },
+        'info': {
+            'short_name': '1L_2FJ',
+            'file_name': '1Lep_2FJ',
+            'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
+            'ylabel_name': '1 Lepton              \n(2 fat jets)   ',
+        }
+    },
     # channel 3
     '2Lepton_OS': {
         'subchannels': {
