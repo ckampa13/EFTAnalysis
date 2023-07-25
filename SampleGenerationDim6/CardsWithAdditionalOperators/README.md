@@ -69,4 +69,4 @@ sh triboson_production.sh -p pileup_files.txt -s ZZZ_1Jet_xqcut15_12Operators_4F
 
 ## For keeping track of sample production, we have the following spreadsheet:
 
-<iframe src="https://docs.google.com/spreadsheets/d/14xAqp9kCjJNmuxpJDPC7XgNk1O6dF5_KQl-Qo8HMd68/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false", width=800, height=500></iframe>
+https://docs.google.com/spreadsheets/d/14xAqp9kCjJNmuxpJDPC7XgNk1O6dF5_KQl-Qo8HMd68/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false
