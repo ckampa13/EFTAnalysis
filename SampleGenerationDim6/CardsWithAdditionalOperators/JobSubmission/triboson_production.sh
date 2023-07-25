@@ -473,6 +473,8 @@ then
    rm ${STEP2_NAME}.root
    rm ${STEP3_NAME}.root
    rm ${STEP4_NAME}.root
+   rm ${STEP5_NAME}.root
+   rm ${STEP6_NAME}.root
 
    rm -rf rm -rf CMSSW_*
    rm -rf *_cfg.py
