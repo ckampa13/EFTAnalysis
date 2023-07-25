@@ -4,12 +4,12 @@ echo $PWD
 echo ${1} 
 
 # this is used for transfer the out put, should be consistant with the output name in the triboson_production.sh
-#SAMPLE=WWW
-SAMPLE=WWW_1Jet_xqcut15_12Operators
+SAMPLE=WWZ_1Jet_xqcut15_12Operators_4F
 CAMPAIGN=RunIISummer20UL18
 NPART=${1}
-STEP5_NAME=${SAMPLE}-${CAMPAIGN}MiniAODv2_${NPART}.root
-STEP6_NAME=${SAMPLE}-${CAMPAIGN}NanoAODv9_${NPART}.root
+FILTER=DileptonFilter
+STEP5_NAME=${SAMPLE}-${FILTER}-${CAMPAIGN}MiniAODv2_${NPART}.root
+STEP6_NAME=${SAMPLE}-${FILTER}-${CAMPAIGN}NanoAODv9_${NPART}.root
 
 OUTPUTDIR=$PWD
 
