@@ -32,8 +32,6 @@ There are several scripts in that directory
 - submitJob.sh: submitting the job, which entails running submitCondorJob.sh in a loop
 - triboson_production.sh: the actual script that will be run on the worker nodes 
 
-1. sh triboson_production.sh -p pileup_files.txt -s ZZZ_1Jet_xqcut15_12Operators_4F -c -o $PWD -a 1 -n 10 -b 12345 -l NoFilter -f
-
 ## Submission of jobs at the LPC cluster:
 
 1. Use the script submitCondorJob.sh
@@ -69,6 +67,3 @@ sh triboson_production.sh -p pileup_files.txt -s ZZZ_1Jet_xqcut15_12Operators_4F
 | WZZ                | ✅          | ✅                    |             1M		           |
 | ZZZ                | ✅          | ✅                    |             1M	                   |
 
-## Validation of weights
-
-![Image](cHl3.png)
