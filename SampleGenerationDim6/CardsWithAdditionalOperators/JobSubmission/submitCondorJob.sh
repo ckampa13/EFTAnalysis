@@ -4,10 +4,10 @@ echo $PWD
 echo ${1} 
 
 # this is used for transfer the out put, should be consistant with the output name in the triboson_production.sh
-SAMPLE=WWZ_1Jet_xqcut15_12Operators_4F
+SAMPLE=ZZZ_1Jet_xqcut15_12Operators_4F
 CAMPAIGN=RunIISummer20UL18
 NPART=${1}
-FILTER=DileptonFilter
+FILTER=NoFilter
 STEP5_NAME=${SAMPLE}-${FILTER}-${CAMPAIGN}MiniAODv2_${NPART}.root
 STEP6_NAME=${SAMPLE}-${FILTER}-${CAMPAIGN}NanoAODv9_${NPART}.root
 
@@ -22,7 +22,7 @@ Nevents=1000
 # if run on the cmsplc, can not use remap, use -f options here to copy the file
 cat>Job_${1}.sh<<EOF
 #!/bin/bash
-sh triboson_production.sh -p pileup_files.txt -s ${SAMPLE} -c -o $PWD -a ${1} -n ${Nevents} -b \${2}\${3} -l DileptonFilter -f
+sh triboson_production.sh -p pileup_files.txt -s ${SAMPLE} -c -o $PWD -a ${1} -n ${Nevents} -b \${2}\${3} -l ${FILTER} -f
 EOF
 
 chmod 775 Job_${1}.sh
