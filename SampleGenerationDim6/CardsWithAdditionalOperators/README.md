@@ -40,7 +40,7 @@ There are several scripts in that directory
 2. To submit several jobs simply use submitCondorJob.sh in a loop as done here: submitJob.sh
 3. Update the script triboson_production.sh with the correct url for procuring gridpacks and fragments
 4. Do not submit Nofilter and DileptonFilter jobs from one directory, while this is fixed in the newest iteration so the jobs are not overwritten, it is easier for book-keeping to keep submission separate
-5. If submitting jobs at the LPC, please use your nobackup area (/uscms/home/sapta/nobackup/), submitting from home may clog up the home area
+5. If submitting jobs at the LPC, please use your nobackup area (/uscms/home/${USERNAME}/nobackup/), submitting from home may clog up the home area
 6. If you want to keep local copies of the files, then please remove these lines in the `triboson_production.sh` script:
 - https://github.com/Saptaparna/EFTAnalysis/blob/master/SampleGenerationDim6/CardsWithAdditionalOperators/JobSubmission/triboson_production.sh#L476ToL477 
 
