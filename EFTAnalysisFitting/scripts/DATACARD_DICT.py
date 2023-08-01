@@ -95,7 +95,7 @@ datacard_dict = {
     '2Lepton_OS': {
         'subchannels': {
             'OF': {
-                'bins': [1, 2, 3], # v2, v3, v4, v5
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6
                 'info': {
                     'short_name': '_OF',
                     'file_name': '1Jet_OF',
