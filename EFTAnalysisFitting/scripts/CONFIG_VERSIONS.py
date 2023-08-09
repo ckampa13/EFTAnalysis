@@ -17,11 +17,12 @@ versions_dict = {
     '2Lepton_OS': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # 1Jet sample processed
     # '2Lepton_SS': {'v': 1, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '2Lepton_SS': {'v': 2, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # only WWW
-    '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW
+    # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW -- first batch
+    '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # VVV 1J
 }
 
-# WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB'] # 2L_SS v2
-WC_ALL = ['cW', 'cHDD', 'cHW', 'cHWB', 'cHB'] # 2L_SS v3
+WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB'] # 2L_SS v2
+# WC_ALL = ['cW', 'cHDD', 'cHW', 'cHWB', 'cHB'] # 2L_SS v3 -- first batch
 
 L_2018 = 59.83 # fb^-1
 L_Run2 = 137.64 # fb^-1
