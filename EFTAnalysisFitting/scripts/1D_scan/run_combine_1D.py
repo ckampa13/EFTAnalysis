@@ -52,11 +52,13 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     if range_ > 50:
         prec = 1.0
         print('Using prec = 1.0')
-        grid_dict['steps'] = int(grid_dict['UL']-grid_dict['LL'] + 1)
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
     elif range_ > 25:
         prec = 0.1
         print('Using prec = 0.1')
-        grid_dict['steps'] = int(grid_dict['UL']-grid_dict['LL'] + 1)
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.1
     elif range_ > 10:
         prec = args.PrecisionCoarse
         print('Using PrecisionCoarse')
@@ -119,7 +121,8 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
             # No need to scan a wide range if we know it's narrow.
             # grid_dict = {'LL':-75, 'UL':75, 'steps': 301}
-            grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+            # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
             name_str = f'_coarse_{WC}'
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
@@ -178,7 +181,8 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
         # No need to scan a wide range if we know it's narrow.
         # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+        # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
         name_str = f'_coarse_{WC}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
@@ -235,7 +239,8 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
         # No need to scan a wide range if we know it's narrow.
         # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+        # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
         name_str = f'_coarse_{WC}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
@@ -286,7 +291,8 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
     # No need to scan a wide range if we know it's narrow.
     # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
-    grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+    # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
+    grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
     name_str = f'_coarse_{WC}'
     outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
