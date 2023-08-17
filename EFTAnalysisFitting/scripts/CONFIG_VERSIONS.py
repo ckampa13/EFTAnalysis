@@ -10,7 +10,8 @@ versions_dict = {
     # '0Lepton_3FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW']}, # no systematics, multi-operators not finished yet
     # '0Lepton_3FJ': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points'}, # no systematics, SMHLOOP not supressed.
     '0Lepton_3FJ': {'v': 12, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # no systematics, update to VVV+1Jet. QCD background update.
-    '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
+    # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
+    '1Lepton': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # cW -> VVV+1Jet, all other dim6 added. autoMCStats should be turned off.
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},
     #'2Lepton_OS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # removed WWZ ggH
