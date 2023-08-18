@@ -124,9 +124,9 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-            name_str = f'_coarse_{WC}'
+            name_str = f'_coarse_{WC}_{channel}'
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-            outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
+            outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
             outfile_ = os.path.join(outdir, outfile_)
             # cmd_str = construct_combine_cmd_str(WC, 'workspace.root', grid_dict, asi_str,
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
@@ -184,9 +184,9 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = f'_coarse_{WC}'
+        name_str = f'_coarse_{WC}_{channel}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-        outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
+        outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD)
@@ -242,9 +242,9 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = f'_coarse_{WC}'
+        name_str = f'_coarse_{WC}_{ch}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-        outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
+        outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD)
@@ -294,9 +294,9 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-    name_str = f'_coarse_{WC}'
+    name_str = f'_coarse_{WC}_all'
     outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-    outfile_ = f'higgsCombine_coarse_{WC}.{METHOD}.mH120.root'
+    outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                         name_str, with_syst=True, method=METHOD)
