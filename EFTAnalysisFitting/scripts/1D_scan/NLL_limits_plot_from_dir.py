@@ -170,74 +170,81 @@ def run_lim_plot_channel(channel, datacard_dict, version, CL_list, plot_stat_onl
     fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
     return fig, ax
 
-def run_lim_plot_analysis(datacard_dict, version, CL_list, plot_stat_only):
-    output_dir_full = os.path.join(datacard_dir, 'output', 'combined_datacards', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'combined_datacards', 'full_analysis')
+def run_lim_plot_analysis(WC, datacard_dict, CL_list, plot_stat_only, version=None):
+    if version is None:
+        version = 'vCONFIG_VERSIONS'
+    output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis')
     # construct root file name
-    root_file_all = os.path.join(output_dir_full,
-                                 'higgsCombine_datacard1opWithBkg_FT0_binAll_channelsAll_v1.MultiDimFit.mH120.root')
-    root_file_stat = os.path.join(output_dir_full,
-                                  'higgsCombine_datacard1opWithBkg_FT0_binAll_channelsAll_v1_nosyst.MultiDimFit.mH120.root')
-    root_file_dict = {'total': root_file_all, 'stat_only': root_file_stat, 'bin_info': None}
+    file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version, syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version, syst='nosyst', method='MultiDimFit')
+    root_file_syst = os.path.join(output_dir_full, file_syst)
+    root_file_stat = os.path.join(output_dir_full, file_stat)
+    root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': None}
     # plot
     if plot_stat_only:
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_FT0_channel-All_binAll{stat_str}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-All_binAll{stat_str}')
     title = f'Channel: All; Bin: All'
-    fig, ax = make_limit_plot(root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
+    fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile)
     return fig, ax
 
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    WC = 'cW'
+    #WC = 'cW'
+    WCs = WC_ALL
     # confidence level
     CL_list = [0.95, CL_1sigma]
-    # VERSION = 'v1'
-    # loop through all bins and plot
-    print("=========================================================")
-    print("Making likelihood plots for each bin...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        for ch in datacard_dict.keys():
-            print(f'Channel: {ch}')
-            for sch in datacard_dict[ch]['subchannels'].keys():
-                print(f'{sch}: ', end='')
-                for bin_ in datacard_dict[ch]['subchannels'][sch]['bins']:
-                    print(f'{bin_} ', end='')
-                    fig, ax = run_lim_plot_bin(WC, ch, sch, bin_, datacard_dict, CL_list, plot_stat_only=pstat)
-                print()
-    print("=========================================================\n")
-    '''
-    # loop through all subchannels and plot
-    print("=========================================================")
-    print("Making likelihood plots for each subchannel...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        for ch in datacard_dict.keys():
-            print(f'Channel: {ch}')
-            for sch in datacard_dict[ch]['subchannels'].keys():
-                print(sch)
-                fig, ax = run_lim_plot_subchannel(ch, sch, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
-    print("=========================================================\n")
-    # loop through all channels and plot
-    print("=========================================================")
-    print("Making likelihood plots for each channel...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        for ch in datacard_dict.keys():
-            print(ch)
-            fig, ax = run_lim_plot_channel(ch, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
-    print("=========================================================\n")
-    #####
-    print("=========================================================")
-    print("Making likelihood plots for full analysis...")
-    for pstat in [True, False]:
-        print(f'Include stat-only? {pstat}')
-        fig, ax = run_lim_plot_analysis(datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
-    print("=========================================================\n")
-    '''
+    for WC in WCs:
+        print(f'WC: '+WC)
+        # loop through all bins and plot
+        print("=========================================================")
+        print("Making likelihood plots for each bin...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            for ch in datacard_dict.keys():
+                if WC not in versions_dict[ch]['EFT_ops']:
+                    continue
+                print(f'Channel: {ch}')
+                for sch in datacard_dict[ch]['subchannels'].keys():
+                    print(f'{sch}: ', end='')
+                    for bin_ in datacard_dict[ch]['subchannels'][sch]['bins']:
+                        print(f'{bin_} ', end='')
+                        fig, ax = run_lim_plot_bin(WC, ch, sch, bin_, datacard_dict, CL_list, plot_stat_only=pstat)
+                    print()
+        print("=========================================================\n")
+        '''
+        # loop through all subchannels and plot
+        print("=========================================================")
+        print("Making likelihood plots for each subchannel...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            for ch in datacard_dict.keys():
+                print(f'Channel: {ch}')
+                for sch in datacard_dict[ch]['subchannels'].keys():
+                    print(sch)
+                    fig, ax = run_lim_plot_subchannel(ch, sch, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
+        print("=========================================================\n")
+        # loop through all channels and plot
+        print("=========================================================")
+        print("Making likelihood plots for each channel...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            for ch in datacard_dict.keys():
+                print(ch)
+                fig, ax = run_lim_plot_channel(ch, datacard_dict, VERSION, CL_list, plot_stat_only=pstat)
+        print("=========================================================\n")
+        '''
+        #####
+        print("=========================================================")
+        print("Making likelihood plots for full analysis...")
+        for pstat in [True, False]:
+            print(f'Include stat-only? {pstat}')
+            fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, plot_stat_only=pstat)
+        print("=========================================================\n")
+
     # plt.show()
 
