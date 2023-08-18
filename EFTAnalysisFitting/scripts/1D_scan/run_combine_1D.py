@@ -12,6 +12,7 @@ and scripts/tools/make_workspaces.py have all been run for the WC of interest.
 In the current version, only single WC are supported.
 '''
 import os
+from time import time
 import subprocess
 import shutil
 import argparse
@@ -124,7 +125,7 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-            name_str = f'_coarse_{WC}_{channel}'
+            name_str = f'_coarse_{WC}_{channel}_{time()}'
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
             outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
             outfile_ = os.path.join(outdir, outfile_)
@@ -147,6 +148,8 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
                 print(cmd_str)
                 proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
             print(f'Finished running combine. Expected file output: {outfile}')
+            # remove coarse file, else they will build up (added time)
+            os.remove(outfile_)
     # go back to original directory
     print(f'Going back to original directory...')
     os.chdir(start_dir)
@@ -184,7 +187,7 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = f'_coarse_{WC}_{channel}'
+        name_str = f'_coarse_{WC}_{channel}_{time()}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
         outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
@@ -206,6 +209,8 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
             print(cmd_str)
             proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
         print(f'Finished running combine. Expected file output: {outfile}')
+        # remove coarse file, else they will build up (added time)
+        os.remove(outfile_)
     # go back to original directory
     print(f'Going back to original directory...')
     os.chdir(start_dir)
@@ -242,7 +247,7 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
         # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-        name_str = f'_coarse_{WC}_{ch}'
+        name_str = f'_coarse_{WC}_{ch}_{time()}'
         outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
         outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
         outfile_ = os.path.join(outdir, outfile_)
@@ -264,6 +269,8 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str,
             print(cmd_str)
             proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
         print(f'Finished running combine. Expected file output: {outfile}')
+        # remove coarse file, else they will build up (added time)
+        os.remove(outfile_)
     # go back to original directory
     print(f'Going back to original directory...')
     os.chdir(start_dir)
@@ -294,7 +301,7 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
     # grid_dict = {'LL':-100, 'UL':100, 'steps': 401}
     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     # name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst)
-    name_str = f'_coarse_{WC}_all'
+    name_str = f'_coarse_{WC}_all_{time()}'
     outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
     outfile_ = f'higgsCombine{name_str}.{METHOD}.mH120.root'
     outfile_ = os.path.join(outdir, outfile_)
@@ -316,6 +323,8 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str,
         print(cmd_str)
         proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
     print(f'Finished running combine. Expected file output: {outfile}')
+    # remove coarse file, else they will build up (added time)
+    os.remove(outfile_)
     # go back to original directory
     print(f'Going back to original directory...')
     os.chdir(start_dir)
