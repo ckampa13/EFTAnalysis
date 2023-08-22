@@ -13,7 +13,11 @@ def config_plots():
         plt.rcParams['grid.linestyle'] = '--'    # dashed grid
         plt.rcParams.update({'font.size': 18.0})   # increase plot font size
         #plt.rcParams.update({"text.usetex": True})
-        plt.rcParams.update({"text.usetex": False})
+        #plt.rcParams.update({"text.usetex": False})
+        # to pretty print WC need these lines
+        plt.rc("text", usetex=True)
+        #plt.rc("text.latex", preamble=r"\usepackage{amsmath}\usepackage{amssymb}")
+        plt.rc("text.latex", preamble=r"\usepackage{amsmath}\usepackage{amssymb}\usepackage{color}")
 
 def ticks_in(ax, top_and_right=True):
     if top_and_right:
@@ -39,7 +43,7 @@ def get_label(data, bins):
     return label
 
 # CMS wrapper for title
-def CMSify_title(ax, lumi='137', lumi_unit='fb', energy='13 TeV', prelim=True):
+def CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True):
     lefttitle=r'$\bf{CMS}$'
     if prelim:
         lefttitle += r' $\it{Preliminary}$'
