@@ -1,6 +1,7 @@
 # note: this requires uproot, and is typically ran on the GPU machine, rather than the LPC.
 import os
 import argparse
+from copy import deepcopy
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
@@ -18,6 +19,7 @@ from MISC_CONFIGS import (
     template_outfilename,
     #template_outfilename_stub,
     dim6_ops,
+    WC_pretty_print_dict,
 )
 from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
@@ -26,12 +28,18 @@ config_plots()
 
 # this is a duplicate from limit_summary_plot.py
 # could consider importing this function
-def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None):
+def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
+                            plot_var_of_choice=True):
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
-    fig = plt.figure(figsize=(16, 8))
-    ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
-    CMSify_title(ax, lumi='137', lumi_unit='fb', energy='13 TeV', prelim=True)
+    if plot_var_of_choice:
+        fig = plt.figure(figsize=(16, 8))
+        ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
+    # TEST BELOW
+    else:
+        fig = plt.figure(figsize=(14, 8))
+        ax = fig.add_axes([0.15, 0.1, 0.75, 0.8])
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     # loop through files to plot
     LLs_all = []
     ULs_all = []
@@ -39,48 +47,88 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
     ylabels_all = []
     text_annot_all = []
     var_annot_all = []
-    for i, item in enumerate(sorted(root_file_dict_full.items())):
-        if i==0:
-            label_total = r'Proj. (stat. $\bigoplus$ syst.)'
-            label_stat = 'stat. only'
-        else:
-            label_total = None
-            label_stat = None
-        yval, info_dict = item
-        yvals_all.append(yval)
-        root_file_dict = info_dict['root_file_dict']
-        ylabels_all.append(info_dict['ylabel'])
-        var_of_choice = info_dict['variable_of_choice']
-        # get limits and plot
-        # total
-        Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
-        err_low = C_best - LLs[0]
-        err_high = ULs[0] - C_best
-        ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
-        LLs_all.append(LLs[0])
-        ULs_all.append(ULs[0])
-        if abs(np.round(C_best, 3)) < 0.001:
-            best_str = f'{0.0:0.3f}'
-        else:
-            best_str = f'{C_best:0.3f}'
-        text_annot = rf'   ${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
-        # stat only
-        # add to label either way
-        Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
-        err_low = C_best - LLs[0]
-        err_high = ULs[0] - C_best
-        text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
-        if plot_stat_only:
-            # ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='blue', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
-            ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
-        text_annot_all.append(text_annot)
-        var_annot_all.append(rf'                                       {var_of_choice}')
+    # for sorting
+    # C_best_list = []
+    # yval_list = []
+    # xerr_list = []
+    #y_sort_dict = {}
+    rdict_full = deepcopy(root_file_dict_full)
+    for loop in [0, 1]:
+        if loop == 0:
+            errs_list = []
+            ys_start_list = []
+        if loop == 1:
+            # sort
+            if sort_by_lim:
+                inds = np.argsort(errs_list)[::-1]
+                ys_start_list = np.array(ys_start_list)
+                #ys_new_list = np.array(ys_start_list)[inds]
+                ys_new_list = ys_start_list[inds]
+                y_sort_dict = {yold:ynew for yold,ynew in zip(ys_start_list, ys_new_list)}
+                #
+                rdict_full_ = deepcopy(rdict_full)
+                rdict_full = {}
+                for y_old, y_new in y_sort_dict.items():
+                    #rdict_full[y_new] = rdict_full_[y_old]
+                    rdict_full[y_old] = rdict_full_[y_new]
+        for i, item in enumerate(sorted(rdict_full.items())):
+            plot_dict = {}
+            if i==1:
+                label_total = r'Proj. (stat. $\bigoplus$ syst.)'+'\nAsimov Dataset'
+                label_stat = 'stat. only'
+            else:
+                label_total = None
+                label_stat = None
+            yval, info_dict = item
+            if loop == 1:
+                yvals_all.append(yval)
+            root_file_dict = info_dict['root_file_dict']
+            if loop == 1:
+                ylabels_all.append(info_dict['ylabel'])
+            var_of_choice = info_dict['variable_of_choice']
+            # get limits and plot
+            # total
+            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+            err_low = C_best - LLs[0]
+            err_high = ULs[0] - C_best
+            #err_mean = (err_low + err_high) / 2.
+            # use width of the limit
+            err_mean = (ULs[0] - LLs[0])
+            if loop == 0:
+                errs_list.append(err_mean)
+                ys_start_list.append(yval)
+            if loop == 1:
+                ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
+                LLs_all.append(LLs[0])
+                ULs_all.append(ULs[0])
+            if abs(np.round(C_best, 3)) < 0.001:
+                best_str = f'{0.0:0.3f}'
+            else:
+                best_str = f'{C_best:0.3f}'
+            #text_annot = rf'   ${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
+            text_annot = rf'${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
+            # stat only
+            # add to label either way
+            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            err_low = C_best - LLs[0]
+            err_high = ULs[0] - C_best
+            text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
+            if plot_stat_only:
+                # ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='blue', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+                if loop == 1:
+                    ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+            if loop == 1:
+                text_annot_all.append(text_annot)
+                #var_annot_all.append(rf'                                       {var_of_choice}')
+                #var_annot_all.append(r'$\textcolor{white}{|}\qquad \qquad \qquad \qquad \qquad$'+var_of_choice)
+                var_annot_all.append(var_of_choice)
     # axis labels
     if WC in dim6_ops:
         suff = r'$ / \Lambda^2$ [TeV]$^{-2}$'
     else:
         suff = r'$ / \Lambda^4$ [TeV]$^{-4}$'
-    ax.set_xlabel(f'Sensitivity to {WC}'+suff)
+    WC_lab = WC_pretty_print_dict[WC]
+    ax.set_xlabel('Sensitivity to '+WC_lab+suff)
     ax.set_title(title+'\n', pad=3.)
     # set xlim to be symmetric
     LLs_all = np.array(LLs_all)
@@ -103,21 +151,26 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
         ax.plot(ax.get_xlim(), [yhrule, yhrule], '--', c='gray', alpha=0.8)
     # annotations for sensitivity
     for yval, text_annot, var_annot in zip(yvals, text_annot_all, var_annot_all):
-        ax.annotate(text_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
-        ax.annotate(var_annot, (1.00*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
+        ax.annotate(text_annot, (1.0*xlim, yval), (1.05*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
+        if plot_var_of_choice:
+            ax.annotate(var_annot, (1.0*xlim, yval), (1.65*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
     # additional annotations
     # total, stat
-    header_str = '               total   stat.'
+    #header_str = '               total   stat.'
+    header_str = r'total$\ \ \ \ $stat.'
     # if plot_stat_only:
     #     header_str = '               total   stat.'
     # else:
     #     header_str = '               total'
     header_y = np.min([np.max(yvals) + 0.5, np.max(yvals) + 0.30 * yrange])
-    ax.annotate(header_str, (1.00*xlim, header_y), xycoords='data')
+    ax.annotate(header_str, (1.00*xlim, header_y), (1.22*xlim, header_y), xycoords='data')
     # var of choice header
-    var_header_str = ('                                       Variable of\n'+
-                      '                                       choice')
-    ax.annotate(var_header_str, (1.00*xlim, header_y), xycoords='data')
+    # var_header_str = ('                                       Variable of\n'+
+    #                   '                                       choice')
+    # var_header_str = (r'$\textcolor{green}{~}\qquad \qquad \qquad \qquad \qquad$'+'Variable of\n'+r'$\textcolor{white}{~}\qquad \qquad \qquad \qquad \qquad$'+'choice')
+    if plot_var_of_choice:
+        var_header_str = 'Variable of\nchoice'
+        ax.annotate(var_header_str, (1.00*xlim, header_y),  (1.65*xlim, header_y), xycoords='data')
     # formatting
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))
     ax = ticks_in(ax)
@@ -186,7 +239,10 @@ def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, plot_stat_on
     else:
         stat_str = ''
     plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}_subchannel-{subchannel}{stat_str}_{WC}')
-    title = f'{int(CL*100)}% CL Sensitivity: {channel}, {subchannel}'
+    WC_lab = WC_pretty_print_dict[WC]
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f': {channel}'
+    if subchannel != '':
+        title += f', {subchannel}'
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
@@ -241,7 +297,8 @@ def run_plot_channel(WC, channel, datacard_dict, CL, plot_stat_only, xlim_factor
     else:
         stat_str = ''
     plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}{stat_str}_{WC}')
-    title = f'{int(CL*100)}% CL Sensitivity: {channel}'
+    WC_lab = WC_pretty_print_dict[WC]
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f': {channel}'
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
@@ -293,7 +350,9 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
     else:
         stat_str = ''
     plotfile = os.path.join(plot_dir, f'sensitivity_summary_all-channels{stat_str}_{WC}')
-    title = f'{int(CL*100)}% CL Sensitivity: All Channels'
+    # title = f'{int(CL*100)}% CL Sensitivity: All Channels'
+    WC_lab = WC_pretty_print_dict[WC]
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
@@ -318,6 +377,7 @@ if __name__=='__main__':
     #########################
     # outer loop (over WC)
     for WC in WCs_loop:
+    # for WC in ['cW']: # testing
         print(f'WC: '+WC)
         # loop through all subchannels and plot
         print("=========================================================")

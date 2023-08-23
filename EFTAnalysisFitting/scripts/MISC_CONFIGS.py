@@ -27,3 +27,19 @@ dim6_ops = [
     'cuGPh', 'cuHAbs', 'cuHPh', 'cuWAbs', 'cuWPh', 'cud1', 'cud8', 'cuu',
     'cuu1'
 ]
+
+WC_pretty_print_dict = {
+    # dim6
+    'cW': r'$C_W$',
+    'cHq3': r'$C_{Hq3}$',
+    'cHq1': r'$C_{Hq1}$',
+    'cHu': r'$C_{Hu}$',
+    'cHd': r'$C_{Hd}$',
+    'cHW': r'$C_{HW}$',
+    'cHB': r'$C_{HB}$',
+    'cHWB': r'$C_{HWB}$',
+    'cHl3': r'$C_{Hl3}$',
+    'cll1': r'$C_{ll1}$',
+    'cHbox': r'$C_{H\square}$',
+    'cHDD': r'$C_{HDD}$',
+}
