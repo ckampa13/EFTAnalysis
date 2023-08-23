@@ -1,0 +1,28 @@
+Combination of ch2L_SSsch_1FJ_2018_scaled=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_SS/v3/VVV.2L_SS_1FJ_2018_scaled.cM0_1D.DataCard_Yields.v3.txt
+imax 1 number of bins
+jmax 9 number of processes minus 1
+kmax 9 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *                           ch2L_SSsch_1FJ_2018_scaled  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_SS/v3/VVV.2L_SS_1FJ_2018_scaled.DataCard_Yields_Cleaned.v3.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs                    ch2L_SSsch_1FJ_2018_scaled  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_SS/v3/VVV.2L_SS_1FJ_2018_scaled.DataCard_Yields_Cleaned.v3.root h_$PROCESS
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch2L_SSsch_1FJ_2018_scaled
+observation  45.9037995189             
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                   ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled  ch2L_SSsch_1FJ_2018_scaled
+process                               sm                          ZZ                          quad_cM0                    ttV                         WW                          WJets                       sm_lin_quad_cM0             DY                          TTbar                       WZ                        
+process                               0                           1                           2                           3                           4                           5                           6                           7                           8                           9                         
+rate                                  -1                          -1                          -1                          -1                          -1                          -1                          -1                          -1                          -1                          -1                        
+----------------------------------------------------------------------------------------------------------------------------------
+btag_sf_medium_         shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+jer_                    shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+jes_                    shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+lep_sf_el_tight_        shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+lep_sf_mu_tight_        shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+prefire_weight_         shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+pu_weight_              shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+statonly                lnN           1.0001                      1.0001                      1.0001                      1.0001                      1.0001                      1.0001                      1.0001                      1.0001                      1.0001                      1.0001                    
+trigger_weight_         shape         -                           1.0                         -                           1.0                         1.0                         1.0                         -                           1.0                         1.0                         1.0                       
+allsyst group = pu_weight_ trigger_weight_ btag_sf_medium_ lep_sf_el_tight_ lep_sf_mu_tight_ jer_ jes_ prefire_weight_
+nosyst group = statonly
+ch2L_SSsch_1FJ_2018_scaled autoMCStats 0 0 1
