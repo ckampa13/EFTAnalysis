@@ -14,7 +14,7 @@ fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
 from CONFIG_VERSIONS import versions_dict
-from MISC_CONFIGS import template_filename_yields, template_filename, datacard_dir
+from MISC_CONFIGS import template_filename_yields, template_filename, datacard_dir, dim6_ops
 
 stat_script = os.path.join(datacard_dir, 'scripts', 'tools', 'update_bin_stat_errors.py')
 
@@ -37,6 +37,11 @@ def update_func(channel, subchannel, ddir, fname):
 
 # update subchannels in a channel
 def update_channel_subchannels(channel, version, datacard_dict):
+    # check if dim8 available
+    has_dim8 = False
+    for WC in versions_dict[channel]['EFT_ops']:
+        if not WC in dim6_ops:
+            has_dim8 = True
     dcdir = datacard_dir
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
@@ -52,11 +57,16 @@ def update_channel_subchannels(channel, version, datacard_dict):
             sname_sch += '_2018_scaled'
             print(' (2018 scaled)', end='')
         tfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned', version=version, file_type='root')
+        if has_dim8:
+            tfile_dim8 = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned_dim8', version=version, file_type='root')
         # dc_file = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
         # dc_file = os.path.join(dcdir, channel, version, tfile)
         # run helper functions
         dir_ = os.path.join(dcdir, channel, version)
         update_func(channel, subch, dir_, tfile)
+        # dim8
+        if has_dim8:
+            update_func(channel, subch, dir_, tfile_dim8)
     print()
 
 

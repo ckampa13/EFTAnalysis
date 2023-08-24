@@ -11,8 +11,8 @@ datacard_dict = {
         'subchannels': {
             '': {
                 # 'bins': [1, 2, 3], # v10, v11, v12, v13
-                # 'bins': [1, 2, 3, 4], # v14
-                'bins': [1, 2, 3, 4, 5], # v15 -- to be verified
+                'bins': [1, 2, 3, 4], # v14, v15
+                # 'bins': [1, 2, 3, 4, 5], # v15 -- to be verified -> only for first pass with FT0 WWW
                 'info': {
                     'short_name': '',
                     'file_name': '',

@@ -15,7 +15,7 @@ fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
 from CONFIG_VERSIONS import versions_dict
-from MISC_CONFIGS import template_filename_yields, template_filename, datacard_dir
+from MISC_CONFIGS import template_filename_yields, template_filename, datacard_dir, dim6_ops
 
 # generic function
 def split_func(ddir, fname, sname_sch, dc_files):
@@ -69,10 +69,15 @@ def update_datacard(ddir, dc_name, bin_n):
 
 # split subchannels in a channel
 def split_channel_subchannels(channel, version, datacard_dict, WCs, ScanType):
+    # check if dim8 available
+    has_dim8 = False
+    for WC in versions_dict[channel]['EFT_ops']:
+        if not WC in dim6_ops:
+            has_dim8 = True
     dcdir = datacard_dir
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
-    print(f'Channel: {channel}; Subchannel: ', end='')
+    print(f'Channel: {channel}; version: {version}; Subchannel: ', end='')
     for i, subch in enumerate(subchannels):
         if i == (len(subchannels)-1):
             print(subch, end='')
@@ -85,15 +90,24 @@ def split_channel_subchannels(channel, version, datacard_dict, WCs, ScanType):
             print(' (2018 scaled),', end='')
         print(WCs, end=', ')
         tfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned', version=version, file_type='root')
+        if has_dim8:
+            tfile_dim8 = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned_dim8', version=version, file_type='root')
         dc_files = []
+        dc_files_dim8 = []
         for WC in WCs:
             dc_file = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
-            dc_files.append(dc_file)
+            if WC in dim6_ops:
+                dc_files.append(dc_file)
+            else:
+                dc_files_dim8.append(dc_file)
         # dc_file = os.path.join(dcdir, channel, version, tfile)
         # run helper functions
         dir_ = os.path.join(dcdir, channel, version)
         # split to new ROOT files for each bin and make a new dc file for each
         split_func(dir_, tfile, sname_sch, dc_files)
+        # dim8
+        if has_dim8:
+            split_func(dir_, tfile_dim8, sname_sch, dc_files_dim8)
     print()
 
 

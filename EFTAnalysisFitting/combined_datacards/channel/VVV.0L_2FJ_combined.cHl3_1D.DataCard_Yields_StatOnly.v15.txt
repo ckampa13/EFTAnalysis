@@ -7,7 +7,7 @@ shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/
 shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch             
-observation  16180.9916915148
+observation  16178.0052554622
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                             sch               sch               sch               sch               sch               sch               sch               sch               sch               sch               sch             
 process                         sm                ZZ                sm_lin_quad_cHl3  ttV               quad_cHl3         WW                WJets             DY                QCD               TTbar             WZ              

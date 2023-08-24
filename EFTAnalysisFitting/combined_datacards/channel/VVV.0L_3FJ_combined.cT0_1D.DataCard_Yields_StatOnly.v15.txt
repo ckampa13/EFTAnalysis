@@ -3,8 +3,8 @@ imax 1 number of bins
 jmax 10 number of processes minus 1
 kmax 2 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v15/VVV.0L_3FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v15/VVV.0L_3FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS
+shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v15/VVV.0L_3FJ.DataCard_Yields_Cleaned_dim8.v15.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v15/VVV.0L_3FJ.DataCard_Yields_Cleaned_dim8.v15.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch          
 observation  566.888944125
