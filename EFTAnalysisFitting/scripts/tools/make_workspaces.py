@@ -224,6 +224,7 @@ if __name__=='__main__':
         print(f'WC: '+WC)
         #########################
         # bins workspaces
+        '''
         print('Generating bin workspaces:')
         print('=================================================')
         for channel in channels:
@@ -252,6 +253,7 @@ if __name__=='__main__':
                 make_workspace_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
         print('=================================================\n')
         #########################
+        '''
         # channel workspaces
         print('Generating channel workspaces:')
         print('=================================================')

@@ -387,6 +387,7 @@ if __name__=='__main__':
         print(f'WC: '+WC)
         #########################
         # bin calculations
+        '''
         print('Running combine for each bin:')
         print('=================================================')
         for channel in channels:
@@ -415,7 +416,7 @@ if __name__=='__main__':
                              Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                              stdout=stdout, verbose=args.Verbose)
         print('=================================================\n')
-        # '''
+        '''
         #########################
         # channel calculations
         print('Running combine for each channel:')
@@ -435,4 +436,3 @@ if __name__=='__main__':
                          stdout=stdout, verbose=args.Verbose)
         print('=================================================\n')
         #########################
-        # '''
