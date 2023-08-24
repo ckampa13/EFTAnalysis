@@ -253,7 +253,6 @@ if __name__=='__main__':
                 make_workspace_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
         print('=================================================\n')
         #########################
-        '''
         # channel workspaces
         print('Generating channel workspaces:')
         print('=================================================')
@@ -269,5 +268,4 @@ if __name__=='__main__':
             print('Stat only? ', StatOnly)
             make_workspace_full_analysis(WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
         print('=================================================\n')
-        '''
         #########################
