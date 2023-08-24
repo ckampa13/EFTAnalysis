@@ -224,7 +224,7 @@ if __name__=='__main__':
         print(f'WC: '+WC)
         #########################
         # bins workspaces
-        '''
+        # '''
         print('Generating bin workspaces:')
         print('=================================================')
         for channel in channels:
@@ -269,4 +269,5 @@ if __name__=='__main__':
             print('Stat only? ', StatOnly)
             make_workspace_full_analysis(WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
         print('=================================================\n')
+        '''
         #########################
