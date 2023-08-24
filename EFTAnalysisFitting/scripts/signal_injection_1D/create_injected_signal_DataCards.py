@@ -15,9 +15,13 @@ from MISC_CONFIGS import template_filename_yields, template_filename, datacard_d
 
 def make_dir(ddir):
     # check directory
-    os.makedirs(ddir, exist_ok=True)
+    # os.makedirs(ddir, exist_ok=True) # only works python3
+    if not os.path.isdir(ddir):
+        print('Creating directory: ', ddir)
+        os.mkdir(ddir)
 
 def copy_files(ddir_start, ddir_end, files_list):
+    print('Copying files...')
     for file in files_list:
         file_old = os.path.join(ddir_start, file)
         file_new = os.path.join(ddir_end, file)
@@ -34,9 +38,9 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
     v = versions_dict[channel]['v']
     version = 'v'+str(v)
     # MAIN REPO
-#     dcdir = os.path.join(datacard_dir, channel, version)
+    dcdir = os.path.join(datacard_dir, channel, version)
     # FOR DEV ONLY
-    dcdir = datacard_dir
+    # dcdir = datacard_dir
     inject_dir = os.path.join(dcdir, 'signal_injection_'+WC)
     make_dir(inject_dir)
     # get the channel string
@@ -51,7 +55,7 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
         # update subchannel name if there is rescaling
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
-            print(' (2018 scaled)', end='')
+            #print(' (2018 scaled)', end='')
         scanfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='', version=version, file_type='txt')
         scanfile_SO = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='_StatOnly', version=version, file_type='txt')
         yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
@@ -71,7 +75,9 @@ def update_data_obs(WC, WC_value, channel, datacard_dir=datacard_dir, verbose=Fa
     # version number
     v = versions_dict[channel]['v']
     version = 'v'+str(v)
-    inject_dir = os.path.join(datacard_dir, 'signal_injection_'+WC)
+    # MAIN REPO
+    dcdir = os.path.join(datacard_dir, channel, version)
+    inject_dir = os.path.join(dcdir, 'signal_injection_'+WC)
     # get the channel string
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
@@ -82,7 +88,7 @@ def update_data_obs(WC, WC_value, channel, datacard_dir=datacard_dir, verbose=Fa
         # update subchannel name if there is rescaling
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
-            print(' (2018 scaled)', end='')
+            #print(' (2018 scaled)', end='')
         yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
         yieldfile = os.path.join(inject_dir, yieldfile)
         #cpfile = yieldfile.replace('VVV', 'COPY_VVV')
@@ -151,11 +157,11 @@ def setup_signal_injection(WC, WC_value, datacard_dict, datacard_dir=datacard_di
     for channel in datacard_dict.keys():
         if WC not in versions_dict[channel]['EFT_ops']:
             continue
-        print(f'Channel: {channel}')
+        print('Channel: ', channel)
         # first copy relevant files to the signal injection directory
-        channel_copy_to_signal_inject(WC, channel=channel, datacard_dict=datacard_dict, datacard_dir=ddir)
+        channel_copy_to_signal_inject(WC, channel=channel, datacard_dict=datacard_dict, datacard_dir=datacard_dir)
         # then update h_data_obs
-        update_data_obs(WC, WC_value, channel, datacard_dir=ddir, verbose=False)
+        update_data_obs(WC, WC_value, channel, datacard_dir=datacard_dir, verbose=False)
 
 
 if __name__=='__main__':
