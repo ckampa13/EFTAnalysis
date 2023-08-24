@@ -20,7 +20,8 @@ from MISC_CONFIGS import (
     dim6_ops,
     WC_pretty_print_dict,
 )
-from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+# from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
 from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
@@ -46,13 +47,20 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_s
     if plot_stat_only:
         for CL, NLL_cut, LL, UL, LL_s, UL_s in zip(CL_list, NLL_cuts, LLs, ULs, LLs_stat, ULs_stat):
             # build label
-            label = WC_l+f'@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
+            #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
+            # multi interval
+            label = WC_l+f'@{CL*100:0.1f}\%:\n'
+            label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n\n'
+            label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL_s, UL_s)]) + '\n(stat. only)\n'
             # add to the plot
             ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
     else:
         for CL, NLL_cut, LL, UL, in zip(CL_list, NLL_cuts, LLs, ULs):
             # build label
-            label = WC_l+f'@{CL*100:0.1f}%:\n[{LL:0.3f}, {UL:0.3f}]'
+            #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]'
+            # multi interval
+            label = WC_l+f'@{CL*100:0.1f}\%:\n'
+            label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n'
             # add to the plot
             ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
     if WC in dim6_ops:
@@ -69,15 +77,16 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], plot_s
     ax = ticks_sizes(ax, major={'L':15,'W':1.5}, minor={'L':8,'W':1})
     # axis limits
     if plot_stat_only:
-        largest_lim = 2*np.max(np.abs(np.array([LLs, ULs, LLs_stat, ULs_stat])))
+        largest_lim = 1.25*np.max(np.abs(np.array(np.concatenate([np.concatenate(LLs), np.concatenate(ULs), np.concatenate(LLs_stat), np.concatenate(ULs_stat)]))))
     else:
-        largest_lim = 2*np.max(np.abs(np.array([LLs, ULs])))
+        largest_lim = 1.25*np.max(np.abs(np.array(np.concatenate([np.concatenate(LLs), np.concatenate(ULs)]))))
     xlim = np.max(np.abs([xmin, xmax]))
     xlim2 = np.min(np.abs([xmin, xmax]))
     if largest_lim < xlim:
         ax.set_xlim([-largest_lim, largest_lim])
     else:
-        ax.set_xlim([-xlim2, xlim2])
+        #ax.set_xlim([-xlim2, xlim2])
+        ax.set_xlim([-largest_lim, largest_lim])
     ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
     ax.legend(loc='upper left', bbox_to_anchor=(1,1))
     # save?
@@ -213,8 +222,9 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, plot_stat_only, version=No
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    #WC = 'cW'
     WCs = WC_ALL
+    #WCs = ['cT0', 'cM0']
+    # WCs = ['cHl3']
     # confidence level
     CL_list = [0.95, CL_1sigma]
     for WC in WCs:

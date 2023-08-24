@@ -18,7 +18,8 @@ from MISC_CONFIGS import (
     dim6_ops,
     WC_pretty_print_dict,
 )
-from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+#from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
 from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
@@ -27,8 +28,8 @@ config_plots()
 # FIXME! Harmonize with the function in "limit_summary_plto_from_dir.py"
 # main feature that would need to change is passing in multiple WCs
 # which should be embedded in root_file_dict_full
-def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
-                                plot_var_of_choice=True):
+def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=False, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
+                                plot_var_of_choice=False):
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
     if plot_var_of_choice:
@@ -89,38 +90,57 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=T
             # get limits and plot
             # total
             Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
-            err_low = C_best - LLs[0]
-            err_high = ULs[0] - C_best
-            #err_mean = (err_low + err_high) / 2.
-            # use width of the limit
-            err_mean = (ULs[0] - LLs[0])
-            if loop == 0:
-                errs_list.append(err_mean)
-                ys_start_list.append(yval)
-            if loop == 1:
-                ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
-                LLs_all.append(LLs[0])
-                ULs_all.append(ULs[0])
+            Cs_s, NLL_s, CL_list_s, NLL_cuts_s, LLs_s, ULs_s, C_best_stat_s, NLL_best_s = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            err_low = C_best - LLs[0][0]
+            err_high = ULs[0][-1] - C_best
+            err_low_s = C_best - LLs_s[0][0]
+            err_high_s = ULs_s[0][-1] - C_best
+            # add to annotation
             if abs(np.round(C_best, 3)) < 0.001:
                 best_str = f'{0.0:0.3f}'
             else:
                 best_str = f'{C_best:0.3f}'
-            #text_annot = rf'   ${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
             text_annot = rf'${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
-            # stat only
-            # add to label either way
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
-            err_low = C_best - LLs[0]
-            err_high = ULs[0] - C_best
-            text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
-            if plot_stat_only:
-                # ax.errorbar([FT0_best], [yval], xerr=[[err_low],[err_high]], c='blue', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
-                if loop == 1:
-                    ax.errorbar([C_best], [yval], xerr=[[err_low],[err_high]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+            text_annot += rf'$\ ~^{{+ {err_high_s:0.3f} }}_{{- {err_low_s:0.3f} }}$'
+            if len(LLs[0]) > 1:
+                # asterisk will be explained in figure caption (means discontinuous interval)
+                text_annot += '  *'
+            # use width of the limit for sorting
+            err_mean = (ULs[0][-1] - LLs[0][0])
+            if loop == 0:
+                errs_list.append(err_mean)
+                ys_start_list.append(yval)
             if loop == 1:
+                # TEST
+                err_high_annot = -1000
+                err_low_annot = -1000
+                # find the interval that the best val is actually in
+                for UL_, LL_, UL_s, LL_s in zip(ULs[0], LLs[0], ULs_s[0], LLs_s[0]):
+                    # for UL_, LL_ in zip(UL, LL):
+                    if (C_best > LL_) and (C_best < UL_):
+                        err_low = C_best - LL_
+                        err_high = UL_ - C_best
+                        err_low_s = C_best - LL_s
+                        err_high_s = UL_s - C_best
+                        ax.errorbar([C_best],[yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
+                        if plot_stat_only:
+                            ax.errorbar([C_best], [yval], xerr=[[err_low_s],[err_high_s]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+                    # an additional interval to plot
+                    else:
+                        #cval = (UL_ + LL_) / 2.
+                        m = (Cs >= LL_) & (Cs <= UL_)
+                        ibest = np.argmin(NLL[m])
+                        cval = Cs[ibest]
+                        err_low = cval - LL_
+                        err_high = UL_ - cval
+                        err_low_s = cval - LL_s
+                        err_high_s = UL_s - cval
+                        ax.errorbar([cval], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, marker='', zorder=8)
+                        if plot_stat_only:
+                            ax.errorbar([cval], [yval], xerr=[[err_low_s],[err_high_s]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7)
+                LLs_all.append(LLs[0][0])
+                ULs_all.append(ULs[0][-1])
                 text_annot_all.append(text_annot)
-                #var_annot_all.append(rf'                                       {var_of_choice}')
-                #var_annot_all.append(r'$\textcolor{white}{|}\qquad \qquad \qquad \qquad \qquad$'+var_of_choice)
                 var_annot_all.append(var_of_choice)
     # axis labels
     # this will grab most recent WC (fine as long as I don't mix dim6 and dim8 on the same plot)
@@ -159,18 +179,9 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=T
             ax.annotate(var_annot, (1.0*xlim, yval), (1.65*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
     # additional annotations
     # total, stat
-    #header_str = '               total   stat.'
     header_str = r'total$\ \ \ \ $stat.'
-    # if plot_stat_only:
-    #     header_str = '               total   stat.'
-    # else:
-    #     header_str = '               total'
     header_y = np.min([np.max(yvals) + 0.5, np.max(yvals) + 0.30 * yrange])
     ax.annotate(header_str, (1.00*xlim, header_y), (1.22*xlim, header_y), xycoords='data')
-    # var of choice header
-    # var_header_str = ('                                       Variable of\n'+
-    #                   '                                       choice')
-    # var_header_str = (r'$\textcolor{green}{~}\qquad \qquad \qquad \qquad \qquad$'+'Variable of\n'+r'$\textcolor{white}{~}\qquad \qquad \qquad \qquad \qquad$'+'choice')
     if plot_var_of_choice:
         var_header_str = 'Variable of\nchoice'
         ax.annotate(var_header_str, (1.00*xlim, header_y),  (1.65*xlim, header_y), xycoords='data')
@@ -192,8 +203,6 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=T
 
 
 def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
-    # output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
-    #output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
     plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis')
     root_file_dict_full = {}
@@ -226,7 +235,6 @@ def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
     else:
         stat_str = ''
     plotfile = os.path.join(plot_dir, f'{dim}_sensitivity_summary{stat_str}')
-    # title = f'{int(CL*100)}% CL Sensitivity: All Channels'
     title = f'{int(CL*100)}\% CL Sensitivity to '+dim_l+' Wilson Coefficients'
 
     fig, ax = make_limit_summary_plot_WCs(root_file_dict_full, title, CL=CL, add_hrule=False, plot_stat_only=plot_stat_only,
@@ -240,14 +248,16 @@ if __name__=='__main__':
     # FIXME! make this a commandline arg?
     # most sensitive
     WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHB']
-    # WCs_dim8 = ['cT0', 'cM0']
+    # all dim6
+    #WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHB', 'cHl3', 'cHWB', 'cll1', 'cHDD', 'cHbox']
+    WCs_dim8 = ['cT0', 'cM0']
     # all
     # WCs = WC_ALL
     # CL
     CL = 0.95
     # loop through dim6 and dim8
-    # for WCs, dim in zip([WCs_dim6, WCs_dim8], ['dim6', 'dim8']):
-    for WCs, dim in zip([WCs_dim6], ['dim6']): # only dim6
+    for WCs, dim in zip([WCs_dim6, WCs_dim8], ['dim6', 'dim8']):
+    # for WCs, dim in zip([WCs_dim6], ['dim6']): # only dim6
         # run plot twice (with and without stat only)
         print("=========================================================")
         print(f"Making sensitivity plots for {dim}...")

@@ -42,4 +42,6 @@ WC_pretty_print_dict = {
     'cll1': r'$C_{ll1}$',
     'cHbox': r'$C_{H\square}$',
     'cHDD': r'$C_{HDD}$',
+    'cT0': r'$f_{T0}$',
+    'cM0': r'$f_{M0}$',
 }
