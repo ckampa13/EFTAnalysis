@@ -45,11 +45,11 @@ def write_datacards(WCs, channel, keys_out, keys_out_dim8, filename_root_out, fi
         datacard_string += 'kmax    * number of nuisance parameters\n'
         datacard_string += linebreak
         # files and format of the histogram names
-        datacard_string += f'shapes * * {filename_root_} h_$PROCESS h_$PROCESS_$SYSTEMATIC\n'
-        datacard_string += f'shapes data_obs * {filename_root_} h_$PROCESS\n'
+        datacard_string += 'shapes * * %s h_$PROCESS h_$PROCESS_$SYSTEMATIC\n' % filename_root_
+        datacard_string += 'shapes data_obs * %s h_$PROCESS\n' % filename_root_
         datacard_string += linebreak
         # observation line
-        datacard_string += f'bin          {bin_label}\n'
+        datacard_string += 'bin          %s\n' % bin_label
         # if has_data:
         #     datacard_string += '# ROOT contained "data_obs"\n'
         # else:
@@ -115,34 +115,27 @@ def write_datacards(WCs, channel, keys_out, keys_out_dim8, filename_root_out, fi
         all_systs = sorted(list(all_systs))
         # now loop through each systematic and fill for each process appropriately
         for syst in all_systs:
-            #datacard_string += f'{syst:<20} shape '
             datacard_string += '%-20s' % syst
             datacard_string += ' shape '
             for proc in procs_:
                 k = 'h_%s_%sUp' % (proc, syst)
                 if k in keys_:
-                    #datacard_string += f'{"1":<30}'
                     datacard_string += '%-30s' % "1"
                 else:
-                    # datacard_string += f'{"-":<30}'
                     datacard_string += '%-30s' % "-"
             datacard_string += '\n'
         # dummy systematics line
         datacard_string += '# systematics "off" (very very small)\n'
-        #datacard_string += f'{"statonly":<20}'
         datacard_string += '%-20s' % 'statonly'
         datacard_string += ' lnN   '
-        #y = f'{"1.0001":<30}'
         y = '%-30s' % '1.0001'
         datacard_string += ''.join(len(procs_)*[y]) + '\n'
         # artificially add "statonly" to systematics if they are missing from the file
         if len(all_systs) < 1:
             all_systs = ['statonly2']
             datacard_string += '# systematics "off" (very very small)\n'
-            #datacard_string += f'{"statonly2":<20}'
             datacard_string += '%-20s' % 'statonly2'
             datacard_string += ' lnN   '
-            # y = f'{"1.0001":<30}'
             y = '%-30s' % '1.0001'
             datacard_string += ''.join(len(procs_)*[y]) + '\n'
         # add "groups" line for turning on and off systematics
