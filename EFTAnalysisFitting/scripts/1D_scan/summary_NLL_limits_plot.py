@@ -30,11 +30,15 @@ config_plots()
 
 colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
 
-def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_stat_only=False, savefile=None, sort_by_lim=True):
+def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2):
     # plot
-    fig = plt.figure(figsize=(16, 8))
-    #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
-    ax = fig.add_axes([0.05, 0.1, 0.50, 0.75])
+    if ncol <= 2:
+        fig = plt.figure(figsize=(16, 8))
+        #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
+        ax = fig.add_axes([0.05, 0.1, 0.50, 0.75])
+    else:
+        fig = plt.figure(figsize=(18, 8))
+        ax = fig.add_axes([0.05, 0.1, 0.45, 0.75])
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     WC_l = WC_pretty_print_dict[WC]
     # loop through files to plot
@@ -142,14 +146,18 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
     else:
         yu = ymax_min
     ax.set_ylim([-0.01, yu])
-    ax.legend(loc='upper left', bbox_to_anchor=(1,1), ncol=2)
+    ax.legend(loc='upper left', bbox_to_anchor=(1,1), ncol=ncol)
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0):
+    if SignalInject:
+        Asi = f'Data_SignalInject_{WC}'
+    else:
+        Asi = 'Asimov'
     WC_l = WC_pretty_print_dict[WC]
     output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
@@ -168,9 +176,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only):
                     'channel': fname_ch, 'subchannel': 'All',
                     'version': version, 'bin_': 'All',
                     }
-        # FIXME! 'Asimov' should be passed in. Need to be able to run with data_obs, e.g. signal injection tests.
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -183,21 +190,32 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only):
                 'channel': 'All', 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
                 }
-    file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
-    root_file_dict_full[N+1] = {'root_file_dict': root_file_dict, 'ylabel': 'Full analysis\nAsimov Dataset',
+    if SignalInject:
+        ylabel = f'Full analysis\nSignal Injected\n{WC}={InjectValue:0.2f}'
+    else:
+        ylabel = 'Full analysis\nAsimov Dataset'
+    root_file_dict_full[N+1] = {'root_file_dict': root_file_dict, 'ylabel': ylabel,
                                    'variable_of_choice': ''}
     # plot
     if plot_stat_only:
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'full_analysis_and_channels_NLL_vs_{WC}{stat_str}')
+    if SignalInject:
+        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}')
+    else:
+        plotfile = os.path.join(plot_dir, f'full_analysis_and_channels_NLL_vs_{WC}{stat_str}')
     title = f'{CL*100:0.1f}\% CL Limits on '+WC_l+f'\nFull Combination and Channel Results'
-    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=CL, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True)
+    if SignalInject:
+        ncol = 3
+    else:
+        ncol = 2
+    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=CL, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol)
     return fig, ax
 
 
@@ -205,6 +223,13 @@ if __name__=='__main__':
     # FIX ME! make these command line args
     # WCs = ['cW'] # testing
     WCs = WC_ALL
+    # Asimov
+    SignalInject=False
+    InjectValue = 0.0
+    # SignalInjection cW
+    # SignalInject=True
+    # InjectValue = 0.2
+    # WCs = ['cW']
     # confidence level
     CL = 0.95
     for WC in WCs:
@@ -214,7 +239,7 @@ if __name__=='__main__':
         print("Making NLL plot with full combination and channel results...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat)
+            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat, SignalInject=SignalInject, InjectValue=InjectValue)
         print("=========================================================\n")
     # plt.show()
 
