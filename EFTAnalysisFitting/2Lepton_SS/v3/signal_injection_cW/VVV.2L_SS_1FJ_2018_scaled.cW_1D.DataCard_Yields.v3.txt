@@ -8,7 +8,7 @@ shapes data_obs * VVV.2L_SS_1FJ_2018_scaled.DataCard_Yields_Cleaned.v3.root h_$P
 ----------------------------------------------------------------------------------------------------
 bin          bin_2L_SS_1FJ_2018_scaled
 # ROOT did not contain "data_obs". Using Asimov value.
-observation  45.90379951894283
+observation -1
 ----------------------------------------------------------------------------------------------------
 bin                        bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     bin_2L_SS_1FJ_2018_scaled     
 process                    sm                            quad_cW                       sm_lin_quad_cW                DY                            TTbar                         WJets                         WW                            WZ                            ZZ                            ttV                           

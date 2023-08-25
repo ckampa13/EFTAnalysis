@@ -1,0 +1,29 @@
+Combination of sch_OF=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_OF.cW_1D.DataCard_Yields_StatOnly.v7.txt  sch_SFnoZ=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFnoZ.cW_1D.DataCard_Yields_StatOnly.v7.txt  sch_SFZ=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFZ.cW_1D.DataCard_Yields_StatOnly.v7.txt
+imax 3 number of bins
+jmax 5 number of processes minus 1
+kmax 7 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *          sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_OF.DataCard_Yields_Cleaned.v7.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_OF     /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_OF.DataCard_Yields_Cleaned.v7.root h_$PROCESS
+shapes *          sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFZ.DataCard_Yields_Cleaned.v7.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_SFZ    /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFZ.DataCard_Yields_Cleaned.v7.root h_$PROCESS
+shapes *          sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFnoZ.DataCard_Yields_Cleaned.v7.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs   sch_SFnoZ  /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/2Lepton_OS/v7/signal_injection_cW/VVV.2L_OS_SFnoZ.DataCard_Yields_Cleaned.v7.root h_$PROCESS
+----------------------------------------------------------------------------------------------------------------------------------
+bin          sch_OF     sch_SFnoZ  sch_SFZ  
+observation  -1         -1         -1       
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                      sch_OF          sch_OF          sch_OF          sch_OF          sch_OF          sch_SFnoZ       sch_SFnoZ       sch_SFnoZ       sch_SFnoZ       sch_SFnoZ       sch_SFZ         sch_SFZ         sch_SFZ         sch_SFZ         sch_SFZ       
+process                                  sm              quad_cW         TTbar           sm_lin_quad_cW  restbkg         sm              quad_cW         restbkg         sm_lin_quad_cW  DY              sm              quad_cW         restbkg         sm_lin_quad_cW  DY            
+process                                  0               1               2               3               4               0               1               4               3               5               0               1               4               3               5             
+rate                                     -1              -1              -1              -1              -1              -1              -1              -1              -1              -1              -1              -1              -1              -1              -1            
+----------------------------------------------------------------------------------------------------------------------------------
+datadriven_DYSFZ_       shape            -               -               -               -               -               -               -               -               -               -               -               -               -               -               1.0           
+datadriven_DYSFnoZ_     shape            -               -               -               -               -               -               -               -               -               1.0             -               -               -               -               -             
+datadriven_TTbarOF_     shape            -               -               1.0             -               -               -               -               -               -               -               -               -               -               -               -             
+norm_restbkgOF_         shape            -               -               -               -               1.0             -               -               -               -               -               -               -               -               -               -             
+norm_restbkgSFZ_        shape            -               -               -               -               -               -               -               -               -               -               -               -               1.0             -               -             
+norm_restbkgSFnoZ_      shape            -               -               -               -               -               -               -               1.0             -               -               -               -               -               -               -             
+statonly                lnN              1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001          1.0001        
+allsyst group = datadriven_DYSFZ_ norm_restbkgSFnoZ_ norm_restbkgSFZ_ norm_restbkgOF_ datadriven_DYSFnoZ_ datadriven_TTbarOF_
+nosyst group = statonly

@@ -27,6 +27,20 @@ def copy_files(ddir_start, ddir_end, files_list):
         file_new = os.path.join(ddir_end, file)
         shutil.copyfile(file_old, file_new)
 
+# update data line
+def update_obs_datacards(ddir_end, files_list):
+    for f in files_list:
+        fname = os.path.join(ddir_end, f)
+        with open(fname, 'r') as f_:
+            lines = f_.readlines()
+        lines_new = []
+        for l in lines:
+            if ("observation" in l) and (l[0] != '#'):
+                l = "observation -1\n"
+            lines_new.append(l)
+        with open(fname, 'w') as f_:
+            f_.writelines(lines_new)
+
 def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datacard_dir):
     # dim8 check
     if WC in dim6_ops:
@@ -48,6 +62,7 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
     subchannels = datacard_dict[channel]['subchannels'].keys()
     # loop through subchannels
     files_ch = []
+    files_dc = []
     for i, subch in enumerate(subchannels):
         #print('Subchannel: '+subch+', ', end=': ')
         #print(subch)
@@ -62,9 +77,13 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
         files_ch.append(scanfile)
         files_ch.append(scanfile_SO)
         files_ch.append(yieldfile)
+        files_dc.append(scanfile)
+        files_dc.append(scanfile_SO)
     print()
     # copy files
     copy_files(ddir_start=dcdir, ddir_end=inject_dir, files_list=files_ch)
+    # updata datacard
+    update_obs_datacards(ddir_end=inject_dir, files_list=files_dc)
 
 def update_data_obs(WC, WC_value, channel, datacard_dir=datacard_dir, verbose=False):
     # dim8 check

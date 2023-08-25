@@ -9,8 +9,14 @@ from DATACARD_DICT import datacard_dict
 from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import template_filename, datacard_dir
 
+# check directory exists for signal injection
+# def check_dir(ddir):
+#     if not os.path.isdir(ddir):
+#         print('Creating directory: ', ddir)
+#         os.mkdir(ddir)
+
 # combine subchannels in a channel
-def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType, StatOnly):
+def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType, StatOnly, SignalInject=False):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -31,12 +37,19 @@ def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType, S
             sname_sch += '_2018_scaled'
             print(' (2018 scaled)', end='')
         tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
-        dc_file = os.path.join(dcdir, channel, version, tfile)
+        if SignalInject:
+            dc_file = os.path.join(dcdir, channel, version, 'signal_injection_'+WC, tfile)
+        else:
+            dc_file = os.path.join(dcdir, channel, version, tfile)
         dc_name = f' sch{sname_sch}'
         cmd_str += f'{dc_name}={dc_file}'
     print()
     # construct output file
-    tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
+    if SignalInject:
+        suff_purp = '_SignalInject_'+WC
+    else:
+        suff_purp = ''
+    tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version=version, file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel', tfile_comb)
     cmd_str += f'> {comb_file}'
     # run combine script
@@ -45,7 +58,7 @@ def combine_channel_subchannels(channel, version, datacard_dict, WC, ScanType, S
     proc = subprocess.run(cmd_str, shell=True, stdout=stdout)
 
 # combine all channels
-def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
+def combine_all_channels(datacard_dict, WC, ScanType, StatOnly, SignalInject=False):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -80,7 +93,10 @@ def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
                 sname_sch += '_2018_scaled'
                 # print(' (2018 scaled)', end='')
             tfile_ch = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
-            dc_file = os.path.join(dcdir, ch, version, tfile_ch)
+            if SignalInject:
+                dc_file = os.path.join(dcdir, ch, version, 'signal_injection_'+WC, tfile_ch)
+            else:
+                dc_file = os.path.join(dcdir, ch, version, tfile_ch)
             dc_name = f' ch{sname_ch}sch{sname_sch}'
             cmd_str += f'{dc_name}={dc_file}'
         if i != (len(channels) - 1):
@@ -91,7 +107,11 @@ def combine_all_channels(datacard_dict, WC, ScanType, StatOnly):
         print('No channels have the following WC: '+WC+', combineCards.py will not be run!')
         return
     # construct output file
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    if SignalInject:
+        suff_purp = '_SignalInject_'+WC
+    else:
+        suff_purp = ''
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
     cmd_str += f'> {comb_file}'
     # run combine script
@@ -109,6 +129,8 @@ if __name__=='__main__':
                         help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW" (default), ...]')
     parser.add_argument('-s', '--ScanType',
                         help=f'What type of EFT scan was included in this file? ["_1D" (default),]')
+    parser.add_argument('-i', '--SignalInject',
+                        help=f'Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -125,6 +147,10 @@ if __name__=='__main__':
         WCs_loop = [args.WC]
     if args.ScanType is None:
         args.ScanType = '_1D'
+    if args.SignalInject is None:
+        SignalInject = False
+    else:
+        SignalInject = args.SignalInject == 'y'
     #########################
     # outer loop (over WC)
     for WC in WCs_loop:
@@ -141,7 +167,7 @@ if __name__=='__main__':
             VERSION = f'v{v}'
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_channel_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly)
+                combine_channel_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject)
         print('=================================================\n')
         #########################
         # combine all channels
@@ -149,6 +175,6 @@ if __name__=='__main__':
         print('=================================================')
         for StatOnly in [False, True]:
             print('Stat only? ', StatOnly)
-            combine_all_channels(datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly)
+            combine_all_channels(datacard_dict, WC=WC, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject)
         print('=================================================\n')
         #########################

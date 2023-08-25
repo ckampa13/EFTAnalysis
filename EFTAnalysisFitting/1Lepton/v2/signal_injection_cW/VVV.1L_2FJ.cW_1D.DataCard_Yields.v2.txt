@@ -8,7 +8,7 @@ shapes data_obs * VVV.1L_2FJ.DataCard_Yields_Cleaned.v2.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------
 bin          bin_1L_2FJ
 # ROOT contained "data_obs"
-observation  955.0
+observation -1
 ----------------------------------------------------------------------------------------------------
 bin                        bin_1L_2FJ                    bin_1L_2FJ                    bin_1L_2FJ                    bin_1L_2FJ                    bin_1L_2FJ                    bin_1L_2FJ                    
 process                    sm                            quad_cW                       sm_lin_quad_cW                Other                         Top                           WJets                         

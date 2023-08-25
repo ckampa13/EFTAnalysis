@@ -3,6 +3,7 @@
 # be used s.t. deltaNLL >= some threshold. Given some desired step size, the
 # appropriate number of steps is also calculated.
 import os
+import math
 import argparse
 import numpy as np
 import ROOT
@@ -24,14 +25,21 @@ def check_file_threshold(rootfile, WC, NLL_threshold, stepsize, stepsize_coarse)
     nlls[np.isnan(nlls)] = 1000.
     # using a mask, find LL and UL (to be adjusted)
     below_thresh = nlls < NLL_threshold
-    ilow = np.arange(len(nlls))[below_thresh][0] - 1
-    ihigh = np.arange(len(nlls))[below_thresh][-1] + 1
-    if ilow < 0:
-        ilow = 0
-    if ihigh > len(nlls) -1:
-        ihigh = len(nlls)-1
-    LL = cs[ilow]
-    UL = cs[ihigh]
+    if below_thresh.sum() < 1:
+        limit.GetEntry(0)
+        dc = cs[1] - cs[0]
+        c_best = round(getattr(limit, 'k_'+WC), int(-math.log10(dc)))
+        LL = c_best - 1.1*dc
+        UL = c_best + 1.1*dc
+    else:
+        ilow = np.arange(len(nlls))[below_thresh][0] - 1
+        ihigh = np.arange(len(nlls))[below_thresh][-1] + 1
+        if ilow < 0:
+            ilow = 0
+        if ihigh > len(nlls) -1:
+            ihigh = len(nlls)-1
+        LL = cs[ilow]
+        UL = cs[ihigh]
     # calculate number of steps and adjust UL
     range_ = UL - LL
     if range_ > 10:

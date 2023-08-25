@@ -8,7 +8,7 @@ shapes data_obs * VVV.2L_OS_OF.DataCard_Yields_Cleaned.v7.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------
 bin          bin_2L_OS_OF
 # ROOT did not contain "data_obs". Using Asimov value.
-observation  225.38333633801278
+observation -1
 ----------------------------------------------------------------------------------------------------
 bin                        bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  bin_2L_OS_OF                  
 process                    sm                            quad_cW                       sm_lin_quad_cW                TTbar                         restbkg                       
