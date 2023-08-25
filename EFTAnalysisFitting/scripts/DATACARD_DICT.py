@@ -78,7 +78,7 @@ datacard_dict = {
     '1Lepton': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3, 4], # v1, v2
+                'bins': [1, 2, 3, 4], # v1, v2, v3
                 'info': {
                     'short_name': '',
                     'file_name': '',
