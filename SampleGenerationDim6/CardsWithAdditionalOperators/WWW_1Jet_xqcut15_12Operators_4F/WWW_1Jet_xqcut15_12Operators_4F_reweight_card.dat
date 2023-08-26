@@ -11,6 +11,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -19,7 +20,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[1/216] cW:-10.0
+#[1/234] cW:-10.0
 launch --rwgt_name=EFT__cW_m10.00
 set SMEFT 2 -10.0 # cW
 set SMEFT 4 0 # cHbox
@@ -27,6 +28,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -35,7 +37,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[2/216] cW:-5.0
+#[2/234] cW:-5.0
 launch --rwgt_name=EFT__cW_m5.00
 set SMEFT 2 -5.0 # cW
 set SMEFT 4 0 # cHbox
@@ -43,6 +45,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -51,7 +54,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[3/216] cW:-1.0
+#[3/234] cW:-1.0
 launch --rwgt_name=EFT__cW_m1.00
 set SMEFT 2 -1.0 # cW
 set SMEFT 4 0 # cHbox
@@ -59,6 +62,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -67,7 +71,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[4/216] cW:-0.7
+#[4/234] cW:-0.7
 launch --rwgt_name=EFT__cW_m0.70
 set SMEFT 2 -0.7 # cW
 set SMEFT 4 0 # cHbox
@@ -75,6 +79,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -83,7 +88,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[5/216] cW:-0.5
+#[5/234] cW:-0.5
 launch --rwgt_name=EFT__cW_m0.50
 set SMEFT 2 -0.5 # cW
 set SMEFT 4 0 # cHbox
@@ -91,6 +96,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -99,7 +105,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[6/216] cW:-0.3
+#[6/234] cW:-0.3
 launch --rwgt_name=EFT__cW_m0.30
 set SMEFT 2 -0.3 # cW
 set SMEFT 4 0 # cHbox
@@ -107,6 +113,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -115,7 +122,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[7/216] cW:-0.1
+#[7/234] cW:-0.1
 launch --rwgt_name=EFT__cW_m0.10
 set SMEFT 2 -0.1 # cW
 set SMEFT 4 0 # cHbox
@@ -123,6 +130,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -131,7 +139,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[8/216] cW:-0.05
+#[8/234] cW:-0.05
 launch --rwgt_name=EFT__cW_m0.05
 set SMEFT 2 -0.05 # cW
 set SMEFT 4 0 # cHbox
@@ -139,6 +147,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -147,7 +156,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[9/216] cW:-0.01
+#[9/234] cW:-0.01
 launch --rwgt_name=EFT__cW_m0.01
 set SMEFT 2 -0.01 # cW
 set SMEFT 4 0 # cHbox
@@ -155,6 +164,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -163,7 +173,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[10/216] cW:0.01
+#[10/234] cW:0.01
 launch --rwgt_name=EFT__cW_p0.01
 set SMEFT 2 0.01 # cW
 set SMEFT 4 0 # cHbox
@@ -171,6 +181,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -179,7 +190,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[11/216] cW:0.05
+#[11/234] cW:0.05
 launch --rwgt_name=EFT__cW_p0.05
 set SMEFT 2 0.05 # cW
 set SMEFT 4 0 # cHbox
@@ -187,6 +198,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -195,7 +207,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[12/216] cW:0.1
+#[12/234] cW:0.1
 launch --rwgt_name=EFT__cW_p0.10
 set SMEFT 2 0.1 # cW
 set SMEFT 4 0 # cHbox
@@ -203,6 +215,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -211,7 +224,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[13/216] cW:0.3
+#[13/234] cW:0.3
 launch --rwgt_name=EFT__cW_p0.30
 set SMEFT 2 0.3 # cW
 set SMEFT 4 0 # cHbox
@@ -219,6 +232,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -227,7 +241,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[14/216] cW:0.5
+#[14/234] cW:0.5
 launch --rwgt_name=EFT__cW_p0.50
 set SMEFT 2 0.5 # cW
 set SMEFT 4 0 # cHbox
@@ -235,6 +249,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -243,7 +258,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[15/216] cW:0.7
+#[15/234] cW:0.7
 launch --rwgt_name=EFT__cW_p0.70
 set SMEFT 2 0.7 # cW
 set SMEFT 4 0 # cHbox
@@ -251,6 +266,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -259,7 +275,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[16/216] cW:1.0
+#[16/234] cW:1.0
 launch --rwgt_name=EFT__cW_p1.00
 set SMEFT 2 1.0 # cW
 set SMEFT 4 0 # cHbox
@@ -267,6 +283,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -275,7 +292,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[17/216] cW:5.0
+#[17/234] cW:5.0
 launch --rwgt_name=EFT__cW_p5.00
 set SMEFT 2 5.0 # cW
 set SMEFT 4 0 # cHbox
@@ -283,6 +300,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -291,7 +309,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[18/216] cW:10.0
+#[18/234] cW:10.0
 launch --rwgt_name=EFT__cW_p10.00
 set SMEFT 2 10.0 # cW
 set SMEFT 4 0 # cHbox
@@ -299,6 +317,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -307,7 +326,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[19/216] cHbox:-100.0
+#[19/234] cHbox:-100.0
 launch --rwgt_name=EFT__cHbox_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -100.0 # cHbox
@@ -315,6 +334,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -323,7 +343,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[20/216] cHbox:-50.0
+#[20/234] cHbox:-50.0
 launch --rwgt_name=EFT__cHbox_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -50.0 # cHbox
@@ -331,6 +351,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -339,7 +360,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[21/216] cHbox:-10.0
+#[21/234] cHbox:-10.0
 launch --rwgt_name=EFT__cHbox_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -10.0 # cHbox
@@ -347,6 +368,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -355,7 +377,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[22/216] cHbox:-7.0
+#[22/234] cHbox:-7.0
 launch --rwgt_name=EFT__cHbox_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -7.0 # cHbox
@@ -363,6 +385,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -371,7 +394,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[23/216] cHbox:-5.0
+#[23/234] cHbox:-5.0
 launch --rwgt_name=EFT__cHbox_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -5.0 # cHbox
@@ -379,6 +402,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -387,7 +411,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[24/216] cHbox:-3.0
+#[24/234] cHbox:-3.0
 launch --rwgt_name=EFT__cHbox_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -3.0 # cHbox
@@ -395,6 +419,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -403,7 +428,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[25/216] cHbox:-1.0
+#[25/234] cHbox:-1.0
 launch --rwgt_name=EFT__cHbox_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 -1.0 # cHbox
@@ -411,6 +436,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -419,7 +445,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[26/216] cHbox:-0.5
+#[26/234] cHbox:-0.5
 launch --rwgt_name=EFT__cHbox_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 -0.5 # cHbox
@@ -427,6 +453,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -435,7 +462,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[27/216] cHbox:-0.1
+#[27/234] cHbox:-0.1
 launch --rwgt_name=EFT__cHbox_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 -0.1 # cHbox
@@ -443,6 +470,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -451,7 +479,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[28/216] cHbox:0.1
+#[28/234] cHbox:0.1
 launch --rwgt_name=EFT__cHbox_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0.1 # cHbox
@@ -459,6 +487,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -467,7 +496,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[29/216] cHbox:0.5
+#[29/234] cHbox:0.5
 launch --rwgt_name=EFT__cHbox_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0.5 # cHbox
@@ -475,6 +504,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -483,7 +513,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[30/216] cHbox:1.0
+#[30/234] cHbox:1.0
 launch --rwgt_name=EFT__cHbox_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 1.0 # cHbox
@@ -491,6 +521,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -499,7 +530,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[31/216] cHbox:3.0
+#[31/234] cHbox:3.0
 launch --rwgt_name=EFT__cHbox_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 3.0 # cHbox
@@ -507,6 +538,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -515,7 +547,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[32/216] cHbox:5.0
+#[32/234] cHbox:5.0
 launch --rwgt_name=EFT__cHbox_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 5.0 # cHbox
@@ -523,6 +555,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -531,7 +564,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[33/216] cHbox:7.0
+#[33/234] cHbox:7.0
 launch --rwgt_name=EFT__cHbox_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 7.0 # cHbox
@@ -539,6 +572,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -547,7 +581,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[34/216] cHbox:10.0
+#[34/234] cHbox:10.0
 launch --rwgt_name=EFT__cHbox_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 10.0 # cHbox
@@ -555,6 +589,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -563,7 +598,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[35/216] cHbox:50.0
+#[35/234] cHbox:50.0
 launch --rwgt_name=EFT__cHbox_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 50.0 # cHbox
@@ -571,6 +606,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -579,7 +615,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[36/216] cHbox:100.0
+#[36/234] cHbox:100.0
 launch --rwgt_name=EFT__cHbox_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 100.0 # cHbox
@@ -587,6 +623,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -595,7 +632,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[37/216] cHDD:-100.0
+#[37/234] cHDD:-100.0
 launch --rwgt_name=EFT__cHDD_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -603,6 +640,7 @@ set SMEFT 5 -100.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -611,7 +649,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[38/216] cHDD:-50.0
+#[38/234] cHDD:-50.0
 launch --rwgt_name=EFT__cHDD_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -619,6 +657,7 @@ set SMEFT 5 -50.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -627,7 +666,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[39/216] cHDD:-10.0
+#[39/234] cHDD:-10.0
 launch --rwgt_name=EFT__cHDD_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -635,6 +674,7 @@ set SMEFT 5 -10.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -643,7 +683,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[40/216] cHDD:-7.0
+#[40/234] cHDD:-7.0
 launch --rwgt_name=EFT__cHDD_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -651,6 +691,7 @@ set SMEFT 5 -7.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -659,7 +700,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[41/216] cHDD:-5.0
+#[41/234] cHDD:-5.0
 launch --rwgt_name=EFT__cHDD_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -667,6 +708,7 @@ set SMEFT 5 -5.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -675,7 +717,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[42/216] cHDD:-3.0
+#[42/234] cHDD:-3.0
 launch --rwgt_name=EFT__cHDD_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -683,6 +725,7 @@ set SMEFT 5 -3.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -691,7 +734,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[43/216] cHDD:-1.0
+#[43/234] cHDD:-1.0
 launch --rwgt_name=EFT__cHDD_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -699,6 +742,7 @@ set SMEFT 5 -1.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -707,7 +751,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[44/216] cHDD:-0.5
+#[44/234] cHDD:-0.5
 launch --rwgt_name=EFT__cHDD_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -715,6 +759,7 @@ set SMEFT 5 -0.5 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -723,7 +768,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[45/216] cHDD:-0.1
+#[45/234] cHDD:-0.1
 launch --rwgt_name=EFT__cHDD_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -731,6 +776,7 @@ set SMEFT 5 -0.1 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -739,7 +785,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[46/216] cHDD:0.1
+#[46/234] cHDD:0.1
 launch --rwgt_name=EFT__cHDD_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -747,6 +793,7 @@ set SMEFT 5 0.1 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -755,7 +802,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[47/216] cHDD:0.5
+#[47/234] cHDD:0.5
 launch --rwgt_name=EFT__cHDD_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -763,6 +810,7 @@ set SMEFT 5 0.5 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -771,7 +819,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[48/216] cHDD:1.0
+#[48/234] cHDD:1.0
 launch --rwgt_name=EFT__cHDD_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -779,6 +827,7 @@ set SMEFT 5 1.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -787,7 +836,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[49/216] cHDD:3.0
+#[49/234] cHDD:3.0
 launch --rwgt_name=EFT__cHDD_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -795,6 +844,7 @@ set SMEFT 5 3.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -803,7 +853,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[50/216] cHDD:5.0
+#[50/234] cHDD:5.0
 launch --rwgt_name=EFT__cHDD_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -811,6 +861,7 @@ set SMEFT 5 5.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -819,7 +870,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[51/216] cHDD:7.0
+#[51/234] cHDD:7.0
 launch --rwgt_name=EFT__cHDD_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -827,6 +878,7 @@ set SMEFT 5 7.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -835,7 +887,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[52/216] cHDD:10.0
+#[52/234] cHDD:10.0
 launch --rwgt_name=EFT__cHDD_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -843,6 +895,7 @@ set SMEFT 5 10.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -851,7 +904,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[53/216] cHDD:50.0
+#[53/234] cHDD:50.0
 launch --rwgt_name=EFT__cHDD_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -859,6 +912,7 @@ set SMEFT 5 50.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -867,7 +921,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[54/216] cHDD:100.0
+#[54/234] cHDD:100.0
 launch --rwgt_name=EFT__cHDD_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -875,6 +929,7 @@ set SMEFT 5 100.0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -883,7 +938,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[55/216] cHW:-10.0
+#[55/234] cHW:-10.0
 launch --rwgt_name=EFT__cHW_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -891,6 +946,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -10.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -899,7 +955,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[56/216] cHW:-5.0
+#[56/234] cHW:-5.0
 launch --rwgt_name=EFT__cHW_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -907,6 +963,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -5.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -915,7 +972,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[57/216] cHW:-1.0
+#[57/234] cHW:-1.0
 launch --rwgt_name=EFT__cHW_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -923,6 +980,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -1.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -931,7 +989,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[58/216] cHW:-0.7
+#[58/234] cHW:-0.7
 launch --rwgt_name=EFT__cHW_m0.70
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -939,6 +997,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.7 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -947,7 +1006,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[59/216] cHW:-0.5
+#[59/234] cHW:-0.5
 launch --rwgt_name=EFT__cHW_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -955,6 +1014,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.5 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -963,7 +1023,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[60/216] cHW:-0.3
+#[60/234] cHW:-0.3
 launch --rwgt_name=EFT__cHW_m0.30
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -971,6 +1031,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.3 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -979,7 +1040,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[61/216] cHW:-0.1
+#[61/234] cHW:-0.1
 launch --rwgt_name=EFT__cHW_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -987,6 +1048,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.1 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -995,7 +1057,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[62/216] cHW:-0.05
+#[62/234] cHW:-0.05
 launch --rwgt_name=EFT__cHW_m0.05
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1003,6 +1065,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.05 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1011,7 +1074,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[63/216] cHW:-0.01
+#[63/234] cHW:-0.01
 launch --rwgt_name=EFT__cHW_m0.01
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1019,6 +1082,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 -0.01 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1027,7 +1091,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[64/216] cHW:0.01
+#[64/234] cHW:0.01
 launch --rwgt_name=EFT__cHW_p0.01
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1035,6 +1099,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.01 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1043,7 +1108,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[65/216] cHW:0.05
+#[65/234] cHW:0.05
 launch --rwgt_name=EFT__cHW_p0.05
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1051,6 +1116,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.05 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1059,7 +1125,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[66/216] cHW:0.1
+#[66/234] cHW:0.1
 launch --rwgt_name=EFT__cHW_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1067,6 +1133,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.1 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1075,7 +1142,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[67/216] cHW:0.3
+#[67/234] cHW:0.3
 launch --rwgt_name=EFT__cHW_p0.30
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1083,6 +1150,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.3 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1091,7 +1159,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[68/216] cHW:0.5
+#[68/234] cHW:0.5
 launch --rwgt_name=EFT__cHW_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1099,6 +1167,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.5 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1107,7 +1176,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[69/216] cHW:0.7
+#[69/234] cHW:0.7
 launch --rwgt_name=EFT__cHW_p0.70
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1115,6 +1184,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0.7 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1123,7 +1193,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[70/216] cHW:1.0
+#[70/234] cHW:1.0
 launch --rwgt_name=EFT__cHW_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1131,6 +1201,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 1.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1139,7 +1210,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[71/216] cHW:5.0
+#[71/234] cHW:5.0
 launch --rwgt_name=EFT__cHW_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1147,6 +1218,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 5.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1155,7 +1227,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[72/216] cHW:10.0
+#[72/234] cHW:10.0
 launch --rwgt_name=EFT__cHW_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1163,6 +1235,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 10.0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1171,7 +1244,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[73/216] cHB:-100.0
+#[73/234] cHB:-100.0
 launch --rwgt_name=EFT__cHB_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1179,6 +1252,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -100.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1187,7 +1261,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[74/216] cHB:-50.0
+#[74/234] cHB:-50.0
 launch --rwgt_name=EFT__cHB_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1195,6 +1269,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -50.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1203,7 +1278,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[75/216] cHB:-10.0
+#[75/234] cHB:-10.0
 launch --rwgt_name=EFT__cHB_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1211,6 +1286,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -10.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1219,7 +1295,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[76/216] cHB:-7.0
+#[76/234] cHB:-7.0
 launch --rwgt_name=EFT__cHB_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1227,6 +1303,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -7.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1235,7 +1312,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[77/216] cHB:-5.0
+#[77/234] cHB:-5.0
 launch --rwgt_name=EFT__cHB_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1243,6 +1320,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -5.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1251,7 +1329,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[78/216] cHB:-3.0
+#[78/234] cHB:-3.0
 launch --rwgt_name=EFT__cHB_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1259,6 +1337,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -3.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1267,7 +1346,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[79/216] cHB:-1.0
+#[79/234] cHB:-1.0
 launch --rwgt_name=EFT__cHB_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1275,6 +1354,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -1.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1283,7 +1363,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[80/216] cHB:-0.5
+#[80/234] cHB:-0.5
 launch --rwgt_name=EFT__cHB_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1291,6 +1371,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -0.5 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1299,7 +1380,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[81/216] cHB:-0.1
+#[81/234] cHB:-0.1
 launch --rwgt_name=EFT__cHB_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1307,6 +1388,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 -0.1 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1315,7 +1397,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[82/216] cHB:0.1
+#[82/234] cHB:0.1
 launch --rwgt_name=EFT__cHB_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1323,6 +1405,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0.1 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1331,7 +1414,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[83/216] cHB:0.5
+#[83/234] cHB:0.5
 launch --rwgt_name=EFT__cHB_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1339,6 +1422,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0.5 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1347,7 +1431,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[84/216] cHB:1.0
+#[84/234] cHB:1.0
 launch --rwgt_name=EFT__cHB_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1355,6 +1439,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 1.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1363,7 +1448,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[85/216] cHB:3.0
+#[85/234] cHB:3.0
 launch --rwgt_name=EFT__cHB_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1371,6 +1456,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 3.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1379,7 +1465,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[86/216] cHB:5.0
+#[86/234] cHB:5.0
 launch --rwgt_name=EFT__cHB_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1387,6 +1473,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 5.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1395,7 +1482,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[87/216] cHB:7.0
+#[87/234] cHB:7.0
 launch --rwgt_name=EFT__cHB_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1403,6 +1490,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 7.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1411,7 +1499,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[88/216] cHB:10.0
+#[88/234] cHB:10.0
 launch --rwgt_name=EFT__cHB_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1419,6 +1507,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 10.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1427,7 +1516,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[89/216] cHB:50.0
+#[89/234] cHB:50.0
 launch --rwgt_name=EFT__cHB_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1435,6 +1524,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 50.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1443,7 +1533,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[90/216] cHB:100.0
+#[90/234] cHB:100.0
 launch --rwgt_name=EFT__cHB_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1451,6 +1541,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 100.0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1459,7 +1550,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[91/216] cHWB:-100.0
+#[91/234] cHWB:-100.0
 launch --rwgt_name=EFT__cHWB_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1467,6 +1558,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -100.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1475,7 +1567,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[92/216] cHWB:-50.0
+#[92/234] cHWB:-50.0
 launch --rwgt_name=EFT__cHWB_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1483,6 +1575,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -50.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1491,7 +1584,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[93/216] cHWB:-10.0
+#[93/234] cHWB:-10.0
 launch --rwgt_name=EFT__cHWB_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1499,6 +1592,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -10.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1507,7 +1601,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[94/216] cHWB:-7.0
+#[94/234] cHWB:-7.0
 launch --rwgt_name=EFT__cHWB_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1515,6 +1609,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -7.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1523,7 +1618,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[95/216] cHWB:-5.0
+#[95/234] cHWB:-5.0
 launch --rwgt_name=EFT__cHWB_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1531,6 +1626,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -5.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1539,7 +1635,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[96/216] cHWB:-3.0
+#[96/234] cHWB:-3.0
 launch --rwgt_name=EFT__cHWB_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1547,6 +1643,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -3.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1555,7 +1652,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[97/216] cHWB:-1.0
+#[97/234] cHWB:-1.0
 launch --rwgt_name=EFT__cHWB_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1563,6 +1660,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -1.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1571,7 +1669,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[98/216] cHWB:-0.5
+#[98/234] cHWB:-0.5
 launch --rwgt_name=EFT__cHWB_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1579,6 +1677,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -0.5 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1587,7 +1686,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[99/216] cHWB:-0.1
+#[99/234] cHWB:-0.1
 launch --rwgt_name=EFT__cHWB_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1595,6 +1694,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 -0.1 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1603,7 +1703,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[100/216] cHWB:0.1
+#[100/234] cHWB:0.1
 launch --rwgt_name=EFT__cHWB_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1611,6 +1711,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0.1 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1619,7 +1720,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[101/216] cHWB:0.5
+#[101/234] cHWB:0.5
 launch --rwgt_name=EFT__cHWB_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1627,6 +1728,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0.5 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1635,7 +1737,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[102/216] cHWB:1.0
+#[102/234] cHWB:1.0
 launch --rwgt_name=EFT__cHWB_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1643,6 +1745,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 1.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1651,7 +1754,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[103/216] cHWB:3.0
+#[103/234] cHWB:3.0
 launch --rwgt_name=EFT__cHWB_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1659,6 +1762,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 3.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1667,7 +1771,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[104/216] cHWB:5.0
+#[104/234] cHWB:5.0
 launch --rwgt_name=EFT__cHWB_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1675,6 +1779,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 5.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1683,7 +1788,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[105/216] cHWB:7.0
+#[105/234] cHWB:7.0
 launch --rwgt_name=EFT__cHWB_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1691,6 +1796,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 7.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1699,7 +1805,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[106/216] cHWB:10.0
+#[106/234] cHWB:10.0
 launch --rwgt_name=EFT__cHWB_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1707,6 +1813,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 10.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1715,7 +1822,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[107/216] cHWB:50.0
+#[107/234] cHWB:50.0
 launch --rwgt_name=EFT__cHWB_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1723,6 +1830,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 50.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1731,7 +1839,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[108/216] cHWB:100.0
+#[108/234] cHWB:100.0
 launch --rwgt_name=EFT__cHWB_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1739,6 +1847,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 100.0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1747,7 +1856,313 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[109/216] cHl3:-100.0
+#[109/234] cdWRe:-100.0
+launch --rwgt_name=EFT__cdWRe_m100.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -100.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[110/234] cdWRe:-50.0
+launch --rwgt_name=EFT__cdWRe_m50.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -50.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[111/234] cdWRe:-10.0
+launch --rwgt_name=EFT__cdWRe_m10.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -10.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[112/234] cdWRe:-7.0
+launch --rwgt_name=EFT__cdWRe_m7.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -7.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[113/234] cdWRe:-5.0
+launch --rwgt_name=EFT__cdWRe_m5.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -5.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[114/234] cdWRe:-3.0
+launch --rwgt_name=EFT__cdWRe_m3.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -3.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[115/234] cdWRe:-1.0
+launch --rwgt_name=EFT__cdWRe_m1.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -1.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[116/234] cdWRe:-0.5
+launch --rwgt_name=EFT__cdWRe_m0.50
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -0.5 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[117/234] cdWRe:-0.1
+launch --rwgt_name=EFT__cdWRe_m0.10
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 -0.1 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[118/234] cdWRe:0.1
+launch --rwgt_name=EFT__cdWRe_p0.10
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 0.1 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[119/234] cdWRe:0.5
+launch --rwgt_name=EFT__cdWRe_p0.50
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 0.5 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[120/234] cdWRe:1.0
+launch --rwgt_name=EFT__cdWRe_p1.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 1.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[121/234] cdWRe:3.0
+launch --rwgt_name=EFT__cdWRe_p3.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 3.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[122/234] cdWRe:5.0
+launch --rwgt_name=EFT__cdWRe_p5.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 5.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[123/234] cdWRe:7.0
+launch --rwgt_name=EFT__cdWRe_p7.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 7.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[124/234] cdWRe:10.0
+launch --rwgt_name=EFT__cdWRe_p10.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 10.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[125/234] cdWRe:50.0
+launch --rwgt_name=EFT__cdWRe_p50.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 50.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[126/234] cdWRe:100.0
+launch --rwgt_name=EFT__cdWRe_p100.00
+set SMEFT 2 0 # cW
+set SMEFT 4 0 # cHbox
+set SMEFT 5 0 # cHDD
+set SMEFT 7 0 # cHW
+set SMEFT 8 0 # cHB
+set SMEFT 9 0 # cHWB
+set SMEFT 19 100.0 # cdWRe
+set SMEFT 22 0 # cHl3
+set SMEFT 24 0 # cHq1
+set SMEFT 25 0 # cHq3
+set SMEFT 26 0 # cHu
+set SMEFT 27 0 # cHd
+set SMEFT 30 0 # cll1
+
+
+#[127/234] cHl3:-100.0
 launch --rwgt_name=EFT__cHl3_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1755,6 +2170,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -100.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1763,7 +2179,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[110/216] cHl3:-50.0
+#[128/234] cHl3:-50.0
 launch --rwgt_name=EFT__cHl3_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1771,6 +2187,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -50.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1779,7 +2196,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[111/216] cHl3:-10.0
+#[129/234] cHl3:-10.0
 launch --rwgt_name=EFT__cHl3_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1787,6 +2204,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -10.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1795,7 +2213,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[112/216] cHl3:-7.0
+#[130/234] cHl3:-7.0
 launch --rwgt_name=EFT__cHl3_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1803,6 +2221,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -7.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1811,7 +2230,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[113/216] cHl3:-5.0
+#[131/234] cHl3:-5.0
 launch --rwgt_name=EFT__cHl3_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1819,6 +2238,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -5.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1827,7 +2247,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[114/216] cHl3:-3.0
+#[132/234] cHl3:-3.0
 launch --rwgt_name=EFT__cHl3_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1835,6 +2255,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -3.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1843,7 +2264,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[115/216] cHl3:-1.0
+#[133/234] cHl3:-1.0
 launch --rwgt_name=EFT__cHl3_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1851,6 +2272,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -1.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1859,7 +2281,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[116/216] cHl3:-0.5
+#[134/234] cHl3:-0.5
 launch --rwgt_name=EFT__cHl3_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1867,6 +2289,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -0.5 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1875,7 +2298,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[117/216] cHl3:-0.1
+#[135/234] cHl3:-0.1
 launch --rwgt_name=EFT__cHl3_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1883,6 +2306,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 -0.1 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1891,7 +2315,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[118/216] cHl3:0.1
+#[136/234] cHl3:0.1
 launch --rwgt_name=EFT__cHl3_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1899,6 +2323,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0.1 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1907,7 +2332,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[119/216] cHl3:0.5
+#[137/234] cHl3:0.5
 launch --rwgt_name=EFT__cHl3_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1915,6 +2340,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0.5 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1923,7 +2349,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[120/216] cHl3:1.0
+#[138/234] cHl3:1.0
 launch --rwgt_name=EFT__cHl3_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1931,6 +2357,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 1.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1939,7 +2366,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[121/216] cHl3:3.0
+#[139/234] cHl3:3.0
 launch --rwgt_name=EFT__cHl3_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1947,6 +2374,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 3.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1955,7 +2383,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[122/216] cHl3:5.0
+#[140/234] cHl3:5.0
 launch --rwgt_name=EFT__cHl3_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1963,6 +2391,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 5.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1971,7 +2400,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[123/216] cHl3:7.0
+#[141/234] cHl3:7.0
 launch --rwgt_name=EFT__cHl3_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1979,6 +2408,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 7.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -1987,7 +2417,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[124/216] cHl3:10.0
+#[142/234] cHl3:10.0
 launch --rwgt_name=EFT__cHl3_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -1995,6 +2425,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 10.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2003,7 +2434,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[125/216] cHl3:50.0
+#[143/234] cHl3:50.0
 launch --rwgt_name=EFT__cHl3_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2011,6 +2442,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 50.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2019,7 +2451,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[126/216] cHl3:100.0
+#[144/234] cHl3:100.0
 launch --rwgt_name=EFT__cHl3_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2027,6 +2459,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 100.0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2035,7 +2468,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[127/216] cHq1:-100.0
+#[145/234] cHq1:-100.0
 launch --rwgt_name=EFT__cHq1_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2043,6 +2476,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -100.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2051,7 +2485,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[128/216] cHq1:-50.0
+#[146/234] cHq1:-50.0
 launch --rwgt_name=EFT__cHq1_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2059,6 +2493,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -50.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2067,7 +2502,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[129/216] cHq1:-10.0
+#[147/234] cHq1:-10.0
 launch --rwgt_name=EFT__cHq1_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2075,6 +2510,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -10.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2083,7 +2519,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[130/216] cHq1:-7.0
+#[148/234] cHq1:-7.0
 launch --rwgt_name=EFT__cHq1_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2091,6 +2527,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -7.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2099,7 +2536,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[131/216] cHq1:-5.0
+#[149/234] cHq1:-5.0
 launch --rwgt_name=EFT__cHq1_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2107,6 +2544,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -5.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2115,7 +2553,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[132/216] cHq1:-3.0
+#[150/234] cHq1:-3.0
 launch --rwgt_name=EFT__cHq1_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2123,6 +2561,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -3.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2131,7 +2570,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[133/216] cHq1:-1.0
+#[151/234] cHq1:-1.0
 launch --rwgt_name=EFT__cHq1_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2139,6 +2578,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -1.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2147,7 +2587,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[134/216] cHq1:-0.5
+#[152/234] cHq1:-0.5
 launch --rwgt_name=EFT__cHq1_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2155,6 +2595,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -0.5 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2163,7 +2604,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[135/216] cHq1:-0.1
+#[153/234] cHq1:-0.1
 launch --rwgt_name=EFT__cHq1_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2171,6 +2612,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 -0.1 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2179,7 +2621,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[136/216] cHq1:0.1
+#[154/234] cHq1:0.1
 launch --rwgt_name=EFT__cHq1_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2187,6 +2629,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0.1 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2195,7 +2638,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[137/216] cHq1:0.5
+#[155/234] cHq1:0.5
 launch --rwgt_name=EFT__cHq1_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2203,6 +2646,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0.5 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2211,7 +2655,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[138/216] cHq1:1.0
+#[156/234] cHq1:1.0
 launch --rwgt_name=EFT__cHq1_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2219,6 +2663,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 1.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2227,7 +2672,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[139/216] cHq1:3.0
+#[157/234] cHq1:3.0
 launch --rwgt_name=EFT__cHq1_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2235,6 +2680,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 3.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2243,7 +2689,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[140/216] cHq1:5.0
+#[158/234] cHq1:5.0
 launch --rwgt_name=EFT__cHq1_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2251,6 +2697,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 5.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2259,7 +2706,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[141/216] cHq1:7.0
+#[159/234] cHq1:7.0
 launch --rwgt_name=EFT__cHq1_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2267,6 +2714,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 7.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2275,7 +2723,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[142/216] cHq1:10.0
+#[160/234] cHq1:10.0
 launch --rwgt_name=EFT__cHq1_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2283,6 +2731,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 10.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2291,7 +2740,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[143/216] cHq1:50.0
+#[161/234] cHq1:50.0
 launch --rwgt_name=EFT__cHq1_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2299,6 +2748,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 50.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2307,7 +2757,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[144/216] cHq1:100.0
+#[162/234] cHq1:100.0
 launch --rwgt_name=EFT__cHq1_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2315,6 +2765,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 100.0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -2323,7 +2774,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[145/216] cHq3:-100.0
+#[163/234] cHq3:-100.0
 launch --rwgt_name=EFT__cHq3_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2331,6 +2782,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -100.0 # cHq3
@@ -2339,7 +2791,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[146/216] cHq3:-50.0
+#[164/234] cHq3:-50.0
 launch --rwgt_name=EFT__cHq3_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2347,6 +2799,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -50.0 # cHq3
@@ -2355,7 +2808,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[147/216] cHq3:-10.0
+#[165/234] cHq3:-10.0
 launch --rwgt_name=EFT__cHq3_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2363,6 +2816,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -10.0 # cHq3
@@ -2371,7 +2825,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[148/216] cHq3:-7.0
+#[166/234] cHq3:-7.0
 launch --rwgt_name=EFT__cHq3_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2379,6 +2833,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -7.0 # cHq3
@@ -2387,7 +2842,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[149/216] cHq3:-5.0
+#[167/234] cHq3:-5.0
 launch --rwgt_name=EFT__cHq3_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2395,6 +2850,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -5.0 # cHq3
@@ -2403,7 +2859,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[150/216] cHq3:-3.0
+#[168/234] cHq3:-3.0
 launch --rwgt_name=EFT__cHq3_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2411,6 +2867,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -3.0 # cHq3
@@ -2419,7 +2876,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[151/216] cHq3:-1.0
+#[169/234] cHq3:-1.0
 launch --rwgt_name=EFT__cHq3_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2427,6 +2884,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -1.0 # cHq3
@@ -2435,7 +2893,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[152/216] cHq3:-0.5
+#[170/234] cHq3:-0.5
 launch --rwgt_name=EFT__cHq3_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2443,6 +2901,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -0.5 # cHq3
@@ -2451,7 +2910,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[153/216] cHq3:-0.1
+#[171/234] cHq3:-0.1
 launch --rwgt_name=EFT__cHq3_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2459,6 +2918,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 -0.1 # cHq3
@@ -2467,7 +2927,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[154/216] cHq3:0.1
+#[172/234] cHq3:0.1
 launch --rwgt_name=EFT__cHq3_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2475,6 +2935,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0.1 # cHq3
@@ -2483,7 +2944,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[155/216] cHq3:0.5
+#[173/234] cHq3:0.5
 launch --rwgt_name=EFT__cHq3_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2491,6 +2952,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0.5 # cHq3
@@ -2499,7 +2961,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[156/216] cHq3:1.0
+#[174/234] cHq3:1.0
 launch --rwgt_name=EFT__cHq3_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2507,6 +2969,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 1.0 # cHq3
@@ -2515,7 +2978,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[157/216] cHq3:3.0
+#[175/234] cHq3:3.0
 launch --rwgt_name=EFT__cHq3_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2523,6 +2986,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 3.0 # cHq3
@@ -2531,7 +2995,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[158/216] cHq3:5.0
+#[176/234] cHq3:5.0
 launch --rwgt_name=EFT__cHq3_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2539,6 +3003,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 5.0 # cHq3
@@ -2547,7 +3012,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[159/216] cHq3:7.0
+#[177/234] cHq3:7.0
 launch --rwgt_name=EFT__cHq3_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2555,6 +3020,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 7.0 # cHq3
@@ -2563,7 +3029,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[160/216] cHq3:10.0
+#[178/234] cHq3:10.0
 launch --rwgt_name=EFT__cHq3_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2571,6 +3037,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 10.0 # cHq3
@@ -2579,7 +3046,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[161/216] cHq3:50.0
+#[179/234] cHq3:50.0
 launch --rwgt_name=EFT__cHq3_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2587,6 +3054,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 50.0 # cHq3
@@ -2595,7 +3063,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[162/216] cHq3:100.0
+#[180/234] cHq3:100.0
 launch --rwgt_name=EFT__cHq3_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2603,6 +3071,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 100.0 # cHq3
@@ -2611,7 +3080,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[163/216] cHu:-100.0
+#[181/234] cHu:-100.0
 launch --rwgt_name=EFT__cHu_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2619,15 +3088,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -100.0 # cHu
+set SMEFT 26 -100.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[164/216] cHu:-50.0
+#[182/234] cHu:-50.0
 launch --rwgt_name=EFT__cHu_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2635,15 +3105,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -50.0 # cHu
+set SMEFT 26 -50.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[165/216] cHu:-10.0
+#[183/234] cHu:-10.0
 launch --rwgt_name=EFT__cHu_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2651,15 +3122,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -10.0 # cHu
+set SMEFT 26 -10.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[166/216] cHu:-7.0
+#[184/234] cHu:-7.0
 launch --rwgt_name=EFT__cHu_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2667,15 +3139,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -7.0 # cHu
+set SMEFT 26 -7.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[167/216] cHu:-5.0
+#[185/234] cHu:-5.0
 launch --rwgt_name=EFT__cHu_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2683,15 +3156,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -5.0 # cHu
+set SMEFT 26 -5.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[168/216] cHu:-3.0
+#[186/234] cHu:-3.0
 launch --rwgt_name=EFT__cHu_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2699,15 +3173,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -3.0 # cHu
+set SMEFT 26 -3.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[169/216] cHu:-1.0
+#[187/234] cHu:-1.0
 launch --rwgt_name=EFT__cHu_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2715,15 +3190,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -1.0 # cHu
+set SMEFT 26 -1.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[170/216] cHu:-0.5
+#[188/234] cHu:-0.5
 launch --rwgt_name=EFT__cHu_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2731,15 +3207,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -0.5 # cHu
+set SMEFT 26 -0.5 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[171/216] cHu:-0.1
+#[189/234] cHu:-0.1
 launch --rwgt_name=EFT__cHu_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2747,15 +3224,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 -0.1 # cHu
+set SMEFT 26 -0.1 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[172/216] cHu:0.1
+#[190/234] cHu:0.1
 launch --rwgt_name=EFT__cHu_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2763,15 +3241,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 0.1 # cHu
+set SMEFT 26 0.1 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[173/216] cHu:0.5
+#[191/234] cHu:0.5
 launch --rwgt_name=EFT__cHu_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2779,15 +3258,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 0.5 # cHu
+set SMEFT 26 0.5 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[174/216] cHu:1.0
+#[192/234] cHu:1.0
 launch --rwgt_name=EFT__cHu_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2795,15 +3275,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 1.0 # cHu
+set SMEFT 26 1.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[175/216] cHu:3.0
+#[193/234] cHu:3.0
 launch --rwgt_name=EFT__cHu_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2811,15 +3292,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 3.0 # cHu
+set SMEFT 26 3.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[176/216] cHu:5.0
+#[194/234] cHu:5.0
 launch --rwgt_name=EFT__cHu_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2827,15 +3309,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 5.0 # cHu
+set SMEFT 26 5.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[177/216] cHu:7.0
+#[195/234] cHu:7.0
 launch --rwgt_name=EFT__cHu_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2843,15 +3326,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 7.0 # cHu
+set SMEFT 26 7.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[178/216] cHu:10.0
+#[196/234] cHu:10.0
 launch --rwgt_name=EFT__cHu_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2859,15 +3343,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 10.0 # cHu
+set SMEFT 26 10.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[179/216] cHu:50.0
+#[197/234] cHu:50.0
 launch --rwgt_name=EFT__cHu_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2875,15 +3360,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 50.0 # cHu
+set SMEFT 26 50.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[180/216] cHu:100.0
+#[198/234] cHu:100.0
 launch --rwgt_name=EFT__cHu_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2891,15 +3377,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
-set SMEFT 27 100.0 # cHu
+set SMEFT 26 100.0 # cHu
 set SMEFT 27 0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[181/216] cHd:-100.0
+#[199/234] cHd:-100.0
 launch --rwgt_name=EFT__cHd_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2907,15 +3394,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -100.0 # cHd
+set SMEFT 27 -100.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[182/216] cHd:-50.0
+#[200/234] cHd:-50.0
 launch --rwgt_name=EFT__cHd_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2923,15 +3411,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -50.0 # cHd
+set SMEFT 27 -50.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[183/216] cHd:-10.0
+#[201/234] cHd:-10.0
 launch --rwgt_name=EFT__cHd_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2939,15 +3428,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -10.0 # cHd
+set SMEFT 27 -10.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[184/216] cHd:-7.0
+#[202/234] cHd:-7.0
 launch --rwgt_name=EFT__cHd_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2955,15 +3445,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -7.0 # cHd
+set SMEFT 27 -7.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[185/216] cHd:-5.0
+#[203/234] cHd:-5.0
 launch --rwgt_name=EFT__cHd_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2971,15 +3462,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -5.0 # cHd
+set SMEFT 27 -5.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[186/216] cHd:-3.0
+#[204/234] cHd:-3.0
 launch --rwgt_name=EFT__cHd_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -2987,15 +3479,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -3.0 # cHd
+set SMEFT 27 -3.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[187/216] cHd:-1.0
+#[205/234] cHd:-1.0
 launch --rwgt_name=EFT__cHd_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3003,15 +3496,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -1.0 # cHd
+set SMEFT 27 -1.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[188/216] cHd:-0.5
+#[206/234] cHd:-0.5
 launch --rwgt_name=EFT__cHd_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3019,15 +3513,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -0.5 # cHd
+set SMEFT 27 -0.5 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[189/216] cHd:-0.1
+#[207/234] cHd:-0.1
 launch --rwgt_name=EFT__cHd_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3035,15 +3530,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 -0.1 # cHd
+set SMEFT 27 -0.1 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[190/216] cHd:0.1
+#[208/234] cHd:0.1
 launch --rwgt_name=EFT__cHd_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3051,15 +3547,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 0.1 # cHd
+set SMEFT 27 0.1 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[191/216] cHd:0.5
+#[209/234] cHd:0.5
 launch --rwgt_name=EFT__cHd_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3067,15 +3564,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 0.5 # cHd
+set SMEFT 27 0.5 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[192/216] cHd:1.0
+#[210/234] cHd:1.0
 launch --rwgt_name=EFT__cHd_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3083,15 +3581,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 1.0 # cHd
+set SMEFT 27 1.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[193/216] cHd:3.0
+#[211/234] cHd:3.0
 launch --rwgt_name=EFT__cHd_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3099,15 +3598,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 3.0 # cHd
+set SMEFT 27 3.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[194/216] cHd:5.0
+#[212/234] cHd:5.0
 launch --rwgt_name=EFT__cHd_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3115,15 +3615,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 5.0 # cHd
+set SMEFT 27 5.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[195/216] cHd:7.0
+#[213/234] cHd:7.0
 launch --rwgt_name=EFT__cHd_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3131,15 +3632,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 7.0 # cHd
+set SMEFT 27 7.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[196/216] cHd:10.0
+#[214/234] cHd:10.0
 launch --rwgt_name=EFT__cHd_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3147,15 +3649,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 10.0 # cHd
+set SMEFT 27 10.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[197/216] cHd:50.0
+#[215/234] cHd:50.0
 launch --rwgt_name=EFT__cHd_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3163,15 +3666,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 50.0 # cHd
+set SMEFT 27 50.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[198/216] cHd:100.0
+#[216/234] cHd:100.0
 launch --rwgt_name=EFT__cHd_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3179,15 +3683,16 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
 set SMEFT 26 0 # cHu
-set SMEFT 28 100.0 # cHd
+set SMEFT 27 100.0 # cHd
 set SMEFT 30 0 # cll1
 
 
-#[199/216] cll1:-100.0
+#[217/234] cll1:-100.0
 launch --rwgt_name=EFT__cll1_m100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3195,6 +3700,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3203,7 +3709,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -100.0 # cll1
 
 
-#[200/216] cll1:-50.0
+#[218/234] cll1:-50.0
 launch --rwgt_name=EFT__cll1_m50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3211,6 +3717,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3219,7 +3726,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -50.0 # cll1
 
 
-#[201/216] cll1:-10.0
+#[219/234] cll1:-10.0
 launch --rwgt_name=EFT__cll1_m10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3227,6 +3734,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3235,7 +3743,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -10.0 # cll1
 
 
-#[202/216] cll1:-7.0
+#[220/234] cll1:-7.0
 launch --rwgt_name=EFT__cll1_m7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3243,6 +3751,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3251,7 +3760,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -7.0 # cll1
 
 
-#[203/216] cll1:-5.0
+#[221/234] cll1:-5.0
 launch --rwgt_name=EFT__cll1_m5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3259,6 +3768,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3267,7 +3777,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -5.0 # cll1
 
 
-#[204/216] cll1:-3.0
+#[222/234] cll1:-3.0
 launch --rwgt_name=EFT__cll1_m3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3275,6 +3785,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3283,7 +3794,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -3.0 # cll1
 
 
-#[205/216] cll1:-1.0
+#[223/234] cll1:-1.0
 launch --rwgt_name=EFT__cll1_m1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3291,6 +3802,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3299,7 +3811,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -1.0 # cll1
 
 
-#[206/216] cll1:-0.5
+#[224/234] cll1:-0.5
 launch --rwgt_name=EFT__cll1_m0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3307,6 +3819,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3315,7 +3828,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -0.5 # cll1
 
 
-#[207/216] cll1:-0.1
+#[225/234] cll1:-0.1
 launch --rwgt_name=EFT__cll1_m0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3323,6 +3836,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3331,7 +3845,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 -0.1 # cll1
 
 
-#[208/216] cll1:0.1
+#[226/234] cll1:0.1
 launch --rwgt_name=EFT__cll1_p0.10
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3339,6 +3853,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3347,7 +3862,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0.1 # cll1
 
 
-#[209/216] cll1:0.5
+#[227/234] cll1:0.5
 launch --rwgt_name=EFT__cll1_p0.50
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3355,6 +3870,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3363,7 +3879,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 0.5 # cll1
 
 
-#[210/216] cll1:1.0
+#[228/234] cll1:1.0
 launch --rwgt_name=EFT__cll1_p1.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3371,6 +3887,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3379,7 +3896,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 1.0 # cll1
 
 
-#[211/216] cll1:3.0
+#[229/234] cll1:3.0
 launch --rwgt_name=EFT__cll1_p3.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3387,6 +3904,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3395,7 +3913,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 3.0 # cll1
 
 
-#[212/216] cll1:5.0
+#[230/234] cll1:5.0
 launch --rwgt_name=EFT__cll1_p5.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3403,6 +3921,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3411,7 +3930,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 5.0 # cll1
 
 
-#[213/216] cll1:7.0
+#[231/234] cll1:7.0
 launch --rwgt_name=EFT__cll1_p7.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3419,6 +3938,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3427,7 +3947,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 7.0 # cll1
 
 
-#[214/216] cll1:10.0
+#[232/234] cll1:10.0
 launch --rwgt_name=EFT__cll1_p10.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3435,6 +3955,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3443,7 +3964,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 10.0 # cll1
 
 
-#[215/216] cll1:50.0
+#[233/234] cll1:50.0
 launch --rwgt_name=EFT__cll1_p50.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3451,6 +3972,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
@@ -3459,7 +3981,7 @@ set SMEFT 27 0 # cHd
 set SMEFT 30 50.0 # cll1
 
 
-#[216/216] cll1:100.0
+#[234/234] cll1:100.0
 launch --rwgt_name=EFT__cll1_p100.00
 set SMEFT 2 0 # cW
 set SMEFT 4 0 # cHbox
@@ -3467,6 +3989,7 @@ set SMEFT 5 0 # cHDD
 set SMEFT 7 0 # cHW
 set SMEFT 8 0 # cHB
 set SMEFT 9 0 # cHWB
+set SMEFT 19 0 # cdWRe
 set SMEFT 22 0 # cHl3
 set SMEFT 24 0 # cHq1
 set SMEFT 25 0 # cHq3
