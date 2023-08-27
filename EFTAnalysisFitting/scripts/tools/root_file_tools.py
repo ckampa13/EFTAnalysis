@@ -1,6 +1,7 @@
 import ROOT
 
 def book_and_set_TH1D(root_out, hist_name, bin_contents, bin_edges, bin_errors=None):
+    # print('hist_name=', hist_name)
     nbins = len(bin_contents)
     h1d = ROOT.TH1D(hist_name, '', nbins, bin_edges)
     # set bin contents

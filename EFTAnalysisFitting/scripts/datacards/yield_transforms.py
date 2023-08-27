@@ -6,8 +6,9 @@ import ROOT
 import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
+sys.path.append(os.path.join(fpath,'..','tools'))
 from MISC_CONFIGS import dim6_ops
-from tools.root_file_tools import book_and_set_TH1D
+from root_file_tools import book_and_set_TH1D
 
 
 # this is for the point scan
