@@ -44,6 +44,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     cmd_str += '-s %s -sc %s' % (Precision, PrecisionCoarse)
     proc = subprocess.Popen(cmd_str, shell=True, stdout=subprocess.PIPE)
     proc, err = proc.communicate()
+    # print('find_range output: %s' % proc)
     # parse results
     grid_dict = {i.split(':')[0]:float(i.split(':')[1]) for i in proc.strip('\n').split(';')}
     grid_dict['steps'] = int(grid_dict['steps'])

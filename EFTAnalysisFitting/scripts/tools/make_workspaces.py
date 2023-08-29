@@ -46,10 +46,10 @@ def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1
             # TEST
             print(tfile)
             dc_file = os.path.join(dcdir, channel, version, tfile)
-            cmd_str += '%s %s' % (dc_file, str_module)
+            cmd_str += '%s %s ' % (dc_file, str_module)
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(dcdir, 'workspaces', 'single_bin', wsfile)
-            cmd_str += '-o %s %s' % (wsfile, x_flag)
+            cmd_str += '-o %s %s ' % (wsfile, x_flag)
             # add correct WC
             cmd_str += '--PO eftOperators=%s' % WC
             # run script
