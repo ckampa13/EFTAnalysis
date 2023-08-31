@@ -37,8 +37,19 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
         ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
     # TEST BELOW
     else:
-        fig = plt.figure(figsize=(14, 8))
-        ax = fig.add_axes([0.05, 0.1, 0.75, 0.8])
+        ks = list(root_file_dict_full.keys())
+        # print(ks)
+        # print(ks[0])
+        if root_file_dict_full[ks[0]]['WC'] in dim6_ops:
+            height = 8
+            yfrac = 0.8
+            y0 = 0.1
+        else:
+            height = 4
+            yfrac = 0.5
+            y0 = 0.25
+        fig = plt.figure(figsize=(14, height))
+        ax = fig.add_axes([0.05, y0, 0.75, yfrac])
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     # loop through files to plot
     LLs_all = []
