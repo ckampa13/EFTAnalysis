@@ -1,0 +1,21 @@
+Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v14/VVV.0L_3FJ.cll1_1D.DataCard_Yields.v14.txt
+imax 1 number of bins
+jmax 10 number of processes minus 1
+kmax 2 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v14/VVV.0L_3FJ.DataCard_Yields_Cleaned.v14.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v14/VVV.0L_3FJ.DataCard_Yields_Cleaned.v14.root h_$PROCESS
+----------------------------------------------------------------------------------------------------------------------------------
+bin          sch          
+observation  566.888944125
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             sch               sch               sch               sch               sch               sch               sch               sch               sch               sch               sch             
+process                         sm                ZZ                quad_cll1         DY                sm_lin_quad_cll1  ttV               WW                WJets             QCD               TTbar             WZ              
+process                         0                 1                 2                 3                 4                 5                 6                 7                 8                 9                 10              
+rate                            -1                -1                -1                -1                -1                -1                -1                -1                -1                -1                -1              
+----------------------------------------------------------------------------------------------------------------------------------
+statonly                lnN     1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001          
+statonly2               lnN     1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001            1.0001          
+allsyst group = statonly2
+nosyst group = statonly
+sch autoMCStats 0 0 1

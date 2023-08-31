@@ -1,0 +1,24 @@
+----------------------------------------------------------------------------------------------------
+imax    1 number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * VVV.2L_OS_SFnoZ_bin3.DataCard_Yields_Cleaned.v7.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.2L_OS_SFnoZ_bin3.DataCard_Yields_Cleaned.v7.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_2L_OS_SFnoZ
+# ROOT did not contain "data_obs". Using Asimov value.
+observation -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ               bin_2L_OS_SFnoZ
+process                    sm                            quad_cW                       sm_lin_quad_cW                DY                            restbkg
+process                    0                             1                             2                             3                             4
+rate                       -1                            -1                            -1                            -1                            -1
+----------------------------------------------------------------------------------------------------
+datadriven_DYSFnoZ_  shape -                             -                             -                             1                             -
+norm_restbkgSFnoZ_   shape -                             -                             -                             -                             1
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = datadriven_DYSFnoZ_ norm_restbkgSFnoZ_
+nosyst group = statonly

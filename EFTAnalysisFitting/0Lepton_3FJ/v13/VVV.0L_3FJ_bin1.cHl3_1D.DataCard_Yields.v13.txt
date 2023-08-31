@@ -1,0 +1,26 @@
+----------------------------------------------------------------------------------------------------
+imax    1 number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * VVV.0L_3FJ_bin1.DataCard_Yields_Cleaned.v13.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.0L_3FJ_bin1.DataCard_Yields_Cleaned.v13.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_0L_3FJ
+# ROOT did not contain "data_obs". Using Asimov value.
+observation -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ
+process                    sm                            quad_cHl3                     sm_lin_quad_cHl3              DY                            QCD                           TTbar                         WJets                         WW                            WZ                            ZZ                            ttV
+process                    0                             1                             2                             3                             4                             5                             6                             7                             8                             9                             10
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1
+----------------------------------------------------------------------------------------------------
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# systematics "off" (very very small)
+statonly2            lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = statonly2
+nosyst group = statonly
+# MC stat uncertainties
+* autoMCStats 0

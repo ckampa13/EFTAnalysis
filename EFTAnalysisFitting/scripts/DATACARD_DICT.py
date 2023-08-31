@@ -7,101 +7,150 @@ Nested dictionary structure:
 
 datacard_dict = {
     # channel 0
-    '0Lepton': {
+    '0Lepton_2FJ': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3],
+                # 'bins': [1, 2, 3], # v10, v11, v12, v13
+                'bins': [1, 2, 3, 4], # v14, v15
+                # 'bins': [1, 2, 3, 4, 5], # v15 -- to be verified -> only for first pass with FT0 WWW
                 'info': {
                     'short_name': '',
                     'file_name': '',
-                    'ylabel_name': r'0 Lepton, 2 Jet',
+                    'ylabel_name': r'0 Lepton, 2 FatJet',
                 }
             }
         },
         'info': {
-            'short_name': '0L',
-            'file_name': '0Lep',
+            'short_name': '0L_2FJ',
+            'file_name': '0Lep_2FJ',
             'variable_of_choice': r'$\mathrm{H}_{\mathrm{T}}$',
-            'ylabel_name': '0 Lepton              \n(2 boosted jets)   ',
+            'ylabel_name': '0 Lepton              \n(2 fat jets)   ',
         }
     },
     # channel 1
+    '0Lepton_3FJ': {
+        'subchannels': {
+            '': {
+                # 'bins': [1, 2, 3, 4], # v4
+                'bins': [1, 2, 3, 4, 5, 6], # v6, v10, v11, v12, v13, v14
+                'info': {
+                    'short_name': '',
+                    'file_name': '',
+                    'ylabel_name': r'0 Lepton, 3 FatJet',
+                }
+            }
+        },
+        'info': {
+            'short_name': '0L_3FJ',
+            'file_name': '0Lep_3FJ',
+            'variable_of_choice': r'$\mathrm{H}_{\mathrm{T, Fat-Jet}}$',
+            'ylabel_name': '0 Lepton              \n(3 fat jets)   ',
+        }
+    },
+    # channel 2
+    # '1Lepton': {
+    #     'subchannels': {
+    #         'electron': {
+    #             'bins': [1, 2, 3, 4],
+    #             'info': {
+    #                 'short_name': '_e',
+    #                 'file_name': '_electron',
+    #                 'ylabel_name': r'1 Lepton, $e$',
+    #             },
+    #         },
+    #         'muon': {
+    #             'bins': [1, 2, 3, 4],
+    #             'info': {
+    #                 'short_name': '_mu',
+    #                 'file_name': '_muon',
+    #                 'ylabel_name': r'1 Lepton, $\mu$',
+    #             },
+    #         },
+    #     },
+    #     'info': {
+    #         'short_name': '1L',
+    #         'file_name': '1Lepton',
+    #         'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
+    #         'ylabel_name': '1 Lepton              \n(2 boosted jets)   ',
+    #     }
+    # },
+    # e and mu merged
     '1Lepton': {
         'subchannels': {
-            'electron': {
-                'bins': [1, 2, 3, 4],
+            '': {
+                'bins': [1, 2, 3, 4], # v1, v2, v3
                 'info': {
-                    'short_name': 'e',
-                    'file_name': '_electron',
-                    'ylabel_name': r'1 Lepton, $e$',
-                },
-            },
-            'muon': {
-                'bins': [1, 2, 3, 4],
-                'info': {
-                    'short_name': 'mu',
-                    'file_name': '_muon',
-                    'ylabel_name': r'1 Lepton, $\mu$',
+                    'short_name': '',
+                    'file_name': '',
+                    'ylabel_name': r'1 Lepton, 2 FatJet',
                 },
             },
         },
         'info': {
-            'short_name': '1L',
-            'file_name': '1lepton',
+            'short_name': '1L_2FJ',
+            'file_name': '1Lep_2FJ',
             'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
-            'ylabel_name': '1 Lepton              \n(2 boosted jets)   ',
+            'ylabel_name': '1 Lepton              \n(2 fat jets)   ',
         }
     },
-    # channel 2
-    '2OSLepton': {
+    # channel 3
+    '2Lepton_OS': {
         'subchannels': {
             'OF': {
-                'bins': [1, 2, 3],
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
                 'info': {
-                    'short_name': 'OF',
+                    'short_name': '_OF',
                     'file_name': '1Jet_OF',
                     'ylabel_name': r'2 OS Lepton, OF',
                 },
             },
             'SFnoZ': {
-                'bins': [1, 2, 3],
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
                 'info': {
-                    'short_name': 'SFnoZ',
+                    'short_name': '_SFnoZ',
                     'file_name': '1Jet_SFnoZ',
-                    'ylabel_name': '2 OS Lepton,\nSF (no Z)',
+                    'ylabel_name': '2 OS Leptons,\nSF (no Z)',
                 },
             },
-            '2FatJets': {
-                'bins': [1, 2],
+            # '2FatJets': {
+            #     'bins': [1, 2],
+            #     'info': {
+            #         'short_name': '2FatJets',
+            #         'file_name': '2FatJets',
+            #         'ylabel_name': '2 OS Lepton,\n2 FatJet',
+            #     },
+            #},
+            'SFZ': {
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
                 'info': {
-                    'short_name': '2FatJets',
-                    'file_name': '2FatJets',
-                    'ylabel_name': '2 OS Lepton,\n2 FatJet',
+                    'short_name': '_SFZ',
+                    'file_name': '1Jet_SFZ',
+                    'ylabel_name': '2 OS Leptons,\nSF (Z)',
                 },
             },
         },
         'info': {
-            'short_name': '2OSL',
-            'file_name': 'OS',
+            'short_name': '2L_OS',
+            'file_name': '2Lep_OS',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
             'ylabel_name': '2 Leptons            \n(opposite signed)',
         }
     },
-    # channel 3
-    '2SSLepton': {
+    # channel 4
+    '2Lepton_SS': {
         'subchannels': {
-            '1Jet': {
+            '1FJ': {
                 'bins': [1, 2, 3],
                 'info': {
-                    'short_name': '1J',
-                    'file_name': '1Jet',
-                    'ylabel_name': r'2 SS Leptons, 1 Jet',
+                    'short_name': '_1FJ',
+                    'file_name': '1FatJet',
+                    'ylabel_name': r'2 SS Leptons, 1 fat jet',
                 }
             }
         },
         'info': {
-            'short_name': '2SSL',
-            'file_name': 'SS',
+            'short_name': '2L_SS',
+            'file_name': '2Lep_SS',
             'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
             'ylabel_name': '2 Leptons            \n(same signed)     ',
         }
