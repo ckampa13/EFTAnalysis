@@ -115,7 +115,7 @@ def make_workspace_subchannels(channel, version, datacard_dict, WC, ScanType, ve
         print()
 
 # all channels
-def make_workspace_channels(datacard_dict, WC, ScanType, verbose=1, StatOnly=False, SignalInject=False):
+def make_workspace_channels(channels, datacard_dict, WC, ScanType, verbose=1, StatOnly=False, SignalInject=False):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -125,7 +125,7 @@ def make_workspace_channels(datacard_dict, WC, ScanType, verbose=1, StatOnly=Fal
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    channels = datacard_dict.keys()
+    # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
         if not WC in WCs:
@@ -200,6 +200,8 @@ if __name__=='__main__':
                         help='Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+    parser.add_argument('-t', '--theLevels',
+                        help='Which levels of analysis to run make workspaces for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_1D" (default),]')
     parser.add_argument('-i', '--SignalInject',
@@ -220,16 +222,39 @@ if __name__=='__main__':
         WCs_loop = WC_ALL
     else:
         WCs_loop = [args.WC]
+    if (args.theLevels is None) or (args.theLevels == 'all'):
+        generate_bins = True
+        generate_subch = True
+        generate_ch = True
+        generate_full = True
+    else:
+        if 'b' in args.theLevels:
+            generate_bins = True
+        else:
+            generate_bins = False
+        if 's' in args.theLevels:
+            generate_subch = True
+        else:
+            generate_subch = False
+        if 'c' in args.theLevels:
+            generate_ch = True
+        else:
+            generate_ch = False
+        if 'f' in args.theLevels:
+            generate_full = True
+        else:
+            generate_full = False
     if args.ScanType is None:
         args.ScanType = '_1D'
     if args.SignalInject is None:
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
+    # cannot do bin level with signal injection
     if SignalInject:
         generate_bins = False
-    else:
-        generate_bins = True
+    # else:
+    #     generate_bins = True
     if args.Verbose is None:
         args.Verbose = 1
     else:
@@ -256,32 +281,35 @@ if __name__=='__main__':
             print('=================================================\n')
         #########################
         # subchannel workspaces
-        print('Generating subchannel workspaces:')
-        print('=================================================')
-        for channel in channels:
-            WCs = versions_dict[channel]['EFT_ops']
-            if not WC in WCs:
-                continue
-            v = versions_dict[channel]['v']
-            VERSION = 'v'+str(v)
-            for StatOnly in [False, True]:
-                print('Stat only? ', StatOnly)
-                make_workspace_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
-        print('=================================================\n')
+        if generate_subch:
+            print('Generating subchannel workspaces:')
+            print('=================================================')
+            for channel in channels:
+                WCs = versions_dict[channel]['EFT_ops']
+                if not WC in WCs:
+                    continue
+                v = versions_dict[channel]['v']
+                VERSION = 'v'+str(v)
+                for StatOnly in [False, True]:
+                    print('Stat only? ', StatOnly)
+                    make_workspace_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+            print('=================================================\n')
         #########################
         # channel workspaces
-        print('Generating channel workspaces:')
-        print('=================================================')
-        for StatOnly in [False, True]:
-            print('Stat only? ', StatOnly)
-            make_workspace_channels(datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
-        print('=================================================\n')
+        if generate_ch:
+            print('Generating channel workspaces:')
+            print('=================================================')
+            for StatOnly in [False, True]:
+                print('Stat only? ', StatOnly)
+                make_workspace_channels(channels, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+            print('=================================================\n')
         #########################
         # full analysis workspace
-        print('Generating full analysis workspace:')
-        print('=================================================')
-        for StatOnly in [False, True]:
-            print('Stat only? ', StatOnly)
-            make_workspace_full_analysis(WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
-        print('=================================================\n')
+        if generate_full:
+            print('Generating full analysis workspace:')
+            print('=================================================')
+            for StatOnly in [False, True]:
+                print('Stat only? ', StatOnly)
+                make_workspace_full_analysis(WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+            print('=================================================\n')
         #########################

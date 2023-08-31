@@ -51,9 +51,8 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     print('LL: %s; UL: %s; steps: %s' % (grid_dict['LL'], grid_dict['UL'], grid_dict['steps']))
     range_ = grid_dict["UL"] - grid_dict["LL"]
     # FIXME! I don't think "prec" is used anywhere...
-    # also can switch from hard coding the very coarse precision if desired
+    # also can switch from hard coding the very coarse precision if desired if range_ > 50: prec = 1.0
     if range_ > 50:
-        prec = 1.0
         print('Using prec = 1.0')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
@@ -217,7 +216,7 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
     os.chdir(start_dir)
 
 # channels
-def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
+def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
                      Precision, PrecisionCoarse, stdout, verbose=0):
     start_dir = os.getcwd()
     if Asimov:
@@ -231,7 +230,7 @@ def run_combine_channels(datacard_dict, WC, ScanType, Asimov, asi_str, SignalInj
     wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
     outdir = os.path.join(datacard_dir, 'output', 'channel')
     os.chdir(outdir)
-    channels = datacard_dict.keys()
+    # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
         if not WC in WCs:
@@ -356,6 +355,8 @@ if __name__=='__main__':
                         help='Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+    parser.add_argument('-t', '--theLevels',
+                        help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_1D" (default),]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
@@ -378,6 +379,28 @@ if __name__=='__main__':
         WCs_loop = WC_ALL
     else:
         WCs_loop = [args.WC]
+    if (args.theLevels is None) or (args.theLevels == 'all'):
+        generate_bins = True
+        generate_subch = True
+        generate_ch = True
+        generate_full = True
+    else:
+        if 'b' in args.theLevels:
+            generate_bins = True
+        else:
+            generate_bins = False
+        if 's' in args.theLevels:
+            generate_subch = True
+        else:
+            generate_subch = False
+        if 'c' in args.theLevels:
+            generate_ch = True
+        else:
+            generate_ch = False
+        if 'f' in args.theLevels:
+            generate_full = True
+        else:
+            generate_full = False
     if args.ScanType is None:
         args.ScanType = '_1D'
     if args.Asimov is None:
@@ -392,10 +415,11 @@ if __name__=='__main__':
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
+    # cannot do bin level with signal injection
     if SignalInject:
         generate_bins = False
-    else:
-        generate_bins = True
+    # else:
+    #     generate_bins = True
     if args.Precision is None:
         args.Precision = 0.001
     else:
@@ -434,38 +458,41 @@ if __name__=='__main__':
             print('=================================================\n')
         #########################
         # subchannel calculations
-        print('Running combine for each subchannel:')
-        print('=================================================')
-        for channel in channels:
-            WCs = versions_dict[channel]['EFT_ops']
-            if not WC in WCs:
-                continue
-            v = versions_dict[channel]['v']
-            VERSION = 'v'+str(v)
-            run_combine_subchannels(channel, VERSION, datacard_dict, WC=WC,
+        if generate_subch:
+            print('Running combine for each subchannel:')
+            print('=================================================')
+            for channel in channels:
+                WCs = versions_dict[channel]['EFT_ops']
+                if not WC in WCs:
+                    continue
+                v = versions_dict[channel]['v']
+                VERSION = 'v'+str(v)
+                run_combine_subchannels(channel, VERSION, datacard_dict, WC=WC,
+                                 ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
+                                 SignalInject=SignalInject, Precision=args.Precision,
+                                 PrecisionCoarse=args.PrecisionCoarse,
+                                 stdout=stdout, verbose=args.Verbose)
+            print('=================================================\n')
+        #########################
+        # channel calculations
+        if generate_ch:
+            print('Running combine for each channel:')
+            print('=================================================')
+            run_combine_channels(channels, datacard_dict, WC=WC,
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
                              stdout=stdout, verbose=args.Verbose)
-        print('=================================================\n')
-        #########################
-        # channel calculations
-        print('Running combine for each channel:')
-        print('=================================================')
-        run_combine_channels(datacard_dict, WC=WC,
-                         ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
-                         SignalInject=SignalInject, Precision=args.Precision,
-                         PrecisionCoarse=args.PrecisionCoarse,
-                         stdout=stdout, verbose=args.Verbose)
-        print('=================================================\n')
+            print('=================================================\n')
         #########################
         # full analysis calculation
-        print('Running combine for full analysis:')
-        print('=================================================')
-        run_combine_full_analysis(WC=WC,
-                         ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
-                         SignalInject=SignalInject, Precision=args.Precision,
-                         PrecisionCoarse=args.PrecisionCoarse,
-                         stdout=stdout, verbose=args.Verbose)
-        print('=================================================\n')
+        if generate_full:
+            print('Running combine for full analysis:')
+            print('=================================================')
+            run_combine_full_analysis(WC=WC,
+                             ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
+                             SignalInject=SignalInject, Precision=args.Precision,
+                             PrecisionCoarse=args.PrecisionCoarse,
+                             stdout=stdout, verbose=args.Verbose)
+            print('=================================================\n')
         #########################

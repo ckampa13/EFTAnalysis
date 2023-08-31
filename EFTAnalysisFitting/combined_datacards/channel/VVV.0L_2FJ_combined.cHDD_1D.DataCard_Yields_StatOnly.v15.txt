@@ -6,8 +6,8 @@ kmax 2 number of nuisance parameters
 shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
 shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          sch             
-observation  16178.0052554622
+bin          sch   
+observation  -1    
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                             sch               sch               sch               sch               sch               sch               sch               sch               sch               sch               sch             
 process                         sm                quad_cHDD         sm_lin_quad_cHDD  ZZ                DY                ttV               WW                WJets             QCD               TTbar             WZ              
