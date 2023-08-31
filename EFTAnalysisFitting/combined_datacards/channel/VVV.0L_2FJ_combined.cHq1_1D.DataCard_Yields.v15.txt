@@ -1,10 +1,10 @@
-Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.cHq1_1D.DataCard_Yields.v15.txt
+Combination of sch=/uscms_data/d3/ckampa/VVV_TEST/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.cHq1_1D.DataCard_Yields.v15.txt
 imax 1 number of bins
 jmax 10 number of processes minus 1
 kmax 2 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS
+shapes *         sch       /uscms_data/d3/ckampa/VVV_TEST/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs  sch       /uscms_data/d3/ckampa/VVV_TEST/EFTAnalysis/EFTAnalysisFitting/0Lepton_2FJ/v15/VVV.0L_2FJ.DataCard_Yields_Cleaned.v15.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch   
 observation  -1    
