@@ -18,7 +18,7 @@ rate                       -1                            -1                     
 datadriven_DYSFZ_    shape -                             -                             -                             1                             -                             
 norm_restbkgSFZ_     shape -                             -                             -                             -                             1                             
 # systematics "off" (very very small)
-statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
 # nuisance groups (for stat-only vs. with systematics)
 allsyst group = datadriven_DYSFZ_ norm_restbkgSFZ_
 nosyst group = statonly
