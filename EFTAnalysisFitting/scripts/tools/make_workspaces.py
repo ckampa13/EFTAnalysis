@@ -15,13 +15,13 @@ fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
 from CONFIG_VERSIONS import versions_dict, WC_ALL
-from MISC_CONFIGS import template_filename, datacard_dir
+from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
 x_flag = '--X-allow-no-signal'
 
 # all bins in a subchannel / channel
-def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1, StatOnly=False):
+def make_workspace_bins(dim, channel, version, datacard_dict, WCs, ScanType, verbose=1, StatOnly=False):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -42,16 +42,17 @@ def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1
             print('bin%s' % bin_n)
             sname_sch_b = sname_sch + '_bin' + str(bin_n)
             cmd_str = 'text2workspace.py '
-            tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
+            tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
             # TEST
             print(tfile)
             dc_file = os.path.join(dcdir, channel, version, tfile)
             cmd_str += '%s %s ' % (dc_file, str_module)
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(dcdir, 'workspaces', 'single_bin', wsfile)
             cmd_str += '-o %s %s ' % (wsfile, x_flag)
-            # add correct WC
-            cmd_str += '--PO eftOperators=%s' % WC
+            # add correct WCs
+            WCs_str = ','.join(WCs)
+            cmd_str += '--PO eftOperators=%s' % WCs_str
             # run script
             if verbose > 0:
                 stdout = None
@@ -67,7 +68,7 @@ def make_workspace_bins(channel, version, datacard_dict, WC, ScanType, verbose=1
         print('\n%s done.\n\n' % channel)
 
 # all subchannels in a channel
-def make_workspace_subchannels(channel, version, datacard_dict, WC, ScanType, verbose=1, StatOnly=False, SignalInject=False):
+def make_workspace_subchannels(dim, channel, version, datacard_dict, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -87,17 +88,18 @@ def make_workspace_subchannels(channel, version, datacard_dict, WC, ScanType, ve
         # update subchannel name if there is rescaling
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
-        tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
+        tfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
         if SignalInject:
             dc_file = os.path.join(dcdir, channel, version, 'signal_injection_'+WC, tfile)
         else:
             dc_file = os.path.join(dcdir, channel, version, tfile)
         cmd_str += '%s %s ' % (dc_file, str_module)
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(dcdir, 'workspaces', 'subchannel', wsfile)
         cmd_str += '-o %s %s ' % (wsfile, x_flag)
-        # add correct WC
-        cmd_str += '--PO eftOperators=%s' % WC
+        # add correct WCs
+        WCs_str = ','.join(WCs)
+        cmd_str += '--PO eftOperators=%s' % WCs_str
         # run script
         if verbose > 0:
             stdout = None
@@ -115,7 +117,7 @@ def make_workspace_subchannels(channel, version, datacard_dict, WC, ScanType, ve
         print()
 
 # all channels
-def make_workspace_channels(channels, datacard_dict, WC, ScanType, verbose=1, StatOnly=False, SignalInject=False):
+def make_workspace_channels(dim, channels, datacard_dict, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -127,22 +129,23 @@ def make_workspace_channels(channels, datacard_dict, WC, ScanType, verbose=1, St
         suff_purp = ''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
-        WCs = versions_dict[ch]['EFT_ops']
-        if not WC in WCs:
-            continue
+        # WCs = versions_dict[ch]['EFT_ops']
+        # if not WC in WCs:
+        #     continue
         print('Channel: %s' % ch)
         cmd_str = 'text2workspace.py '
         v = versions_dict[ch]['v']
         version = 'v'+str(v)
         sname_ch = datacard_dict[ch]['info']['short_name']
-        tfile_ch = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version=version, file_type='txt')
+        tfile_ch = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version=version, file_type='txt')
         dc_file = os.path.join(dcdir, tfile_ch)
         cmd_str += '%s %s ' % (dc_file, str_module)
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(datacard_dir, 'workspaces', 'channel', wsfile)
         cmd_str += '-o %s %s ' % (wsfile, x_flag)
-        # add correct WC
-        cmd_str += '--PO eftOperators=%s' % WC
+        # add correct WCs
+        WCs_str = ','.join(WCs)
+        cmd_str += '--PO eftOperators=%s' % WCs_str
         # run script
         if verbose > 0:
             stdout = None
@@ -158,7 +161,7 @@ def make_workspace_channels(channels, datacard_dict, WC, ScanType, verbose=1, St
         print('\nall channels done.\n\n')
 
 # full analysis
-def make_workspace_full_analysis(WC, ScanType, verbose=1, StatOnly=False, SignalInject=False):
+def make_workspace_full_analysis(dim, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -168,16 +171,17 @@ def make_workspace_full_analysis(WC, ScanType, verbose=1, StatOnly=False, Signal
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     dc_file = os.path.join(dcdir, tfile_comb)
     print('Full Analysis')
     cmd_str = 'text2workspace.py '
     cmd_str += '%s %s ' % (dc_file, str_module)
-    wsfile = template_filename.substitute(channel='all', subchannel='_combined', WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
+    wsfile = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
     wsfile = os.path.join(datacard_dir, 'workspaces', 'full_analysis', wsfile)
     cmd_str += '-o %s %s ' % (wsfile, x_flag)
-    # add correct WC
-    cmd_str += '--PO eftOperators=%s' % WC
+    # add correct WCs
+    WCs_str = ','.join(WCs)
+    cmd_str += '--PO eftOperators=%s' % WCs_str
     # run script
     if verbose > 0:
         stdout = None
@@ -198,14 +202,14 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
                         help='Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
-    parser.add_argument('-w', '--WC',
-                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
     parser.add_argument('-t', '--theLevels',
                         help='Which levels of analysis to run make workspaces for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
-                        help='What type of EFT scan was included in this file? ["_1D" (default),]')
+                        help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
+    parser.add_argument('-w', '--WC',
+                        help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
     parser.add_argument('-V', '--Verbose',
                         help='Include "combine" output? 0 / 1 (default). "combine" output included if Verbose>0.')
     args = parser.parse_args()
@@ -216,12 +220,6 @@ if __name__=='__main__':
         channels = datacard_dict.keys()
     else:
         channels = [args.Channel]
-    if args.WC is None:
-        args.WC = 'all'
-    if args.WC == 'all':
-        WCs_loop = WC_ALL
-    else:
-        WCs_loop = [args.WC]
     if (args.theLevels is None) or (args.theLevels == 'all'):
         generate_bins = True
         generate_subch = True
@@ -245,7 +243,7 @@ if __name__=='__main__':
         else:
             generate_full = False
     if args.ScanType is None:
-        args.ScanType = '_1D'
+        args.ScanType = '_All'
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -255,29 +253,49 @@ if __name__=='__main__':
         generate_bins = False
     # else:
     #     generate_bins = True
+    if args.WC is None:
+        args.WC = 'cW'
     if args.Verbose is None:
         args.Verbose = 1
     else:
         args.Verbose = int(args.Verbose)
+    # check if dim6 and dim8 in WC_ALL
+    # dims = set()
+    dims = ['dim6', 'dim8']
+    WCs_dim6 = []
+    WCs_dim8 = []
+    for WC in WC_ALL:
+        if WC in dim6_ops:
+            # dims.add('dim6')
+            WCs_dim6.append(WC)
+    for WC in WC_ALL:
+        if not WC in dim6_ops:
+            # dims.add('dim8')
+            WCs_dim8.append(WC)
+    # dims = list(dims)
     #########################
-    # outer loop (over WC)
-    for WC in WCs_loop:
-        print('WC: %s' % WC)
+    # outer loop (over EFT dimension)
+    for dim, WCs in zip(dims, [WCs_dim6, WCs_dim8]):
+        print(dim)
+        if len(WCs) < 1:
+            print('No WC in WC_ALL with dim %s! Skipping...' % dim)
+            continue
+        print('=================================================')
         #########################
         # bins workspaces
         if generate_bins:
             print('Generating bin workspaces:')
             print('=================================================')
             for channel in channels:
-                WCs = versions_dict[channel]['EFT_ops']
-                if not WC in WCs:
-                    continue
+                # WCs = versions_dict[channel]['EFT_ops']
+                # if not WC in WCs:
+                #     continue
                 v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
                 print(channel, VERSION)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
-                    make_workspace_bins(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
+                    make_workspace_bins(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly)
             print('=================================================\n')
         #########################
         # subchannel workspaces
@@ -285,14 +303,14 @@ if __name__=='__main__':
             print('Generating subchannel workspaces:')
             print('=================================================')
             for channel in channels:
-                WCs = versions_dict[channel]['EFT_ops']
-                if not WC in WCs:
-                    continue
+                # WCs = versions_dict[channel]['EFT_ops']
+                # if not WC in WCs:
+                #     continue
                 v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
-                    make_workspace_subchannels(channel, VERSION, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+                    make_workspace_subchannels(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
             print('=================================================\n')
         #########################
         # channel workspaces
@@ -301,7 +319,7 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_channels(channels, datacard_dict, WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+                make_workspace_channels(dim, channels, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
             print('=================================================\n')
         #########################
         # full analysis workspace
@@ -310,6 +328,6 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_full_analysis(WC=WC, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject)
+                make_workspace_full_analysis(dim, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
             print('=================================================\n')
         #########################

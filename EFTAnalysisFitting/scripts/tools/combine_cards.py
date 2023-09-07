@@ -143,9 +143,9 @@ if __name__=='__main__':
         print('Combining subchannels for each available channel:')
         print('=================================================')
         for channel in channels:
-            WCs = versions_dict[channel]['EFT_ops']
-            if not WC in WCs:
-                continue
+            # WCs = versions_dict[channel]['EFT_ops']
+            # if not WC in WCs:
+            #     continue
             v = versions_dict[channel]['v']
             VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
