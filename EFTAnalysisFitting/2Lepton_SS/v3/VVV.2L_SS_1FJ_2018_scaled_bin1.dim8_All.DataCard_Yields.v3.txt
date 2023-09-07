@@ -1,0 +1,31 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * VVV.2L_SS_1FJ_2018_scaled_bin1.DataCard_Yields_MultiDimCleaned_dim8.v3.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.2L_SS_1FJ_2018_scaled_bin1.DataCard_Yields_MultiDimCleaned_dim8.v3.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_2Lepton_SS
+observation -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS                bin_2Lepton_SS
+process                    sm                            quad_cT0                      sm_lin_quad_cT0               quad_cM0                      sm_lin_quad_cM0               sm_lin_quad_mixed_cT0_cM0     DY                            TTbar                         WJets                         WW                            WZ                            ZZ                            ttV
+process                    0                             1                             2                             3                             4                             5                             6                             7                             8                             9                             10                            11                            12
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1
+----------------------------------------------------------------------------------------------------
+btag_sf_medium_      shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+jer_                 shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+jes_                 shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+lep_sf_el_tight_     shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+lep_sf_mu_tight_     shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+prefire_weight_      shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+pu_weight_           shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+trigger_weight_      shape -                             -                             -                             -                             -                             -                             1                             1                             1                             1                             1                             1                             1
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = btag_sf_medium_ jer_ jes_ lep_sf_el_tight_ lep_sf_mu_tight_ prefire_weight_ pu_weight_ trigger_weight_
+nosyst group = statonly
+# MC stat uncertainties
+* autoMCStats 0
