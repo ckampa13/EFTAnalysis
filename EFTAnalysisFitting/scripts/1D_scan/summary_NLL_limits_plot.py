@@ -176,8 +176,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
                     'channel': fname_ch, 'subchannel': 'All',
                     'version': version, 'bin_': 'All',
                     }
-        file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_All',version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_All',version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -190,8 +190,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
                 'channel': 'All', 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
                 }
-    file_syst = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_All',version=version,syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_All',version=version,syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -221,7 +221,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    # WCs = ['cW'] # testing
+    #WCs = ['cW'] # testing
+    #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3']
     WCs = WC_ALL
     # Asimov
     SignalInject=False
