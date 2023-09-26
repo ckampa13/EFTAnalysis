@@ -208,8 +208,8 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
-    parser.add_argument('-w', '--WC',
-                        help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
+    # parser.add_argument('-w', '--WC',
+    #                     help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
     parser.add_argument('-V', '--Verbose',
                         help='Include "combine" output? 0 / 1 (default). "combine" output included if Verbose>0.')
     args = parser.parse_args()
@@ -253,8 +253,8 @@ if __name__=='__main__':
         generate_bins = False
     # else:
     #     generate_bins = True
-    if args.WC is None:
-        args.WC = 'cW'
+    # if args.WC is None:
+    #     args.WC = 'cW'
     if args.Verbose is None:
         args.Verbose = 1
     else:
