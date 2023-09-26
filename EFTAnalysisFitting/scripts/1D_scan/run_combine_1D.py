@@ -85,7 +85,8 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     if WCs_freeze is None:
         cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
     else:
-        WCs_str = ','.join(WCs_freeze)
+        WCs_ = ['k_'+w for w in WCs_freeze]
+        WCs_str = ','.join(WCs_)
         cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s ' % (WC, LL, UL)
     cmd_str += '--verbose -1 -n %s' % name_str
