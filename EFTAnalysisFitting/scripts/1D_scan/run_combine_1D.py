@@ -53,19 +53,24 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     range_ = grid_dict["UL"] - grid_dict["LL"]
     # FIXME! I don't think "prec" is used anywhere...
     # also can switch from hard coding the very coarse precision if desired if range_ > 50: prec = 1.0
-    if range_ > 50:
+    if range_ > 10:
         prec = 1.0
         print('Using prec = 1.0')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
-    elif range_ > 25:
+    elif range_ > 2:
         prec = 0.1
         print('Using prec = 0.1')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.1
-    elif range_ > 10:
-        prec = args.PrecisionCoarse
-        print('Using PrecisionCoarse')
+    elif range_ > 1:
+        prec = 0.01
+        print('Using prec = 0.01')
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.01) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.01
+    # elif range_ > 10:
+    #     prec = args.PrecisionCoarse
+    #     print('Using PrecisionCoarse')
     else:
         prec = args.Precision
         print('Using Precision')
