@@ -1,7 +1,7 @@
 Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.dim8_All.DataCard_Yields_StatOnly.v4.txt
 imax 1 number of bins
 jmax 8 number of processes minus 1
-kmax 12 number of nuisance parameters
+kmax 9 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
 shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS
@@ -20,11 +20,8 @@ TF2                     shape            -                          -           
 jes                     shape            -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
 lepSFe                  shape            -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
 lepSFmu                 shape            -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
-norm_Other1L2FJ         shape            -                          -                          -                          -                          1.0                        -                          -                          -                          -                        
-norm_Top1L2FJ           shape            -                          1.0                        -                          -                          -                          -                          -                          -                          -                        
-norm_WJets1L2FJ         shape            -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
 puWeight                shape            -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
 statonly                lnN              1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                   
 triggerWeightWeight     shape            -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
-allsyst group = jes lepSFe norm_WJets1L2FJ norm_Other1L2FJ triggerWeightWeight norm_Top1L2FJ puWeight TF2 TF1 lepSFmu BtagSF
+allsyst group = jes triggerWeightWeight lepSFe puWeight TF2 TF1 lepSFmu BtagSF
 nosyst group = statonly
