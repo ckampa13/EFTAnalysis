@@ -1,7 +1,7 @@
 Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.dim8_All.DataCard_Yields.v4.txt
 imax 1 number of bins
 jmax 8 number of processes minus 1
-kmax 5 number of nuisance parameters
+kmax 8 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
 shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v4/VVV.1L_2FJ.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS
@@ -9,15 +9,18 @@ shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/
 bin          sch   
 observation  -1    
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                                sch                        sch                        sch                        sch                        sch                        sch                        sch                        sch                        sch                      
-process                            sm_lin_quad_mixed_cT0_cM0  Top                        quad_cM0                   WJets                      Other                      sm_lin_quad_cM0            sm                         quad_cT0                   sm_lin_quad_cT0          
-process                            1                          2                          3                          4                          5                          6                          7                          8                          9                        
-rate                               -1                         -1                         -1                         -1                         -1                         -1                         -1                         -1                         -1                       
+bin                                  sch                        sch                        sch                        sch                        sch                        sch                        sch                        sch                        sch                      
+process                              sm_lin_quad_mixed_cT0_cM0  Top                        quad_cM0                   WJets                      Other                      sm_lin_quad_cM0            sm                         quad_cT0                   sm_lin_quad_cT0          
+process                              1                          2                          3                          4                          5                          6                          7                          8                          9                        
+rate                                 -1                         -1                         -1                         -1                         -1                         -1                         -1                         -1                         -1                       
 ----------------------------------------------------------------------------------------------------------------------------------
-TF1                     shape      -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
-TF2                     shape      -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
-jes                     shape      -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
-statonly                lnN        1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                   
-triggerWeight           shape      -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
-allsyst group = jes TF2 TF1 triggerWeight
+TF1                     shape        -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
+TF2                     shape        -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
+jes                     shape        -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
+norm_Other1L2FJ         shape        -                          -                          -                          -                          1.0                        -                          -                          -                          -                        
+norm_Top1L2FJ           shape        -                          1.0                        -                          -                          -                          -                          -                          -                          -                        
+norm_WJets1L2FJ         shape        -                          -                          -                          1.0                        -                          -                          -                          -                          -                        
+statonly                lnN          1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                     1.0001                   
+triggerWeight           shape        -                          -                          1.0                        -                          -                          1.0                        1.0                        1.0                        1.0                      
+allsyst group = jes norm_WJets1L2FJ norm_Other1L2FJ triggerWeight TF1 norm_Top1L2FJ TF2
 nosyst group = statonly

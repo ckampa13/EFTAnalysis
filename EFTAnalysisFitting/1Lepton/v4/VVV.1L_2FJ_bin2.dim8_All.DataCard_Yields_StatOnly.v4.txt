@@ -17,9 +17,12 @@ rate                       -1                            -1                     
 TF1                  shape -                             -                             -                             -                             -                             -                             1                             -                             -
 TF2                  shape -                             -                             -                             -                             -                             -                             1                             -                             -
 jes                  shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+norm_Other1L2FJ      shape -                             -                             -                             -                             -                             1                             -                             -                             -
+norm_Top1L2FJ        shape -                             -                             -                             1                             -                             -                             -                             -                             -
+norm_WJets1L2FJ      shape -                             -                             -                             -                             -                             -                             1                             -                             -
 triggerWeight        shape 1                             1                             -                             -                             1                             -                             -                             1                             1
 # systematics "off" (very very small)
 statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
 # nuisance groups (for stat-only vs. with systematics)
-allsyst group = TF1 TF2 jes triggerWeight
+allsyst group = TF1 TF2 jes norm_Other1L2FJ norm_Top1L2FJ norm_WJets1L2FJ triggerWeight
 nosyst group = statonly
