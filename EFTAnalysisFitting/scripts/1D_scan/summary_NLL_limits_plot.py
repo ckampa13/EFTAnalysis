@@ -227,9 +227,9 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    WCs = ['cW'] # testing
-    #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3']
-    #WCs = WC_ALL
+    #WCs = ['cW'] # testing
+    #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
+    WCs = WC_ALL
     # Asimov
     SignalInject=False
     InjectValue = 0.0
@@ -241,7 +241,7 @@ if __name__=='__main__':
     # freeze all but one
     ScanType = '_1D'
     # profile
-    # ScanType = '_All'
+    #ScanType = '_All'
     # confidence level
     CL = 0.95
     for WC in WCs:
