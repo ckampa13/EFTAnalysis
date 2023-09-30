@@ -54,10 +54,14 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     # FIXME! I don't think "prec" is used anywhere...
     # also can switch from hard coding the very coarse precision if desired if range_ > 50: prec = 1.0
     if range_ > 20.5:
-        prec = 1.0
-        print('Using prec = 1.0')
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
-        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
+        # prec = 1.0
+        # print('Using prec = 1.0')
+        # grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
+        # grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
+        prec = 0.1
+        print('Using prec = 0.1')
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.1
     elif range_ > 4.5:
         prec = 0.1
         print('Using prec = 0.1')
@@ -403,7 +407,8 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     # else:
     #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     if ScanType == '_1D':
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        grid_dict = {'LL':-20, 'UL':20, 'steps': 41}
         # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
     else:
         grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
