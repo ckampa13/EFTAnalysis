@@ -106,7 +106,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
                 ax.plot(Cs, NLL, c=colors_list[i], linestyle='-', linewidth=lw, label=label_NLL)
                 if plot_stat_only:
                     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
-                    Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_sta, NLL_best_stat = hold
+                    Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
                     #label_NLL = f'[{LLs_stat[0]:0.3f}, {ULs_stat[0]:0.3f}]\n(stat. only)\n'
                     # multi interval
                     label_NLL = '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'

@@ -21,14 +21,16 @@ from MISC_CONFIGS import (
     dim6_ops,
     WC_pretty_print_dict,
 )
-from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+# from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
+from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
 from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
 # this is a duplicate from limit_summary_plot.py
 # could consider importing this function
-def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
+def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=True, plot_stat_only=True,
+                            xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
                             plot_var_of_choice=True):
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
@@ -88,7 +90,12 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
             var_of_choice = info_dict['variable_of_choice']
             # get limits and plot
             # total
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+            #Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+            Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
+            # for multi lim version need to ensure single limit
+            LLs = [np.min(LL) for LL in LLs]
+            ULs = [np.max(UL) for UL in ULs]
             err_low = C_best - LLs[0]
             err_high = ULs[0] - C_best
             #err_mean = (err_low + err_high) / 2.
@@ -109,7 +116,15 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
             text_annot = rf'${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
             # stat only
             # add to label either way
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            #Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best_stat, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+            #Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
+            Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
+            # for multi lim version need to ensure single limit
+            #LLs_stat = [np.min(LL) for LL in LLs_stat]
+            #ULs_stat = [np.max(UL) for UL in ULs_stat]
+            LLs = [np.min(LL) for LL in LLs]
+            ULs = [np.max(UL) for UL in ULs]
             err_low = C_best - LLs[0]
             err_high = ULs[0] - C_best
             text_annot += rf'$\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
@@ -187,10 +202,16 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_xlim):
+def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim):
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+        scan_title = '(Freeze Other WCs)'
+    else:
+        scan_dir = 'profile'
+        scan_title = '(Profile Other WCs)'
     output_dir_bin = os.path.join(datacard_dir, 'output', 'single_bin')
     output_dir_sch = os.path.join(datacard_dir, 'output', 'subchannel')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'subchannel')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'subchannel', scan_dir)
     root_file_dict_full = {}
     fname_ch = datacard_dict[channel]['info']['file_name']
     sname_ch = datacard_dict[channel]['info']['short_name']
@@ -211,8 +232,8 @@ def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, plot_stat_on
                     'version': version, 'bin_': bin_,
                     }
         sname_sch_b = sname_sch + f'_bin{bin_}'
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType='_1D',version=version, syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType='_1D',version=version, syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType,version=version, syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType,version=version, syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -226,8 +247,8 @@ def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, plot_stat_on
                 'version': version, 'bin_': 'All',
                 }
     # FIXME! 'Asimov' should be passed in. Need to be able to run with data_obs, e.g. signal injection tests.
-    file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D',version=version, syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D',version=version, syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType,version=version, syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType,version=version, syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -238,19 +259,25 @@ def run_plot_subchannel(WC, channel, subchannel, datacard_dict, CL, plot_stat_on
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}_subchannel-{subchannel}{stat_str}_{WC}')
+    plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}_subchannel-{subchannel}{stat_str}_{WC}{ScanType}')
     WC_lab = WC_pretty_print_dict[WC]
-    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f': {channel}'
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f' {scan_title}: {channel}'
     if subchannel != '':
         title += f', {subchannel}'
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
 
-def run_plot_channel(WC, channel, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_xlim):
+def run_plot_channel(WC, channel, datacard_dict, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim):
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+        scan_title = '(Freeze Other WCs)'
+    else:
+        scan_dir = 'profile'
+        scan_title = '(Profile Other WCs)'
     output_dir_sch = os.path.join(datacard_dir, 'output', 'subchannel')
     output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'channel')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'channel', scan_dir)
     root_file_dict_full = {}
     fname_ch = datacard_dict[channel]['info']['file_name']
     sname_ch = datacard_dict[channel]['info']['short_name']
@@ -271,8 +298,8 @@ def run_plot_channel(WC, channel, datacard_dict, CL, plot_stat_only, xlim_factor
                     'version': version, 'bin_': 'All',
                     }
         # FIXME! 'Asimov' should be passed in. Need to be able to run with data_obs, e.g. signal injection tests.
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D',version=version, syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D',version=version, syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType,version=version, syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType,version=version, syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -284,8 +311,8 @@ def run_plot_channel(WC, channel, datacard_dict, CL, plot_stat_only, xlim_factor
                 'channel': fname_ch, 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
                 }
-    file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -296,18 +323,24 @@ def run_plot_channel(WC, channel, datacard_dict, CL, plot_stat_only, xlim_factor
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}{stat_str}_{WC}')
+    plotfile = os.path.join(plot_dir, f'sensitivity_summary_channel-{channel}{stat_str}_{WC}{ScanType}')
     WC_lab = WC_pretty_print_dict[WC]
-    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f': {channel}'
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f' {scan_title}: {channel}'
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
 
-def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_xlim):
+def run_plot_analysis(WC, datacard_dict, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim):
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+        scan_title = '(Freeze Other WCs)'
+    else:
+        scan_dir = 'profile'
+        scan_title = '(Profile Other WCs)'
     # output_dir_sch = os.path.join(datacard_dir, 'output', 'combined_datacards', 'subchannel')
     output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -323,8 +356,8 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
                     'version': version, 'bin_': 'All',
                     }
         # FIXME! 'Asimov' should be passed in. Need to be able to run with data_obs, e.g. signal injection tests.
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov='Asimov', channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -337,8 +370,8 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
                 'channel': 'All', 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
                 }
-    file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -349,10 +382,10 @@ def run_plot_analysis(WC, datacard_dict, CL, plot_stat_only, xlim_factor, fixed_
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'sensitivity_summary_all-channels{stat_str}_{WC}')
+    plotfile = os.path.join(plot_dir, f'sensitivity_summary_all-channels{stat_str}_{WC}{ScanType}')
     # title = f'{int(CL*100)}% CL Sensitivity: All Channels'
     WC_lab = WC_pretty_print_dict[WC]
-    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab
+    title = f'{int(CL*100)}\% CL Sensitivity to '+WC_lab+f' {scan_title}'
     fig, ax = make_limit_summary_plot(WC, root_file_dict_full, title, CL=CL, add_hrule=True, plot_stat_only=plot_stat_only,
                                       xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile)
     return fig, ax
@@ -362,6 +395,11 @@ if __name__=='__main__':
     # FIXME! make these cmd line args
     #WC = 'cW'
     CL = 0.95
+    # which scan type?
+    # freeze all but one
+    ScanType = '_1D'
+    # profile
+    #ScanType = '_All'
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--WC',
@@ -391,7 +429,7 @@ if __name__=='__main__':
                 print(ch)
                 for sch in datacard_dict[ch]['subchannels'].keys():
                     print(sch)
-                    fig, ax = run_plot_subchannel(WC, ch, sch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
+                    fig, ax = run_plot_subchannel(WC, ch, sch, datacard_dict, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
                     # fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
         print("=========================================================\n")
         # loop through all channels and plot
@@ -404,7 +442,7 @@ if __name__=='__main__':
                 if not WC in WCs:
                     continue
                 print(ch)
-                fig, ax = run_plot_channel(WC, ch, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
+                fig, ax = run_plot_channel(WC, ch, datacard_dict, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
                 # fig, ax = run_plot_channel(ch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
         print("=========================================================\n")
         #####
@@ -412,7 +450,7 @@ if __name__=='__main__':
         print("Making sensitivity plots for full analysis...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
+            fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
             # fig, ax = run_plot_analysis(WC, datacard_dict, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-0.5., 0.5])
         print("=========================================================\n")
 

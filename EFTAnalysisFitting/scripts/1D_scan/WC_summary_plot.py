@@ -100,8 +100,12 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             var_of_choice = info_dict['variable_of_choice']
             # get limits and plot
             # total
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
-            Cs_s, NLL_s, CL_list_s, NLL_cuts_s, LLs_s, ULs_s, C_best_stat_s, NLL_best_s = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            # Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+            # Cs_s, NLL_s, CL_list_s, NLL_cuts_s, LLs_s, ULs_s, C_best_stat_s, NLL_best_s = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+            Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
+            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+            Cs_s, NLL_s, CL_list_s, NLL_cuts_s, _, _, LLs_s, ULs_s, C_best_s, NLL_best_s = hold
             err_low = C_best - LLs[0][0]
             err_high = ULs[0][-1] - C_best
             err_low_s = C_best - LLs_s[0][0]
@@ -213,7 +217,13 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
     return fig, ax
 
 
-def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
+def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim):
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+        scan_title = '(Freeze Other WCs)'
+    else:
+        scan_dir = 'profile'
+        scan_title = '(Profile Other WCs)'
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
     plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis')
     root_file_dict_full = {}
@@ -226,8 +236,8 @@ def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
     # construct root file for each WC
     for i, WC in enumerate(WCs):
         WC_l = WC_pretty_print_dict[WC]
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -245,8 +255,8 @@ def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'{dim}_sensitivity_summary{stat_str}')
-    title = f'{int(CL*100)}\% CL Sensitivity to '+dim_l+' Wilson Coefficients'
+    plotfile = os.path.join(plot_dir, f'{dim}_sensitivity_summary{stat_str}{ScanType}')
+    title = f'{int(CL*100)}\% CL Sensitivity to '+dim_l+f' Wilson Coefficients {scan_title}'
 
     fig, ax = make_limit_summary_plot_WCs(root_file_dict_full, title, CL=CL, add_hrule=False, plot_stat_only=plot_stat_only,
                                           xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile,
@@ -258,7 +268,7 @@ def run_plot_WC_summary(WCs, CL, plot_stat_only, xlim_factor, fixed_xlim):
 if __name__=='__main__':
     # FIXME! make this a commandline arg?
     # most sensitive
-    WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHB']
+    WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']
     # all dim6
     #WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHB', 'cHl3', 'cHWB', 'cll1', 'cHDD', 'cHbox']
     WCs_dim8 = ['cT0', 'cM0']
@@ -266,6 +276,11 @@ if __name__=='__main__':
     # WCs = WC_ALL
     # CL
     CL = 0.95
+    # which scan type?
+    # freeze all but one
+    ScanType = '_1D'
+    # profile
+    #ScanType = '_All'
     # loop through dim6 and dim8
     for WCs, dim in zip([WCs_dim6, WCs_dim8], ['dim6', 'dim8']):
     # for WCs, dim in zip([WCs_dim6], ['dim6']): # only dim6
@@ -274,7 +289,7 @@ if __name__=='__main__':
         print(f"Making sensitivity plots for {dim}...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            fig, ax = run_plot_WC_summary(WCs, CL=CL, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
+            fig, ax = run_plot_WC_summary(WCs, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
             # fig, ax = run_plot_WC_summary(WCs, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-1.5, 1.5])
         print("=========================================================\n")
 

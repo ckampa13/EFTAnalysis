@@ -47,6 +47,7 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
         imin = np.argmin(NLL)
         C_best = Cs[imin]
         Cs_best.append(C_best)
+        NLL_best = NLL[imin]
         # find interval(s)
         mask_excluded = NLL > NLL_cut
         # calculate locations of crossings from positive to negative and reverse
