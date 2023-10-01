@@ -1,0 +1,32 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * VVV.1L_2FJ_bin4.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.1L_2FJ_bin4.DataCard_Yields_MultiDimCleaned_dim8.v4.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_1Lepton
+observation -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton                   bin_1Lepton
+process                    quad_cT0                      sm_lin_quad_cM0               sm_lin_quad_mixed_cT0_cM0     Top                           sm_lin_quad_cT0               Other                         WJets                         quad_cM0                      sm
+process                    1                             2                             3                             4                             5                             6                             7                             8                             9
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1
+----------------------------------------------------------------------------------------------------
+BtagSF               shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+TF1                  shape -                             -                             -                             -                             -                             -                             1                             -                             -
+TF2                  shape -                             -                             -                             -                             -                             -                             1                             -                             -
+jes                  shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+lepSFe               shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+lepSFmu              shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+norm_Other1L2FJ      shape -                             -                             -                             -                             -                             1                             -                             -                             -
+norm_Top1L2FJ        shape -                             -                             -                             1                             -                             -                             -                             -                             -
+norm_WJets1L2FJ      shape -                             -                             -                             -                             -                             -                             1                             -                             -
+puWeight             shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+triggerWeightWeight  shape 1                             1                             -                             -                             1                             -                             -                             1                             1
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = BtagSF TF1 TF2 jes lepSFe lepSFmu norm_Other1L2FJ norm_Top1L2FJ norm_WJets1L2FJ puWeight triggerWeightWeight
+nosyst group = statonly

@@ -20,19 +20,22 @@ versions_dict = {
     '0Lepton_3FJ': {'v': 15, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim8: FT0, FM0 VVV. Binning back to v14 2FJ.
     # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '1Lepton': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # cW -> VVV+1Jet, all other dim6 added. autoMCStats should be turned off.
-    '1Lepton': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # All dim8 added (dim6 bugged). Processed only FT0, FM0. autoMCStats should be turned off.
+    #'1Lepton': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # All dim8 added (dim6 bugged). Processed only FT0, FM0. autoMCStats should be turned off.
+    '1Lepton': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # Signal systematics added for dim6 and dim8 (missing PDF, alpha_s, QCD_scales). All dim8 added. Processed only FT0, FM0. autoMCStats should be turned off.
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},
     #'2Lepton_OS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # removed WWZ ggH
     # '2Lepton_OS': {'v': 5, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # signal xsec bug fix
     # '2Lepton_OS': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # 1Jet sample processed
     # '2Lepton_OS': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 completed, with minor errors in point scans (removed points)
-    '2Lepton_OS': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim8 completed (FT0, FM0), dim6 completed (with bugged points fixed)
+    #'2Lepton_OS': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim8 completed (FT0, FM0), dim6 completed (with bugged points fixed)
+    '2Lepton_OS': {'v': 8, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # lumi bug fixed (dim6 and dim8), dim6 signal systematics added with a few missing (PDF, alpha_s, QCD scales). Background uncertainty for DY updated to alternate method (more conservative)
     # '2Lepton_SS': {'v': 1, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '2Lepton_SS': {'v': 2, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # only WWW
     # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW -- first batch
     # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # VVV 1J
-    '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # VVV 1J, same as previous line with dim8 added.
+    #'2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # VVV 1J, same as previous line with dim8 added.
+    '2Lepton_SS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim6 signal systematics added with a few missing (PDF, alpha_s, QCD_scales). TTbar updated to data driven (including uncertainty). dim8 missing but added by hand from cleaned v3 file.
 }
 
 # WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB'] # 2L_SS v2

@@ -78,7 +78,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
                 ylabels_all.append(info_dict['ylabel'])
             # get limits and plot
             # total
-            Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
+            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+            Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
             # err_low = C_best - LLs[0]
             # err_high = ULs[0] - C_best
             # # use width of the limit for sorting
@@ -104,7 +105,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
                 label_NLL += '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
                 ax.plot(Cs, NLL, c=colors_list[i], linestyle='-', linewidth=lw, label=label_NLL)
                 if plot_stat_only:
-                    Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, LLs_stat, ULs_stat = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
+                    hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+                    Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
                     #label_NLL = f'[{LLs_stat[0]:0.3f}, {ULs_stat[0]:0.3f}]\n(stat. only)\n'
                     # multi interval
                     label_NLL = '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
@@ -113,7 +115,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
                 LLs_all.append(LLs[0])
                 ULs_all.append(ULs[0])
                 # ylims
-                ymax_min = min(np.max(NLL), ymax_min)
+                #ymax_min = min(np.max(NLL), ymax_min)
     # plot the horizontal line for NLL_cut only once at the end
     xmin = np.min(Cs)
     xmax = np.max(Cs)
@@ -153,7 +155,13 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D'):
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+        scan_title = '(Freeze Other WCs)'
+    else:
+        scan_dir = 'profile'
+        scan_title = '(Profile Other WCs)'
     if SignalInject:
         Asi = f'Data_SignalInject_{WC}'
     else:
@@ -161,7 +169,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
     WC_l = WC_pretty_print_dict[WC]
     output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis')
+    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -176,8 +184,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
                     'channel': fname_ch, 'subchannel': 'All',
                     'version': version, 'bin_': 'All',
                     }
-        file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -190,8 +198,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
                 'channel': 'All', 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
                 }
-    file_syst = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='syst', method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType='_1D',version=version,syst='nosyst', method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov=Asi, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -207,10 +215,10 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
     else:
         stat_str = ''
     if SignalInject:
-        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}')
+        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}')
     else:
-        plotfile = os.path.join(plot_dir, f'full_analysis_and_channels_NLL_vs_{WC}{stat_str}')
-    title = f'{CL*100:0.1f}\% CL Limits on '+WC_l+f'\nFull Combination and Channel Results'
+        plotfile = os.path.join(plot_dir, f'full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}')
+    title = f'{CL*100:0.1f}\% CL Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     if SignalInject:
         ncol = 3
     else:
@@ -221,7 +229,9 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    # WCs = ['cW'] # testing
+    #WCs = ['cW'] # testing
+    #WCs = ['cW', 'cHB'] # testing
+    #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     WCs = WC_ALL
     # Asimov
     SignalInject=False
@@ -230,6 +240,11 @@ if __name__=='__main__':
     # SignalInject=True
     # InjectValue = 0.2
     # WCs = ['cW']
+    # which scan type?
+    # freeze all but one
+    ScanType = '_1D'
+    # profile
+    #ScanType = '_All'
     # confidence level
     CL = 0.95
     for WC in WCs:
@@ -239,7 +254,7 @@ if __name__=='__main__':
         print("Making NLL plot with full combination and channel results...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat, SignalInject=SignalInject, InjectValue=InjectValue)
+            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat, SignalInject=SignalInject, InjectValue=InjectValue, ScanType=ScanType)
         print("=========================================================\n")
     # plt.show()
 

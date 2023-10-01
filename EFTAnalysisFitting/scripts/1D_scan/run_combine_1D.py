@@ -27,6 +27,7 @@ from MISC_CONFIGS import (
     template_filename,
     template_outfilename,
     template_outfilename_stub,
+    dim6_ops,
 )
 
 # FIXME! method should be a cmdline arg, but need to make sure it works
@@ -52,25 +53,35 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     range_ = grid_dict["UL"] - grid_dict["LL"]
     # FIXME! I don't think "prec" is used anywhere...
     # also can switch from hard coding the very coarse precision if desired if range_ > 50: prec = 1.0
-    if range_ > 50:
-        print('Using prec = 1.0')
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
-        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
-    elif range_ > 25:
+    if range_ > 20.5:
+        # prec = 1.0
+        # print('Using prec = 1.0')
+        # grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
+        # grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
         prec = 0.1
         print('Using prec = 0.1')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.1
-    elif range_ > 10:
-        prec = args.PrecisionCoarse
-        print('Using PrecisionCoarse')
+    elif range_ > 4.5:
+        prec = 0.1
+        print('Using prec = 0.1')
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.1
+    elif range_ > 2.5:
+        prec = 0.01
+        print('Using prec = 0.01')
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.01) + 2
+        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 0.01
+    # elif range_ > 10:
+    #     prec = args.PrecisionCoarse
+    #     print('Using PrecisionCoarse')
     else:
         prec = args.Precision
         print('Using Precision')
     return grid_dict, prec
 
 def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit'):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None):
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -80,14 +91,23 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         freeze_group = 'nosyst'
     else:
         freeze_group = 'allsyst'
-    cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+    if WCs_freeze is None:
+        cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+    else:
+        WCs_ = ['k_'+w for w in WCs_freeze]
+        WCs_str = ','.join(WCs_)
+        cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s ' % (WC, LL, UL)
     cmd_str += '--verbose -1 -n %s' % name_str
     return cmd_str
 
 # all bins in a subchannel / channel
-def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
+def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
                      Precision, PrecisionCoarse, stdout, verbose=0):
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -96,6 +116,17 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
     wsdir = os.path.join(datacard_dir, 'workspaces', 'single_bin')
     outdir = os.path.join(datacard_dir, 'output', 'single_bin')
     os.chdir(outdir)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+    else:
+        WCs_freeze = None
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
     print('Channel: %s' % channel)
@@ -112,19 +143,23 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             # construct workspace filename
             sname_sch_b = sname_sch + ('_bin%d' % bin_n)
             SO_lab = ''
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS, purpose='workspace', proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             # coarse scan (using syst)
             syst = 'syst_coarse'
             # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
             # No need to scan a wide range if we know it's narrow.
-            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            if ScanType == '_1D':
+                grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+                # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            else:
+                grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
             name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
             outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
             outfile_ = os.path.join(outdir, outfile_)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                                name_str, with_syst=True, method=METHOD)
+                                                name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze)
             print('Coarse scan to determine appropriate WC range and number of steps:')
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -133,11 +168,11 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
             for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
                 print('Running "%s"' % syst_label)
                 # update to the appropriate workspace file (stat only or with syst)
-                wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=WC, ScanType=ScanType, purpose='workspace', proc=SO_lab, version=version, file_type='root')
+                wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS, purpose='workspace', proc=SO_lab, version=version, file_type='root')
                 wsfile = os.path.join(wsdir, wsfile)
                 name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
                 cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
-                                                    name_str, with_syst=syst_bool, method=METHOD)
+                                                    name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze)
                 print(cmd_str)
                 proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
             print('Finished running combine. Expected file output: %s' % outfile)
@@ -148,8 +183,12 @@ def run_combine_bins(channel, version, datacard_dict, WC, ScanType, Asimov, asi_
     os.chdir(start_dir)
 
 # all subchannels in a channel
-def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
+def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
                      SignalInject, Precision, PrecisionCoarse, stdout, verbose=0):
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -162,6 +201,17 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
     wsdir = os.path.join(datacard_dir, 'workspaces', 'subchannel')
     outdir = os.path.join(datacard_dir, 'output', 'subchannel')
     os.chdir(outdir)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+    else:
+        WCs_freeze = None
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
     print('Channel: %s' % channel)
@@ -173,7 +223,7 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
             sname_sch += '_2018_scaled'
         # construct workspace filename
         SO_lab = ''
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         syst = 'syst_coarse'
@@ -186,13 +236,17 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         #     grid_dict = {'LL':-10, 'UL':10, 'steps': 201}
         # else:
         #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        if ScanType == '_1D':
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        else:
+            grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            name_str, with_syst=True, method=METHOD)
+                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -201,11 +255,11 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
         for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print('Running "%s"' % syst_label)
             # update to the appropriate workspace file (stat only or with syst)
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
-                                                name_str, with_syst=syst_bool, method=METHOD)
+                                                name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze)
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
         print('Finished running combine. Expected file output: %s' % outfile)
@@ -216,8 +270,12 @@ def run_combine_subchannels(channel, version, datacard_dict, WC, ScanType, Asimo
     os.chdir(start_dir)
 
 # channels
-def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
+def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
                      Precision, PrecisionCoarse, stdout, verbose=0):
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -230,6 +288,17 @@ def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str,
     wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
     outdir = os.path.join(datacard_dir, 'output', 'channel')
     os.chdir(outdir)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+    else:
+        WCs_freeze = None
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
@@ -241,7 +310,7 @@ def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str,
         sname_ch = datacard_dict[ch]['info']['short_name']
         sname_sch = '_combined'
         SO_lab = ''
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         syst = 'syst_coarse'
@@ -255,13 +324,17 @@ def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str,
         #     grid_dict = {'LL':-10, 'UL':10, 'steps': 201}
         # else:
         #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        if ScanType == '_1D':
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        else:
+            grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         name_str = '_coarse_%s_%s_%s' % (WC, ch, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            name_str, with_syst=True, method=METHOD)
+                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -270,11 +343,11 @@ def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str,
         for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print('Running "%s"' % syst_label)
             # update to the appropriate workspace file (stat only or with syst)
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
-                                                name_str, with_syst=syst_bool, method=METHOD)
+                                                name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze)
             print(cmd_str)
             # proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -286,8 +359,12 @@ def run_combine_channels(channels, datacard_dict, WC, ScanType, Asimov, asi_str,
     os.chdir(start_dir)
 
 # full analysis
-def run_combine_full_analysis(WC, ScanType, Asimov, asi_str, SignalInject,
+def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
                      Precision, PrecisionCoarse, stdout, verbose=0):
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -305,8 +382,19 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str, SignalInject,
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'
     SO_lab = ''
-    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+    else:
+        WCs_freeze = None
     # coarse scan (using syst)
     syst = 'syst_coarse'
     # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
@@ -318,13 +406,18 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str, SignalInject,
     #     grid_dict = {'LL':-10, 'UL':10, 'steps': 201}
     # else:
     #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-    grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+    if ScanType == '_1D':
+        # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        grid_dict = {'LL':-20, 'UL':20, 'steps': 41}
+        # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+    else:
+        grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
     name_str = '_coarse_%s_all_%s' % (WC, str(time()))
     outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
     outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                        name_str, with_syst=True, method=METHOD)
+                                        name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
     proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -333,11 +426,11 @@ def run_combine_full_analysis(WC, ScanType, Asimov, asi_str, SignalInject,
     for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print('Running "%s"' % syst_label)
         # update to the appropriate workspace file (stat only or with syst)
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
-                                            name_str, with_syst=syst_bool, method=METHOD)
+                                            name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze)
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
     print('Finished running combine. Expected file output: %s' % outfile)
@@ -358,7 +451,7 @@ if __name__=='__main__':
     parser.add_argument('-t', '--theLevels',
                         help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
-                        help='What type of EFT scan was included in this file? ["_1D" (default),]')
+                        help='What type of EFT scan was included in this file? ["_All" (default), "_1D" (freeze WCs)]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
@@ -402,7 +495,7 @@ if __name__=='__main__':
         else:
             generate_full = False
     if args.ScanType is None:
-        args.ScanType = '_1D'
+        args.ScanType = '_All'
     if args.Asimov is None:
         args.Asimov = 'y'
     if args.Asimov == 'y':
@@ -440,6 +533,11 @@ if __name__=='__main__':
     # outer loop (over WC)
     for WC in WCs_loop:
         print('WC: %s' % WC)
+        if WC in dim6_ops:
+            dim = 'dim6'
+        else:
+            dim = 'dim8'
+        print(dim)
         #########################
         # bin calculations
         if generate_bins:
@@ -451,7 +549,7 @@ if __name__=='__main__':
                     continue
                 v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
-                run_combine_bins(channel, VERSION, datacard_dict, WC=WC,
+                run_combine_bins(dim, channel, VERSION, datacard_dict, WC=WC,
                                  ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                                  Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                                  stdout=stdout, verbose=args.Verbose)
@@ -467,7 +565,7 @@ if __name__=='__main__':
                     continue
                 v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
-                run_combine_subchannels(channel, VERSION, datacard_dict, WC=WC,
+                run_combine_subchannels(dim, channel, VERSION, datacard_dict, WC=WC,
                                  ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                                  SignalInject=SignalInject, Precision=args.Precision,
                                  PrecisionCoarse=args.PrecisionCoarse,
@@ -478,7 +576,7 @@ if __name__=='__main__':
         if generate_ch:
             print('Running combine for each channel:')
             print('=================================================')
-            run_combine_channels(channels, datacard_dict, WC=WC,
+            run_combine_channels(dim, channels, datacard_dict, WC=WC,
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
@@ -489,7 +587,7 @@ if __name__=='__main__':
         if generate_full:
             print('Running combine for full analysis:')
             print('=================================================')
-            run_combine_full_analysis(WC=WC,
+            run_combine_full_analysis(dim, WC=WC,
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
