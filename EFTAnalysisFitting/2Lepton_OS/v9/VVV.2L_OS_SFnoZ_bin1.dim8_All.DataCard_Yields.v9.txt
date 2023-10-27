@@ -1,0 +1,25 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * VVV.2L_OS_SFnoZ_bin1.DataCard_Yields_MultiDimCleaned_dim8.v9.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * VVV.2L_OS_SFnoZ_bin1.DataCard_Yields_MultiDimCleaned_dim8.v9.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_2Lepton_OS
+observation -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS                bin_2Lepton_OS
+process                    sm                            DY                            sm_lin_quad_cT0               restbkg                       quad_cM0                      sm_lin_quad_cM0               sm_lin_quad_mixed_cT0_cM0     quad_cT0
+process                    1                             2                             3                             4                             5                             6                             7                             8
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1
+----------------------------------------------------------------------------------------------------
+datadriven_DYSFnoZ_  shape -                             1                             -                             -                             -                             -                             -                             -
+norm_restbkgSFnoZ_   shape -                             -                             -                             1                             -                             -                             -                             -
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = datadriven_DYSFnoZ_ norm_restbkgSFnoZ_
+nosyst group = statonly
+# MC stat uncertainties
+* autoMCStats 0
