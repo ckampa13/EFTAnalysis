@@ -11,6 +11,9 @@ template_filename_yields = Template("VVV.$channel$subchannel.$purpose$proc.$vers
 template_filename = Template("VVV.$channel$subchannel.$WC$ScanType.$purpose$proc.$version.$file_type")
 template_outfilename = Template("higgsCombine_$asimov.$channel$subchannel.$WC$ScanType.$version.$syst.$method.mH120.root")
 template_outfilename_stub = Template("_$asimov.$channel$subchannel.$WC$ScanType.$version.$syst")
+# 2D scan
+template_outfilename_2D = Template("higgsCombine_$asimov.$channel$subchannel.$WC1$WC2$ScanType.$version.$syst.$method.mH120.root")
+template_outfilename_2D_stub = Template("_$asimov.$channel$subchannel.$WC1$WC2$ScanType.$version.$syst")
 
 # copied from: https://github.com/amassiro/AnalyticAnomalousCoupling/blob/master/python/AnomalousCouplingEFTNegative.py
 # dimension 6 -- 81 ops
