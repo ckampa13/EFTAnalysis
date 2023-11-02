@@ -332,7 +332,18 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        # TEST FOR YULUN'S WWW SAMPLE (no sensitivity to cHB, cHu, cHd)
+        WCs_freeze = []
+        if not WC == 'cHB':
+            WCs_freeze.append('cHB')
+        if not WC == 'cHu':
+            WCs_freeze.append('cHu')
+        if not WC == 'cHd':
+            WCs_freeze.append('cHd')
+        WCs_limit = None
+        '''
+        # BETTER
+        # WCs_freeze = None
         WCs_limit = []
         for WC_ in WC_ALL:
             if WC_ != WC:
@@ -340,6 +351,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
+        '''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
