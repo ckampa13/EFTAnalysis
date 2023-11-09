@@ -250,19 +250,28 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
 if __name__=='__main__':
     # FIX ME! make these command line args
     WCs = WC_ALL
+    # WCs = ['cW']
     #WCs = ['cT0', 'cM0']
     # WCs = ['cHl3']
+    # WCs = ['cW', 'cHbox', 'cHDD']
     # confidence level
-    CL_list = [0.95, CL_1sigma]
+    ##CL_list = [0.95, CL_1sigma]
+    CL_list = [0.95]
     # which scan type?
     # freeze all but one
-    ScanType = '_1D'
+    #ScanType = '_1D'
     # profile
-    #ScanType = '_All'
+    ScanType = '_All'
+    # channels -- for testing
+    # all
+    #chs = datacard_dict.keys()
+    # limited
+    chs = ['2Lepton_SS']
     for WC in WCs:
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
         # loop through all bins and plot
+        '''
         print("=========================================================")
         print("Making likelihood plots for each bin...")
         for pstat in [True, False]:
@@ -291,17 +300,20 @@ if __name__=='__main__':
                     print(sch)
                     fig, ax = run_lim_plot_subchannel(WC, ch, sch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat)
         print("=========================================================\n")
+        '''
         # loop through all channels and plot
         print("=========================================================")
         print("Making likelihood plots for each channel...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            for ch in datacard_dict.keys():
+            #for ch in datacard_dict.keys():
+            for ch in chs:
                 if WC not in versions_dict[ch]['EFT_ops']:
                     continue
                 print(ch)
                 fig, ax = run_lim_plot_channel(WC, ch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat)
         print("=========================================================\n")
+        '''
         #####
         print("=========================================================")
         print("Making likelihood plots for full analysis...")
@@ -309,5 +321,6 @@ if __name__=='__main__':
             print(f'Include stat-only? {pstat}')
             fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat)
         print("=========================================================\n")
+        '''
     # plt.show()
 

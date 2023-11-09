@@ -232,6 +232,7 @@ if __name__=='__main__':
     #WCs = ['cW'] # testing
     #WCs = ['cW', 'cHB'] # testing
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
+    # WCs = ['cW', 'cHbox', 'cHDD']
     WCs = WC_ALL
     # Asimov
     SignalInject=False
