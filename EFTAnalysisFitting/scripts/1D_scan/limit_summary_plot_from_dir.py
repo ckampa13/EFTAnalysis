@@ -418,6 +418,8 @@ if __name__=='__main__':
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
         # loop through all subchannels and plot
+        # RERUN BIN LEVEL 2L_OS
+        '''
         print("=========================================================")
         print("Making sensitivity plots for each subchannel...")
         for pstat in [True, False]:
@@ -432,6 +434,7 @@ if __name__=='__main__':
                     fig, ax = run_plot_subchannel(WC, ch, sch, datacard_dict, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=2.0, fixed_xlim=None)
                     # fig, ax = run_plot_subchannel(ch, sch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
         print("=========================================================\n")
+        '''
         # loop through all channels and plot
         print("=========================================================")
         print("Making sensitivity plots for each channel...")

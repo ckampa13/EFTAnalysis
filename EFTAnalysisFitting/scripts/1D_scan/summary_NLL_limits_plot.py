@@ -231,6 +231,7 @@ if __name__=='__main__':
     # FIX ME! make these command line args
     #WCs = ['cW'] # testing
     #WCs = ['cW', 'cHB'] # testing
+    #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3']
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     # WCs = ['cW', 'cHbox', 'cHDD']
     WCs = WC_ALL
