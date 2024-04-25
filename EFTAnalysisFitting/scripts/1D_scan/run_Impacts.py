@@ -28,23 +28,54 @@ from MISC_CONFIGS import (
     dim6_ops,
 )
 
-def get_impact_commands(wsfile, WCs_freeze=None):
+def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name,
+                        WCs_freeze=None, WCs_limit=None, limit_val=10.):
     params_to_freeze = WCs
-    cmd1 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (wsfile, asimov_str, WC)
-    cmd2 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (wsfile, asimov_str, WC)
+    cmd1 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
+    cmd2 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
+    cmd3 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
     if WCs_freeze is None:
         cmd1 += '--freezeParameters r '
+        cmd2 += '--freezeParameters r '
+        cmd3 += '--freezeParameters r '
     else:
         WCs_ = ['k_'+w for w in WCs_freeze]
         WCs_str = ','.join(WCs_)
-        cmd_str += '--freezeParameters r,%s ' % WCs_str
-
-# cmd1
-    cmd1 += '--setParameters r=1 --setParameterRanges k_cW=-10,10 --doInitialFit --robustFit 1 -n 2L_OS'
-
-# cmd 2
-    --freezeParameters r,k_cHl3,k_cHbox,k_cHDD,k_cHq1,k_cHq3,k_cHW,k_cHWB,k_cll1,k_cHB,k_cHu,k_cHd --setParameters r=1 --setParameterRanges k_cW=-10,10 --robustFit 1 --doFits -n 2L_OS
-    pass
+        cmd1 += '--freezeParameters r,%s ' % WCs_str
+        cmd2 += '--freezeParameters r,%s ' % WCs_str
+        cmd3 += '--freezeParameters r,%s ' % WCs_str
+    # fix r param, set ranges
+    cmd1 += '--setParameters r=1'
+    cmd2 += '--setParameters r=1'
+    cmd3 += '--setParameters r=1'
+    # FIXME! Limit just the POI, or all WC?
+    if WCs_limit is None:
+        cmd1 += ' '
+        cmd2 += ' '
+        cmd3 += ' '
+    else:
+        WCs_ = ['k_'+w for w in WCs_limit]
+        val = '%0.1f' % limit_val
+        mval = '%0.1f' % -limit_val
+        for WC_ in WCs_:
+            cmd1 += ':%s=%s,%s' % (WC_, mval, val)
+            cmd2 += ':%s=%s,%s' % (WC_, mval, val)
+            cmd3 += ':%s=%s,%s' % (WC_, mval, val)
+        cmd1 += ' '
+        cmd2 += ' '
+        cmd3 += ' '
+    # robust fit
+    cmd1 += '--robustFit 1 '
+    cmd2 += '--robustFit 1 '
+    cmd3 += '--robustFit 1 '
+    # cmd specific1
+    cmd1 += '--doInitialFit -n %s' % name_str
+    cmd2 += '--doFits -n %s' % name_str
+    cmd3 += ' -o %s.json -n %s' % (json_name, name_str)
+    # plot impacts command
+    cmd4 = 'plotImpacts.py -i %s.json -o $s' % (json_name, json_name)
+    cmds = [cmd1, cmd2, cmd3, cmd4]
+    return cmds
 
 def run_impact_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
                            SignalInject, Precision, PrecisionCoarse, stdout, verbose=0):
