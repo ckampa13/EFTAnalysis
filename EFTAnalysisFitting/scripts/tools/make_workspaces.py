@@ -129,6 +129,16 @@ def make_workspace_channels(dim, channels, datacard_dict, WCs, ScanType, verbose
         suff_purp = ''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
+        # channels may not always have dim8
+        WCs_ch = versions_dict[ch]['EFT_ops']
+        if dim=='dim8':
+            has_dim8 = False
+            for WC in WCs_ch:
+                if not WC in dim6_ops:
+                    has_dim8 = True
+                    break
+            if not has_dim8:
+                continue
         # WCs = versions_dict[ch]['EFT_ops']
         # if not WC in WCs:
         #     continue
@@ -287,6 +297,16 @@ if __name__=='__main__':
             print('Generating bin workspaces:')
             print('=================================================')
             for channel in channels:
+                # channels may not always have dim8
+                WCs_ch = versions_dict[channel]['EFT_ops']
+                if dim=='dim8':
+                    has_dim8 = False
+                    for WC in WCs_ch:
+                        if not WC in dim6_ops:
+                            has_dim8 = True
+                            break
+                    if not has_dim8:
+                        continue
                 # WCs = versions_dict[channel]['EFT_ops']
                 # if not WC in WCs:
                 #     continue
@@ -303,6 +323,16 @@ if __name__=='__main__':
             print('Generating subchannel workspaces:')
             print('=================================================')
             for channel in channels:
+                # channels may not always have dim8
+                WCs_ch = versions_dict[channel]['EFT_ops']
+                if dim=='dim8':
+                    has_dim8 = False
+                    for WC in WCs_ch:
+                        if not WC in dim6_ops:
+                            has_dim8 = True
+                            break
+                    if not has_dim8:
+                        continue
                 # WCs = versions_dict[channel]['EFT_ops']
                 # if not WC in WCs:
                 #     continue

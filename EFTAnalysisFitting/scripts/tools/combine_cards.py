@@ -60,6 +60,16 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     str_ = 'Channel: '
     n_ch_added = 0
     for i, ch in enumerate(channels):
+        # channels may not always have dim8
+        WCs_ch = versions_dict[ch]['EFT_ops']
+        if dim=='dim8':
+            has_dim8 = False
+            for WC in WCs_ch:
+                if not WC in dim6_ops:
+                    has_dim8 = True
+                    break
+            if not has_dim8:
+                continue
         str_ += ch
         v = versions_dict[ch]['v']
         version = 'v' + str(v)
@@ -143,6 +153,16 @@ if __name__=='__main__':
         print('Combining subchannels for each available channel:')
         print('=================================================')
         for channel in channels:
+            # channels may not always have dim8
+            WCs_ch = versions_dict[channel]['EFT_ops']
+            if dim=='dim8':
+                has_dim8 = False
+                for WC in WCs_ch:
+                    if not WC in dim6_ops:
+                        has_dim8 = True
+                        break
+                if not has_dim8:
+                    continue
             # WCs = versions_dict[channel]['EFT_ops']
             # if not WC in WCs:
             #     continue
