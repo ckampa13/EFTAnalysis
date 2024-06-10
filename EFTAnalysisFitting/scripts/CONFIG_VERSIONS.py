@@ -53,8 +53,8 @@ versions_dict = {
 
 # WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB'] # 2L_SS v2
 # WC_ALL = ['cW', 'cHDD', 'cHW', 'cHWB', 'cHB'] # 2L_SS v3 -- first batch
-# WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd'] # full set of dim-6
-WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0'] # full set of dim-6, a few representative dim-8
+WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd'] # full set of dim-6
+# WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0'] # full set of dim-6, a few representative dim-8
 
 L_2018 = 59.83 # fb^-1
 L_Run2 = 137.64 # fb^-1
