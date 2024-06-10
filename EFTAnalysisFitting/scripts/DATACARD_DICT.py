@@ -11,7 +11,8 @@ datacard_dict = {
         'subchannels': {
             '': {
                 # 'bins': [1, 2, 3], # v10, v11, v12, v13
-                'bins': [1, 2, 3, 4], # v14, v15
+                #'bins': [1, 2, 3, 4], # v14, v15
+                'bins': [1, 2, 3, 4, 5], # v18
                 # 'bins': [1, 2, 3, 4, 5], # v15 -- to be verified -> only for first pass with FT0 WWW
                 'info': {
                     'short_name': '',
@@ -32,7 +33,8 @@ datacard_dict = {
         'subchannels': {
             '': {
                 # 'bins': [1, 2, 3, 4], # v4
-                'bins': [1, 2, 3, 4, 5, 6], # v6, v10, v11, v12, v13, v14
+                #'bins': [1, 2, 3, 4, 5, 6], # v6, v10, v11, v12, v13, v14
+                'bins': [1, 2, 3, 4, 5, 6, 7], # v18
                 'info': {
                     'short_name': '',
                     'file_name': '',
@@ -48,37 +50,12 @@ datacard_dict = {
         }
     },
     # channel 2
-    # '1Lepton': {
-    #     'subchannels': {
-    #         'electron': {
-    #             'bins': [1, 2, 3, 4],
-    #             'info': {
-    #                 'short_name': '_e',
-    #                 'file_name': '_electron',
-    #                 'ylabel_name': r'1 Lepton, $e$',
-    #             },
-    #         },
-    #         'muon': {
-    #             'bins': [1, 2, 3, 4],
-    #             'info': {
-    #                 'short_name': '_mu',
-    #                 'file_name': '_muon',
-    #                 'ylabel_name': r'1 Lepton, $\mu$',
-    #             },
-    #         },
-    #     },
-    #     'info': {
-    #         'short_name': '1L',
-    #         'file_name': '1Lepton',
-    #         'variable_of_choice': r'$\mathrm{M}_{\mathrm{JJl}\nu}$',
-    #         'ylabel_name': '1 Lepton              \n(2 boosted jets)   ',
-    #     }
-    # },
     # e and mu merged
     '1Lepton': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3, 4], # v1, v2, v3
+                #'bins': [1, 2, 3, 4], # v1, v2, v3
+                'bins': [1, 2, 3], # v5
                 'info': {
                     'short_name': '',
                     'file_name': '',
@@ -97,7 +74,7 @@ datacard_dict = {
     '2Lepton_OS': {
         'subchannels': {
             'OF': {
-                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7, ..., v13
                 'info': {
                     'short_name': '_OF',
                     'file_name': '1Jet_OF',
@@ -105,7 +82,7 @@ datacard_dict = {
                 },
             },
             'SFnoZ': {
-                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7, ..., v13
                 'info': {
                     'short_name': '_SFnoZ',
                     'file_name': '1Jet_SFnoZ',
@@ -121,7 +98,7 @@ datacard_dict = {
             #     },
             #},
             'SFZ': {
-                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7
+                'bins': [1, 2, 3], # v2, v3, v4, v5, v6, v7, ..., v13
                 'info': {
                     'short_name': '_SFZ',
                     'file_name': '1Jet_SFZ',
