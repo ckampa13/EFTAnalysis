@@ -28,7 +28,7 @@ from MISC_CONFIGS import (
     dim6_ops,
 )
 
-def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plot_name,
+def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plot_dir,
                         WCs_freeze=None, WCs_limit=None, limit_val=10.):
     params_to_freeze = WCs
     cmd1 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
@@ -80,12 +80,14 @@ def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plo
     cmd2 += '--doFits -n %s' % name_str
     cmd3 += ' -o %s.json -n %s' % (json_name, name_str)
     # plot impacts command
-    cmd4 = 'plotImpacts.py -i %s.json -o %s' % (json_name, plot_name)
-    cmds = [cmd1, cmd2, cmd3, cmd4]
+    cmd4 = 'plotImpacts.py -i %s.json -o %s' % (json_name, json_name)
+    # mv from cwd to final plot directory
+    cmd5 = 'mv %s.pdf %s' % (json_name, plot_dir)
+    cmds = [cmd1, cmd2, cmd3, cmd4, cmd5]
     return cmds
 
-def run_impact_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                           SignalInject, stdout, verbose=0):
+def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
+                           ScanType, Asimov, asi_str, SignalInject, stdout, verbose=0):
     start_dir = os.getcwd()
     syst_label='syst'
     if ScanType == '_1D':
@@ -142,15 +144,140 @@ def run_impact_subchannels(dim, channel, version, datacard_dict, WC, ScanType, A
         wsfile = os.path.join(wsdir, wsfile)
         name_str = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
         json_name = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
-        plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
+        # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
         # print("json_name: %s, type: %s" % (json_name, str(type(json_name))))
         # print("plot_name: %s, type: %s" % (plot_name, str(type(plot_name))))
-        cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_name,
-                                   WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=10.)
+        cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
+                                   WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val)
         for cmd in cmds:
             print(cmd)
             proc = subprocess.call(cmd, stdout=stdout, shell=True)
             print('\n\n')
+    # go back to original directory
+    print('Going back to original directory...')
+    os.chdir(start_dir)
+
+def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, ScanType,
+                       Asimov, asi_str, SignalInject, stdout, verbose=0):
+    start_dir = os.getcwd()
+    syst_label='syst'
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+    else:
+        scan_dir = 'profile'
+    plot_dir = os.path.join(datacard_dir, 'plots', 'channel', scan_dir)
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
+    if Asimov:
+        asi = 'Asimov'
+    else:
+        asi = 'Data'
+    if SignalInject:
+        suff_purp = '_SignalInject_'+WC
+    else:
+        suff_purp = ''
+    wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
+    outdir = os.path.join(datacard_dir, 'output', 'channel')
+    os.chdir(outdir)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+        WCs_limit = None
+    else:
+        WCs_freeze = None
+        WCs_limit = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_limit.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_limit.append(WC_)
+    sname_ch = datacard_dict[channel]['info']['short_name']
+    sname_sch = '_combined'
+    print('Channel: %s' % channel)
+    SO_lab = ''
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+    wsfile = os.path.join(wsdir, wsfile)
+    name_str = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    json_name = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
+    cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
+                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val)
+    for cmd in cmds:
+        print(cmd)
+        proc = subprocess.call(cmd, stdout=stdout, shell=True)
+        print('\n\n')
+    # go back to original directory
+    print('Going back to original directory...')
+    os.chdir(start_dir)
+
+def run_impact_full_analysis(dim, datacard_dict, WC, limit_val, ScanType, Asimov,
+                             asi_str, SignalInject, stdout, verbose=0):
+    start_dir = os.getcwd()
+    syst_label='syst'
+    if ScanType == '_1D':
+        scan_dir = 'freeze'
+    else:
+        scan_dir = 'profile'
+    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
+    if ScanType == '_1D':
+        ScanTypeWS = '_All'
+    else:
+        ScanTypeWS = ScanType
+    if Asimov:
+        asi = 'Asimov'
+    else:
+        asi = 'Data'
+    if SignalInject:
+        suff_purp = '_SignalInject_'+WC
+    else:
+        suff_purp = ''
+    wsdir = os.path.join(datacard_dir, 'workspaces', 'full_analysis')
+    outdir = os.path.join(datacard_dir, 'output', 'full_analysis')
+    os.chdir(outdir)
+    # add any frozen WC
+    if ScanType == '_1D':
+        WCs_freeze = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_freeze.append(WC_)
+        WCs_limit = None
+    else:
+        WCs_freeze = None
+        WCs_limit = []
+        for WC_ in WC_ALL:
+            if WC_ != WC:
+                if (dim == 'dim6') and (WC_ in dim6_ops):
+                    WCs_limit.append(WC_)
+                elif (dim == 'dim8') and (not WC_ in dim6_ops):
+                    WCs_limit.append(WC_)
+    sname_ch = 'all'
+    sname_sch = '_combined'
+    version = 'vCONFIG_VERSIONS'
+    print('Channel: %s' % channel)
+    SO_lab = ''
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+    wsfile = os.path.join(wsdir, wsfile)
+    name_str = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    json_name = 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
+    cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
+                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val)
+    for cmd in cmds:
+        print(cmd)
+        proc = subprocess.call(cmd, stdout=stdout, shell=True)
+        print('\n\n')
     # go back to original directory
     print('Going back to original directory...')
     os.chdir(start_dir)
@@ -163,6 +290,8 @@ if __name__=='__main__':
                         help='Which channel? ["0Lepton_2FJ" (default), "0Lepton_3FJ", "1Lepton", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study for 1D limits? ["cW" (default), ...]')
+    parser.add_argument('-l', '--LimitValue',
+                        help='What range do you want to use for the selected WC? [10 (default), 20, ...]')
     parser.add_argument('-t', '--theLevel',
                         help='Which levels of analysis to run combine for? Only one level may be run per script call: "s" (subchannel), "c" (channel), "f" (full analysis, default).')
     parser.add_argument('-s', '--ScanType',
@@ -177,6 +306,10 @@ if __name__=='__main__':
         args.Channel = '0Lepton_3FJ'
     if args.WC is None:
         args.WC = 'cW'
+    if args.LimitValue is None:
+        args.LimitValue = 10
+    else:
+        args.LimitValue = float(args.LimitValue)
     generate_subch = False
     generate_ch = False
     generate_full = False
@@ -230,7 +363,32 @@ if __name__=='__main__':
             v = versions_dict[channel]['v']
             VERSION = 'v'+str(v)
             run_impact_subchannels(dim, channel, VERSION, datacard_dict, WC=WC,
-                                   ScanType=args.ScanType, Asimov=args.Asimov,
-                                   asi_str=asi_str, SignalInject=SignalInject,
+                                   limit_val=args.LimitValue, ScanType=args.ScanType,
+                                   Asimov=args.Asimov, asi_str=asi_str,
+                                   SignalInject=SignalInject,
                                    stdout=stdout, verbose=args.Verbose)
+    print('=================================================\n')
+    if generate_ch:
+        print('Making impact plot for the selected channel:')
+        print('=================================================')
+        WCs = versions_dict[channel]['EFT_ops']
+        if WC in WCs:
+            v = versions_dict[channel]['v']
+            VERSION = 'v'+str(v)
+            run_impact_channel(dim, channel, VERSION, datacard_dict, WC=WC,
+                               limit_val=args.LimitValue, ScanType=args.ScanType,
+                               Asimov=args.Asimov, asi_str=asi_str,
+                               SignalInject=SignalInject,
+                               stdout=stdout, verbose=args.Verbose)
+    print('=================================================\n')
+    if generate_full:
+        print('Making impact plot for full analysis:')
+        print('=================================================')
+        WCs = WC_ALL
+        if WC in WCs:
+            run_impact_full_analysis(dim, datacard_dict, WC=WC,
+                                     limit_val=args.LimitValue, ScanType=args.ScanType,
+                                     Asimov=args.Asimov, asi_str=asi_str,
+                                     SignalInject=SignalInject,
+                                     stdout=stdout, verbose=args.Verbose)
     print('=================================================\n')
