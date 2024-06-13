@@ -114,6 +114,25 @@ datacard_dict = {
         }
     },
     # channel 4
+    '2Lepton_OS_2FJ': {
+        'subchannels': {
+            '': {
+                'bins': [1, 2, 3], # v2
+                'info': {
+                    'short_name': '',
+                    'file_name': '',
+                    'ylabel_name': r'2 OS Lepton, 2 fat jets',
+                },
+            },
+        },
+        'info': {
+            'short_name': '2L_OS_2FJ',
+            'file_name': '2Lep_OS_2FJ',
+            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+            'ylabel_name': '2 Leptons            \n(opposite signed, 2FJ)',
+        }
+    },
+    # channel 5
     '2Lepton_SS': {
         'subchannels': {
             '1FJ': {
