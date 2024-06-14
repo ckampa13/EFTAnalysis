@@ -55,7 +55,8 @@ datacard_dict = {
         'subchannels': {
             '': {
                 #'bins': [1, 2, 3, 4], # v1, v2, v3
-                'bins': [1, 2, 3], # v5
+                #'bins': [1, 2, 3], # v5
+                'bins': [1, 2, 3, 4], # v1000 4 bin test
                 'info': {
                     'short_name': '',
                     'file_name': '',
