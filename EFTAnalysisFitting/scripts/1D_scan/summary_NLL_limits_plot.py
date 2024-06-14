@@ -41,7 +41,10 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
         fig = plt.figure(figsize=(18, 8))
         ax = fig.add_axes([0.05, 0.1, 0.45, 0.75])
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
-    WC_l = WC_pretty_print_dict[WC]
+    if WC == 'sm':
+        WC_l = 'SM'
+    else:
+        WC_l = WC_pretty_print_dict[WC]
     # loop through files to plot
     LLs_all = []
     ULs_all = []
@@ -140,9 +143,12 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
     # set xlim to be symmetric
     # LLs_all = np.array(LLs_all)
     # ULs_all = np.array(ULs_all)
-    xlim_factor = 2.
-    xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
-    ax.set_xlim([-xlim, xlim])
+    if WC == 'sm':
+        ax.set_xlim([xmin, xmax])
+    else:
+        xlim_factor = 2.
+        xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
+        ax.set_xlim([-xlim, xlim])
     #ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
     if ymax_min > 2.5*np.max(NLL_cuts):
         yu = 2.5 * np.max(NLL_cuts)
@@ -156,7 +162,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D'):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1'):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -167,14 +173,27 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
         Asi = f'Data_SignalInject_{WC}'
     else:
         Asi = 'Asimov'
-    WC_l = WC_pretty_print_dict[WC]
+    # custom SM
+    if WC == 'sm':
+        scan_dir = ''
+        ScanType = ''
+        if expect_signal is None:
+            expect_signal = '0'
+        scan_title = f'(Expected Signal = {expect_signal})'
+        Asi += f'_expect_signal_{expect_signal}'
+        SignalInject = False
+
+    if WC == 'sm':
+        WC_l = 'SM'
+    else:
+        WC_l = WC_pretty_print_dict[WC]
     output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
     plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
-        WCs = versions_dict[ch]['EFT_ops']
+        WCs = versions_dict[ch]['EFT_ops'] + ['sm']
         if not WC in WCs:
             continue
         fname_ch = datacard_dict[ch]['info']['file_name']
@@ -223,7 +242,10 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
     if SignalInject:
         ncol = 3
     else:
-        ncol = 2
+        if plot_stat_only:
+            ncol = 3
+        else:
+            ncol = 2
     fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=CL, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol)
     return fig, ax
 
@@ -236,7 +258,8 @@ if __name__=='__main__':
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3']
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     # WCs = ['cW', 'cHbox', 'cHDD']
-    WCs = WC_ALL
+    #WCs = WC_ALL
+    WCs = ['sm'] # sm debug
     # Asimov
     SignalInject=False
     InjectValue = 0.0
@@ -249,6 +272,8 @@ if __name__=='__main__':
     ScanType = '_1D'
     # profile
     #ScanType = '_All'
+    # SM expectation
+    expect_signal = '1'
     # confidence level
     CL = 0.95
     for WC in WCs:
@@ -258,7 +283,7 @@ if __name__=='__main__':
         print("Making NLL plot with full combination and channel results...")
         for pstat in [True, False]:
             print(f'Include stat-only? {pstat}')
-            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat, SignalInject=SignalInject, InjectValue=InjectValue, ScanType=ScanType)
+            run_NLL_plot_analysis_channel(WC, datacard_dict, CL, pstat, SignalInject=SignalInject, InjectValue=InjectValue, ScanType=ScanType, expect_signal=expect_signal)
         print("=========================================================\n")
     # plt.show()
 

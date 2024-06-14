@@ -128,7 +128,7 @@ datacard_dict = {
         'info': {
             'short_name': '2L_OS_2FJ',
             'file_name': '2Lep_OS_2FJ',
-            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T, MET}}$', # VERIFY!
             'ylabel_name': '2 Leptons            \n(opposite signed, 2FJ)',
         }
     },

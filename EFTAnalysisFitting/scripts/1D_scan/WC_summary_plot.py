@@ -282,8 +282,8 @@ if __name__=='__main__':
     # profile
     #ScanType = '_All'
     # loop through dim6 and dim8
-    for WCs, dim in zip([WCs_dim6, WCs_dim8], ['dim6', 'dim8']):
-    # for WCs, dim in zip([WCs_dim6], ['dim6']): # only dim6
+    #for WCs, dim in zip([WCs_dim6, WCs_dim8], ['dim6', 'dim8']):
+    for WCs, dim in zip([WCs_dim6], ['dim6']): # only dim6
         # run plot twice (with and without stat only)
         print("=========================================================")
         print(f"Making sensitivity plots for {dim}...")

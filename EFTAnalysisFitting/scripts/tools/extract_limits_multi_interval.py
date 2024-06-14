@@ -15,14 +15,22 @@ def lin_interp_to_cutoff(x0, x1, y0, y1, cutoff):
 def get_NLL(root_file, WC='cW'):
     file_ = uproot.open(root_file)
     NLL = np.array(file_['limit']['deltaNLL'].array()[1:].tolist())
-    Cs = np.array(file_['limit']['k_'+WC].array()[1:].tolist())
+    if WC == 'sm':
+        x_col = 'r'
+    else:
+        x_col = 'k_'+WC
+    Cs = np.array(file_['limit'][x_col].array()[1:].tolist())
 
     return Cs, NLL
 
 def get_NLL_full(root_file, WC='cW'):
     file_ = uproot.open(root_file)
     NLL = np.array(file_['limit']['deltaNLL'].array().tolist())
-    Cs = np.array(file_['limit']['k_'+WC].array().tolist())
+    if WC == 'sm':
+        x_col = 'r'
+    else:
+        x_col = 'k_'+WC
+    Cs = np.array(file_['limit'][x_col].array().tolist())
 
     return Cs, NLL
 
