@@ -1,0 +1,38 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * SM.0L_3FJ.DataCard_Yields_Cleaned.v18.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * SM.0L_3FJ.DataCard_Yields_Cleaned.v18.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_0L_3FJ
+# "data_obs" copied from VVV ROOT file and yield.
+observation  -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    bin_0L_3FJ                    
+process                    DY                            QCD                           Top                           WJets                         WW                            WZ                            ZZ                            sm                            
+process                    1                             2                             3                             4                             5                             6                             7                             0                             
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            -1                            
+----------------------------------------------------------------------------------------------------
+PDF_                 shape -                             -                             -                             -                             -                             -                             -                             1                             
+QCDScale_            shape -                             -                             -                             -                             -                             -                             -                             1                             
+alphas_              shape -                             -                             -                             -                             -                             -                             -                             1                             
+jer_                 shape -                             -                             -                             -                             -                             -                             -                             1                             
+jes_                 shape -                             -                             -                             -                             -                             -                             -                             1                             
+lumi_                shape -                             -                             -                             -                             -                             -                             -                             1                             
+norm_DY_             shape 1                             -                             -                             -                             -                             -                             -                             -                             
+norm_QCD_0L_3FJ_     shape -                             1                             -                             -                             -                             -                             -                             -                             
+norm_Top_            shape -                             -                             1                             -                             -                             -                             -                             -                             
+norm_WJets_          shape -                             -                             -                             1                             -                             -                             -                             -                             
+norm_WW_             shape -                             -                             -                             -                             1                             -                             -                             -                             
+norm_WZ_             shape -                             -                             -                             -                             -                             1                             -                             -                             
+norm_ZZ_             shape -                             -                             -                             -                             -                             -                             1                             -                             
+prefire_weight_      shape -                             -                             -                             -                             -                             -                             -                             1                             
+pu_weight_           shape -                             -                             -                             -                             -                             -                             -                             1                             
+trigger_weight_0L_   shape -                             -                             -                             -                             -                             -                             -                             1                             
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = PDF_ QCDScale_ alphas_ jer_ jes_ lumi_ norm_DY_ norm_QCD_0L_3FJ_ norm_Top_ norm_WJets_ norm_WW_ norm_WZ_ norm_ZZ_ prefire_weight_ pu_weight_ trigger_weight_0L_
+nosyst group = statonly

@@ -1,0 +1,50 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * SM.2L_OS_2FJ.DataCard_Yields_Cleaned.v3.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * SM.2L_OS_2FJ.DataCard_Yields_Cleaned.v3.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_2L_OS_2FJ
+# "data_obs" copied from VVV ROOT file and yield.
+observation  -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_2L_OS_2FJ                 bin_2L_OS_2FJ                 bin_2L_OS_2FJ                 bin_2L_OS_2FJ                 bin_2L_OS_2FJ                 bin_2L_OS_2FJ                 
+process                    DY                            Top                           WW                            WZ                            ZZ                            sm                            
+process                    1                             2                             3                             4                             5                             0                             
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            
+----------------------------------------------------------------------------------------------------
+PDF_                 shape -                             -                             -                             -                             -                             1                             
+QCDScale_            shape -                             -                             -                             -                             -                             1                             
+alphas_              shape -                             -                             -                             -                             -                             1                             
+btag_sf_             shape -                             -                             -                             -                             -                             1                             
+fj_sf_               shape -                             -                             -                             -                             -                             1                             
+jer_                 shape -                             -                             -                             -                             -                             1                             
+jes_                 shape -                             -                             -                             -                             -                             1                             
+lep_sf_el_1_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_el_2_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_el_3_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_el_4_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_el_5_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_mu_1_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_mu_2_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_mu_3_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_mu_4_         shape -                             -                             -                             -                             -                             1                             
+lep_sf_mu_5_         shape -                             -                             -                             -                             -                             1                             
+lumi_                shape -                             -                             -                             -                             -                             1                             
+norm_DY_             shape 1                             -                             -                             -                             -                             -                             
+norm_Top_            shape -                             1                             -                             -                             -                             -                             
+norm_WW_             shape -                             -                             1                             -                             -                             -                             
+norm_WZ_             shape -                             -                             -                             1                             -                             -                             
+norm_ZZ_             shape -                             -                             -                             -                             1                             -                             
+prefire_weight_      shape -                             -                             -                             -                             -                             1                             
+pu_weight_           shape -                             -                             -                             -                             -                             1                             
+trigger_weight_2L_   shape -                             -                             -                             -                             -                             1                             
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = PDF_ QCDScale_ alphas_ btag_sf_ fj_sf_ jer_ jes_ lep_sf_el_1_ lep_sf_el_2_ lep_sf_el_3_ lep_sf_el_4_ lep_sf_el_5_ lep_sf_mu_1_ lep_sf_mu_2_ lep_sf_mu_3_ lep_sf_mu_4_ lep_sf_mu_5_ lumi_ norm_DY_ norm_Top_ norm_WW_ norm_WZ_ norm_ZZ_ prefire_weight_ pu_weight_ trigger_weight_2L_
+nosyst group = statonly
+# MC stat uncertainties
+* autoMCStats 0
