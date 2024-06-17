@@ -259,7 +259,9 @@ if __name__=='__main__':
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     # WCs = ['cW', 'cHbox', 'cHDD']
     #WCs = WC_ALL
-    WCs = ['sm'] # sm debug
+    ###WCs = ['sm'] # sm debug
+    # all, with sm
+    WCs = WC_ALL + ['sm']
     # Asimov
     SignalInject=False
     InjectValue = 0.0
