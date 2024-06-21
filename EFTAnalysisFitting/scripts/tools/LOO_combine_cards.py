@@ -10,7 +10,7 @@ from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 # combine all channels
-def combine_all_channels(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
+def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -60,8 +60,8 @@ def combine_all_channels(channel_leave_out, datacard_dict, dim, ScanType, StatOn
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'leave_one_out', tfile_comb)
     cmd_str += ' > ' + comb_file
     # run combine script
     stdout = None
@@ -72,13 +72,11 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+                        help='Which channel to leave out? ["all" (default, looping), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
-    # parser.add_argument('-w', '--WC',
-    #                     help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -113,7 +111,7 @@ if __name__=='__main__':
         # print('WC: %s' % WC)
         #########################
         # combine channel subchannels
-        print('Combining subchannels for each available channel:')
+        print('Combining all channels (leave one out):')
         print('=================================================')
         for channel in channels:
             # channels may not always have dim8
@@ -129,18 +127,11 @@ if __name__=='__main__':
             # WCs = versions_dict[channel]['EFT_ops']
             # if not WC in WCs:
             #     continue
+            print('Leaving out: ', channel)
             v = versions_dict[channel]['v']
             VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_channel_subchannels(channel, VERSION, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
-        print('=================================================\n')
-        #########################
-        # combine all channels
-        print('Combining all channels (complete analysis):')
-        print('=================================================')
-        for StatOnly in [False, True]:
-            print('Stat only? ', StatOnly)
-            combine_all_channels(datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
         print('=================================================\n')
         #########################
