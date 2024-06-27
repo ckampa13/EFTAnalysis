@@ -388,8 +388,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # else:
         #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         if ScanType == '_1D':
-            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+                grid_dict = {'LL': -10, 'UL': 10, 'steps': 9}
+            elif WC in ['cHWB', 'cHl3', 'cHB', 'cll1']:
+                grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+            else:
+                grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         else:
             grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         name_str = '_coarse_%s_%s_%s' % (WC, ch, str(time()))
