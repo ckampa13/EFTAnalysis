@@ -58,7 +58,7 @@ datacard_dict = {
             '': {
                 #'bins': [1, 2, 3, 4], # v1, v2, v3
                 #'bins': [1, 2, 3], # v5
-                'bins': [1, 2, 3, 4], # v1000 4 bin test
+                'bins': [1, 2, 3, 4], # v1000 4 bin test, v7
                 'info': {
                     'short_name': '',
                     'file_name': '',

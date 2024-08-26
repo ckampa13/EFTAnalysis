@@ -100,6 +100,7 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
     cmd_str += ' > ' + comb_file
+    print(cmd_str)
     # run combine script
     stdout = None
     proc = subprocess.call(cmd_str, shell=True, stdout=stdout)
