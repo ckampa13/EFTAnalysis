@@ -252,14 +252,14 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    #WCs = ['cW'] # testing
+    WCs = ['cW'] # testing
     #WCs = ['cW', 'sm'] # testing
     #WCs = ['cW', 'cHB'] # testing
     #WCs = ['cW', 'cHbox']
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3']
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     # WCs = ['cW', 'cHbox', 'cHDD']
-    WCs = WC_ALL
+    #WCs = WC_ALL
     ###WCs = ['sm'] # sm debug
     # all, with sm
     ##WCs = WC_ALL + ['sm']
