@@ -29,7 +29,7 @@ config_plots()
 
 
 #colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
-colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta']
+colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta', 'saddlebrown', 'dimgray', 'cyan']
 
 def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2):
     # plot
@@ -149,6 +149,10 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
         xlim_factor = 2.
         xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
         ax.set_xlim([-xlim, xlim])
+        # FIXME! for tau debug
+        max_ = 10*np.min(np.abs(np.concatenate([UL for UL in ULs_all])))
+        if xlim > max_:
+            ax.set_xlim([-max_, max_])
     #ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
     if ymax_min > 2.5*np.max(NLL_cuts):
         yu = 2.5 * np.max(NLL_cuts)
@@ -252,7 +256,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL, plot_stat_only, SignalI
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    #WCs = ['cW'] # testing
+    WCs = ['cW'] # testing
     #WCs = ['cW', 'cHbox'] # testing
     #WCs = ['cW', 'sm'] # testing
     #WCs = ['cW', 'cHB'] # testing
@@ -260,7 +264,7 @@ if __name__=='__main__':
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3']
     #WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1']
     # WCs = ['cW', 'cHbox', 'cHDD']
-    WCs = WC_ALL
+    # WCs = WC_ALL
     ###WCs = ['sm'] # sm debug
     # all, with sm
     ##WCs = WC_ALL + ['sm']
