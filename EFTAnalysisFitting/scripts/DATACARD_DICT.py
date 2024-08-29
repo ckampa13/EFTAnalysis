@@ -154,8 +154,10 @@ datacard_dict = {
             'ylabel_name': '2 Leptons            \n(same signed)     ',
         }
     },
+}
     # TAU TESTS
     # channel 6
+'''
     '0Lepton_1T': {
         'subchannels': {
             '2FJ': {
@@ -213,3 +215,4 @@ datacard_dict = {
         }
     },
 }
+'''
