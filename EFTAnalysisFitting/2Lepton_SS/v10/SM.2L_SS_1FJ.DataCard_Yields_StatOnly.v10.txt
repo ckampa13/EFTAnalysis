@@ -1,0 +1,28 @@
+----------------------------------------------------------------------------------------------------
+imax    * number of bins
+jmax    * number of processes minus 1
+kmax    * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+shapes * * SM.2L_SS_1FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs * SM.2L_SS_1FJ.DataCard_Yields_Cleaned.v10.root h_$PROCESS
+----------------------------------------------------------------------------------------------------
+bin          bin_
+# "data_obs" copied from VVV ROOT file and yield.
+observation  -1
+----------------------------------------------------------------------------------------------------
+bin                        bin_                          bin_                          bin_                          bin_                          bin_                          bin_                          bin_                          
+process                    DY                            Top                           WJets                         WW                            WZ                            ZZ                            sm                            
+process                    1                             2                             3                             4                             5                             6                             0                             
+rate                       -1                            -1                            -1                            -1                            -1                            -1                            -1                            
+----------------------------------------------------------------------------------------------------
+norm_DY_             shape 1                             -                             -                             -                             -                             -                             -                             
+norm_Top_2L_SS_1FJ_  shape -                             1                             -                             -                             -                             -                             -                             
+norm_WJets_          shape -                             -                             1                             -                             -                             -                             -                             
+norm_WJets_2L_SS_1FJ_ shape -                             -                             -                             -                             1                             -                             -                             
+norm_WW_             shape -                             -                             -                             1                             -                             -                             -                             
+norm_ZZ_             shape -                             -                             -                             -                             -                             1                             -                             
+# systematics "off" (very very small)
+statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
+# nuisance groups (for stat-only vs. with systematics)
+allsyst group = norm_DY_ norm_Top_2L_SS_1FJ_ norm_WJets_ norm_WJets_2L_SS_1FJ_ norm_WW_ norm_ZZ_
+nosyst group = statonly
