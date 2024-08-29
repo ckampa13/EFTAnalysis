@@ -354,21 +354,20 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         WCs_limit = None
     else:
         # TEST FOR YULUN'S WWW SAMPLE (no sensitivity to cHB, cHu, cHd)
-        '''
         WCs_freeze = []
         if (not WC1 == 'cHB') and (not WC2 == 'cHB'):
             WCs_freeze.append('cHB')
-        if (not WC1 == 'cHu') and (not WC2 == 'cHu'):
-            WCs_freeze.append('cHu')
-        if (not WC1 == 'cHd') and (not WC2 == 'cHd'):
-            WCs_freeze.append('cHd')
+        # if (not WC1 == 'cHu') and (not WC2 == 'cHu'):
+        #     WCs_freeze.append('cHu')
+        # if (not WC1 == 'cHd') and (not WC2 == 'cHd'):
+        #     WCs_freeze.append('cHd')
         # adding others with <1% total contribution (quad)
         if (not WC1 == 'cHDD') and (not WC2 == 'cHDD'):
             WCs_freeze.append('cHDD')
         if (not WC1 == 'cll1') and (not WC2 == 'cll1'):
             WCs_freeze.append('cll1')
-        if (not WC1 == 'cHWB') and (not WC2 == 'cHWB'):
-            WCs_freeze.append('cHWB')
+        # if (not WC1 == 'cHWB') and (not WC2 == 'cHWB'):
+        #     WCs_freeze.append('cHWB')
         if (not WC1 == 'cHbox') and (not WC2 == 'cHbox'):
             WCs_freeze.append('cHbox')
         WCs_limit = None
@@ -382,6 +381,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
+        '''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
