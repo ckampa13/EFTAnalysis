@@ -36,6 +36,12 @@ METHOD = 'MultiDimFit'
 # LIM_VAL = 20
 LIM_VAL = 100
 
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+--X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
+"""
+
+
 # for finding appropriate scan range
 # FIXME! This has not been developed yet.
 '''
@@ -87,7 +93,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
 '''
 
 def construct_combine_cmd_str(WC1, WC2, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20.):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True):
     points1 = grid_dict['steps1']
     LL1 = grid_dict['LL1']
     UL1 = grid_dict['UL1']
@@ -120,6 +126,8 @@ def construct_combine_cmd_str(WC1, WC2, workspace_file, grid_dict, asimov_str,
             cmd_str += ':%s=%s,%s' % (WC_, mval, val)
         cmd_str += ' '
     cmd_str += '--verbose -1 -n %s' % name_str
+    if with_extra:
+        cmd_str += secret_options
     return cmd_str
 
 '''
@@ -346,6 +354,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         WCs_limit = None
     else:
         # TEST FOR YULUN'S WWW SAMPLE (no sensitivity to cHB, cHu, cHd)
+        '''
         WCs_freeze = []
         if (not WC1 == 'cHB') and (not WC2 == 'cHB'):
             WCs_freeze.append('cHB')
@@ -365,15 +374,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         WCs_limit = None
         '''
         # BETTER
-        # WCs_freeze = None
+        WCs_freeze = None
         WCs_limit = []
         for WC_ in WC_ALL:
-            if WC_ != WC:
+            if (WC_ != WC1) and (WC_ != WC2):
                 if (dim == 'dim6') and (WC_ in dim6_ops):
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
-        '''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
