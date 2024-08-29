@@ -436,6 +436,7 @@ if __name__=='__main__':
         print("=========================================================\n")
         '''
         # loop through all channels and plot
+        '''
         print("=========================================================")
         print("Making sensitivity plots for each channel...")
         for pstat in [True, False]:
@@ -451,6 +452,7 @@ if __name__=='__main__':
                 fig, ax = run_plot_channel(WC, ch, datacard_dict, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None)
                 # fig, ax = run_plot_channel(ch, datacard_dict, version=VERSION, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-2., 2.])
         print("=========================================================\n")
+        '''
         #####
         print("=========================================================")
         print("Making sensitivity plots for full analysis...")
