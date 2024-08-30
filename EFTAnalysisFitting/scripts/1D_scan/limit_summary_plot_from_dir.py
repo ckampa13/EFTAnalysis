@@ -35,8 +35,12 @@ def make_limit_summary_plot(WC, root_file_dict_full, title, CL=0.95, add_hrule=T
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
     if plot_var_of_choice:
-        fig = plt.figure(figsize=(16, 8))
-        ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
+        if len(root_file_dict_full) <= 6:
+            fig = plt.figure(figsize=(16, 8))
+            ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
+        else:
+            fig = plt.figure(figsize=(18, 12))
+            ax = fig.add_axes([0.15, 0.1, 0.55, 0.8])
     # TEST BELOW
     else:
         fig = plt.figure(figsize=(14, 8))

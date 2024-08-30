@@ -29,7 +29,8 @@ config_plots()
 
 
 #colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
-colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta']
+#colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta']
+colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta', 'saddlebrown', 'dimgray', 'cyan']
 
 def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2):
     # plot

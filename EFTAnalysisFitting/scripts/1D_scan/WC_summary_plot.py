@@ -268,7 +268,7 @@ def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xl
 if __name__=='__main__':
     # FIXME! make this a commandline arg?
     # most sensitive
-    #WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']
+    # WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']
     # all dim6
     WCs_dim6 =  ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHB', 'cHl3', 'cHWB', 'cll1', 'cHDD', 'cHbox']
     WCs_dim8 = ['cT0', 'cM0']
