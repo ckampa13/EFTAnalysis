@@ -115,8 +115,8 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
-    # parser.add_argument('-w', '--WC',
-    #                     help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
+    parser.add_argument('-w', '--WC',
+                        help='Which Wilson Coefficient to study in the signal injection case? ["cW", ...]')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -131,15 +131,19 @@ if __name__=='__main__':
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
-    # if args.WC is None:
-    #     args.WC = 'cW'
+    if args.WC is None:
+        WC_SI = 'cW'
+    else:
+        WC_SI = args.WC
     # check if dim6 and dim8 in WC_ALL
     dims = []
     for WC in WC_ALL:
+    # for WC in WC_list:
         if WC in dim6_ops:
             dims.append('dim6')
             break
     for WC in WC_ALL:
+    # for WC in WC_list:
         if not WC in dim6_ops:
             dims.append('dim8')
             break
@@ -171,7 +175,7 @@ if __name__=='__main__':
             VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_channel_subchannels(channel, VERSION, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                combine_channel_subchannels(channel, VERSION, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI)
         print('=================================================\n')
         #########################
         # combine all channels
@@ -179,6 +183,6 @@ if __name__=='__main__':
         print('=================================================')
         for StatOnly in [False, True]:
             print('Stat only? ', StatOnly)
-            combine_all_channels(datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+            combine_all_channels(datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI)
         print('=================================================\n')
         #########################

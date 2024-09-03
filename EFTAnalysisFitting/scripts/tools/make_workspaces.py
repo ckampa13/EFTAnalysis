@@ -218,8 +218,8 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
-    # parser.add_argument('-w', '--WC',
-    #                     help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
+    parser.add_argument('-w', '--WC',
+                        help='Which Wilson Coefficient to study in the signal injection case? ["cW" (default), ...]')
     parser.add_argument('-V', '--Verbose',
                         help='Include "combine" output? 0 / 1 (default). "combine" output included if Verbose>0.')
     args = parser.parse_args()
@@ -263,8 +263,10 @@ if __name__=='__main__':
         generate_bins = False
     # else:
     #     generate_bins = True
-    # if args.WC is None:
-    #     args.WC = 'cW'
+    if args.WC is None:
+        WC_SI = 'cW'
+    else:
+        WC_SI = args.WC
     if args.Verbose is None:
         args.Verbose = 1
     else:
@@ -340,7 +342,7 @@ if __name__=='__main__':
                 VERSION = 'v'+str(v)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
-                    make_workspace_subchannels(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                    make_workspace_subchannels(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI)
             print('=================================================\n')
         #########################
         # channel workspaces
@@ -349,7 +351,7 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_channels(dim, channels, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                make_workspace_channels(dim, channels, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI)
             print('=================================================\n')
         #########################
         # full analysis workspace
@@ -358,6 +360,6 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_full_analysis(dim, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                make_workspace_full_analysis(dim, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI)
             print('=================================================\n')
         #########################

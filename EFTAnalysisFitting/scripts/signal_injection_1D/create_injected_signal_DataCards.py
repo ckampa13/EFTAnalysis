@@ -45,8 +45,10 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
     # dim8 check
     if WC in dim6_ops:
         suff_proc = ''
+        WC_str = 'dim6'
     else:
         suff_proc = '_dim8'
+        WC_str = 'dim8'
     # first check if dir exists
     # version number
     v = versions_dict[channel]['v']
@@ -71,9 +73,12 @@ def channel_copy_to_signal_inject(WC, channel, datacard_dict, datacard_dir=datac
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
             #print(' (2018 scaled)', end='')
-        scanfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='', version=version, file_type='txt')
-        scanfile_SO = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='_StatOnly', version=version, file_type='txt')
-        yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
+        # scanfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+        # scanfile_SO = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC, ScanType='_1D', purpose='DataCard_Yields', proc='_StatOnly', version=version, file_type='txt')
+        # yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
+        yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_MultiDimCleaned'+suff_proc, version=version, file_type='root')
+        scanfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC_str, ScanType='_All', purpose='DataCard_Yields', proc='', version=version, file_type='txt')
+        scanfile_SO = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=WC_str, ScanType='_All', purpose='DataCard_Yields', proc='_StatOnly', version=version, file_type='txt')
         files_ch.append(scanfile)
         files_ch.append(scanfile_SO)
         files_ch.append(yieldfile)
@@ -108,7 +113,8 @@ def update_data_obs(WC, WC_value, channel, datacard_dir=datacard_dir, verbose=Fa
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
             #print(' (2018 scaled)', end='')
-        yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
+        # yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_Cleaned'+suff_proc, version=version, file_type='root')
+        yieldfile = template_filename_yields.substitute(channel=sname_ch, subchannel=sname_sch, purpose='DataCard_Yields', proc='_MultiDimCleaned'+suff_proc, version=version, file_type='root')
         yieldfile = os.path.join(inject_dir, yieldfile)
         #cpfile = yieldfile.replace('VVV', 'COPY_VVV')
         cpfile = os.path.join(inject_dir, 'hold.root')
