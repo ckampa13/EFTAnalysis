@@ -150,7 +150,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL=0.95, plot_st
         xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
         ax.set_xlim([-xlim, xlim])
         # FIXME! for tau debug
-        max_ = 10*np.min(np.abs(np.concatenate([UL for UL in ULs_all])))
+        #max_ = 10*np.min(np.abs(np.concatenate([UL for UL in ULs_all])))
+        max_ = 100.
         if xlim > max_:
             ax.set_xlim([-max_, max_])
     #ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
@@ -284,7 +285,8 @@ if __name__=='__main__':
     # SM expectation
     expect_signal = '1'
     # confidence level
-    CL = 0.95
+    #CL = 0.95
+    CL = CL_1sigma
     for WC in WCs:
         print(f'WC: '+WC)
         # full analysis plot
