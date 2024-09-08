@@ -28,11 +28,10 @@ norm_WZ_             shape -                             -                      
 norm_ZJets_          shape -                             -                             -                             -                             -                             -                             -                             -                             1                             -                             -                             
 norm_ZZ_             shape -                             -                             -                             -                             -                             -                             -                             -                             -                             1                             -                             
 prefire_weight_      shape -                             -                             -                             -                             -                             -                             -                             -                             -                             -                             1                             
-tau_sf_              shape -                             -                             -                             -                             -                             -                             -                             -                             -                             -                             1                             
 # systematics "off" (very very small)
 statonly             lnN   1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        1.0001                        
 # nuisance groups (for stat-only vs. with systematics)
-allsyst group = btag_sf_ lumi_ norm_DY_ norm_H_ norm_QCD_ norm_Top_ norm_VH_ norm_WJets_ norm_WW_ norm_WZ_ norm_ZJets_ norm_ZZ_ prefire_weight_ tau_sf_
+allsyst group = btag_sf_ lumi_ norm_DY_ norm_H_ norm_QCD_ norm_Top_ norm_VH_ norm_WJets_ norm_WW_ norm_WZ_ norm_ZJets_ norm_ZZ_ prefire_weight_
 nosyst group = statonly
 # MC stat uncertainties
 * autoMCStats 0
