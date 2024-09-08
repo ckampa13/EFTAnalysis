@@ -5,7 +5,6 @@
 - A single datacard points to all the appropriate shape files, and contains information for all WCs listed above: `VVV.all_combined.dim6_All.DataCard_Yields.vCONFIG_VERSIONS.txt`
 	- Analysis has not fully implemented the multi-WC parameterization. The current version artificially sets the "mixed" terms to zero (e.g. `h_sm_lin_quad_mixed_cW_cHbox`).
 - EFT model: AnalyticAnomalousCoupling, using the `AnaliticAnomalousCouplingEFTNegative` physics model.
-- In the current version, all systematics are assumed to be fully correlated, i.e. they are to be used as directly recorded in the datacard.
 - To avoid runtime errors with combine when running stat. only combinations, we artificially add a negligble systematic, `statonly`, which applies an `lnN` scale of value 1.0001 to all processes. Additionally, two nuisance groups are defined: `allsyst` and `nosyst`. Whether running a stat. only combination, or a combination that includes systematics, one should freeze the appropriate nuisance group, i.e. `--freezeNuisanceGroups nosyst` should be used when running the combination with
     systematics.
 
@@ -17,6 +16,7 @@
 	- Channels: 0Lepton_2FJ, 0Lepton_3FJ, 1Lepton, 2Lepton_OS, 2Lepton_SS, 2Lepton_OS_2FJ, 0Lepton_1T, 1Lepton_1T, 2Lepton_1T
 		- 2Lepton_OS_2FJ and three tau channels (0Lepton_1T, 1Lepton_1T, 2Lepton_1T) added.
 	- Systematics: all background systematics, all signal systematics.
+		- Lepton SFs (el and mu) are treated as 50% correlated between each subchannel. This is accomplished using Cholesky decomposition, and the original SF NP is split into N NP, where N is the number of channels that are affected by that systematic (e.g. for el, "lep_sf_el_" --> ["lep_sf_el_1_", "lep_sf_el_2_",...,"lep_sf_el_8_"])
 		- There may be minor changes to the systematics in the future; this is expected to have a small impact on the limits.
 		- Tau channels use a conservative 50% flat systematic uncertainty for each background process. These will be refined soon.
 		- Tau channels have limited signal systematics; they are under development right now.
