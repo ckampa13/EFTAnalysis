@@ -48,3 +48,21 @@ WC_pretty_print_dict = {
     'cT0': r'$f_{T0}$',
     'cM0': r'$f_{M0}$',
 }
+
+WC_pretty_print_dict_AN = {
+    # dim6
+    'cW': r'$c_W$',
+    'cHq3': r'$c_{Hq3}$',
+    'cHq1': r'$c_{Hq1}$',
+    'cHu': r'$c_{Hu}$',
+    'cHd': r'$c_{Hd}$',
+    'cHW': r'$c_{HW}$',
+    'cHB': r'$c_{HB}$',
+    'cHWB': r'$c_{HWB}$',
+    'cHl3': r'$c_{Hl3}$',
+    'cll1': r'$c_{ll1}$',
+    'cHbox': r'$c_{H\square}$',
+    'cHDD': r'$c_{HDD}$',
+    'cT0': r'$f_{T0}$',
+    'cM0': r'$f_{M0}$',
+}
