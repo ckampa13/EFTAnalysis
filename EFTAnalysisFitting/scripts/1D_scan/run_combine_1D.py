@@ -64,17 +64,17 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
         # grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
         ##prec = 0.1
         #print('Using prec = 0.1')
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     elif range_ > 4.5:
         #prec = 0.1
         #print('Using prec = 0.1')
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.1) + 2
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     elif range_ > 2.5:
         #prec = 0.01
         #print('Using prec = 0.01')
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/0.01) + 2
+        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     # elif range_ > 10:
     #     prec = args.PrecisionCoarse
@@ -493,7 +493,8 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
             grid_dict = {'LL': -4, 'UL': 4, 'steps': 9}
         elif WC in ['cHWB', 'cHl3', 'cHB', 'cll1']:
-            grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+            #grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+            grid_dict = {'LL': -20, 'UL': 20, 'steps': 21}
         else:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     else:
