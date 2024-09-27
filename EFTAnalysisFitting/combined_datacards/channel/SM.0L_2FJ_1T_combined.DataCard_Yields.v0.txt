@@ -1,7 +1,7 @@
 Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_1T/v0/SM.0L_2FJ_1T.DataCard_Yields.v0.txt
 imax 1 number of bins
 jmax 10 number of processes minus 1
-kmax 15 number of nuisance parameters
+kmax 14 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_1T/v0/SM.0L_2FJ_1T.DataCard_Yields_Cleaned.v0.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
 shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_1T/v0/SM.0L_2FJ_1T.DataCard_Yields_Cleaned.v0.root h_$PROCESS
@@ -28,7 +28,6 @@ norm_ZJets_             shape        -       -       -       -       -       -  
 norm_ZZ_                shape        -       -       -       -       -       -       -       1.0     -       -       -     
 prefire_weight_         shape        1.0     -       -       -       -       -       -       -       -       -       -     
 statonly                lnN          1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001
-tau_sf_                 shape        1.0     -       -       -       -       -       -       -       -       -       -     
-allsyst group = norm_VH_ norm_DY_ norm_WW_ norm_ZJets_ norm_H_ norm_Top_ tau_sf_ lumi_ norm_WJets_ norm_WZ_ norm_QCD_ norm_ZZ_ btag_sf_ prefire_weight_
+allsyst group = norm_VH_ norm_DY_ norm_WW_ norm_ZJets_ norm_H_ norm_Top_ lumi_ norm_WJets_ norm_WZ_ norm_QCD_ norm_ZZ_ btag_sf_ prefire_weight_
 nosyst group = statonly
 sch autoMCStats 0 0 1

@@ -299,7 +299,7 @@ if __name__=='__main__':
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
-    parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
+    parser.add_argument('-V', '--Verbose', help='Include "combine" output? 1 (default) / 0. "combine" output only included if Verbose>0.')
     # parse args
     args = parser.parse_args()
     if args.Channel is None:
@@ -339,7 +339,7 @@ if __name__=='__main__':
     else:
         SignalInject = args.SignalInject == 'y'
     if args.Verbose is None:
-        args.Verbose = 0
+        args.Verbose = 1
     else:
         args.Verbose = int(args.Verbose)
     if args.Verbose > 0:
