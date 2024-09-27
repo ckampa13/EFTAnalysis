@@ -21,14 +21,16 @@ from MISC_CONFIGS import (
     dim6_ops,
     #WC_pretty_print_dict,
     WC_pretty_print_dict_AN,
+    #SR_pretty_print_dict_AN,
 )
 WC_pretty_print_dict = WC_pretty_print_dict_AN
+#SR_pretty_print_dict = SR_pretty_print_dict_AN
 # from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
 from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
-
+plt.rcParams['figure.constrained_layout.use'] = True
 
 # FIXME! Is "ScanType" needed in this function?
 def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanType='_1D', plot_stat_only=True, savefile=None, legend=True, tight_layout=False):

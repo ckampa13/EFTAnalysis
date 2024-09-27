@@ -66,3 +66,19 @@ WC_pretty_print_dict_AN = {
     'cT0': r'$f_{T0}$',
     'cM0': r'$f_{M0}$',
 }
+
+SR_pretty_print_dict_AN = {
+    # subchannel file names
+    '0L_2FJ': r'SR-0l-2fj',
+    '0L_3FJ': r'SR-0l-3fj',
+    '1L_2FJ': r'SR-\ensuremath{\ell}-2fj',
+    '2L_OS_OF': r'SR-2l-OSOF-1fj',
+    '2L_OS_SFZ': r'SR-2l-OSonZ-1fj',
+    '2L_OS_SFnoZ': r'SR-2l-OSoffZ-1fj',
+    '2L_OS_2FJ': r'SR-2l-OS-2fj',
+    '2L_SS_1FJ': r'SR-2l-SS-1fj',
+    # tau channels to be confirmed
+    '0L_2FJ_1T': r'SR-1T-0l-2fj',
+    '1L_1FJ_1T': r'SR-1T-1l-1fj',
+    '2L_0FJ_1T': r'SR-1T-2l-0fj',
+}

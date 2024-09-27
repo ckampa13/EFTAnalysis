@@ -271,7 +271,7 @@ if __name__=='__main__':
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
         # loop through all bins and plot
-        #'''
+        '''
         print("=========================================================")
         print("Making likelihood plots for each bin...")
         for pstat in [True, False]:
@@ -300,7 +300,7 @@ if __name__=='__main__':
                     print(sch)
                     fig, ax = run_lim_plot_subchannel(WC, ch, sch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat)
         print("=========================================================\n")
-        #'''
+        '''
         # loop through all channels and plot
         print("=========================================================")
         print("Making likelihood plots for each channel...")

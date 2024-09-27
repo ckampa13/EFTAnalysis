@@ -1,6 +1,8 @@
 # this script reads the .pkl tables generated in VVVYieldTable
 # FIXME! This code should all be in the same repo.
 import os
+import argparse
+from copy import deepcopy
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
@@ -19,11 +21,15 @@ from MISC_CONFIGS import (
     template_outfilename,
     #template_outfilename_stub,
     dim6_ops,
-    WC_pretty_print_dict,
+    #WC_pretty_print_dict,
+    WC_pretty_print_dict_AN,
+    SR_pretty_print_dict_AN,
 )
+WC_pretty_print_dict = WC_pretty_print_dict_AN
+SR_pretty_print_dict = SR_pretty_print_dict_AN
 # from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 #from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting import config_plots, ticks_in, ticks_sizes, CMSify_title
+from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
@@ -98,19 +104,25 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
     # sort!
     # use limits?
     if limit_rank:
-        ylabel = f'{WC} Excluded\n95\% CL'
+        WC_l = WC_pretty_print_dict[WC]
+        #ylabel = rf'{WC_l}'+' Excluded\n95\% CL'
+        ylabel = rf'{WC_l}'+' Limit\n95\% CL'
         ysymm = True
         # channel rank?
         if channel_rank:
-            sort_cols = [f'comb_{WC}_95CL', f'{WC}_95CL']
-            asc_list = [False, False]
+            # FIXME! This is to get AN done but is misleading flag now.
+            ##sort_cols = [f'comb_{WC}_95CL', f'{WC}_95CL']
+            ##asc_list = [False, False]
+            sort_cols = [f'comb_{WC}_95CL', 'bin_label']
+            asc_list = [False, True]
         else:
             sort_cols = [f'{WC}_95CL']
             asc_list = [False]
         #ycol_cW = f'yield_{WC}_at_1'
         #lab_cW = f'{WC}=1.0'
         ycol_cW = f'all_comb_yield'
-        lab_cW = f'Yield @ {WC}={limit_95CL:0.3f} (95\% CL UL)\n'+r'$-$SM VVV'
+        #lab_cW = f'Yield @ {WC}={limit_95CL:0.3f} (95\% CL UL)\n'+r'$-$SM VVV'
+        lab_cW = f'VVV Yield\n(Total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
     # use median significance
     # note here channel ranking will still rely on combine output
     else:
@@ -143,12 +155,27 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
             ycol_cW = f'all_comb_yield'
             lab_cW = f'Yield @ {WC}={limit_95CL:0.3f} (95\% CL UL)\n'+r'$-$SM VVV'
     df_yields.sort_values(by=sort_cols, ascending=asc_list, inplace=True)
+    # don't include dummy bins (b = 0, s = 0) -- appear in early versions of tau channels
+    df_yields = df_yields.query('total_bkg > 1e-3').copy()
+    # reset index
     df_yields.reset_index(drop=True, inplace=True)
+
     # plot
-    fig = plt.figure(figsize=(18, 14))
+    #fig = plt.figure(figsize=(18, 14))
+    ###fig = plt.figure(figsize=(20, 16))
+    fig = plt.figure(figsize=(18, 16))
     axs = []
-    axs.append(fig.add_axes((0.1, 0.44, 0.62, 0.50)))
-    axs.append(fig.add_axes((0.1, 0.20, 0.62, 0.22))) #, sharex=ax1)
+    #axs.append(fig.add_axes((0.1, 0.44, 0.62, 0.50)))
+    #axs.append(fig.add_axes((0.1, 0.20, 0.62, 0.22))) #, sharex=ax1)
+    ##axs.append(fig.add_axes((0.1, 0.44, 0.55, 0.45)))
+    ##axs.append(fig.add_axes((0.1, 0.20, 0.55, 0.22))) #, sharex=ax1)
+    axs.append(fig.add_axes((0.1, 0.44, 0.6, 0.45)))
+    axs.append(fig.add_axes((0.1, 0.20, 0.6, 0.22))) #, sharex=ax1)
+    CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
+    # ticks_sizes(axs[0], major={'L':5,'W':1.5}, minor={'L':5,'W':1})
+    # ticks_sizes(axs[1], major={'L':5,'W':1.5}, minor={'L':5,'W':1})
+    ticks_in(axs[0])
+    ticks_in(axs[1])
     # for the combined limit bin
 #     axs.append(fig.add_axes((0.75, 0.20, 0.1, 0.22)))
 #     axs[2].yaxis.tick_right()
@@ -173,7 +200,16 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
             nbins = len(df_s)
             inds.append(delta + np.arange(prev+1, prev+nbins+1, 1))
             bin_edges.append(delta+np.arange(prev, prev+nbins+1, 1) + 0.5)
-            xticklabels.append(np.concatenate([[""], df_s['bin_label'].values]))
+            #xticklabels.append(np.concatenate([[""], df_s['bin_label'].values]))
+            # only one xticklabel
+            ch_ = '_'.join(df_s['bin_label'].values[0].split('_')[:-1])
+            ch_label = SR_pretty_print_dict[ch_]
+            ticklabels = deepcopy(df_s['bin_label'].values)
+            Nt = len(ticklabels)
+            ticklabels[:Nt//2-1] = ''
+            ticklabels[Nt//2-1] = ch_label
+            ticklabels[Nt//2:] = ''
+            xticklabels.append(np.concatenate([[""], ticklabels]))
             prev = inds[-1][-1]
         inds = np.concatenate(inds)
         bin_edges = np.concatenate(bin_edges)
@@ -202,7 +238,9 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
 #     axs[0].errorbar(inds, df_yields['total_bkg'].values, yerr=df_yields[['total_unc_Decrease', 'total_unc_Increase']].values.T,
 #                     marker='', ls='none', color='black', elinewidth=3, label='Systematics\n(with MC stat. uncertainty)', zorder=12)
     axs[0].errorbar(inds, df_yields['total_bkg_plu_SM'], yerr=df_yields[['total_unc_Decrease', 'total_unc_Increase']].values.T,
-                    marker='', ls='none', color='black', elinewidth=3, label='Systematics\n(with MC stat. uncertainty)', zorder=12)
+                    marker='', ls='none', color='black', elinewidth=3,
+                    label='Systematics', zorder=12)
+                    #label='Systematics\n(with MC stat. uncertainty)', zorder=12)
     # plot MC stat error as hatched bar
 #     axs[0].bar(inds, 2*df_yields['total_MCstat'].values, 1.0, bottom=df_yields['total_bkg'].values-df_yields['total_MCstat'].values,
 #                color=None, fill=False, edgecolor='cyan', hatch='//', linewidth=1, label='MC stat. uncertainty', zorder=11)
@@ -246,12 +284,14 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
     axs[0].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     axs[1].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     # labels
-    axs[1].set_xlabel('Analysis Bin')
+    #axs[1].set_xlabel('Analysis Bin')
+    axs[1].set_xlabel('Analysis Channel SR')
     axs[0].set_ylabel('Events')
-    axs[0].set_title(f'VVV Yield Summary for {WC}\n')
+    WC_l = WC_pretty_print_dict[WC]
+    axs[0].set_title('VVV Yield Summary for '+rf'{WC_l}'+'\n\n')
     #axs[0].set_title('CMS Preliminary', fontweight ='bold', loc='left')
-    axs[0].set_title(r'$\bf{CMS}$ $\it{Preliminary}$', fontweight ='bold', loc='left')
-    axs[0].set_title(r'138 fb$^{-1}$ (13 TeV)', loc='right')
+    #axs[0].set_title(r'$\bf{CMS}$ $\it{Preliminary}$', fontweight ='bold', loc='left')
+    #axs[0].set_title(r'138 fb$^{-1}$ (13 TeV)', loc='right')
     axs[2].set_title('Combined Limit')
     #axs[1].set_ylabel(f'{WC} Excluded\n95% CL (symm.)')
     axs[1].set_ylabel(ylabel)
@@ -293,25 +333,40 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        fig.savefig(savefile+'.png')
+        #fig.savefig(savefile+'.png')
 
     return fig, axs, df_yields
 
 
 if __name__=='__main__':
     #WCs = ['cW']
-    WCs = WC_ALL
+    #WCs = WC_ALL
 
-    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', 'freeze', '')
+    # parse commmand line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--WC',
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+    args = parser.parse_args()
+    if args.WC is None:
+        args.WC = 'all'
+    if args.WC == 'all':
+        WCs = WC_ALL
+    else:
+        WCs = [args.WC]
+
+    plot_dir = os.path.join(datacard_dir, 'AN_plots', 'full_analysis', 'freeze', '')
 
     for WC in WCs:
         print(f'{WC}: ', end='\n')
         #tablepkl = os.path.join(tabledir, f'yiel_table_{WC}.csv')
         tablepkl = os.path.join(tabledir, f'yield_table_{WC}.pkl')
-        for channel_rank, ch_str in zip([False, True], ['_by_bin', '_by_channel']):
-            for logy, log_str in zip([False, True], ['', '_logy']):
+        #for channel_rank, ch_str in zip([False, True], ['_by_bin', '_by_channel']):
+        for channel_rank, ch_str in zip([True], ['_by_channel']):
+            #for logy, log_str in zip([False, True], ['', '_logy']):
+            for logy, log_str in zip([True], ['_logy']):
                 print(f'channel_rank={channel_rank} & logy={logy}', end='\n')
                 savefile = plot_dir+f'yield_{WC}{ch_str}{log_str}'
                 _ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=logy, channel_rank=channel_rank, limit_rank=True, sm_significance=False, savefile=savefile)
+                #_ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=logy, channel_rank=channel_rank, limit_rank=False, sm_significance=False, savefile=savefile)
                 #fig, axs, df_yields = _
         print()

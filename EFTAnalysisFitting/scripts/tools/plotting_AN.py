@@ -18,11 +18,8 @@ def config_plots():
         plt.rc("text", usetex=True)
         #plt.rc("text.latex", preamble=r"\usepackage{amsmath}\usepackage{amssymb}")
         plt.rc("text.latex", preamble=r"\usepackage{amsmath}\usepackage{amssymb}\usepackage{color}")
-        plt.rcParams['figure.constrained_layout.use'] = True
-        # font = {'family' : 'normal',
-        #         'weight' : 'bold',
-        #         'size'   : 28}
-        # plt.rc('font', **font)
+        # apply in each file as needed
+        #plt.rcParams['figure.constrained_layout.use'] = True
         plt.rc('axes', labelsize=34.0)     # fontsize of the axes title
 
 def ticks_in(ax, top_and_right=True):
