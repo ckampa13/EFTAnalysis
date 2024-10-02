@@ -81,4 +81,9 @@ SR_pretty_print_dict_AN = {
     '0L_2FJ_1T': r'SR-1T-0l-2fj',
     '1L_1FJ_1T': r'SR-1T-1l-1fj',
     '2L_0FJ_1T': r'SR-1T-2l-0fj',
+    # additional, e.g. combining 2L_OS
+    # to be confirmed
+    '2L_OS': r'SR-2l-1fj',
+    # copy of 2L_SS
+    '2L_SS': r'SR-2l-SS-1fj',
 }

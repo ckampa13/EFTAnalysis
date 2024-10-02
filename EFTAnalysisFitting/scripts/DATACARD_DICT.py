@@ -159,8 +159,8 @@ datacard_dict = {
     '0Lepton_1T': {
         'subchannels': {
             '2FJ': {
-                'bins': [1, 2, 3, 4], # v0
-                #'bins': [1, 2, 3], # v1, removed empty bin (3)
+                #'bins': [1, 2, 3, 4], # v0
+                'bins': [1, 2, 3], # v1, removed empty bin (3)
                 'info': {
                     'short_name': '',
                     'file_name': '2FatJet',
@@ -179,8 +179,8 @@ datacard_dict = {
     '1Lepton_1T': {
         'subchannels': {
             '1FJ': {
-                'bins': [1, 2, 3, 4], # v0
-                #'bins': [1, 2, 3], # v1, removed empty bin (3)
+                #'bins': [1, 2, 3, 4], # v0
+                'bins': [1, 2, 3], # v1, removed empty bin (3)
                 'info': {
                     'short_name': '',
                     'file_name': '1FatJet',

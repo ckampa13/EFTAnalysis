@@ -34,17 +34,33 @@ config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
 
 #colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
+
 colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta', 'saddlebrown', 'dimgray', 'cyan']
 
-def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True):
+colors_dict = {'0L_2FJ': 'green', '0L_3FJ': 'blue', '1L_2FJ': 'magenta',
+               '2L_OS': 'darkorange', '2L_OS_2FJ': 'cyan', '2L_SS': 'saddlebrown',
+               '0L_2FJ_1T': 'gold', '1L_1FJ_1T': 'limegreen', '2L_0FJ_1T': 'dimgray'}
+
+N_ch = len(colors_dict) + 1
+
+def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True, title_on=False, SignalInject=False):
     # plot
-    if ncol <= 2:
-        fig = plt.figure(figsize=(16, 8))
-        #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
-        ax = fig.add_axes([0.05, 0.1, 0.50, 0.75])
+    # if ncol <= 2:
+    #     fig = plt.figure(figsize=(16, 8))
+    #     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
+    #     ax = fig.add_axes([0.05, 0.1, 0.50, 0.75])
+    # else:
+    #     fig = plt.figure(figsize=(18, 8))
+    #     ax = fig.add_axes([0.05, 0.1, 0.45, 0.75])
+    #fig, axs = plt.subplots(1, 2, figsize=(20, 12), gridspec_kw={'width_ratios': [2., 1.5]})
+    #ax, ax_leg = axs
+    #ax_leg.axis('off')
+    #fig, ax = plt.subplots(figsize=(18, 18))
+    if not SignalInject:
+        fig, ax = plt.subplots(figsize=(12, 12))
     else:
-        fig = plt.figure(figsize=(18, 8))
-        ax = fig.add_axes([0.05, 0.1, 0.45, 0.75])
+        fig, ax = plt.subplots(figsize=(12, 14))
+    #fig, ax = plt.subplots()
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     if WC == 'sm':
         WC_l = 'SM'
@@ -105,14 +121,31 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                 # do actual plotting in second iteration
                 # thicker total lim
                 if i == 0:
-                    lw = 2.
+                    #lw = 2.
+                    lw = 3.
                 else:
-                    lw = 1.
-                label_NLL = info_dict['ylabel']+f'\n'
+                    #lw = 1.
+                    lw = 2.
+                zorder = N_ch + 10 - i
+                ##label_NLL = info_dict['ylabel']+f'\n'
+                if 'Full analysis' in info_dict['ylabel']:
+                    ch_l = info_dict['ylabel']
+                    color = 'black'
+                else:
+                    ch_ = info_dict['ylabel']
+                    #ch_ = rdict_full['bin_info']['channel']
+                    ch_l = SR_pretty_print_dict[ch_]
+                    color = colors_dict[ch_]
+                label_NLL = ch_l + '\n'
                 # label_NLL += f'[{LLs[0]:0.3f}, {ULs[0]:0.3f}]\n'
                 # multi interval
                 label_NLL += '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
-                ax.plot(Cs, NLL, c=colors_list[i], linestyle='-', linewidth=lw, label=label_NLL)
+                if (i + 1) % 2 == 0:
+                    ls = ':'
+                    lw *= 2.0
+                else:
+                    ls = '-'
+                ax.plot(Cs, NLL, c=color, linestyle=ls, linewidth=lw, label=label_NLL, zorder=zorder)
                 if plot_stat_only:
                     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
                     Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
@@ -128,19 +161,26 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     # plot the horizontal line for NLL_cut only once at the end
     xmin = np.min(Cs)
     xmax = np.max(Cs)
-    NLL_cut = NLL_cuts[0]
-    #label = WC_l+f'@{CL*100:0.1f}\% CL'
-    #label = r'$\Delta$NLL Threshold' + f'\n{int(CL*100):d}\% CL'
-    label = r'$\Delta$NLL Threshold' + f'\n{int(CL_list[0]*100):d}\% CL'
-    ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r--', linewidth=2, label=label)
+    xra = (xmax - xmin)
+    #xmin -= xra*0.1
+    #xmax += xra*0.1
+    for NLL_cut, ls in zip(NLL_cuts, ['-', '-.']):
+        #NLL_cut = NLL_cuts[0]
+        #label = WC_l+f'@{CL*100:0.1f}\% CL'
+        #label = r'$\Delta$NLL Threshold' + f'\n{int(CL*100):d}\% CL'
+        label = r'$\Delta$NLL Threshold' + f'\n{int(CL_list[0]*100):d}\% CL'
+        ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls, linewidth=2, label=label, zorder=100)
     # axis labels
     if WC in dim6_ops:
-        suff = r'$ / \Lambda^2$ [TeV]$^{-2}$'
+        suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
     else:
-        suff = r'$ / \Lambda^4$ [TeV]$^{-4}$'
-    ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right', fontsize=20.)
-    ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top', fontsize=20.)
-    ax.set_title(title+'\n', pad=3.)
+        suff = r'$ / \Lambda^4$ [TeV$^{-4}$]'
+    if WC == 'sm':
+        suff = r' ($\mu_{\mathrm{SM}}$)'
+    ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right', labelpad=-2.0)#, fontsize=20.)
+    ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top')#, fontsize=20.)
+    if title_on:
+        ax.set_title(title+'\n', pad=3.)
     # ticks
     ax = ticks_in(ax)
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))
@@ -150,7 +190,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     # LLs_all = np.array(LLs_all)
     # ULs_all = np.array(ULs_all)
     if WC == 'sm':
-        ax.set_xlim([xmin, xmax])
+        #ax.set_xlim([xmin, xmax])
+        ax.set_xlim([-0.5, xmax])
     else:
         xlim_factor = 2.
         xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
@@ -160,14 +201,31 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #max_ = 100.
         if xlim > max_:
             ax.set_xlim([-max_, max_])
+    if SignalInject:
+        iv = abs(InjectValue)
+        ax.set_xlim([-1.5*iv, 1.5*iv])
     #ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
     if ymax_min > 2.5*np.max(NLL_cuts):
         yu = 2.5 * np.max(NLL_cuts)
     else:
         yu = ymax_min
     ax.set_ylim([-0.01, yu])
+    #if WC == 'sm':
+    #    ax.set_ylim([-0.01, 3.])
     if legend:
-        ax.legend(loc='upper left', bbox_to_anchor=(1,1), ncol=ncol)
+        ###ax.legend(loc='upper left', bbox_to_anchor=(1,1), ncol=ncol)
+        #ax.legend(loc='upper left', bbox_to_anchor=(0.0,-0.1), ncol=3)
+        #ax.legend(loc='upper left', bbox_to_anchor=(0.0,-0.15), ncol=3, fontsize=18.0,
+        #          borderpad=10.0)
+        if not SignalInject:
+            fig.legend(loc='outside lower left', ncol=3, fontsize=20.0)
+        else:
+            fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
+        # separate axis
+        #handles, labels = ax.get_legend_handles_labels()
+        #ncol_ = ncol
+        #ncol_ = 6
+        #ax_leg.legend(handles, labels, loc='upper left', clip_on=True)#, ncol=ncol_)
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
@@ -213,7 +271,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         v = versions_dict[ch]['v']
         version = f'v{v}'
         bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
-                    'channel': fname_ch, 'subchannel': 'All',
+                    #'channel': fname_ch, 'subchannel': 'All',
+                    'channel': sname_ch, 'subchannel': 'All',
                     'version': version, 'bin_': 'All',
                     }
         file_syst = template_outfilename.substitute(asimov=Asi, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
@@ -254,12 +313,21 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
     title = f'Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     if SignalInject:
         ncol = 3
+        title_on = True
+        if WC in dim6_ops:
+            lT = r'$/\Lambda^2$'
+            lS = r'[TeV$^{2}$]'
+        else:
+            lT = r'$/\Lambda^2$'
+            lS = r'[TeV$^{4}$]'
+        title = 'Signal Injection Test: ' + WC_l + lT + rf'$={{ {InjectValue:0.1f} }}$ ' + lS + '\n'
     else:
         if plot_stat_only:
             ncol = 3
         else:
             ncol = 2
-    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend)
+        title_on = False
+    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend, title_on=title_on, SignalInject=SignalInject)
     return fig, ax
 
 
@@ -268,7 +336,8 @@ if __name__=='__main__':
     #WCs = WC_ALL
     #WCs = ['cW'] # testing
     # confidence level
-    CL_list = [0.95, CL_1sigma]
+    #CL_list = [0.95, CL_1sigma]
+    #CL_list = [0.95]
     # which scan type?
     # freeze all but one
     ScanType = '_1D'
@@ -312,6 +381,11 @@ if __name__=='__main__':
         InjectValue = float(args.InjectValue)
     # loop over WCs
     for WC in WCs:
+        #if WC == 'sm':
+        if (WC == 'sm') or SignalInject:
+            CL_list = [CL_1sigma]
+        else:
+            CL_list = [0.95]
         print(f'WC: '+WC)
         # full analysis plot
         print("=========================================================")

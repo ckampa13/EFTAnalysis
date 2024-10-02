@@ -15,9 +15,10 @@ conda activate HCOMB
 # no signal injection -- WCs and SM
 #python summary_NLL_limits_plot.py
 # debug 1 WC
-python summary_NLL_limits_plot.py -w cW
+# python summary_NLL_limits_plot.py -w cW
+# python summary_NLL_limits_plot.py -w sm
 
 # signal injection -- cW
-# python summary_NLL_limits_plot.py -i y -w cW -v 1.0
+python summary_NLL_limits_plot.py -i y -w cW -v 1.0
 
 #python limit_summary_plot_from_dir.py -t f
