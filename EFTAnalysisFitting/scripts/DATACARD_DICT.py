@@ -156,25 +156,26 @@ datacard_dict = {
     },
     # TAU TESTS
     # channel 6
-    '0Lepton_1T': {
-        'subchannels': {
-            '2FJ': {
-                #'bins': [1, 2, 3, 4], # v0
-                'bins': [1, 2, 3], # v1, removed empty bin (3)
-                'info': {
-                    'short_name': '',
-                    'file_name': '2FatJet',
-                    'ylabel_name': r'0 Lepton, 2 fat jet, 1 tau',
-                }
-            }
-        },
-        'info': {
-            'short_name': '0L_2FJ_1T',
-            'file_name': '0Lep_1T',
-            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$ (+BDT score)',
-            'ylabel_name': '0 Lepton            \n(2FJ, 1 tau)     ',
-        }
-    },
+    # 0L removed after v1
+    # '0Lepton_1T': {
+    #     'subchannels': {
+    #         '2FJ': {
+    #             #'bins': [1, 2, 3, 4], # v0
+    #             'bins': [1, 2, 3], # v1, removed empty bin (3)
+    #             'info': {
+    #                 'short_name': '',
+    #                 'file_name': '2FatJet',
+    #                 'ylabel_name': r'0 Lepton, 2 fat jet, 1 tau',
+    #             }
+    #         }
+    #     },
+    #     'info': {
+    #         'short_name': '0L_2FJ_1T',
+    #         'file_name': '0Lep_1T',
+    #         'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$ (+BDT score)',
+    #         'ylabel_name': '0 Lepton            \n(2FJ, 1 tau)     ',
+    #     }
+    # },
     # channel 7
     '1Lepton_1T': {
         'subchannels': {

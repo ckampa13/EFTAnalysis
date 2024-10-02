@@ -1,0 +1,53 @@
+Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton_1T/v1/SM.1L_1FJ_1T.DataCard_Yields_StatOnly.v1.txt
+imax 1 number of bins
+jmax 9 number of processes minus 1
+kmax 35 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton_1T/v1/SM.1L_1FJ_1T.DataCard_Yields_Cleaned.v1.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton_1T/v1/SM.1L_1FJ_1T.DataCard_Yields_Cleaned.v1.root h_$PROCESS
+----------------------------------------------------------------------------------------------------------------------------------
+bin          sch   
+observation  -1    
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                  sch     sch     sch     sch     sch     sch     sch     sch     sch     sch   
+process                              sm      VH      H       Top     WW      WJets   ZZ      DY      ZJets   WZ    
+process                              0       1       2       3       4       5       6       7       8       9     
+rate                                 -1      -1      -1      -1      -1      -1      -1      -1      -1      -1    
+----------------------------------------------------------------------------------------------------------------------------------
+PDF_                    shape        1.0     -       -       -       -       -       -       -       -       -     
+QCDScale_               shape        1.0     -       -       -       -       -       -       -       -       -     
+alphas_                 shape        1.0     -       -       -       -       -       -       -       -       -     
+btag_sf_                shape        1.0     -       -       -       -       -       -       -       -       -     
+jer_                    shape        1.0     -       -       -       -       -       -       -       -       -     
+jes_                    shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_1_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_2_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_3_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_4_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_5_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_6_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_el_7_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_1_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_2_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_3_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_4_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_5_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_6_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_mu_7_            shape        1.0     -       -       -       -       -       -       -       -       -     
+lep_sf_tau_             shape        1.0     -       -       -       -       -       -       -       -       -     
+lumi_                   shape        1.0     -       -       -       -       -       -       -       -       -     
+norm_DY_                shape        -       -       -       -       -       -       -       1.0     -       -     
+norm_H_                 shape        -       -       1.0     -       -       -       -       -       -       -     
+norm_Top_               shape        -       -       -       1.0     -       -       -       -       -       -     
+norm_VH_                shape        -       1.0     -       -       -       -       -       -       -       -     
+norm_WJets_             shape        -       -       -       -       -       1.0     -       -       -       -     
+norm_WW_                shape        -       -       -       -       1.0     -       -       -       -       -     
+norm_WZ_                shape        -       -       -       -       -       -       -       -       -       1.0   
+norm_ZJets_             shape        -       -       -       -       -       -       -       -       1.0     -     
+norm_ZZ_                shape        -       -       -       -       -       -       1.0     -       -       -     
+prefire_weight_         shape        1.0     -       -       -       -       -       -       -       -       -     
+pu_weight_              shape        1.0     -       -       -       -       -       -       -       -       -     
+statonly                lnN          1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001
+wtag_fj_sf_             shape        1.0     -       -       -       -       -       -       -       -       -     
+allsyst group = norm_DY_ pu_weight_ norm_H_ norm_Top_ norm_WJets_ norm_WZ_ btag_sf_ lep_sf_el_3_ lep_sf_tau_ lep_sf_mu_6_ lep_sf_el_5_ norm_ZJets_ alphas_ lep_sf_mu_4_ QCDScale_ lep_sf_mu_2_ lep_sf_el_1_ lep_sf_el_7_ jes_ norm_VH_ norm_WW_ norm_ZZ_ PDF_ lep_sf_el_4_ lumi_ lep_sf_mu_7_ lep_sf_mu_5_ jer_ lep_sf_el_2_ wtag_fj_sf_ lep_sf_mu_3_ lep_sf_mu_1_ prefire_weight_ lep_sf_el_6_
+nosyst group = statonly

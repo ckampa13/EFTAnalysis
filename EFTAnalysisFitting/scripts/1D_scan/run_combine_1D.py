@@ -58,7 +58,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     # also can switch from hard coding the very coarse precision if desired if range_ > 50: prec = 1.0
     prec = Precision
     if range_ > 20.5:
-        # prec = 1.0
+        prec = 1.0
         # print('Using prec = 1.0')
         # grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/1.) + 2
         # grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * 1.
@@ -67,12 +67,12 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     elif range_ > 4.5:
-        #prec = 0.1
+        prec = 0.1
         #print('Using prec = 0.1')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     elif range_ > 2.5:
-        #prec = 0.01
+        prec = 0.01
         #print('Using prec = 0.01')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
