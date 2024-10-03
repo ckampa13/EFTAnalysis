@@ -115,6 +115,8 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         ax.legend(loc='upper left', framealpha=1.0).set_zorder(9)
     #if tight_layout:
     #    fig.tight_layout()
+    # DEBUG!!
+    ax.set_xlim([-1, 1])
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
@@ -276,7 +278,7 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
 
 if __name__=='__main__':
     # FIX ME! make these command line args
-    WCs = WC_ALL
+    #WCs = WC_ALL
     #WCs = ['cW'] # testing
     # confidence level
     CL_list = [0.95, CL_1sigma]
@@ -300,6 +302,8 @@ if __name__=='__main__':
                         'characters will work: "b" (bin), "s" (subchannel),'+
                         ' "c" (channel), "f" (full analysis). e.g. "bsc" will'+
                         ' run all but the full analysis.')
+    parser.add_argument('-w', '--WC',
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
     args = parser.parse_args()
     if (args.theLevels is None) or (args.theLevels == 'all'):
         generate_bins = True
@@ -323,6 +327,13 @@ if __name__=='__main__':
             generate_full = True
         else:
             generate_full = False
+    if args.WC is None:
+        args.WC = 'all'
+    if args.WC == 'all':
+        ##WCs = WC_ALL + ['sm']
+        WCs = WC_ALL
+    else:
+        WCs = [args.WC]
     # channels -- for testing
     # all
     chs = datacard_dict.keys()
