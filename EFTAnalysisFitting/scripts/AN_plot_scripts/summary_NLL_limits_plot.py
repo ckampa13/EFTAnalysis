@@ -28,7 +28,7 @@ WC_pretty_print_dict = WC_pretty_print_dict_AN
 SR_pretty_print_dict = SR_pretty_print_dict_AN
 #from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
+from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter
 
 config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
@@ -61,6 +61,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     else:
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
+    fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     if WC == 'sm':
         WC_l = 'SM'
@@ -139,7 +140,9 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                 label_NLL = ch_l + '\n'
                 # label_NLL += f'[{LLs[0]:0.3f}, {ULs[0]:0.3f}]\n'
                 # multi interval
-                label_NLL += '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
+                #label_NLL += '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
+                # multi interval, numerical formatter
+                label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
                 if (i + 1) % 2 == 0:
                     ls = ':'
                     lw *= 2.0
@@ -151,7 +154,9 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
                     #label_NLL = f'[{LLs_stat[0]:0.3f}, {ULs_stat[0]:0.3f}]\n(stat. only)\n'
                     # multi interval
-                    label_NLL = '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
+                    #label_NLL = '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
+                    # multi interval, numerical formatter
+                    label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
                     ax.plot(Cs_stat, NLL_stat, c=colors_list[i], linestyle='-.', linewidth=lw, label=label_NLL)
                 # track limits for the x limits later
                 LLs_all.append(LLs[0])
@@ -217,10 +222,13 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #ax.legend(loc='upper left', bbox_to_anchor=(0.0,-0.1), ncol=3)
         #ax.legend(loc='upper left', bbox_to_anchor=(0.0,-0.15), ncol=3, fontsize=18.0,
         #          borderpad=10.0)
-        if not SignalInject:
-            fig.legend(loc='outside lower left', ncol=3, fontsize=20.0)
+        if (not SignalInject) and (not WC == 'sm'):
+            #fig.legend(loc='outside lower left', ncol=3, fontsize=20.0)
+            fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
         else:
-            fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
+            #fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
+            #fig.legend(loc='outside lower left', ncol=4, fontsize=18.0)
+            fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
         # separate axis
         #handles, labels = ax.get_legend_handles_labels()
         #ncol_ = ncol
@@ -316,10 +324,10 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         title_on = True
         if WC in dim6_ops:
             lT = r'$/\Lambda^2$'
-            lS = r'[TeV$^{2}$]'
+            lS = r'[TeV$^{-2}$]'
         else:
             lT = r'$/\Lambda^2$'
-            lS = r'[TeV$^{4}$]'
+            lS = r'[TeV$^{-4}$]'
         title = 'Signal Injection Test: ' + WC_l + lT + rf'$={{ {InjectValue:0.1f} }}$ ' + lS + '\n'
     else:
         if plot_stat_only:
@@ -350,8 +358,6 @@ if __name__=='__main__':
     #CL = CL_1sigma
     # legend = False
     legend = True
-    # tight_layout=False
-    tight_layout=True
     # list of stat on / stat off
     pstats = [False] # only make the plot without stat only
     #pstats = [True] # only make the plot that includes stat only

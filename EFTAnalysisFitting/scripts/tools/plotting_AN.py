@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter, HourLocator, MinuteLocator
 from datetime import datetime
+from decimal import localcontext, Decimal, ROUND_HALF_UP
 
 # nicer plot formatting
 def config_plots():
@@ -54,3 +55,22 @@ def CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True):
     # ax.set_title(lefttitle, fontweight ='bold', loc='left')
     ax.set_title(lefttitle, loc='left')
     ax.set_title(righttitle, loc='right')
+
+def numerical_formatter(value_float):
+    if abs(value_float) < 0.1:
+        s = f'{value_float:0.3f}'
+    elif abs(value_float) < 2.0:
+        s = f'{value_float:0.2f}'
+    elif abs(value_float) < 10.:
+        s = f'{value_float:0.1f}'
+    else:
+        # above 10, round to integer
+        # use decimal package to avoid bankers rounding
+        # with localcontext() as ctx:
+        #     ctx.rounding = ROUND_HALF_UP
+        #     dval = Decimal(value_float)
+        #     rval = dval.to_integral_value()
+        # s = f'{rval}'
+        # or just use f-string, which rounds appropriately
+        s = f'{value_float:0.0f}'
+    return s

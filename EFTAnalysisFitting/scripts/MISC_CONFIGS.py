@@ -45,8 +45,31 @@ WC_pretty_print_dict = {
     'cll1': r'$C_{ll1}$',
     'cHbox': r'$C_{H\square}$',
     'cHDD': r'$C_{HDD}$',
+    # dim6 (old)
     'cT0': r'$f_{T0}$',
     'cM0': r'$f_{M0}$',
+    # dim8
+    'FS0': r'$f_{S,0}$',
+    'FS1': r'$f_{S,1}$',
+    'FS2': r'$f_{S,2}$',
+    'FM0': r'$f_{M,0}$',
+    'FM1': r'$f_{M,1}$',
+    'FM2': r'$f_{M,2}$',
+    'FM3': r'$f_{M,3}$',
+    'FM4': r'$f_{M,4}$',
+    'FM5': r'$f_{M,5}$',
+    'FM6': r'$f_{M,6}$', # not in final analysis
+    'FM7': r'$f_{M,7}$',
+    'FT0': r'$f_{T,0}$',
+    'FT1': r'$f_{T,1}$',
+    'FT2': r'$f_{T,2}$',
+    'FT3': r'$f_{T,3}$',
+    'FT4': r'$f_{T,4}$',
+    'FT5': r'$f_{T,5}$',
+    'FT6': r'$f_{T,6}$',
+    'FT7': r'$f_{T,7}$',
+    'FT8': r'$f_{T,8}$',
+    'FT9': r'$f_{T,9}$',
 }
 
 WC_pretty_print_dict_AN = {
@@ -63,8 +86,31 @@ WC_pretty_print_dict_AN = {
     'cll1': r'$c_{ll1}$',
     'cHbox': r'$c_{H\square}$',
     'cHDD': r'$c_{HDD}$',
+    # dim6 (old)
     'cT0': r'$f_{T0}$',
     'cM0': r'$f_{M0}$',
+    # dim8
+    'FS0': r'$f_{S,0}$',
+    'FS1': r'$f_{S,1}$',
+    'FS2': r'$f_{S,2}$',
+    'FM0': r'$f_{M,0}$',
+    'FM1': r'$f_{M,1}$',
+    'FM2': r'$f_{M,2}$',
+    'FM3': r'$f_{M,3}$',
+    'FM4': r'$f_{M,4}$',
+    'FM5': r'$f_{M,5}$',
+    'FM6': r'$f_{M,6}$', # not in final analysis
+    'FM7': r'$f_{M,7}$',
+    'FT0': r'$f_{T,0}$',
+    'FT1': r'$f_{T,1}$',
+    'FT2': r'$f_{T,2}$',
+    'FT3': r'$f_{T,3}$',
+    'FT4': r'$f_{T,4}$',
+    'FT5': r'$f_{T,5}$',
+    'FT6': r'$f_{T,6}$',
+    'FT7': r'$f_{T,7}$',
+    'FT8': r'$f_{T,8}$',
+    'FT9': r'$f_{T,9}$',
 }
 
 SR_pretty_print_dict_AN = {
@@ -83,7 +129,7 @@ SR_pretty_print_dict_AN = {
     '2L_0FJ_1T': r'SR-1T-2l-0fj',
     # additional, e.g. combining 2L_OS
     # to be confirmed
-    '2L_OS': r'SR-2l-1fj',
+    '2L_OS': r'SR-2l-OS-1fj',
     # copy of 2L_SS
     '2L_SS': r'SR-2l-SS-1fj',
 }
