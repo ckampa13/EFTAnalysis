@@ -21,7 +21,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
 from MISC_CONFIGS import (
     datacard_dir,
     template_filename,
@@ -165,7 +165,8 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             print('bin%s' % str(bin_n))
             # construct workspace filename
             sname_sch_b = sname_sch + ('_bin%d' % bin_n)
-            SO_lab = ''
+            #SO_lab = '' # with syst
+            SO_lab = '_StatOnly' # stat only
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS, purpose='workspace', proc=SO_lab, version=version, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             # coarse scan (using syst)
@@ -182,7 +183,8 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
             outfile_ = os.path.join(outdir, outfile_)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                                name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                                #name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                                name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL)
             print('Coarse scan to determine appropriate WC range and number of steps:')
             print(cmd_str)
@@ -255,7 +257,8 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
         # construct workspace filename
-        SO_lab = ''
+        #SO_lab = '' # with syst
+        SO_lab = '_StatOnly' # stat only
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
@@ -279,7 +282,8 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            #name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
@@ -373,7 +377,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         version = 'v' + str(v)
         sname_ch = datacard_dict[ch]['info']['short_name']
         sname_sch = '_combined'
-        SO_lab = ''
+        #SO_lab = '' # with syst
+        SO_lab = '_StatOnly' # stat only
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
@@ -404,7 +409,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            #name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
@@ -453,7 +459,8 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     sname_ch = 'all'
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'
-    SO_lab = ''
+    #SO_lab = '' # with syst
+    SO_lab = '_StatOnly' # stat only
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # add any frozen WC
@@ -504,7 +511,8 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                        name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                        #name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                        name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                         WCs_limit=WCs_limit, limit_val=LIM_VAL)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
@@ -536,7 +544,7 @@ if __name__=='__main__':
     parser.add_argument('-c', '--Channel',
                         help='Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
-                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "dim6", "dim8", "cW", ...]')
     parser.add_argument('-t', '--theLevels',
                         help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
@@ -559,6 +567,10 @@ if __name__=='__main__':
         args.WC = 'all'
     if args.WC == 'all':
         WCs_loop = WC_ALL
+    elif args.WC == 'dim6':
+        WCs_loop = dim6_WCs
+    elif args.WC == 'dim8':
+        WCs_loop = dim8_WCs
     else:
         WCs_loop = [args.WC]
     if (args.theLevels is None) or (args.theLevels == 'all'):
