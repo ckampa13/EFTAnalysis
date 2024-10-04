@@ -33,7 +33,7 @@ python NLL_limits_plot_from_dir.py -t f -w FT0
 # python summary_NLL_limits_plot.py -w cW
 # python summary_NLL_limits_plot.py -w sm
 # degug dim8
-#python summary_NLL_limits_plot.py -w FT0
+python summary_NLL_limits_plot.py -w FT0
 
 # signal injection -- cW
 # echo "Signal injection (make NLL with full analysis and channels...)"
