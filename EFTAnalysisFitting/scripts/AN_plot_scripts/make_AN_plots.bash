@@ -13,8 +13,11 @@ conda activate HCOMB
 # # NLL full combination multi-panel figure
 # echo "NLL vs. WC main plots (1D)..."
 # python NLL_limits_plot_from_dir.py -t f
+# 1 dim6
+#python NLL_limits_plot_from_dir.py -t f -w cW
 # debug dim8
 python NLL_limits_plot_from_dir.py -t f -w FT0
+python NLL_limits_plot_from_dir.py -t bsc -w FT0
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
@@ -30,7 +33,7 @@ python NLL_limits_plot_from_dir.py -t f -w FT0
 #echo "Make NLL with full analysis and channels..."
 #python summary_NLL_limits_plot.py
 # debug 1 WC
-# python summary_NLL_limits_plot.py -w cW
+#python summary_NLL_limits_plot.py -w cW
 # python summary_NLL_limits_plot.py -w sm
 # degug dim8
 python summary_NLL_limits_plot.py -w FT0

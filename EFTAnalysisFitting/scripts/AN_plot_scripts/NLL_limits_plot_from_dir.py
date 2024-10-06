@@ -116,7 +116,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     #if tight_layout:
     #    fig.tight_layout()
     # DEBUG!!
-    ax.set_xlim([-1, 1])
+    #ax.set_xlim([-1, 1])
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
