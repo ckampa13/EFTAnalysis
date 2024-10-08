@@ -648,13 +648,20 @@ if __name__=='__main__':
     else:
         stdout = subprocess.PIPE
     # update WCs_loop if we are clipping
+    # FIXME! This is clunky and was only in place to avoid freezing WCs not present in the file
+    # during development.
     if "clip" in vsuff:
+        WCs_ALL_ = []
         WCs_loop_new = []
         for WC in WCs_loop:
             if WC in WCs_clip:
                 WCs_loop_new.append(WC)
+                WCs_ALL_.append(WC)
         WCs_loop = WCs_loop_new
         print('Clipping -- using an alternative set of WCs: %s' % str(WCs_loop))
+    else:
+        WCs_ALL_ = WC_ALL
+
     #########################
     # outer loop (over WC)
     for WC in WCs_loop:
@@ -678,7 +685,8 @@ if __name__=='__main__':
                 run_combine_bins(dim, channel, VERSION, datacard_dict, WC=WC,
                                  ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                                  Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
-                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                                 #stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
             print('=================================================\n')
         #########################
         # subchannel calculations
@@ -695,7 +703,8 @@ if __name__=='__main__':
                                  ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                                  SignalInject=SignalInject, Precision=args.Precision,
                                  PrecisionCoarse=args.PrecisionCoarse,
-                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                                 # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
             print('=================================================\n')
         #########################
         # channel calculations
@@ -706,7 +715,8 @@ if __name__=='__main__':
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
-                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                             # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
             print('=================================================\n')
         #########################
         # full analysis calculation
@@ -717,6 +727,7 @@ if __name__=='__main__':
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
-                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                             # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
             print('=================================================\n')
         #########################
