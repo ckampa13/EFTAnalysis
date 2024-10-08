@@ -62,6 +62,8 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
                         help='Which channel to leave out? ["all" (default, looping), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+    parser.add_argument('-d', '--Dimension',
+                        help='Which dim of EFT ops to process? "all" (default), "dim6", "dim8"')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
@@ -76,6 +78,14 @@ if __name__=='__main__':
         channels = datacard_dict.keys()
     else:
         channels = [args.Channel]
+    if args.Dimension == 'all':
+        dims = ['dim6', 'dim8']
+    elif args.Dimension == 'dim6':
+        dims = ['dim6']
+    elif args.Dimension == 'dim8':
+        dims = ['dim8']
+    else:
+        raise ValueError('The input args.Dimension="%s" is not implemented. Please select from: ["all", "dim6", "dim8"].' % args.Dimension)
     if args.ScanType is None:
         args.ScanType = '_All'
     if args.SignalInject is None:
@@ -88,7 +98,7 @@ if __name__=='__main__':
         args.Verbose = int(args.Verbose)
     # check if dim6 and dim8 in WC_ALL
     # dims = set()
-    dims = ['dim6', 'dim8']
+    #dims = ['dim6', 'dim8']
     WCs_dim6 = []
     WCs_dim8 = []
     for WC in WC_ALL:
@@ -99,10 +109,13 @@ if __name__=='__main__':
         if not WC in dim6_ops:
             # dims.add('dim8')
             WCs_dim8.append(WC)
+    WCs_dim_dict = {'dim6': WCs_dim6, 'dim8': WCs_dim8}
     # dims = list(dims)
     #########################
     # outer loop (over EFT dimension)
-    for dim, WCs in zip(dims, [WCs_dim6, WCs_dim8]):
+    # for dim, WCs in zip(dims, [WCs_dim6, WCs_dim8]):
+    for dim in dims:
+        WCs = WCs_dim_dict[dim]
         print(dim)
         if len(WCs) < 1:
             print('No WC in WC_ALL with dim %s! Skipping...' % dim)

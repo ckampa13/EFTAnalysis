@@ -21,7 +21,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
 from MISC_CONFIGS import (
     datacard_dir,
     template_filename,
@@ -139,7 +139,8 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
     sname_ch = 'all'
     sname_sch = '_combined_LOO_'+channel_leave_out
     version = 'vCONFIG_VERSIONS'
-    SO_lab = ''
+    # SO_lab = ''
+    SO_lab = '_StatOnly' # stat only
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # add any frozen WC
@@ -177,12 +178,13 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
     outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                        name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                        # name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                        name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                         WCs_limit=WCs_limit, limit_val=LIM_VAL)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
     proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
     # loop through stat/syst
     for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print('Running "%s"' % syst_label)
@@ -209,7 +211,7 @@ if __name__=='__main__':
     parser.add_argument('-c', '--Channel',
                         help='Which channel to leave out? ["all" (looping, not recommended), "0Lepton_2FJ" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
-                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "dim6", "dim8", "cW", ...]')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default), "_1D" (freeze WCs)]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
@@ -231,6 +233,10 @@ if __name__=='__main__':
         args.WC = 'all'
     if args.WC == 'all':
         WCs_loop = WC_ALL
+    elif args.WC == 'dim6':
+        WCs_loop = dim6_WCs
+    elif args.WC == 'dim8':
+        WCs_loop = dim8_WCs
     else:
         WCs_loop = [args.WC]
     if args.ScanType is None:
