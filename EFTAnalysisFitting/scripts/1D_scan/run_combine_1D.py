@@ -166,8 +166,8 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             print('bin%s' % str(bin_n))
             # construct workspace filename
             sname_sch_b = sname_sch + ('_bin%d' % bin_n)
-            # SO_lab = '' # with syst
-            SO_lab = '_StatOnly' # stat only
+            SO_lab = '' # with syst
+            # SO_lab = '_StatOnly' # stat only
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS, purpose='workspace', proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             # coarse scan (using syst)
@@ -185,13 +185,14 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
             outfile_ = os.path.join(outdir, outfile_)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                                # name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
-                                                name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
+                                                name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                                # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL)
             print('Coarse scan to determine appropriate WC range and number of steps:')
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-            grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
+            grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+            # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
             # loop through stat/syst
             for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
                 print('Running "%s"' % syst_label)
@@ -260,8 +261,8 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         if versions_dict[channel]['lumi'] == '2018':
             sname_sch += '_2018_scaled'
         # construct workspace filename
-        # SO_lab = '' # with syst
-        SO_lab = '_StatOnly' # stat only
+        SO_lab = '' # with syst
+        # SO_lab = '_StatOnly' # stat only
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
@@ -286,13 +287,14 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            # name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
-                                            name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
+                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
+        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+        # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
         # loop through stat/syst
         for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print('Running "%s"' % syst_label)
@@ -382,8 +384,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         version_full = version + vsuff
         sname_ch = datacard_dict[ch]['info']['short_name']
         sname_sch = '_combined'
-        # SO_lab = '' # with syst
-        SO_lab = '_StatOnly' # stat only
+        SO_lab = '' # with syst
+        # SO_lab = '_StatOnly' # stat only
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
@@ -415,13 +417,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         outfile_ = os.path.join(outdir, outfile_)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                            # name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
-                                            name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
+                                            name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                            # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
+        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+        # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
         # loop through stat/syst
         for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print('Running "%s"' % syst_label)
@@ -465,8 +468,8 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     sname_ch = 'all'
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'+vsuff
-    # SO_lab = '' # with syst
-    SO_lab = '_StatOnly' # stat only
+    SO_lab = '' # with syst
+    # SO_lab = '_StatOnly' # stat only
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # add any frozen WC
@@ -518,13 +521,14 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
     outfile_ = os.path.join(outdir, outfile_)
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                        # name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
-                                        name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
+                                        name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+                                        # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                         WCs_limit=WCs_limit, limit_val=LIM_VAL)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
     proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
+    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+    # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
     # loop through stat/syst
     for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print('Running "%s"' % syst_label)
