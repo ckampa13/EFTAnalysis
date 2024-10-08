@@ -11,13 +11,13 @@ conda activate HCOMB
 # bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
-# echo "NLL vs. WC main plots (1D)..."
-# python NLL_limits_plot_from_dir.py -t f
+echo "NLL vs. WC main plots (1D)..."
+python NLL_limits_plot_from_dir.py -t f
 # 1 dim6
 #python NLL_limits_plot_from_dir.py -t f -w cW
 # debug dim8
-python NLL_limits_plot_from_dir.py -t f -w FT0
-python NLL_limits_plot_from_dir.py -t bsc -w FT0
+#python NLL_limits_plot_from_dir.py -t f -w FT0
+#python NLL_limits_plot_from_dir.py -t bsc -w FT0
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
@@ -30,8 +30,8 @@ python NLL_limits_plot_from_dir.py -t bsc -w FT0
 
 # # NLL full combination and channels
 # # no signal injection -- WCs and SM
-#echo "Make NLL with full analysis and channels..."
-#python summary_NLL_limits_plot.py
+echo "Make NLL with full analysis and channels..."
+python summary_NLL_limits_plot.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 # python summary_NLL_limits_plot.py -w sm
