@@ -19,7 +19,7 @@ conda activate HCOMB
 #python NLL_limits_plot_from_dir.py -t f -w FT0
 #python NLL_limits_plot_from_dir.py -t bsc -w FT0
 #python NLL_limits_plot_from_dir.py -t bc -w FT0
-#python NLL_limits_plot_from_dir.py -t c -w FT0
+python NLL_limits_plot_from_dir.py -t c -w FT0
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
