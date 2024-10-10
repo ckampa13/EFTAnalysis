@@ -120,7 +120,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        #fig.savefig(savefile+'.png')
+        fig.savefig(savefile+'.png')
     return fig, ax
 
 def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout):

@@ -11,8 +11,8 @@ conda activate HCOMB
 # bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
-echo "NLL vs. WC main plots (1D)..."
-python NLL_limits_plot_from_dir.py -t f
+# echo "NLL vs. WC main plots (1D)..."
+# python NLL_limits_plot_from_dir.py -t f
 # 1 dim6
 #python NLL_limits_plot_from_dir.py -t f -w cW
 # debug dim8
@@ -30,32 +30,32 @@ python NLL_limits_plot_from_dir.py -t f
 
 # # NLL full combination and channels
 # # no signal injection -- WCs and SM
-echo "Make NLL with full analysis and channels..."
-python summary_NLL_limits_plot.py
+# echo "Make NLL with full analysis and channels..."
+# python summary_NLL_limits_plot.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 # python summary_NLL_limits_plot.py -w sm
 # degug dim8
-python summary_NLL_limits_plot.py -w FT0
+# python summary_NLL_limits_plot.py -w FT0
 
 # signal injection -- cW
-# echo "Signal injection (make NLL with full analysis and channels...)"
-# python summary_NLL_limits_plot.py -i y -w cW -v 1.0
+echo "Signal injection (make NLL with full analysis and channels...)"
+python summary_NLL_limits_plot.py -i y -w cW -v 1.0
 
 # LOO (all?)
-#echo "LOO plots (make NLL with full analysis and channels...)"
-#python LOO_summary_NLL_limits_plot.py
+# echo "LOO plots (make NLL with full analysis and channels...)"
+# python LOO_summary_NLL_limits_plot.py -w dim6
 # debug, cW only
 #python LOO_summary_NLL_limits_plot.py -w cW
 
-#echo "WC limit summary plots (horizontal band plots)..."
+# echo "WC limit summary plots (horizontal band plots)..."
 # echo "dim6..."
 # echo "all WC..."
 # python WC_summary_plot.py -w all -d dim6
 # echo "top 6 WC..."
 # python WC_summary_plot.py -w top_6 -d dim6
-#echo "dim8..."
-#echo "all WC..."
+# echo "dim8..."
+# echo "all WC..."
 # python WC_summary_plot.py -w all -d dim8
-#echo "top 6 WC..."
-#python WC_summary_plot.py -w top_6 -d dim8
+# echo "top 6 WC..."
+# python WC_summary_plot.py -w top_6 -d dim8

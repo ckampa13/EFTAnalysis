@@ -58,7 +58,10 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
     if top_6:
         fig, ax = plt.subplots(figsize=(12, 8))
     else:
-        fig, ax = plt.subplots(figsize=(12, 12))
+        if len(root_file_dict_full) > 15:
+            fig, ax = plt.subplots(figsize=(12, 16))
+        else:
+            fig, ax = plt.subplots(figsize=(12, 12))
     #fig.set_constrained_layout_pads(h_pad=0.0417, w_pad=0.0417) # default
     fig.set_constrained_layout_pads(h_pad=0.0417, w_pad=0.075)
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
@@ -246,7 +249,7 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        #fig.savefig(savefile+'.png')
+        fig.savefig(savefile+'.png')
     return fig, ax
 
 

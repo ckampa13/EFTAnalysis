@@ -237,7 +237,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        #fig.savefig(savefile+'.png')
+        fig.savefig(savefile+'.png')
     return fig, ax
 
 def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True):

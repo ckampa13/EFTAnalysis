@@ -13,7 +13,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
 from MISC_CONFIGS import (
     datacard_dir,
     #template_filename,
@@ -212,7 +212,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        #fig.savefig(savefile+'.png')
+        fig.savefig(savefile+'.png')
     return fig, ax
 
 def run_NLL_plot_analysis_channel_LOO(WC, datacard_dict, CL, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True):
@@ -363,6 +363,10 @@ if __name__=='__main__':
     if args.WC == 'all':
         ##WCs = WC_ALL + ['sm']
         WCs = WC_ALL
+    elif args.WC == 'dim6':
+        WCs = dim6_WCs
+    elif args.WC == 'dim8':
+        WCs = dim8_WCs
     else:
         WCs = [args.WC]
     # if args.InjectValue is None:

@@ -333,7 +333,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=False,
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
-        #fig.savefig(savefile+'.png')
+        fig.savefig(savefile+'.png')
 
     return fig, axs, df_yields
 

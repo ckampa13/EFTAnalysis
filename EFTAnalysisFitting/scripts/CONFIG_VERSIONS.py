@@ -16,8 +16,9 @@ versions_dict = {
     # '0Lepton_2FJ': {'v': 15, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0']}, # dim8: FT0 WWW only. Binning changed for 2FJ.
     #'0Lepton_2FJ': {'v': 15, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim8: FT0, FM0 VVV. Binning back to v14 2FJ.
     #'0Lepton_2FJ': {'v': 18, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 1D complete, with all systematics. Missing VH.
-    '0Lepton_2FJ': {'v': 20, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # wtag sf added; VH fixed; JES fixed.
+    #'0Lepton_2FJ': {'v': 20, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # wtag sf added; VH fixed; JES fixed.
     #'0Lepton_2FJ': {'v': 21, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # alternate binning test (3 bins)
+    '0Lepton_2FJ': {'v': 23, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # most uncertainties fixed
     # '0Lepton_3FJ': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points'},
     # '0Lepton_3FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points'}, # rebinning test, no systematics, more 1D scans
     # '0Lepton_3FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW']}, # no systematics, multi-operators not finished yet
@@ -28,8 +29,9 @@ versions_dict = {
     # '0Lepton_3FJ': {'v': 15, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0']}, # dim8: FT0 WWW only. Binning changed for 2FJ.
     #'0Lepton_3FJ': {'v': 15, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # dim8: FT0, FM0 VVV. Binning back to v14 2FJ.
     #'0Lepton_3FJ': {'v': 18, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 1D complete, with all systematics. Missing VH.
-    '0Lepton_3FJ': {'v': 20, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # wtag sf added; VH fixed; JES fixed.
+    #'0Lepton_3FJ': {'v': 20, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # wtag sf added; VH fixed; JES fixed.
     #'0Lepton_3FJ': {'v': 21, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # alternate binning test (3 bins)
+    '0Lepton_3FJ': {'v': 23, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # most uncertainties fixed
     # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '1Lepton': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # cW -> VVV+1Jet, all other dim6 added. autoMCStats should be turned off.
     #'1Lepton': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # All dim8 added (dim6 bugged). Processed only FT0, FM0. autoMCStats should be turned off.
