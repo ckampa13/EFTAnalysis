@@ -30,17 +30,18 @@ conda activate HCOMB
 
 # # NLL full combination and channels
 # # no signal injection -- WCs and SM
-# echo "Make NLL with full analysis and channels..."
-# python summary_NLL_limits_plot.py
+echo "Make NLL with full analysis and channels..."
+python summary_NLL_limits_plot.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
+#python summary_NLL_limits_plot.py -w cHq3
 # python summary_NLL_limits_plot.py -w sm
 # degug dim8
 # python summary_NLL_limits_plot.py -w FT0
 
 # signal injection -- cW
-echo "Signal injection (make NLL with full analysis and channels...)"
-python summary_NLL_limits_plot.py -i y -w cW -v 1.0
+# echo "Signal injection (make NLL with full analysis and channels...)"
+# python summary_NLL_limits_plot.py -i y -w cW -v 1.0
 
 # LOO (all?)
 # echo "LOO plots (make NLL with full analysis and channels...)"
