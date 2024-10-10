@@ -120,7 +120,7 @@ datacard_dict = {
     '2Lepton_OS_2FJ': {
         'subchannels': {
             '': {
-                'bins': [1, 2, 3], # v2
+                'bins': [1, 2, 3], # v2 ... v6
                 'info': {
                     'short_name': '',
                     'file_name': '',

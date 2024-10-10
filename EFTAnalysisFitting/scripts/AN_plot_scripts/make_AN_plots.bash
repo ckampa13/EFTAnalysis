@@ -18,6 +18,8 @@ conda activate HCOMB
 # debug dim8
 #python NLL_limits_plot_from_dir.py -t f -w FT0
 #python NLL_limits_plot_from_dir.py -t bsc -w FT0
+#python NLL_limits_plot_from_dir.py -t bc -w FT0
+#python NLL_limits_plot_from_dir.py -t c -w FT0
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
@@ -30,14 +32,14 @@ conda activate HCOMB
 
 # # NLL full combination and channels
 # # no signal injection -- WCs and SM
-echo "Make NLL with full analysis and channels..."
-python summary_NLL_limits_plot.py
+# echo "Make NLL with full analysis and channels..."
+# python summary_NLL_limits_plot.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 #python summary_NLL_limits_plot.py -w cHq3
 # python summary_NLL_limits_plot.py -w sm
 # degug dim8
-# python summary_NLL_limits_plot.py -w FT0
+python summary_NLL_limits_plot.py -w FT0
 
 # signal injection -- cW
 # echo "Signal injection (make NLL with full analysis and channels...)"
