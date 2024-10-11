@@ -21,7 +21,9 @@ str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNeg
 x_flag = '--X-allow-no-signal'
 
 # full analysis
-def make_workspace_full_analysis_leave_one_out(channel_leave_out, dim, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None):
+def make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None, file_suff=None):
+    if file_suff is None:
+        file_suff = channels_leave_out[0]
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -31,12 +33,14 @@ def make_workspace_full_analysis_leave_one_out(channel_leave_out, dim, WCs, Scan
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    # tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     dc_file = os.path.join(dcdir, tfile_comb)
     print('Full Analysis')
     cmd_str = 'text2workspace.py '
     cmd_str += '%s %s ' % (dc_file, str_module)
-    wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
+    # wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
+    wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
     wsfile = os.path.join(datacard_dir, 'workspaces', 'leave_one_out', wsfile)
     cmd_str += '-o %s %s ' % (wsfile, x_flag)
     # add correct WCs
@@ -61,7 +65,7 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel to leave out? ["all" (default, looping), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+                        help='Which channel to leave out? ["all" (default, looping), "all_tau", "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-d', '--Dimension',
                         help='Which dim of EFT ops to process? "all" (default), "dim6", "dim8"')
     parser.add_argument('-s', '--ScanType',
@@ -75,7 +79,7 @@ if __name__=='__main__':
     if args.Channel is None:
         args.Channel = 'all'
     if args.Channel == 'all':
-        channels = datacard_dict.keys()
+        channels = datacard_dict.keys()+['all_tau']
     else:
         channels = [args.Channel]
     if args.Dimension == 'all':
@@ -126,9 +130,18 @@ if __name__=='__main__':
         print('Generating full analysis (leave one out) workspaces:')
         print('=================================================')
         for channel in channels:
+            if channel == 'all_tau':
+                channels_leave_out = [ch for ch in datacard_dict.keys() if ch[-3:] == '_1T']
+                file_suff = 'all_tau'
+                print('"all_tau" has the following channels: %s' % channels_leave_out)
+            else:
+                channels_leave_out = [channel]
+                file_suff = None
             print('Leaving out: %s' % channel)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_full_analysis_leave_one_out(channel, dim, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs=WCs, ScanType=args.ScanType,
+                                                           verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC,
+                                                           file_suff=file_suff)
         print('=================================================\n')
         #########################

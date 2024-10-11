@@ -1,6 +1,7 @@
 import os
 import subprocess
 import argparse
+import numpy as np
 # local imports
 import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
@@ -10,7 +11,10 @@ from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 # combine all channels
-def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
+# def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
+def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None):
+    if file_suff is None:
+        file_suff = channels_leave_out[0]
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -21,7 +25,8 @@ def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, Sc
     str_ = 'Channel: '
     n_ch_added = 0
     for i, ch in enumerate(channels):
-        if ch == channel_leave_out:
+        # if ch == channel_leave_out:
+        if ch in channels_leave_out:
             continue
         # channels may not always have dim8
         WCs_ch = versions_dict[ch]['EFT_ops']
@@ -60,7 +65,8 @@ def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, Sc
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    #tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'leave_one_out', tfile_comb)
     cmd_str += ' > ' + comb_file
     # run combine script
@@ -72,7 +78,7 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel to leave out? ["all" (default, looping), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+                        help='Which channel to leave out? ["all" (default, looping), "all_tau" (remove tau channels), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
@@ -82,7 +88,7 @@ if __name__=='__main__':
     if args.Channel is None:
         args.Channel = 'all'
     if args.Channel == 'all':
-        channels = datacard_dict.keys()
+        channels = datacard_dict.keys()+['all_tau']
     else:
         channels = [args.Channel]
     if args.ScanType is None:
@@ -114,11 +120,23 @@ if __name__=='__main__':
         print('Combining all channels (leave one out):')
         print('=================================================')
         for channel in channels:
+            if channel == 'all_tau':
+                channels_leave_out = [ch for ch in datacard_dict.keys() if ch[-3:] == '_1T']
+                file_suff = 'all_tau'
+                print('"all_tau" has the following channels: %s' % channels_leave_out)
+            else:
+                channels_leave_out = [channel]
+                file_suff = None
             # channels may not always have dim8
-            WCs_ch = versions_dict[channel]['EFT_ops']
+            WCs_ch_all = []
+            for ch in channels_leave_out:
+                WCs_ch = versions_dict[ch]['EFT_ops']
+                WCs_ch_all.append(WCs_ch)
+            WCs_ch_all = np.concatenate(WCs_ch_all)
             if dim=='dim8':
                 has_dim8 = False
-                for WC in WCs_ch:
+                #for WC in WCs_ch:
+                for WC in WCs_ch_all:
                     if not WC in dim6_ops:
                         has_dim8 = True
                         break
@@ -128,10 +146,12 @@ if __name__=='__main__':
             # if not WC in WCs:
             #     continue
             print('Leaving out: ', channel)
-            v = versions_dict[channel]['v']
-            VERSION = 'v' + str(v)
+            # v = versions_dict[channel]['v']
+            # VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC)
+                combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType,
+                                                   StatOnly=StatOnly, SignalInject=SignalInject, WC=WC,
+                                                   file_suff=file_suff)
         print('=================================================\n')
         #########################
