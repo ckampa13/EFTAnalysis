@@ -1,10 +1,10 @@
-Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v8/SM.1L_2FJ.DataCard_Yields.v8.txt
+Combination of sch=/uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v23/SM.0L_3FJ.DataCard_Yields_StatOnly.v23.txt
 imax 1 number of bins
 jmax 8 number of processes minus 1
-kmax 21 number of nuisance parameters
+kmax 18 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v8/SM.1L_2FJ.DataCard_Yields_Cleaned.v8.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
-shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/1Lepton/v8/SM.1L_2FJ.DataCard_Yields_Cleaned.v8.root h_$PROCESS
+shapes *         sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v23/SM.0L_3FJ.DataCard_Yields_Cleaned.v23.root h_$PROCESS h_$PROCESS_$SYSTEMATIC
+shapes data_obs  sch       /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/0Lepton_3FJ/v23/SM.0L_3FJ.DataCard_Yields_Cleaned.v23.root h_$PROCESS
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          sch   
 observation  -1    
@@ -17,24 +17,20 @@ rate                                    -1      -1      -1      -1      -1      
 PDF_                    shape           1.0     -       -       -       -       -       -       -       -     
 QCDScale_               shape           1.0     -       -       -       -       -       -       -       -     
 alphas_                 shape           1.0     -       -       -       -       -       -       -       -     
-btag_sf_                shape           1.0     -       -       -       -       -       -       -       -     
 jer_                    shape           1.0     -       -       -       -       -       -       -       -     
 jes_                    shape           1.0     -       -       -       -       -       -       -       -     
-lep_sf_el_1_            shape           1.0     -       -       -       -       -       -       -       -     
-lep_sf_mu_1_            shape           1.0     -       -       -       -       -       -       -       -     
 lumi_                   shape           1.0     -       -       -       -       -       -       -       -     
 norm_DY_                shape           -       -       -       1.0     -       -       -       -       -     
-norm_QCD_               shape           -       -       -       -       -       -       -       1.0     -     
-norm_Top_1L_2FJ_        shape           -       -       1.0     -       -       -       -       -       -     
+norm_QCD_0L_3FJ_        shape           -       -       -       -       -       -       -       1.0     -     
+norm_Top_               shape           -       -       1.0     -       -       -       -       -       -     
 norm_VH_                shape           -       1.0     -       -       -       -       -       -       -     
-norm_WJets_1L_2FJ_      shape           -       -       -       -       -       1.0     -       -       -     
+norm_WJets_             shape           -       -       -       -       -       1.0     -       -       -     
 norm_WW_                shape           -       -       -       -       1.0     -       -       -       -     
 norm_WZ_                shape           -       -       -       -       -       -       -       -       1.0   
 norm_ZZ_                shape           -       -       -       -       -       -       1.0     -       -     
 pu_weight_              shape           1.0     -       -       -       -       -       -       -       -     
 statonly                lnN             1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001  1.0001
-trigger_weight_1L_      shape           1.0     -       -       -       -       -       -       -       -     
+trigger_weight_0L_      shape           1.0     -       -       -       -       -       -       -       -     
 wtag_fj_sf_             shape           1.0     -       -       -       -       -       -       -       -     
-allsyst group = norm_VH_ norm_DY_ pu_weight_ norm_WW_ norm_ZZ_ PDF_ trigger_weight_1L_ btag_sf_ lumi_ alphas_ jes_ QCDScale_ jer_ wtag_fj_sf_ norm_QCD_ norm_WJets_1L_2FJ_ lep_sf_el_1_ norm_Top_1L_2FJ_ lep_sf_mu_1_ norm_WZ_
+allsyst group = norm_VH_ norm_DY_ pu_weight_ norm_WW_ norm_Top_ norm_WJets_ norm_WZ_ lumi_ trigger_weight_0L_ alphas_ QCDScale_ jer_ wtag_fj_sf_ norm_ZZ_ norm_QCD_0L_3FJ_ jes_ PDF_
 nosyst group = statonly
-sch autoMCStats 0 0 1
