@@ -7,11 +7,11 @@ conda activate HCOMB
 
 # summary tables
 # WCs (fully combined)
-echo "Making tex tables for WC limit summary..."
-python WC_summary_table.py
+#echo "Making tex tables for WC limit summary..."
+#python WC_summary_table.py
 # tau impact
-echo "Making tex tables for impact of taus..."
-python tau_impact_table.py
+#echo "Making tex tables for impact of taus..."
+#python tau_impact_table.py
 
 # copy impact plots from plots/
 # echo "Copy impact plots..."
@@ -19,8 +19,8 @@ python tau_impact_table.py
 # bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
-#echo "NLL vs. WC main plots (1D)..."
-#python NLL_limits_plot_from_dir.py -t f
+# echo "NLL vs. WC main plots (1D)..."
+# python NLL_limits_plot_from_dir.py -t f
 # 1 dim6
 #python NLL_limits_plot_from_dir.py -t f -w cW
 # debug dim8
@@ -45,7 +45,7 @@ python tau_impact_table.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 #python summary_NLL_limits_plot.py -w cHq3
-# python summary_NLL_limits_plot.py -w sm
+python summary_NLL_limits_plot.py -w sm
 # degug dim8
 #python summary_NLL_limits_plot.py -w FT0
 
