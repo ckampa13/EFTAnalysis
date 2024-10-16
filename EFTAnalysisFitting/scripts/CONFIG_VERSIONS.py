@@ -3,7 +3,8 @@
 dim6_WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd'] # full set of dim-6
 dim8_WCs = ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7', 'FT0', 'FT1', 'FT2', 'FT3', 'FT4', 'FT5', 'FT6', 'FT7', 'FT8', 'FT9'] # full set of dim-8
 dim8_WCs_1T = ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7', 'FT0', 'FT1', 'FT2', 'FT3', 'FT4', 'FT5', 'FT6', 'FT7', 'FT8'] # FT9 missing
-WCs_clip = dim8_WCs # all
+WCs_clip_dim6 = dim6_WCs # all
+WCs_clip_dim8 = dim8_WCs # all
 #WCs_clip = ['FT0'] # dev
 # 2 dim8 for debug
 #dim8_WCs = ['FT0', 'FM0']
