@@ -14,7 +14,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL, WCs_clip
+from CONFIG_VERSIONS import versions_dict, WC_ALL, WCs_clip_dim6, WCs_clip_dim8
 from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
@@ -308,7 +308,8 @@ if __name__=='__main__':
     WCs_dim6 = []
     WCs_dim8 = []
     if 'clip' in vsuff:
-        WC_list = WCs_clip
+        #WC_list = WCs_clip
+        WC_list = WCs_clip_dim6 + WCs_clip_dim8
         print('Clipping -- using specially defined set of WCs')
     else:
         WC_list = WC_ALL

@@ -21,7 +21,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, WCs_clip
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, WCs_clip_dim6, WCs_clip_dim8
 from MISC_CONFIGS import (
     datacard_dir,
     template_filename,
@@ -653,6 +653,7 @@ if __name__=='__main__':
     if "clip" in vsuff:
         WCs_ALL_ = []
         WCs_loop_new = []
+        WCs_clip = WCs_clip_dim6 + WCs_clip_dim8
         for WC in WCs_loop:
             if WC in WCs_clip:
                 WCs_loop_new.append(WC)
