@@ -52,6 +52,8 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     # parse results
     grid_dict = {i.split(':')[0]:float(i.split(':')[1]) for i in proc.strip('\n').split(';')}
     grid_dict['steps'] = int(grid_dict['steps'])
+    # CAUTION! debugging NDIM -- go at least to -1
+    grid_dict['LL'] = min(grid_dict['LL'], -1.)
     print('LL: %s; UL: %s; steps: %s' % (grid_dict['LL'], grid_dict['UL'], grid_dict['steps']))
     range_ = grid_dict["UL"] - grid_dict["LL"]
     # FIXME! I don't think "prec" is used anywhere...
