@@ -71,6 +71,21 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     n_sch_added = 0
     for i, ch in enumerate(channels):
         # channels may not always have dim8
+        has_NDIM = True
+        if vsuff == '_NDIM':
+            if 'v_NDIM' in versions_dict[ch].keys():
+                has_NDIM = True
+                WCs_ch = versions_dict[ch]['EFT_ops_NDIM']
+            else:
+                has_NDIM = False
+                #WCs_ch = versions_dict[channel]['EFT_ops']
+                WCs_ch = []
+        else:
+            WCs_ch = versions_dict[ch]['EFT_ops']
+        # FIXME! This is a bit misleading. We pass through for 1D files
+        # as has_NDIM defaults to True.
+        if not has_NDIM:
+            continue
         WCs_ch = versions_dict[ch]['EFT_ops']
         if dim=='dim8':
             has_dim8 = False
@@ -81,7 +96,10 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
             if not has_dim8:
                 continue
         str_ += ch
-        v = versions_dict[ch]['v']
+        if vsuff == '_NDIM':
+            v = versions_dict[ch]['v_NDIM']
+        else:
+            v = versions_dict[ch]['v']
         version = 'v' + str(v)
         version_full = version+vsuff
         if versions_dict[ch]['lumi'] == '2018':
@@ -135,7 +153,7 @@ if __name__=='__main__':
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study in the signal injection case? ["cW", ...]')
     parser.add_argument('-v', '--VersionSuff',
-                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
+                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0", "_NDIM",...]')
     parser.add_argument('-d', '--DCSubDir',
                         help='Subdirectory of the datacard/root files, e.g. for clipping. ["" (default), "clipping",...]')
     args = parser.parse_args()
@@ -188,7 +206,21 @@ if __name__=='__main__':
         print('=================================================')
         for channel in channels:
             # channels may not always have dim8
-            WCs_ch = versions_dict[channel]['EFT_ops']
+            has_NDIM = True
+            if vsuff == '_NDIM':
+                if 'v_NDIM' in versions_dict[channel].keys():
+                    has_NDIM = True
+                    WCs_ch = versions_dict[channel]['EFT_ops_NDIM']
+                else:
+                    has_NDIM = False
+                    #WCs_ch = versions_dict[channel]['EFT_ops']
+                    WCs_ch = []
+            else:
+                WCs_ch = versions_dict[channel]['EFT_ops']
+            # FIXME! This is a bit misleading. We pass through for 1D files
+            # as has_NDIM defaults to True.
+            if not has_NDIM:
+                continue
             if dim=='dim8':
                 has_dim8 = False
                 for WC in WCs_ch:
@@ -200,7 +232,10 @@ if __name__=='__main__':
             # WCs = versions_dict[channel]['EFT_ops']
             # if not WC in WCs:
             #     continue
-            v = versions_dict[channel]['v']
+            if vsuff == '_NDIM':
+                v = versions_dict[channel]['v_NDIM']
+            else:
+                v = versions_dict[channel]['v']
             VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
