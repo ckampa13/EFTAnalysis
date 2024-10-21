@@ -33,8 +33,8 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
-# LIM_VAL = 20
-LIM_VAL = 100
+LIM_VAL = 20
+# LIM_VAL = 100
 
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
@@ -363,8 +363,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             WCs_freeze.append('cHWB')
         if not WC == 'cHbox':
             WCs_freeze.append('cHbox')
-        WCs_limit = None
-        '''
+        #WCs_limit = None
+        #'''
         # BETTER
         # WCs_freeze = None
         WCs_limit = []
@@ -374,7 +374,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
-        '''
+        #'''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
