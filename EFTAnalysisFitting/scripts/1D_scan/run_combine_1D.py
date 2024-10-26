@@ -348,8 +348,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
     else:
         # TEST FOR YULUN'S WWW SAMPLE (no sensitivity to cHB, cHu, cHd)
         WCs_freeze = []
-        if not WC == 'cHB':
-            WCs_freeze.append('cHB')
+        # if not WC == 'cHB':
+        #     WCs_freeze.append('cHB')
         # if not WC == 'cHu':
         #     WCs_freeze.append('cHu')
         # if not WC == 'cHd':
@@ -361,8 +361,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             WCs_freeze.append('cll1')
         # if not WC == 'cHWB':
         #     WCs_freeze.append('cHWB')
-        if not WC == 'cHbox':
-            WCs_freeze.append('cHbox')
+        # if not WC == 'cHbox':
+        #     WCs_freeze.append('cHbox')
         # adding all the others...
         # if not WC == 'cHq3':
         #     WCs_freeze.append('cHq3')
