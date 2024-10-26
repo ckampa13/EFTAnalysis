@@ -27,13 +27,13 @@ WC_pretty_print_dict = WC_pretty_print_dict_AN
 #SR_pretty_print_dict = SR_pretty_print_dict_AN
 # from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
+from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter
 
 config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
 
 # FIXME! Is "ScanType" needed in this function?
-def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanType='_1D', plot_stat_only=True, savefile=None, legend=True, tight_layout=False):
+def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanType='_1D', plot_stat_only=True, savefile=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False):
     # plot
     #fig = plt.figure(figsize=(16, 8))
     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
@@ -44,12 +44,19 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     # total
     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
     Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
-    ax.plot(Cs, NLL, c='blue', linestyle='-', linewidth=4, zorder=5, label='With Systematics')# label='Expected\nAsimov Dataset')
+    label = 'With Systematics'
+    if limits_legend:
+        label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])])# + '\n'
+    ax.plot(Cs, NLL, c='blue', linestyle='-', linewidth=4, zorder=5, label=label)# label='Expected\nAsimov Dataset')
     # stat only
     if plot_stat_only:
         hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
         Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
-        ax.plot(Cs_stat, NLL_stat, c='black', linestyle=':', linewidth=4, zorder=6, label='Statistical Uncertainties\nOnly')#label='Expected (stat. only)')
+        #label='Statistical Uncertainties\nOnly'
+        label='Statistical\nUncertainties Only'
+        if limits_legend:
+            label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])])# + '\n'
+        ax.plot(Cs_stat, NLL_stat, c='black', linestyle=':', linewidth=4, zorder=6, label=label)#label='Expected (stat. only)')
     # loop through CLs to determine limits
     xmin = np.min(Cs)
     xmax = np.max(Cs)
@@ -110,6 +117,9 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         #ax.set_xlim([-xlim2, xlim2])
         ax.set_xlim([-largest_lim, largest_lim])
     ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
+    # force xlim
+    if not xlim_force is None:
+        ax.set_xlim([-xlim_force, xlim_force])
     if legend:
         #ax.legend(loc='upper left', bbox_to_anchor=(1,1))
         ax.legend(loc='upper left', framealpha=1.0).set_zorder(9)
@@ -123,7 +133,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout):
+def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -143,7 +153,7 @@ def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, Scan
         print(' (2018 scaled)', end='')
     # version number
     v = versions_dict[channel]['v']
-    version = f'v{v}'
+    version = f'v{v}'+vsuff
     # plotting info
     bin_info = {'output_dir': output_dir_bin, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': fname_sch,
@@ -162,13 +172,13 @@ def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, Scan
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}')
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout)
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
     return fig, ax
 
-def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout):
+def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -188,7 +198,7 @@ def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, Sca
         print(' (2018 scaled)', end='')
     # version number
     v = versions_dict[channel]['v']
-    version = f'v{v}'
+    version = f'v{v}'+vsuff
     bin_info = {'output_dir': output_dir_sch, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': fname_sch,
                 'version': version, 'bin_': 'All',
@@ -204,13 +214,13 @@ def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, Sca
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}')
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout)
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
     return fig, ax
 
-def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_stat_only,legend, tight_layout):
+def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_stat_only,legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -224,7 +234,7 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
     sname_ch = datacard_dict[channel]['info']['short_name']
     # version number
     v = versions_dict[channel]['v']
-    version = f'v{v}'
+    version = f'v{v}'+vsuff
     bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
@@ -240,13 +250,13 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_bin{bin_info["bin_"]}{stat_str}{ScanType}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-{channel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}')
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {bin_info["subchannel"]}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout)
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
     return fig, ax
 
-def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, version=None, legend=True, tight_layout=False):
+def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, version=None, legend=True, tight_layout=False, vsuff='', xlim_force=None, limits_legend=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -256,6 +266,7 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
     WC_l = WC_pretty_print_dict[WC]
     if version is None:
         version = 'vCONFIG_VERSIONS'
+    version += vsuff
     output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
     plot_dir = os.path.join(datacard_dir, 'AN_plots', 'full_analysis', scan_dir)
     # construct root file name
@@ -269,10 +280,10 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-All_binAll{stat_str}{ScanType}')
+    plotfile = os.path.join(plot_dir, f'NLL_vs_{WC}_channel-All_binAll{stat_str}{ScanType}{vsuff}')
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: All; Bin: All'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout)
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
     return fig, ax
 
 
@@ -284,7 +295,7 @@ if __name__=='__main__':
     CL_list = [0.95, CL_1sigma]
     # which scan type?
     # freeze all but one
-    ScanType = '_1D'
+    #ScanType = '_1D'
     # profile
     #ScanType = '_All'
     # legend = False
@@ -296,6 +307,8 @@ if __name__=='__main__':
     # pstats = [True, False] # both
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--Channel',
+                        help='Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-t', '--theLevels',
                         help='Which levels of analysis to run make workspaces for?'+
                         '"all" (default). Any combination in any order of the following'+
@@ -304,6 +317,14 @@ if __name__=='__main__':
                         ' run all but the full analysis.')
     parser.add_argument('-w', '--WC',
                         help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+    parser.add_argument('-s', '--ScanType',
+                        help=f'What strategy was used to handle the other WCs? "_1D" (freeze, default), "_All" (profile)')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
+    parser.add_argument('-x', '--xlim_force',
+                        help='Override any algorithms internally deciding xlims for the plots. ["" (default, use algorithms), "0.5", "0.1", ...]')
+    parser.add_argument('-l', '--LimitsLegend',
+                        help='Add 95% CL limits to the legend? ["n" (default), "y"]')
     args = parser.parse_args()
     if (args.theLevels is None) or (args.theLevels == 'all'):
         generate_bins = True
@@ -334,11 +355,35 @@ if __name__=='__main__':
         WCs = WC_ALL
     else:
         WCs = [args.WC]
+    if args.ScanType is None:
+        ScanType = '_1D'
+    else:
+        ScanType = args.ScanType
     # channels -- for testing
+    if args.Channel is None:
+        Channel = 'all'
+    else:
+        Channel = args.Channel
     # all
-    chs = datacard_dict.keys()
+    if Channel == 'all':
+        chs = datacard_dict.keys()
+    else:
+        chs = [Channel]
     # limited
     #chs = ['2Lepton_SS']
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
+    if args.xlim_force is None:
+        xlim_force = None
+    else:
+        xlim_force = float(args.xlim_force)
+    if args.LimitsLegend is None:
+        limits_legend = False
+    else:
+        limits_legend = args.LimitsLegend == 'y'
+    # loop
     for WC in WCs:
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
@@ -358,7 +403,8 @@ if __name__=='__main__':
                         for bin_ in datacard_dict[ch]['subchannels'][sch]['bins']:
                             print(f'{bin_} ', end='')
                             fig, ax = run_lim_plot_bin(WC, ch, sch, bin_, datacard_dict, CL_list, ScanType, plot_stat_only=pstat,
-                                legend=legend, tight_layout=tight_layout)
+                                legend=legend, tight_layout=tight_layout,
+                                vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend)
                         print()
             print("=========================================================\n")
         if generate_subch:
@@ -374,7 +420,8 @@ if __name__=='__main__':
                     for sch in datacard_dict[ch]['subchannels'].keys():
                         print(sch)
                         fig, ax = run_lim_plot_subchannel(WC, ch, sch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat,
-                            legend=legend, tight_layout=tight_layout)
+                            legend=legend, tight_layout=tight_layout,
+                            vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend)
             print("=========================================================\n")
         #'''
         if generate_ch:
@@ -389,7 +436,8 @@ if __name__=='__main__':
                         continue
                     print(ch)
                     fig, ax = run_lim_plot_channel(WC, ch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat,
-                        legend=legend, tight_layout=tight_layout)
+                        legend=legend, tight_layout=tight_layout,
+                        vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend)
             print("=========================================================\n")
         #'''
         if generate_full:
@@ -398,7 +446,8 @@ if __name__=='__main__':
             print("Making likelihood plots for full analysis...")
             for pstat in pstats:
                 print(f'Include stat-only? {pstat}')
-                fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat, legend=legend, tight_layout=tight_layout)
+                fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat, legend=legend, tight_layout=tight_layout,
+                                                vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend)
             print("=========================================================\n")
             #'''
     # plt.show()
