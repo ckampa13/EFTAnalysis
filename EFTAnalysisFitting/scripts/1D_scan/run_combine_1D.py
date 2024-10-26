@@ -74,7 +74,8 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
     elif range_ > 2.5:
-        prec = 0.01
+        #prec = 0.01
+        prec = 0.05
         #print('Using prec = 0.01')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
@@ -355,8 +356,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # if not WC == 'cHd':
         #     WCs_freeze.append('cHd')
         # adding others with <1% total contribution (quad)
-        if not WC == 'cHDD':
-            WCs_freeze.append('cHDD')
+        # if not WC == 'cHDD':
+        #     WCs_freeze.append('cHDD')
         if not WC == 'cll1':
             WCs_freeze.append('cll1')
         # if not WC == 'cHWB':
