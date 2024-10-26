@@ -429,7 +429,11 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             else:
                 grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         else:
-            grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+                grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            else:
+                grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
+            #grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         #name_str = '_coarse_%s_%s_%s' % (WC, ch, str(time()))
         name_str = '_coarse_%s_%s_%s_%s' % (WC, ch, version_full, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version_full,syst=syst, method=METHOD)
