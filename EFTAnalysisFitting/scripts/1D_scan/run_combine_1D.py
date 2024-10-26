@@ -36,6 +36,11 @@ METHOD = 'MultiDimFit'
 LIM_VAL = 20
 # LIM_VAL = 100
 
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+--X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
+"""
+
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
 
@@ -88,7 +93,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     return grid_dict, prec
 
 def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20.):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True):
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -117,6 +122,8 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
             cmd_str += ':%s=%s,%s' % (WC_, mval, val)
         cmd_str += ' '
     cmd_str += '--verbose -1 -n %s' % name_str
+    if with_extra:
+        cmd_str += secret_options
     return cmd_str
 
 # all bins in a subchannel / channel
