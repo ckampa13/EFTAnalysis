@@ -442,8 +442,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
                 grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
             elif WC in ['cHl3']:
-                #grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-                grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
+                grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+                # grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
             else:
                 grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
             #grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
