@@ -33,10 +33,11 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
+LIM_VAL = 10
 #LIM_VAL = 20
 #LIM_VAL = 50
 # LIM_VAL = 100
-LIM_VAL = 200 # DEFAULT
+#LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
 # original
@@ -372,14 +373,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # if not WC == 'cHd':
         #     WCs_freeze.append('cHd')
         # adding others with <1% total contribution (quad)
-        if not WC == 'cHDD':
-            WCs_freeze.append('cHDD')
+        # if not WC == 'cHDD':
+        #     WCs_freeze.append('cHDD')
         # if not WC == 'cll1':
         #     WCs_freeze.append('cll1')
         # if not WC == 'cHWB':
         #     WCs_freeze.append('cHWB')
-        if not WC == 'cHbox':
-            WCs_freeze.append('cHbox')
+        # if not WC == 'cHbox':
+        #     WCs_freeze.append('cHbox')
         # adding all the others...
         # if not WC == 'cHq3':
         #     WCs_freeze.append('cHq3')
