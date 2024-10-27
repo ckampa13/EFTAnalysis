@@ -33,12 +33,18 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
+LIM_VAL = 10
 # LIM_VAL = 20
-LIM_VAL = 100
+#LIM_VAL = 100
+
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
+# """
 
 secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
---stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD
 """
 
 
@@ -326,7 +332,7 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
 
 # channels
 def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimov, asi_str, SignalInject,
-                         grid_dict, stdout, verbose=0):
+                         grid_dict, stdout, verbose=0, vsuff=''):
     # if ScanType == '_2D':
     #     ScanTypeWS = '_All'
     # else:
@@ -357,25 +363,25 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
     else:
         # TEST FOR YULUN'S WWW SAMPLE (no sensitivity to cHB, cHu, cHd)
         WCs_freeze = []
-        if (not WC1 == 'cHB') and (not WC2 == 'cHB'):
-            WCs_freeze.append('cHB')
+        # if (not WC1 == 'cHB') and (not WC2 == 'cHB'):
+        #     WCs_freeze.append('cHB')
         # if (not WC1 == 'cHu') and (not WC2 == 'cHu'):
         #     WCs_freeze.append('cHu')
         # if (not WC1 == 'cHd') and (not WC2 == 'cHd'):
         #     WCs_freeze.append('cHd')
         # adding others with <1% total contribution (quad)
-        if (not WC1 == 'cHDD') and (not WC2 == 'cHDD'):
-            WCs_freeze.append('cHDD')
-        if (not WC1 == 'cll1') and (not WC2 == 'cll1'):
-            WCs_freeze.append('cll1')
+        # if (not WC1 == 'cHDD') and (not WC2 == 'cHDD'):
+        #     WCs_freeze.append('cHDD')
+        # if (not WC1 == 'cll1') and (not WC2 == 'cll1'):
+        #     WCs_freeze.append('cll1')
         # if (not WC1 == 'cHWB') and (not WC2 == 'cHWB'):
         #     WCs_freeze.append('cHWB')
-        if (not WC1 == 'cHbox') and (not WC2 == 'cHbox'):
-            WCs_freeze.append('cHbox')
-        WCs_limit = None
-        '''
+        # if (not WC1 == 'cHbox') and (not WC2 == 'cHbox'):
+        #     WCs_freeze.append('cHbox')
+        # WCs_limit = None
+        #'''
         # BETTER
-        WCs_freeze = None
+        #WCs_freeze = None
         WCs_limit = []
         for WC_ in WC_ALL:
             if (WC_ != WC1) and (WC_ != WC2):
@@ -383,7 +389,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
-        '''
+        #'''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
@@ -392,10 +398,11 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         print('Channel: %s' % ch)
         v = versions_dict[ch]['v']
         version = 'v' + str(v)
+        version_full = version + vsuff
         sname_ch = datacard_dict[ch]['info']['short_name']
         sname_sch = '_combined'
         SO_lab = ''
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         # syst = 'syst_coarse'
@@ -416,7 +423,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         #     grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         # name_str = '_coarse_%s_%s_%s_%s' % (WC1, WC2, ch, str(time()))
         syst = 'syst'
-        outfile = template_outfilename_2D.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version,syst=syst, method=METHOD)
+        outfile = template_outfilename_2D.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version_full,syst=syst, method=METHOD)
         # outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
         # outfile_ = os.path.join(outdir, outfile_)
         # cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
@@ -430,9 +437,9 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
             print('Running "%s"' % syst_label)
             # update to the appropriate workspace file (stat only or with syst)
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
-            name_str = template_outfilename_2D_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version,syst=syst_label)
+            name_str = template_outfilename_2D_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version_full,syst=syst_label)
             cmd_str = construct_combine_cmd_str(WC1, WC2, wsfile, grid_dict, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL)
@@ -569,6 +576,8 @@ if __name__=='__main__':
     parser.add_argument('-p1', '--Precision1', help='What is desired precision / step size for WC1? e.g. "0.01" (default)')
     parser.add_argument('-p2', '--Precision2', help='What is desired precision / step size for WC2? e.g. "0.01" (default)')
     # parser.add_argument('-pc', '--PrecisionCoarse', help='What is desired precision / step size when POI range > 10? e.g. "0.01" (default)')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
@@ -658,6 +667,10 @@ if __name__=='__main__':
     #     args.PrecisionCoarse = 0.01
     # else:
     #     args.PrecisionCoarse = float(args.PrecisionCoarse)
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     if args.Verbose is None:
         args.Verbose = 0
     else:
@@ -735,7 +748,7 @@ if __name__=='__main__':
         run_combine_channels(dim, channels, datacard_dict, WC1=args.WC1, WC2=args.WC2,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                          SignalInject=SignalInject, grid_dict=grid_dict,
-                         stdout=stdout, verbose=args.Verbose)
+                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
         print('=================================================\n')
     #########################
     '''
