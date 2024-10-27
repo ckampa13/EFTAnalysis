@@ -36,8 +36,8 @@ METHOD = 'MultiDimFit'
 #LIM_VAL = 20
 #LIM_VAL = 50
 # LIM_VAL = 100
-# DEFAULT=200
-LIM_VAL = 500
+LIM_VAL = 200 # DEFAULT
+#LIM_VAL = 500
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
