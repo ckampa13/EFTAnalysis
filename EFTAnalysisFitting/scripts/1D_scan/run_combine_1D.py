@@ -387,8 +387,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         #     WCs_freeze.append('cHW')
         if not WC == 'cHl3':
             WCs_freeze.append('cHl3')
-        #WCs_limit = None
-        #'''
+        WCs_limit = None
+        '''
         # BETTER
         # WCs_freeze = None
         WCs_limit = []
@@ -398,7 +398,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
-        #'''
+        '''
     # channels = datacard_dict.keys()
     for i, ch in enumerate(channels):
         WCs = versions_dict[ch]['EFT_ops']
