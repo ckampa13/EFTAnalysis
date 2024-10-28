@@ -32,8 +32,15 @@ conda activate HCOMB
 # profiled limits
 echo "profile other WCs"
 python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 2 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -x 0.5 -l y
+
+#python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 40 -l y
+python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 60 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 100 -l y
+#python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 40 -l y
+python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
