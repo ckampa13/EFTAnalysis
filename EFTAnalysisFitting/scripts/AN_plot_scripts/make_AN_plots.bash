@@ -14,9 +14,9 @@ conda activate HCOMB
 #python tau_impact_table.py
 
 # copy impact plots from plots/
-# echo "Copy impact plots..."
-# bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cW_1D.vCONFIG_VERSIONS.syst.pdf
-# bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
+echo "Copy impact plots..."
+bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cW_1D.vCONFIG_VERSIONS.syst.pdf
+bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
 #echo "NLL vs. WC main plots (1D)..."
@@ -89,10 +89,10 @@ conda activate HCOMB
 #echo "top 6 WC..."
 #python WC_summary_plot.py -w top_6 -d dim8
 
-echo "WC limit summary plots v2 (horizontal band plots)..."
-echo "dim6..."
-echo "all WC..."
-python WC_summary_plot_v2.py -w all -d dim6
-echo "dim8..."
-echo "all WC..."
-python WC_summary_plot_v2.py -w all -d dim8
+# echo "WC limit summary plots v2 (horizontal band plots)..."
+# echo "dim6..."
+# echo "all WC..."
+# python WC_summary_plot_v2.py -w all -d dim6
+# echo "dim8..."
+# echo "all WC..."
+# python WC_summary_plot_v2.py -w all -d dim8
