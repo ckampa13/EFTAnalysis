@@ -30,17 +30,17 @@ conda activate HCOMB
 #python NLL_limits_plot_from_dir.py -t bc -w FT0
 #python NLL_limits_plot_from_dir.py -t c -w FT0
 # profiled limits
-echo "profile other WCs"
-python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# echo "profile other WCs"
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 2 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -x 0.5 -l y
 
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 40 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 60 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 60 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 100 -l y
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 40 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables
@@ -55,12 +55,14 @@ python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x
 # # no signal injection -- WCs and SM
 # echo "Make NLL with full analysis and channels..."
 # python summary_NLL_limits_plot.py
+# dim8 only
+python summary_NLL_limits_plot.py -w dim8
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 #python summary_NLL_limits_plot.py -w cHq3
 #python summary_NLL_limits_plot.py -w sm
 # degug dim8
-# python summary_NLL_limits_plot.py -w FT0
+#python summary_NLL_limits_plot.py -w FT0
 # python summary_NLL_limits_plot.py -w FT7
 
 # signal injection -- cW

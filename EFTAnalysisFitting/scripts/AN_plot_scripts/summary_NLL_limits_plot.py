@@ -13,7 +13,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
 from MISC_CONFIGS import (
     datacard_dir,
     #template_filename,
@@ -367,7 +367,7 @@ if __name__=='__main__':
     parser.add_argument('-i', '--InjectSignal',
                         help='Plot the results of a signal injection test? "n" (default) / "y". If "y", must supply --WC and --InjectValue')
     parser.add_argument('-w', '--WC',
-                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", ...]')
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", "dim6", "dim8"...]')
     parser.add_argument('-v', '--InjectValue',
                         help='What value for the WC was used in the signal injection test? 0.0 (default), 1.0, ...')
     args = parser.parse_args()
@@ -379,6 +379,10 @@ if __name__=='__main__':
     if args.WC == 'all':
         WCs = WC_ALL + ['sm']
         #WCs = WC_ALL
+    elif args.WC == 'dim6':
+        WCs = dim6_WCs
+    elif args.WC == 'dim8':
+        WCs = dim8_WCs
     else:
         WCs = [args.WC]
     if args.InjectValue is None:
