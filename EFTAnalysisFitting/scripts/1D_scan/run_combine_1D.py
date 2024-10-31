@@ -44,7 +44,7 @@ LIM_VAL = 10
 # None (full treatment)
 # prof_freeze_WCs = []
 # turning some off
-prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox']
+prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
