@@ -42,11 +42,11 @@ LIM_VAL = 200 # DEFAULT
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-# prof_freeze_WCs = []
+prof_freeze_WCs = []
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
-prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
+#prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
