@@ -40,6 +40,12 @@ LIM_VAL = 10
 #LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
+# always use the same list of WCs to freeze while profiling
+# None (full treatment)
+# prof_freeze_WCs = []
+# turning some off
+prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox']
+
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 # --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
@@ -373,14 +379,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # if not WC == 'cHd':
         #     WCs_freeze.append('cHd')
         # adding others with <1% total contribution (quad)
-        if not WC == 'cHDD':
-            WCs_freeze.append('cHDD')
-        if not WC == 'cll1':
-            WCs_freeze.append('cll1')
+        # if not WC == 'cHDD':
+        #     WCs_freeze.append('cHDD')
+        # if not WC == 'cll1':
+        #     WCs_freeze.append('cll1')
         # if not WC == 'cHWB':
         #     WCs_freeze.append('cHWB')
-        if not WC == 'cHbox':
-            WCs_freeze.append('cHbox')
+        # if not WC == 'cHbox':
+        #     WCs_freeze.append('cHbox')
         # adding all the others...
         # if not WC == 'cHq3':
         #     WCs_freeze.append('cHq3')
@@ -388,9 +394,12 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         #     WCs_freeze.append('cHq1')
         # if not WC == 'cHW':
         #     WCs_freeze.append('cHW')
-        if not WC == 'cHl3':
-            WCs_freeze.append('cHl3')
+        # if not WC == 'cHl3':
+        #     WCs_freeze.append('cHl3')
         #WCs_limit = None
+        for WC_ in prof_freeze_WCs:
+            if not WC == WC_:
+                WCs_freeze.append(WC_)
         #'''
         # BETTER
         # WCs_freeze = None
@@ -544,6 +553,9 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         #     WCs_freeze.append('cHW')
         # if not WC == 'cHl3':
         #     WCs_freeze.append('cHl3')
+        for WC_ in prof_freeze_WCs:
+            if not WC == WC_:
+                WCs_freeze.append(WC_)
         #WCs_freeze = None
         WCs_limit = []
         for WC_ in WCs_list:
