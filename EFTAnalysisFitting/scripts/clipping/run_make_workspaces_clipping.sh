@@ -21,7 +21,8 @@ else
 fi
 
 #for i in $(seq 0 12);
-for i in $(seq 0 14); # adding a few points just below 1 TeV
+#for i in $(seq 0 14); # adding a few points just below 1 TeV
+for i in $(seq 0 17); # adding a few points just below 1 TeV
 do
     echo Making workspaces for clip index $i...
     python tools/make_workspaces.py -c $CH -d $DIM -t $L -v _clip_mVVV_$i
