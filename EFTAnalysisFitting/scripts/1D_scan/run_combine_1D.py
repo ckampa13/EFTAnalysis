@@ -46,7 +46,7 @@ LIM_VAL = 10
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
-prof_freeze_WCs = ['cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
+prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
@@ -400,7 +400,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         #     WCs_freeze.append('cHl3')
         #WCs_limit = None
         for WC_ in prof_freeze_WCs:
-            if not WC == WC_:
+            if WC != WC_:
                 WCs_freeze.append(WC_)
         #'''
         # BETTER
@@ -556,7 +556,7 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         # if not WC == 'cHl3':
         #     WCs_freeze.append('cHl3')
         for WC_ in prof_freeze_WCs:
-            if not WC == WC_:
+            if WC != WC_:
                 WCs_freeze.append(WC_)
         #WCs_freeze = None
         WCs_limit = []
