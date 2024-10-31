@@ -375,8 +375,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # adding others with <1% total contribution (quad)
         # if not WC == 'cHDD':
         #     WCs_freeze.append('cHDD')
-        # if not WC == 'cll1':
-        #     WCs_freeze.append('cll1')
+        if not WC == 'cll1':
+            WCs_freeze.append('cll1')
         # if not WC == 'cHWB':
         #     WCs_freeze.append('cHWB')
         # if not WC == 'cHbox':
@@ -388,8 +388,8 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         #     WCs_freeze.append('cHq1')
         # if not WC == 'cHW':
         #     WCs_freeze.append('cHW')
-        # if not WC == 'cHl3':
-        #     WCs_freeze.append('cHl3')
+        if not WC == 'cHl3':
+            WCs_freeze.append('cHl3')
         #WCs_limit = None
         #'''
         # BETTER
