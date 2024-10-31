@@ -519,7 +519,32 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        WCs_freeze = []
+        # if not WC == 'cHB':
+        #     WCs_freeze.append('cHB')
+        # if not WC == 'cHu':
+        #     WCs_freeze.append('cHu')
+        # if not WC == 'cHd':
+        #     WCs_freeze.append('cHd')
+        # adding others with <1% total contribution (quad)
+        # if not WC == 'cHDD':
+        #     WCs_freeze.append('cHDD')
+        # if not WC == 'cll1':
+        #     WCs_freeze.append('cll1')
+        # if not WC == 'cHWB':
+        #     WCs_freeze.append('cHWB')
+        # if not WC == 'cHbox':
+        #     WCs_freeze.append('cHbox')
+        # adding all the others...
+        # if not WC == 'cHq3':
+        #     WCs_freeze.append('cHq3')
+        # if not WC == 'cHq1':
+        #     WCs_freeze.append('cHq1')
+        # if not WC == 'cHW':
+        #     WCs_freeze.append('cHW')
+        # if not WC == 'cHl3':
+        #     WCs_freeze.append('cHl3')
+        #WCs_freeze = None
         WCs_limit = []
         for WC_ in WCs_list:
             if WC_ != WC:
@@ -550,7 +575,13 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         else:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     else:
-        grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+            grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        elif WC in ['cHl3']:
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            # grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
+        else:
+            grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
     #name_str = '_coarse_%s_all_%s' % (WC, str(time()))
     name_str = '_coarse_%s_all_%s_%s' % (WC, version, str(time()))
     outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
