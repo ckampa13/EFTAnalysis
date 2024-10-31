@@ -23,7 +23,8 @@ else
     DIM=$3
 fi
 
-for i in $(seq 0 12);
+#for i in $(seq 0 12);
+for i in $(seq 0 14); # adding a few points just below 1 TeV
 do
     echo Running combine for clip index $i, sent to background...
     python 1D_scan/run_combine_1D.py -c $CH -w $DIM -t $L -s _1D -a y -p 0.05 -pc 0.5 -v _clip_mVVV_$i > ${LOGDIR}${CH}_${DIM}_${L}_clip_mVVV_${i}.txt 2>&1 &
