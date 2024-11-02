@@ -68,7 +68,9 @@ versions_dict = {
     #'2Lepton_OS_2FJ': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete / first official pass, with all systematics.
     #'2Lepton_OS_2FJ': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete. everything in place except wtag sf
     #'2Lepton_OS_2FJ': {'v': 5, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # wtag sf added. switched from 2018 scaled to Run2 lumi to using all 3 years.
-    '2Lepton_OS_2FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # includes pT dependent SFs; background uncertainties updated; dim8 WCs added 10-10-24
+    #'2Lepton_OS_2FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # includes pT dependent SFs; background uncertainties updated; dim8 WCs added 10-10-24
+    '2Lepton_OS_2FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+                       'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs}, #  includes pT dependent SFs; background uncertainties updated; dim8 WCs added 10-10-24; MultiDim (refactored)
     # '2Lepton_SS': {'v': 1, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '2Lepton_SS': {'v': 2, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # only WWW
     # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW -- first batch
@@ -91,11 +93,16 @@ versions_dict = {
     #'0Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # updated uncertainties (bkg summed in quadrature; more signal systematics) -- removed after v1.
     #'1Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'1Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
-    '1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
+    #'1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
+    '1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
     #'1Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
-    '2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
+    #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
+    '2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
+
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
 }
 

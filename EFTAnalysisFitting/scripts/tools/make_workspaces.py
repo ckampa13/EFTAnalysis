@@ -146,9 +146,15 @@ def make_workspace_channels(dim, channels, datacard_dict, WCs, ScanType, verbose
         #     continue
         print('Channel: %s' % ch)
         cmd_str = 'text2workspace.py '
-        v = versions_dict[ch]['v']
+        #v = versions_dict[ch]['v']
+        if vsuff == '_NDIM':
+            v = versions_dict[ch]['v_NDIM']
+        else:
+            v = versions_dict[ch]['v']
         version = 'v'+str(v)
         version_full = version + vsuff
+        # debug
+        print('version_full=%s' % version_full)
         sname_ch = datacard_dict[ch]['info']['short_name']
         tfile_ch = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version=version_full, file_type='txt')
         dc_file = os.path.join(dcdir, tfile_ch)
@@ -361,7 +367,11 @@ if __name__=='__main__':
                 # WCs = versions_dict[channel]['EFT_ops']
                 # if not WC in WCs:
                 #     continue
-                v = versions_dict[channel]['v']
+                #v = versions_dict[channel]['v']
+                if vsuff == '_NDIM':
+                    v = versions_dict[channel]['v_NDIM']
+                else:
+                    v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
                 print(channel, VERSION)
                 for StatOnly in [False, True]:
@@ -387,7 +397,11 @@ if __name__=='__main__':
                 # WCs = versions_dict[channel]['EFT_ops']
                 # if not WC in WCs:
                 #     continue
-                v = versions_dict[channel]['v']
+                #v = versions_dict[channel]['v']
+                if vsuff == '_NDIM':
+                    v = versions_dict[channel]['v_NDIM']
+                else:
+                    v = versions_dict[channel]['v']
                 VERSION = 'v'+str(v)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
