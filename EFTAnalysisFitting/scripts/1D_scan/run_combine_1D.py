@@ -33,19 +33,19 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
-#LIM_VAL = 10
+LIM_VAL = 10
 #LIM_VAL = 20
 #LIM_VAL = 50
 # LIM_VAL = 100
-LIM_VAL = 200 # DEFAULT
+#LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+#prof_freeze_WCs = []
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
-#prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
+prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 
 # original
@@ -419,7 +419,11 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         if not WC in WCs:
             continue
         print('Channel: %s' % ch)
-        v = versions_dict[ch]['v']
+        # v = versions_dict[ch]['v']
+        if vsuff == '_NDIM':
+            v = versions_dict[ch]['v_NDIM']
+        else:
+            v = versions_dict[ch]['v']
         version = 'v' + str(v)
         version_full = version + vsuff
         sname_ch = datacard_dict[ch]['info']['short_name']
