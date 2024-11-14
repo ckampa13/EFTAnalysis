@@ -21,3 +21,29 @@ def book_and_set_TH1D(root_out, hist_name, bin_contents, bin_edges, bin_errors=N
         for i in range(nbins):
             h1d.SetBinError(i+1, bin_errors[i])
     root_out.WriteObject(h1d, hist_name)
+
+
+def book_and_set_TH2D(root_out, hist_name, bin_contents_2D, bin_edges_x, bin_edges_y, bin_errors_2D=None, TH2_type='TH2D'):
+    # print('hist_name=', hist_name)
+    nbins_x = bin_contents_2D.shape[0]
+    nbins_y = bin_contents_2D.shape[1]
+    if TH2_type == 'TH2D':
+        h2d = ROOT.TH2D(hist_name, '', nbins_x, bin_edges_x, nbins_y, bin_edges_y)
+        # don't add to registry
+        h2d.SetDirectory(0)
+    elif TH2_type == 'TH2F':
+        h2d = ROOT.TH2F(hist_name, '', nbins_x, bin_edges_x, nbins_y, bin_edges_y)
+        # don't add to registry
+        h2d.SetDirectory(0)
+    else:
+        raise ValueError('TH2_type = "%s" is not allowed. Select between ["TH2D", "TH2F"].' % TH2_type)
+    # set bin contents
+    for i in range(nbins_x):
+        for j in range(nbins_y):
+            h2d.SetBinContent(i+1, j+1, bin_contents_2D[i, j])
+    # set bin errors if they are passed in
+    if not bin_errors_2D is None:
+        for i in range(nbins_x):
+            for j in range(nbins_y):
+                h2d.SetBinError(i+1, j+1, bin_errors_2D[i, j])
+    root_out.WriteObject(h2d, hist_name)

@@ -14,12 +14,12 @@ conda activate HCOMB
 #python tau_impact_table.py
 
 # copy impact plots from plots/
-echo "Copy impact plots..."
-bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cW_1D.vCONFIG_VERSIONS.syst.pdf
-bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
+# echo "Copy impact plots..."
+# bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cW_1D.vCONFIG_VERSIONS.syst.pdf
+# bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
-#echo "NLL vs. WC main plots (1D)..."
+echo "NLL vs. WC main plots (1D)..."
 #echo "freeze other WCs"
 #python NLL_limits_plot_from_dir.py -t f
 # 1 dim6
@@ -30,17 +30,42 @@ bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VE
 #python NLL_limits_plot_from_dir.py -t bc -w FT0
 #python NLL_limits_plot_from_dir.py -t c -w FT0
 # profiled limits
-# echo "profile other WCs"
+echo "profile other WCs"
+echo "Channels..."
+echo "cW"
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
-# python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 2 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+#### python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 2 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# using 1D sample
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _1D -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -x 0.5 -l y
+python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -x 0.5 -l y
 
+# echo "cHl3"
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 40 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 60 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 100 -l y
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 40 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
+
+# echo "Full analysis..."
+# echo "cW"
+# python NLL_limits_plot_from_dir.py -t f -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -t f -w cW -s _1D -v _NDIM -x 0.5 -l y
+
+# recreate the main freeze plot (adding limit to legend)
+# note this comparison doesn't make sense until we have all channels combined in the profile fit!
+# python NLL_limits_plot_from_dir.py -t f -w cW -s _1D -x 0.5 -l y
 
 # # yield summary plot with bin limits in bottom panel
 # # make tables

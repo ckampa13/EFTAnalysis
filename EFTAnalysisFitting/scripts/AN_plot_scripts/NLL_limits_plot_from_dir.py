@@ -152,7 +152,11 @@ def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, Scan
         sname_sch += '_2018_scaled'
         print(' (2018 scaled)', end='')
     # version number
-    v = versions_dict[channel]['v']
+    #v = versions_dict[channel]['v']
+    if vsuff == '_NDIM':
+        v = versions_dict[ch]['v_NDIM']
+    else:
+        v = versions_dict[channel]['v']
     version = f'v{v}'+vsuff
     # plotting info
     bin_info = {'output_dir': output_dir_bin, 'plot_dir': plot_dir,
@@ -197,7 +201,11 @@ def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, Sca
         sname_sch += '_2018_scaled'
         print(' (2018 scaled)', end='')
     # version number
-    v = versions_dict[channel]['v']
+    #v = versions_dict[channel]['v']
+    if vsuff == '_NDIM':
+        v = versions_dict[ch]['v_NDIM']
+    else:
+        v = versions_dict[channel]['v']
     version = f'v{v}'+vsuff
     bin_info = {'output_dir': output_dir_sch, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': fname_sch,
@@ -233,7 +241,11 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
     fname_ch = datacard_dict[channel]['info']['file_name']
     sname_ch = datacard_dict[channel]['info']['short_name']
     # version number
-    v = versions_dict[channel]['v']
+    #v = versions_dict[channel]['v']
+    if vsuff == '_NDIM':
+        v = versions_dict[ch]['v_NDIM']
+    else:
+        v = versions_dict[channel]['v']
     version = f'v{v}'+vsuff
     bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
                 'channel': fname_ch, 'subchannel': 'All',
