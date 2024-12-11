@@ -54,15 +54,14 @@ prof_freeze_WCs = []
 # --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
 # """
 # extra options -- with outputs of best fit values for nuisances and profiled values
-# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
-# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
-# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD
-# """
-# extra options -- with outputs of best fit values for nuisances and profiled values; include RooFit results
 secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
---stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD --saveFitResult
-"""
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
+# extra options -- with outputs of best fit values for nuisances and profiled values; include RooFit results
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD --saveFitResult
+# """
 
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
@@ -116,7 +115,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     return grid_dict, prec
 
 def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True, fastScan=False):
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -144,19 +143,29 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         for WC_ in WCs_:
             cmd_str += ':%s=%s,%s' % (WC_, mval, val)
         cmd_str += ' '
+    # if fastScan:
+    #     # appends to "syst" part of the output file
+    #     name_str +='_fastScan'
     cmd_str += '--verbose -1 -n %s' % name_str
     if with_extra:
         cmd_str += secret_options
+    if fastScan:
+        # nuisance parameters are fixed to their best-fit values
+        cmd_str += ' --fastScan'
     return cmd_str
 
 # all bins in a subchannel / channel
 def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False):
     version_full = version + vsuff
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
         ScanTypeWS = ScanType
+    if fastScan:
+        FS_suff = '_fastScan'
+    else:
+        FS_suff = ''
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -220,7 +229,7 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                                 name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                                 # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
-                                                WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                                WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
             print('Coarse scan to determine appropriate WC range and number of steps:')
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -232,10 +241,10 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
                 # update to the appropriate workspace file (stat only or with syst)
                 wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS, purpose='workspace', proc=SO_lab, version=version_full, file_type='root')
                 wsfile = os.path.join(wsdir, wsfile)
-                name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label)
+                name_str = template_outfilename_stub.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label+FS_suff)
                 cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                     name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
-                                                    WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                                    WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
                 print(cmd_str)
                 proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
             print('Finished running combine. Expected file output: %s' % outfile)
@@ -247,12 +256,16 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
 
 # all subchannels in a channel
 def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL):
+                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False):
     version_full = version + vsuff
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
         ScanTypeWS = ScanType
+    if fastScan:
+        FS_suff = '_fastScan'
+    else:
+        FS_suff = ''
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -322,7 +335,7 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                             # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
-                                            WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                            WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -334,10 +347,10 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
             # update to the appropriate workspace file (stat only or with syst)
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
-            name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label)
+            name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label+FS_suff)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
-                                                WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                                WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
         print('Finished running combine. Expected file output: %s' % outfile)
@@ -349,11 +362,15 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
 
 # channels
 def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False):
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
         ScanTypeWS = ScanType
+    if fastScan:
+        FS_suff = '_fastScan'
+    else:
+        FS_suff = ''
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -475,7 +492,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                             # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
-                                            WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                            WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
         print('Coarse scan to determine appropriate WC range and number of steps:')
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -487,10 +504,10 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             # update to the appropriate workspace file (stat only or with syst)
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
-            name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label)
+            name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version_full,syst=syst_label+FS_suff)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
-                                                WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                                WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
             print(cmd_str)
             # proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -503,11 +520,15 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
 
 # full analysis
 def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False):
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
         ScanTypeWS = ScanType
+    if fastScan:
+        FS_suff = '_fastScan'
+    else:
+        FS_suff = ''
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -613,7 +634,7 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                         name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                         # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
-                                        WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                        WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
     proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -625,10 +646,10 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         # update to the appropriate workspace file (stat only or with syst)
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
-        name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+        name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label+FS_suff)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                             name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
-                                            WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                            WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan)
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
     print('Finished running combine. Expected file output: %s' % outfile)
@@ -650,6 +671,8 @@ if __name__=='__main__':
                         help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default), "_1D" (freeze WCs)]')
+    parser.add_argument('-f', '--fastScan',
+                        help='Do you want to run a "fast scan" where the nuisance parameters are fixed to best-fit values (instead of profiling)? "n" (default) / "y"')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
@@ -700,6 +723,10 @@ if __name__=='__main__':
             generate_full = False
     if args.ScanType is None:
         args.ScanType = '_All'
+    if args.fastScan is None:
+        fastScan = False
+    else:
+        fastScan = args.fastScan == 'y'
     if args.Asimov is None:
         args.Asimov = 'y'
     if args.Asimov == 'y':
@@ -777,7 +804,8 @@ if __name__=='__main__':
                                  ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                                  Precision=args.Precision, PrecisionCoarse=args.PrecisionCoarse,
                                  #stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
-                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
+                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
+                                 fastScan=fastScan)
             print('=================================================\n')
         #########################
         # subchannel calculations
@@ -795,7 +823,8 @@ if __name__=='__main__':
                                  SignalInject=SignalInject, Precision=args.Precision,
                                  PrecisionCoarse=args.PrecisionCoarse,
                                  # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
-                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
+                                 stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
+                                 fastScan=fastScan)
             print('=================================================\n')
         #########################
         # channel calculations
@@ -807,7 +836,8 @@ if __name__=='__main__':
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
                              # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
-                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
+                             fastScan=fastScan)
             print('=================================================\n')
         #########################
         # full analysis calculation
@@ -819,6 +849,7 @@ if __name__=='__main__':
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
                              # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
-                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
+                             fastScan=fastScan)
             print('=================================================\n')
         #########################
