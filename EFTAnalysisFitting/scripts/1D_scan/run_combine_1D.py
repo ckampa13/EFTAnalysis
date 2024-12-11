@@ -69,8 +69,8 @@ prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ
 # """
 # (modified by hand) extra options -- with outputs of best fit values for nuisances and profiled values
 secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
---X-rtd=MINIMIZER_no_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
---stepSize=0.001 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
+--X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
 
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
@@ -135,11 +135,15 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     else:
         freeze_group = 'allsyst'
     if WCs_freeze is None:
-        cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+        #cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+        # TEST remove PDF
+        cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r ' % freeze_group
     else:
         WCs_ = ['k_'+w for w in WCs_freeze]
         WCs_str = ','.join(WCs_)
-        cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
+        #cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
+        # TEST remove PDF
+        cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
     if WCs_limit is None:
         # TEST LIMITING PDF
