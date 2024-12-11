@@ -135,15 +135,19 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     else:
         freeze_group = 'allsyst'
     if WCs_freeze is None:
-        #cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
-        # TEST remove PDF
-        cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r ' % freeze_group
+        if freeze_group == 'allsyst':
+            cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+        else:
+            # TEST remove PDF
+            cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r ' % freeze_group
     else:
         WCs_ = ['k_'+w for w in WCs_freeze]
         WCs_str = ','.join(WCs_)
-        #cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
-        # TEST remove PDF
-        cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
+        if freeze_group == 'allsyst':
+            cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
+        else:
+            # TEST remove PDF
+            cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
     if WCs_limit is None:
         # TEST LIMITING PDF
