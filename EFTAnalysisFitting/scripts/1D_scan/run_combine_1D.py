@@ -49,7 +49,8 @@ LIM_VAL = 50
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 # 0L debug
 # 50 limit
-prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
+#prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
+prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
