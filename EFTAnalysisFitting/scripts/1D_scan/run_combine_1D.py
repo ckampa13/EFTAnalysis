@@ -51,7 +51,7 @@ LIM_VAL = 50
 # 50 limit
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
-prof_freeze_WCs = ['cll1']
+prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ), but seems ok. mild degradation from 1D
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
