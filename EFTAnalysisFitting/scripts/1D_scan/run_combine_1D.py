@@ -135,7 +135,8 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     else:
         freeze_group = 'allsyst'
     if WCs_freeze is None:
-        if freeze_group == 'allsyst':
+        if True:
+        # if freeze_group == 'allsyst':
             cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
         else:
             # TEST remove PDF
@@ -143,7 +144,8 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     else:
         WCs_ = ['k_'+w for w in WCs_freeze]
         WCs_str = ','.join(WCs_)
-        if freeze_group == 'allsyst':
+        if True:
+        # if freeze_group == 'allsyst':
             cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
         else:
             # TEST remove PDF
