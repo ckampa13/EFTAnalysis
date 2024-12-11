@@ -42,7 +42,7 @@ LIM_VAL = 50
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-# prof_freeze_WCs = []
+prof_freeze_WCs = []
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
@@ -50,7 +50,7 @@ LIM_VAL = 50
 # 0L debug
 # 50 limit
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
-prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
@@ -137,6 +137,9 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
     if WCs_limit is None:
+        # TEST LIMITING PDF
+        cmd_str += ':PDF_=-2,2'
+        ###
         cmd_str += ' '
     else:
         WCs_ = ['k_'+w for w in WCs_limit]
@@ -146,6 +149,9 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         # WCs_str = ''
         for WC_ in WCs_:
             cmd_str += ':%s=%s,%s' % (WC_, mval, val)
+        # TEST LIMITING PDF
+        cmd_str += ':PDF_=-2,2'
+        ###
         cmd_str += ' '
     # if fastScan:
     #     # appends to "syst" part of the output file
