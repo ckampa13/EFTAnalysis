@@ -138,7 +138,7 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
     if WCs_limit is None:
         # TEST LIMITING PDF
-        cmd_str += ':PDF_=-2,2'
+        # cmd_str += ':PDF_=-2,2'
         ###
         cmd_str += ' '
     else:
@@ -150,7 +150,7 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         for WC_ in WCs_:
             cmd_str += ':%s=%s,%s' % (WC_, mval, val)
         # TEST LIMITING PDF
-        cmd_str += ':PDF_=-2,2'
+        # cmd_str += ':PDF_=-2,2'
         ###
         cmd_str += ' '
     # if fastScan:
