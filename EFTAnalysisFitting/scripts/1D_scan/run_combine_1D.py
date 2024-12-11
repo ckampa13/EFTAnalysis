@@ -42,7 +42,7 @@ LIM_VAL = 50
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+# prof_freeze_WCs = []
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
@@ -51,6 +51,7 @@ prof_freeze_WCs = []
 # 50 limit
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
+prof_freeze_WCs = ['cll1']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
@@ -67,7 +68,7 @@ prof_freeze_WCs = []
 # --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD --saveFitResult
 # """
 # (modified by hand) extra options -- with outputs of best fit values for nuisances and profiled values
-secret_options = """ --skipInitialFit --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
 --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
 
