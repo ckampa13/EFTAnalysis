@@ -33,16 +33,16 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
-#LIM_VAL = 10
+LIM_VAL = 10
 #LIM_VAL = 20
-LIM_VAL = 50
+#LIM_VAL = 50
 # LIM_VAL = 100
 # LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-# prof_freeze_WCs = []
+prof_freeze_WCs = []
 # turning some off
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
@@ -51,7 +51,7 @@ LIM_VAL = 50
 # 50 limit
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
-prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ), but seems ok. mild degradation from 1D
+#prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ), but seems ok. mild degradation from 1D
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
