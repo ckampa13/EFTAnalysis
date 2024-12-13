@@ -69,7 +69,9 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     str_ = 'Channel: '
     n_ch_added = 0
     n_sch_added = 0
-    for i, ch in enumerate(channels):
+    #for i, ch in enumerate(channels):
+    # DEBUG MULTIDIM
+    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ']):
         # channels may not always have dim8
         has_NDIM = True
         if vsuff == '_NDIM':
