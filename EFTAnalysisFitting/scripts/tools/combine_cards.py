@@ -71,9 +71,10 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     n_sch_added = 0
     #for i, ch in enumerate(channels):
     # DEBUG MULTIDIM
-    # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T']):
+    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T']):
     # swapping 2L_OS for 2L_OS_2FJ, which has a binning bug
-    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS', '1Lepton_1T', '2Lepton_1T']):
+    # FAILS
+    # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS', '1Lepton_1T', '2Lepton_1T']):
         # channels may not always have dim8
         has_NDIM = True
         if vsuff == '_NDIM':
