@@ -2,7 +2,8 @@
 # also track what integrated luminosity is in that version of the yield file
 dim6_WCs = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd'] # full set of dim-6
 dim8_WCs = ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7', 'FT0', 'FT1', 'FT2', 'FT3', 'FT4', 'FT5', 'FT6', 'FT7', 'FT8', 'FT9'] # full set of dim-8
-dim8_WCs_1T = ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7', 'FT0', 'FT1', 'FT2', 'FT3', 'FT4', 'FT5', 'FT6', 'FT7', 'FT8'] # FT9 missing
+#dim8_WCs_1T = ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7', 'FT0', 'FT1', 'FT2', 'FT3', 'FT4', 'FT5', 'FT6', 'FT7', 'FT8'] # FT9 missing
+dim8_WCs_1T = dim8_WCs
 WCs_clip_dim6 = dim6_WCs # all
 WCs_clip_dim8 = dim8_WCs # all
 #WCs_clip = ['FT0'] # dev
@@ -100,14 +101,17 @@ versions_dict = {
     #'1Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'1Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
-    '1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
+    #'1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #               'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
+    '1Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM; 1D signal fix
     #'1Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
-    '2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
+    #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    '2Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM; 1D signal fix
 
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
 }

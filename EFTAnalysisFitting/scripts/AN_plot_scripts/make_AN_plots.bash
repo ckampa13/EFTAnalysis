@@ -12,6 +12,9 @@ conda activate HCOMB
 # tau impact
 #echo "Making tex tables for impact of taus..."
 #python tau_impact_table.py
+# profile vs. freeze (dim6)
+echo "Making tex table comparing profile to freeze limits (dim6)..."
+python WC_prof_vs_freeze_table.py
 
 # copy impact plots from plots/
 # echo "Copy impact plots..."
@@ -19,7 +22,7 @@ conda activate HCOMB
 # bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.cHl3_1D.vCONFIG_VERSIONS.syst.pdf
 
 # # NLL full combination multi-panel figure
-echo "NLL vs. WC main plots (1D)..."
+#echo "NLL vs. WC main plots (1D)..."
 #echo "freeze other WCs"
 #python NLL_limits_plot_from_dir.py -t f
 # 1 dim6
@@ -30,7 +33,7 @@ echo "NLL vs. WC main plots (1D)..."
 #python NLL_limits_plot_from_dir.py -t bc -w FT0
 #python NLL_limits_plot_from_dir.py -t c -w FT0
 # profiled limits
-echo "profile other WCs"
+#echo "profile other WCs"
 ###
 # echo "Subchannels..."
 # echo "cW"
@@ -101,8 +104,8 @@ echo "profile other WCs"
 # python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _All -v _NDIM -x 40 -l y
 # python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _1D -v _NDIM -x 40 -l y
 
-echo "profile vs. freeze on same plot"
-echo "Full analysis..."
+#echo "profile vs. freeze on same plot"
+#echo "Full analysis..."
 ### top 6
 # echo "cW"
 # python NLL_limits_profile_vs_freeze.py -t f -w cW -v _NDIM -x 0.2 -l y
@@ -117,15 +120,21 @@ echo "Full analysis..."
 # echo "cHW"
 # python NLL_limits_profile_vs_freeze.py -t f -w cHW -v _NDIM -x 3.0 -l y
 ### next few
-echo "cHWB"
-python NLL_limits_profile_vs_freeze.py -t f -w cHWB -v _NDIM -x 10.0 -l y
+# echo "cHWB"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHWB -v _NDIM -x 10.0 -l y
 # an interesting one
-echo "cHl3"
-python NLL_limits_profile_vs_freeze.py -t f -w cHl3 -v _NDIM -x 22.0 -l y
+# echo "cHl3"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHl3 -v _NDIM -x 22.0 -l y
 #
-echo "cHB"
-python NLL_limits_profile_vs_freeze.py -t f -w cHB -v _NDIM -x 22.0 -l y
+# echo "cHB"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHB -v _NDIM -x 22.0 -l y
 
+# samle comparison
+python NLL_limits_plot_from_dir.py -t f -w cW -v _NDIM -x 0.2  -l y -fs _sample_comp
+python NLL_limits_plot_from_dir.py -t f -w cW -x 0.2  -l y -fs _sample_comp
+
+
+#####
 # recreate the main freeze plot (adding limit to legend)
 # note this comparison doesn't make sense until we have all channels combined in the profile fit!
 # python NLL_limits_plot_from_dir.py -t f -w cW -s _1D -x 0.5 -l y
