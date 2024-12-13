@@ -53,7 +53,7 @@ LIM_VAL = 10
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
 #prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ), but seems ok. mild degradation from 1D
 # 2L_OS debugs -- SFZ fine, SFnoZ and OF weird
-prof_freeze_WCs = ['cHWB']
+prof_freeze_WCs = ['cHWB', 'cHDD', 'cHbox']
 
 # original
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
