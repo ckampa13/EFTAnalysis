@@ -71,10 +71,12 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     n_sch_added = 0
     #for i, ch in enumerate(channels):
     # DEBUG MULTIDIM
-    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T']):
+    # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T']):
     # swapping 2L_OS for 2L_OS_2FJ, which has a binning bug
     # FAILS
     # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS', '1Lepton_1T', '2Lepton_1T']):
+    # ALL
+    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS']):
         # channels may not always have dim8
         has_NDIM = True
         if vsuff == '_NDIM':
@@ -113,6 +115,10 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
         # loop through subchannels
         subchannels = datacard_dict[ch]['subchannels'].keys()
         for j, subch in enumerate(subchannels):
+            # DEBUG MULTIDIM
+            if ("SFZ" in subch) or ("SFnoZ" in subch):
+                continue
+            ####
             sname_sch = datacard_dict[ch]['subchannels'][subch]['info']['short_name']
             # update subchannel name if there is rescaling
             if versions_dict[ch]['lumi'] == '2018':
