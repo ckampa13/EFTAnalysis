@@ -448,7 +448,8 @@ if __name__=='__main__':
             print("Making likelihood plots for each subchannel...")
             for pstat in pstats:
                 print(f'Include stat-only? {pstat}')
-                for ch in datacard_dict.keys():
+                #for ch in datacard_dict.keys():
+                for ch in chs:
                     if WC not in versions_dict[ch]['EFT_ops']:
                         continue
                     print(f'Channel: {ch}')
