@@ -119,7 +119,8 @@ def construct_combine_cmd_str(WC1, WC2, workspace_file, grid_dict, asimov_str,
     #points = int(points1 * points2)
     # FIXME! Don't want to hard code this -- need a better calculation
     # points = 10000
-    points = 100
+    #points = 100
+    points = 400
     cmd_str = 'combine -M %s %s --algo=grid --points %s ' % (method, workspace_file, points)
     cmd_str += '--alignEdges 1 %s --redefineSignalPOIs k_%s,k_%s ' % (asimov_str, WC1, WC2)
     if with_syst:
