@@ -212,7 +212,11 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        #WCs_freeze = None
+        WCs_freeze = []
+        for WC_ in prof_freeze_WCs:
+            if WC != WC_:
+                WCs_freeze.append(WC_)
         WCs_limit = []
         for WC_ in WCs_list:
             if WC_ != WC:
@@ -316,8 +320,12 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        #WCs_freeze = None
+        WCs_freeze = []
         WCs_limit = []
+        for WC_ in prof_freeze_WCs:
+            if WC != WC_:
+                WCs_freeze.append(WC_)
         for WC_ in WCs_list:
             if WC_ != WC:
                 if (dim == 'dim6') and (WC_ in dim6_ops):
