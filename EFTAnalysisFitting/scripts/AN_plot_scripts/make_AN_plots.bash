@@ -76,7 +76,7 @@ echo "profile other WCs"
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 40 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
 
-echo "Full analysis..."
+# echo "Full analysis..."
 ### top 6
 # echo "cW"
 # python NLL_limits_plot_from_dir.py -t f -w cW -s _All -v _NDIM -x 0.5 -l y
@@ -97,9 +97,34 @@ echo "Full analysis..."
 # python NLL_limits_plot_from_dir.py -t f -w cHd -s _All -v _NDIM -x 6.0 -l y
 # python NLL_limits_plot_from_dir.py -t f -w cHd -s _1D -v _NDIM -x 6.0 -l y
 # an interesting one
+# echo "cHl3"
+# python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _All -v _NDIM -x 40 -l y
+# python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _1D -v _NDIM -x 40 -l y
+
+echo "profile vs. freeze on same plot"
+echo "Full analysis..."
+### top 6
+# echo "cW"
+# python NLL_limits_profile_vs_freeze.py -t f -w cW -v _NDIM -x 0.2 -l y
+# echo "cHq3"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHq3 -v _NDIM -x 0.5 -l y
+# echo "cHq1"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHq1 -v _NDIM -x 0.5 -l y
+# echo "cHu"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHu -v _NDIM -x 1.2 -l y
+# echo "cHd"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHd -v _NDIM -x 1.2 -l y
+# echo "cHW"
+# python NLL_limits_profile_vs_freeze.py -t f -w cHW -v _NDIM -x 3.0 -l y
+### next few
+echo "cHWB"
+python NLL_limits_profile_vs_freeze.py -t f -w cHWB -v _NDIM -x 10.0 -l y
+# an interesting one
 echo "cHl3"
-python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _All -v _NDIM -x 40 -l y
-python NLL_limits_plot_from_dir.py -t f -w cHl3 -s _1D -v _NDIM -x 40 -l y
+python NLL_limits_profile_vs_freeze.py -t f -w cHl3 -v _NDIM -x 22.0 -l y
+#
+echo "cHB"
+python NLL_limits_profile_vs_freeze.py -t f -w cHB -v _NDIM -x 22.0 -l y
 
 # recreate the main freeze plot (adding limit to legend)
 # note this comparison doesn't make sense until we have all channels combined in the profile fit!
