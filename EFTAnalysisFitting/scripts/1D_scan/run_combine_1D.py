@@ -348,8 +348,12 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         # else:
         #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         if ScanType == '_1D':
-            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            #grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+                grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            else:
+                grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         else:
             grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
         #name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
