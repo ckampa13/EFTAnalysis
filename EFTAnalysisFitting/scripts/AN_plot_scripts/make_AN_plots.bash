@@ -31,25 +31,35 @@ echo "NLL vs. WC main plots (1D)..."
 #python NLL_limits_plot_from_dir.py -t c -w FT0
 # profiled limits
 echo "profile other WCs"
-echo "Channels..."
-echo "cW"
+# echo "Channels..."
+# echo "cW"
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _All -v _NDIM -x 0.5 -l y
-# python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _All -v _NDIM -x 0.5 -l y
-# python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _All -v _NDIM -x 0.5 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _All -v _NDIM -x 4 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _All -v _NDIM -x 4 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_OS_2FJ -t c -w cW -s _All -v _NDIM -x 4 -l y
+# python NLL_limits_plot_from_dir.py -c 0Lepton_2FJ -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 0Lepton_3FJ -t c -w cW -s _All -v _NDIM -x 0.5 -l y
+# fast scans
+# python NLL_limits_plot_from_dir.py -c 0Lepton_2FJ -t c -w cW -s _All -f y -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 0Lepton_3FJ -t c -w cW -s _All -f y -v _NDIM -x 0.5 -l y
 #### python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _All -v _NDIM -x 2 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+# python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+#python NLL_limits_plot_from_dir.py -c 0Lepton_2FJ -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
+#python NLL_limits_plot_from_dir.py -c 0Lepton_3FJ -t c -w cW -s _1D -v _NDIM -x 0.5 -l y
 # using 1D sample
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cW -s _1D -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 1Lepton -t c -w cW -s _1D -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -x 0.5 -l y
-python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -x 0.5 -l y
+#python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -x 0.5 -l y
+#python NLL_limits_plot_from_dir.py -c 0Lepton_2FJ -t c -w cW -s _1D -x 0.5 -l y
+#python NLL_limits_plot_from_dir.py -c 0Lepton_3FJ -t c -w cW -s _1D -x 0.5 -l y
 
 # echo "cHl3"
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _All -v _NDIM -x 40 -l y
@@ -58,9 +68,9 @@ python NLL_limits_plot_from_dir.py -c 2Lepton_OS -t c -w cW -s _1D -x 0.5 -l y
 #python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 40 -l y
 # python NLL_limits_plot_from_dir.py -c 2Lepton_SS -t c -w cHl3 -s _1D -v _NDIM -x 60 -l y
 
-# echo "Full analysis..."
-# echo "cW"
-# python NLL_limits_plot_from_dir.py -t f -w cW -s _All -v _NDIM -x 0.5 -l y
+echo "Full analysis..."
+echo "cW"
+python NLL_limits_plot_from_dir.py -t f -w cW -s _All -v _NDIM -x 0.5 -l y
 # python NLL_limits_plot_from_dir.py -t f -w cW -s _1D -v _NDIM -x 0.5 -l y
 
 # recreate the main freeze plot (adding limit to legend)
