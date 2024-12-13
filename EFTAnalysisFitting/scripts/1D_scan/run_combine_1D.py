@@ -649,7 +649,7 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         elif WC in ['cHl3']:
             # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             #grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
-            grid_dict = {'LL':-23, 'UL':40, 'steps': 63}
+            grid_dict = {'LL':-23, 'UL':40, 'steps': 64}
         else:
             grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
     #name_str = '_coarse_%s_all_%s' % (WC, str(time()))
