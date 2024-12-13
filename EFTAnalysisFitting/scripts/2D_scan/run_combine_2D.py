@@ -37,15 +37,25 @@ LIM_VAL = 10
 # LIM_VAL = 20
 #LIM_VAL = 100
 
+# always use the same list of WCs to freeze while profiling
+# None (full treatment)
+# prof_freeze_WCs = []
+# full analysis
+prof_freeze_WCs = ['cll1']
+
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 # --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
 # --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND
 # """
 
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD
+# """
+# (modified by hand) extra options -- with outputs of best fit values for nuisances and profiled values
 secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
---stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD
-"""
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
 
 
 # for finding appropriate scan range
@@ -108,7 +118,8 @@ def construct_combine_cmd_str(WC1, WC2, workspace_file, grid_dict, asimov_str,
     UL2 = grid_dict['UL2']
     #points = int(points1 * points2)
     # FIXME! Don't want to hard code this -- need a better calculation
-    points = 10000
+    # points = 10000
+    points = 100
     cmd_str = 'combine -M %s %s --algo=grid --points %s ' % (method, workspace_file, points)
     cmd_str += '--alignEdges 1 %s --redefineSignalPOIs k_%s,k_%s ' % (asimov_str, WC1, WC2)
     if with_syst:
@@ -372,10 +383,10 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         # adding others with <1% total contribution (quad)
         # if (not WC1 == 'cHDD') and (not WC2 == 'cHDD'):
         #     WCs_freeze.append('cHDD')
-        if (not WC1 == 'cll1') and (not WC2 == 'cll1'):
-            WCs_freeze.append('cll1')
-        if (not WC1 == 'cHl3') and (not WC2 == 'cHl3'):
-            WCs_freeze.append('cHl3')
+        # if (not WC1 == 'cll1') and (not WC2 == 'cll1'):
+        #     WCs_freeze.append('cll1')
+        # if (not WC1 == 'cHl3') and (not WC2 == 'cHl3'):
+        #     WCs_freeze.append('cHl3')
         # if (not WC1 == 'cHWB') and (not WC2 == 'cHWB'):
         #     WCs_freeze.append('cHWB')
         # if (not WC1 == 'cHbox') and (not WC2 == 'cHbox'):
@@ -384,6 +395,10 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         #'''
         # BETTER
         #WCs_freeze = None
+        for WC_ in prof_freeze_WCs:
+            #if WC != WC_:
+            if (WC1 != WC_) and (WC2 != WC_):
+                WCs_freeze.append(WC_)
         WCs_limit = []
         for WC_ in WC_ALL:
             if (WC_ != WC1) and (WC_ != WC2):
@@ -455,14 +470,14 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
     print('Going back to original directory...')
     os.chdir(start_dir)
 
-'''
 # full analysis
-def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0):
-    if ScanType == '_1D':
-        ScanTypeWS = '_All'
-    else:
-        ScanTypeWS = ScanType
+def run_combine_full_analysis(dim, WC1, WC2, ScanType, Asimov, asi_str, SignalInject,
+                              grid_dict, stdout, verbose=0, vsuff=''):
+    # if ScanType == '_1D':
+    #     ScanTypeWS = '_All'
+    # else:
+    #     ScanTypeWS = ScanType
+    ScanTypeWS = '_All'
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -479,30 +494,36 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     sname_ch = 'all'
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'
+    version_full = version + vsuff
     SO_lab = ''
-    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # add any frozen WC
-    if ScanType == '_1D':
+    if ScanType == '_2D':
         WCs_freeze = []
         for WC_ in WC_ALL:
-            if WC_ != WC:
+            if (WC_ != WC1) and (WC_ != WC2):
                 if (dim == 'dim6') and (WC_ in dim6_ops):
                     WCs_freeze.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        # WCs_freeze = None
+        WCs_freeze = []
+        for WC_ in prof_freeze_WCs:
+            if (WC1 != WC_) and (WC2 != WC_):
+                WCs_freeze.append(WC_)
         WCs_limit = []
         for WC_ in WC_ALL:
-            if WC_ != WC:
+            #if WC_ != WC:
+            if (WC_ != WC1) and (WC_ != WC2):
                 if (dim == 'dim6') and (WC_ in dim6_ops):
                     WCs_limit.append(WC_)
                 elif (dim == 'dim8') and (not WC_ in dim6_ops):
                     WCs_limit.append(WC_)
     # coarse scan (using syst)
-    syst = 'syst_coarse'
+    #syst = 'syst_coarse'
     # FIXME! Make this configurable in each channel (maybe in CONFIG_VERSIONS.py)
     # No need to scan a wide range if we know it's narrow.
     # grid_dict = {'LL':-10, 'UL':10, 'steps': 41}
@@ -512,42 +533,42 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     #     grid_dict = {'LL':-10, 'UL':10, 'steps': 201}
     # else:
     #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-    if ScanType == '_1D':
-        grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
-        # grid_dict = {'LL':-20, 'UL':20, 'steps': 41}
-        # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
-    else:
-        grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
-    name_str = '_coarse_%s_all_%s' % (WC, str(time()))
-    outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
-    outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
-    outfile_ = os.path.join(outdir, outfile_)
-    cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
-                                        name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
-                                        WCs_limit=WCs_limit, limit_val=LIM_VAL)
-    print('Coarse scan to determine appropriate WC range and number of steps:')
-    print(cmd_str)
-    proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+    # if ScanType == '_1D':
+    #     grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+    #     # grid_dict = {'LL':-20, 'UL':20, 'steps': 41}
+    #     # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+    # else:
+    #     grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+    #name_str = '_coarse_%s_all_%s' % (WC, str(time()))
+    syst = 'syst_coarse'
+    outfile = template_outfilename_2D.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version_full,syst=syst, method=METHOD)
+    # outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
+    # outfile_ = os.path.join(outdir, outfile_)
+    # cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
+    #                                     name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
+    #                                     WCs_limit=WCs_limit, limit_val=LIM_VAL)
+    # print('Coarse scan to determine appropriate WC range and number of steps:')
+    # print(cmd_str)
+    # proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+    # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
     # loop through stat/syst
     for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print('Running "%s"' % syst_label)
         # update to the appropriate workspace file (stat only or with syst)
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
-        name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
-        cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
+        name_str = template_outfilename_2D_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC1=WC1+'_',WC2=WC2,ScanType=ScanType,version=version_full,syst=syst_label)
+        cmd_str = construct_combine_cmd_str(WC1, WC2, wsfile, grid_dict, asi_str,
                                             name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL)
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
     print('Finished running combine. Expected file output: %s' % outfile)
     # remove coarse file, else they will build up (added time)
-    os.remove(outfile_)
+    # os.remove(outfile_)
     # go back to original directory
     print('Going back to original directory...')
     os.chdir(start_dir)
-'''
 
 
 if __name__=='__main__':
@@ -753,16 +774,13 @@ if __name__=='__main__':
                          stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
         print('=================================================\n')
     #########################
-    '''
     # full analysis calculation
     if generate_full:
         print('Running combine for full analysis:')
         print('=================================================')
-        run_combine_full_analysis(dim, WC=WC,
+        run_combine_full_analysis(dim, WC1=args.WC1, WC2=args.WC2,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
-                         SignalInject=SignalInject, Precision=args.Precision,
-                         PrecisionCoarse=args.PrecisionCoarse,
-                         stdout=stdout, verbose=args.Verbose)
+                         SignalInject=SignalInject, grid_dict=grid_dict,
+                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
         print('=================================================\n')
     #########################
-    '''

@@ -116,8 +116,10 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
         subchannels = datacard_dict[ch]['subchannels'].keys()
         for j, subch in enumerate(subchannels):
             # DEBUG MULTIDIM
-            if ("SFZ" in subch) or ("SFnoZ" in subch):
-                continue
+            #if ("SFZ" in subch) or ("SFnoZ" in subch):
+            #if ("SFnoZ" in subch):
+            # if ("SFZ" in subch):
+            #     continue
             ####
             sname_sch = datacard_dict[ch]['subchannels'][subch]['info']['short_name']
             # update subchannel name if there is rescaling
