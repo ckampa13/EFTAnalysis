@@ -14,7 +14,10 @@ from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 # def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
 def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None):
     if file_suff is None:
-        file_suff = channels_leave_out[0]
+        if type(channels_leave_out) is str:
+            file_suff = channels_leave_out
+        else:
+            file_suff = channels_leave_out[0]
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
