@@ -175,7 +175,8 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
         elif 'FM' in WC:
             grid_dict = {'LL': -8, 'UL': 8, 'steps': 17}
         elif 'FS' in WC:
-            grid_dict = {'LL': -20, 'UL': 20, 'steps': 41}
+            #grid_dict = {'LL': -20, 'UL': 20, 'steps': 41}
+            grid_dict = {'LL': -40, 'UL': 40, 'steps': 81}
         else:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     else:
