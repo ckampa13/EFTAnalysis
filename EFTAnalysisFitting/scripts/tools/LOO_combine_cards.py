@@ -13,11 +13,15 @@ from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 # combine all channels
 # def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
 def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None):
+    if type(channels_leave_out) is str:
+        print("Caution! 'channels_leave_out' should be a list, not a str. Creating a length 1 list.")
+        channels_leave_out = [channels_leave_out]
     if file_suff is None:
-        if type(channels_leave_out) is str:
-            file_suff = channels_leave_out
-        else:
-            file_suff = channels_leave_out[0]
+        # if type(channels_leave_out) is str:
+        #     file_suff = channels_leave_out
+        # else:
+        #     file_suff = channels_leave_out[0]
+        file_suff = channels_leave_out[0]
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
@@ -148,12 +152,14 @@ if __name__=='__main__':
             # WCs = versions_dict[channel]['EFT_ops']
             # if not WC in WCs:
             #     continue
-            print('Leaving out: ', channel)
+            #print('Leaving out: ', channel)
+            print('Leaving out: ', channels_leave_out)
             # v = versions_dict[channel]['v']
             # VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType,
+                #combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType,
+                combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType=args.ScanType,
                                                    StatOnly=StatOnly, SignalInject=SignalInject, WC=WC,
                                                    file_suff=file_suff)
         print('=================================================\n')
