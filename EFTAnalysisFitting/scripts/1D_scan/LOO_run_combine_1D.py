@@ -171,9 +171,15 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
             grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
         # dim8
         elif 'FT' in WC:
-            grid_dict = {'LL': -5, 'UL': 5, 'steps': 11}
+            if WC == 'FT9':
+                grid_dict = {'LL': -10, 'UL': 10, 'steps': 21}
+            else:
+                grid_dict = {'LL': -5, 'UL': 5, 'steps': 11}
         elif 'FM' in WC:
-            grid_dict = {'LL': -8, 'UL': 8, 'steps': 17}
+            if WC == 'FM3':
+                grid_dict = {'LL': -12, 'UL': 12, 'steps': 25}
+            else:
+                grid_dict = {'LL': -8, 'UL': 8, 'steps': 17}
         elif 'FS' in WC:
             #grid_dict = {'LL': -20, 'UL': 20, 'steps': 41}
             grid_dict = {'LL': -40, 'UL': 40, 'steps': 81}
