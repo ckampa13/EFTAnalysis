@@ -9,40 +9,40 @@ shapes data_obs  sch_1FJ   /uscms_data/d3/ckampa/EFTAnalysis/EFTAnalysisFitting/
 bin          sch_1FJ
 observation  -1     
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                                        sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ
-process                                    sm       Top      WW       WJets    ZZ       DY       WZ     
-process                                    0        1        2        3        4        5        6      
-rate                                       -1       -1       -1       -1       -1       -1       -1     
+bin                                      sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ  sch_1FJ
+process                                  sm       Top      WW       WJets    ZZ       DY       WZ     
+process                                  0        1        2        3        4        5        6      
+rate                                     -1       -1       -1       -1       -1       -1       -1     
 ----------------------------------------------------------------------------------------------------------------------------------
-PDF_                    shape              1.0      -        -        -        -        -        -      
-QCDScale_               shape              1.0      -        -        -        -        -        -      
-alphas_                 shape              1.0      -        -        -        -        -        -      
-btag_sf_                shape              1.0      -        -        -        -        -        -      
-jer_                    shape              1.0      -        -        -        -        -        -      
-jes_                    shape              1.0      -        -        -        -        -        -      
-lep_sf_el_1_            shape              1.0      -        -        -        -        -        -      
-lep_sf_el_2_            shape              1.0      -        -        -        -        -        -      
-lep_sf_el_3_            shape              1.0      -        -        -        -        -        -      
-lep_sf_el_4_            shape              1.0      -        -        -        -        -        -      
-lep_sf_el_5_            shape              1.0      -        -        -        -        -        -      
-lep_sf_el_6_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_1_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_2_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_3_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_4_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_5_            shape              1.0      -        -        -        -        -        -      
-lep_sf_mu_6_            shape              1.0      -        -        -        -        -        -      
-lumi_                   shape              1.0      -        -        -        -        -        -      
-norm_DY_                shape              -        -        -        -        -        1.0      -      
-norm_Top_2L_SS_1FJ_     shape              -        1.0      -        -        -        -        -      
-norm_WJets_             shape              -        -        -        1.0      -        -        -      
-norm_WJets_2L_SS_1FJ_   shape              -        -        -        -        -        -        1.0    
-norm_WW_                shape              -        -        1.0      -        -        -        -      
-norm_ZZ_                shape              -        -        -        -        1.0      -        -      
-pu_weight_              shape              1.0      -        -        -        -        -        -      
-statonly                lnN                1.0001   1.0001   1.0001   1.0001   1.0001   1.0001   1.0001 
-trigger_weight_2L_      shape              1.0      -        -        -        -        -        -      
-wtag_fj_sf_             shape              1.0      -        -        -        -        -        -      
-allsyst group = norm_Top_2L_SS_1FJ_ norm_DY_ pu_weight_ norm_WW_ lep_sf_el_4_ norm_WJets_ PDF_ lep_sf_mu_1_ norm_WJets_2L_SS_1FJ_ btag_sf_ lep_sf_el_3_ lumi_ lep_sf_mu_6_ lep_sf_el_5_ lep_sf_mu_5_ alphas_ lep_sf_mu_4_ trigger_weight_2L_ QCDScale_ jer_ lep_sf_el_2_ wtag_fj_sf_ lep_sf_mu_2_ norm_ZZ_ lep_sf_el_1_ lep_sf_mu_3_ jes_ lep_sf_el_6_
+PDF_                    shape            1.0      -        -        -        -        -        -      
+QCDScale_               shape            1.0      -        -        -        -        -        -      
+alphas_                 shape            1.0      -        -        -        -        -        -      
+btag_sf_                shape            1.0      -        -        -        -        -        -      
+jer_                    shape            1.0      -        -        -        -        -        -      
+jes_                    shape            1.0      -        -        -        -        -        -      
+lep_sf_el_1_            shape            1.0      -        -        -        -        -        -      
+lep_sf_el_2_            shape            1.0      -        -        -        -        -        -      
+lep_sf_el_3_            shape            1.0      -        -        -        -        -        -      
+lep_sf_el_4_            shape            1.0      -        -        -        -        -        -      
+lep_sf_el_5_            shape            1.0      -        -        -        -        -        -      
+lep_sf_el_6_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_1_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_2_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_3_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_4_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_5_            shape            1.0      -        -        -        -        -        -      
+lep_sf_mu_6_            shape            1.0      -        -        -        -        -        -      
+lumi_                   shape            1.0      -        -        -        -        -        -      
+norm_DY_                shape            -        -        -        -        -        1.0      -      
+norm_Top_2L_SS_1FJ_     shape            -        1.0      -        -        -        -        -      
+norm_WJets_             shape            -        -        -        1.0      -        -        -      
+norm_WW_                shape            -        -        1.0      -        -        -        -      
+norm_WZ_2L_SS_1FJ_      shape            -        -        -        -        -        -        1.0    
+norm_ZZ_                shape            -        -        -        -        1.0      -        -      
+pu_weight_              shape            1.0      -        -        -        -        -        -      
+statonly                lnN              1.0001   1.0001   1.0001   1.0001   1.0001   1.0001   1.0001 
+trigger_weight_2L_      shape            1.0      -        -        -        -        -        -      
+wtag_fj_sf_             shape            1.0      -        -        -        -        -        -      
+allsyst group = norm_Top_2L_SS_1FJ_ norm_DY_ pu_weight_ norm_WW_ lep_sf_el_4_ norm_WJets_ PDF_ lep_sf_mu_1_ btag_sf_ lep_sf_el_3_ lumi_ lep_sf_mu_6_ lep_sf_el_5_ lep_sf_mu_5_ alphas_ lep_sf_mu_4_ trigger_weight_2L_ QCDScale_ jer_ lep_sf_el_2_ wtag_fj_sf_ norm_WZ_2L_SS_1FJ_ lep_sf_mu_2_ norm_ZZ_ lep_sf_el_1_ lep_sf_mu_3_ jes_ lep_sf_el_6_
 nosyst group = statonly
 sch_1FJ autoMCStats 0 0 1
