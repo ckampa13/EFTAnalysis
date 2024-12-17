@@ -8,7 +8,7 @@ echo "LOGDIR=${LOGDIR}"
 if [[ -z "$1" ]]; then
     S="_All2D"
 else
-    L=$1
+    S=$1
 fi
 
 echo Performing scan type: ${S}
