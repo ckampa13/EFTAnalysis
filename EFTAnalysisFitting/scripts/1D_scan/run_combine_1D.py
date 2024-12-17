@@ -33,11 +33,11 @@ from MISC_CONFIGS import (
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
-LIM_VAL = 10
+# LIM_VAL = 10
 #LIM_VAL = 20
 #LIM_VAL = 50
 # LIM_VAL = 100
-# LIM_VAL = 200 # DEFAULT
+LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
 # always use the same list of WCs to freeze while profiling
