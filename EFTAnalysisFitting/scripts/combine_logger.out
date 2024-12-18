@@ -1,13 +1,6 @@
 INFO: (function: applyOptionsBase) FitterAlgoBase.cc: 113 -- Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer were taken where option not specified)
 INFO: (function: run) Combine.cc: 679 -- Freezing the following parameters: 
 INFO: (function: run) Combine.cc: 682  r 
-INFO: (function: run) Combine.cc: 682  k_cHDD 
-INFO: (function: run) Combine.cc: 682  k_cHbox 
-INFO: (function: run) Combine.cc: 682  k_cll1 
-INFO: (function: run) Combine.cc: 682  k_cHB 
-INFO: (function: run) Combine.cc: 682  k_cHl3 
-INFO: (function: run) Combine.cc: 682  k_cHWB 
-INFO: (function: run) Combine.cc: 682  k_cHW 
 INFO: (function: generateAsimov) ToyMCSamplerOpt.cc: 139 -- Using internal logic for binned/unbinned Asimov dataset generation
 INFO: (function: generateWithHisto) ToyMCSamplerOpt.cc: 214 -- Generating asimov with histogram for pdf pdf_binch0L_2FJsch_obsOnly: in 7 x-bins
 INFO: (function: generateAsimov) ToyMCSamplerOpt.cc: 139 -- Using internal logic for binned/unbinned Asimov dataset generation
