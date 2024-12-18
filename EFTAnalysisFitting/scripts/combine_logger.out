@@ -22,5 +22,10 @@ INFO: (function: generateWithHisto) ToyMCSamplerOpt.cc: 214 -- Generating asimov
 INFO: (function: generateAsimov) ToyMCSamplerOpt.cc: 139 -- Using internal logic for binned/unbinned Asimov dataset generation
 INFO: (function: generateWithHisto) ToyMCSamplerOpt.cc: 214 -- Generating asimov with histogram for pdf pdf_binch2L_OSsch_SFnoZ_obsOnly: in 7 x-bins
 INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=-1
+DEBUG: (function: improveOnce) CascadeMinimizer.cc: 213 -- Minimization ended with latest status != 0 or 1
+DEBUG: (function: improve) CascadeMinimizer.cc: 135 -- Failed minimization with Minuit2, Migrad and tolerance 0.1
+DEBUG: (function: improve) CascadeMinimizer.cc: 146 -- Will fallback to minimization using Migrad, strategy 0 and tolerance 0.2
+INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.2
 INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
 INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
