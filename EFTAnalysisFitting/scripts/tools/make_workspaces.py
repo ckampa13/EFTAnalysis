@@ -19,7 +19,7 @@ from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
 str_module_LinO = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingLinearEFTNegative:analiticAnomalousCouplingLinearEFTNegative'
-str_extra_PO_LinO = ' --PO reuseCompleteDataCards'
+str_extra_PO_LinO = ' --PO reuseCompleteDatacards'
 x_flag = '--X-allow-no-signal'
 
 # all bins in a subchannel / channel
