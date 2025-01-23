@@ -65,7 +65,7 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel to leave out? ["all" (default, looping), "all_tau", "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+                        help='Which channel to leave out? ["all" (default, looping), "all_tau" (remove tau channels), "not_tau" (combine tau channels), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-d', '--Dimension',
                         help='Which dim of EFT ops to process? "all" (default), "dim6", "dim8"')
     parser.add_argument('-s', '--ScanType',
@@ -79,7 +79,7 @@ if __name__=='__main__':
     if args.Channel is None:
         args.Channel = 'all'
     if args.Channel == 'all':
-        channels = datacard_dict.keys()+['all_tau']
+        channels = datacard_dict.keys()+['all_tau', 'not_tau']
     else:
         channels = [args.Channel]
     if args.Dimension == 'all':
@@ -134,6 +134,10 @@ if __name__=='__main__':
                 channels_leave_out = [ch for ch in datacard_dict.keys() if ch[-3:] == '_1T']
                 file_suff = 'all_tau'
                 print('"all_tau" has the following channels: %s' % channels_leave_out)
+            elif channel == 'not_tau':
+                channels_leave_out = [ch for ch in datacard_dict.keys() if ch[-3:] != '_1T']
+                file_suff = 'not_tau'
+                print('"not_tau" has the following channels: %s' % channels_leave_out)
             else:
                 channels_leave_out = [channel]
                 file_suff = None

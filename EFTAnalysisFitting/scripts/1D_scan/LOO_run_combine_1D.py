@@ -224,7 +224,7 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel to leave out? ["all" (looping, not recommended), "all_tau", "0Lepton_2FJ" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+                        help='Which channel to leave out? ["all" (default, looping), "all_tau" (remove tau channels), "not_tau" (combine tau channels), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "dim6", "dim8", "cW", ...]')
     parser.add_argument('-s', '--ScanType',
@@ -241,7 +241,7 @@ if __name__=='__main__':
         args.Channel = '0Lepton_2FJ'
     # list of channels
     if args.Channel == 'all':
-        channels = datacard_dict.keys()+['all_tau']
+        channels = datacard_dict.keys()+['all_tau', 'not_tau']
     else:
         channels = [args.Channel]
     if args.WC is None:
