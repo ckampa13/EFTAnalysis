@@ -39,9 +39,9 @@ LIM_VAL = 10
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+# prof_freeze_WCs = []
 # full analysis
-# prof_freeze_WCs = ['cll1']
+prof_freeze_WCs = ['cll1']
 
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 # --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \

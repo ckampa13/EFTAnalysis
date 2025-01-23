@@ -34,7 +34,56 @@ from MISC_CONFIGS import (
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
 # LIM_VAL = 20
-LIM_VAL = 100
+#LIM_VAL = 100
+
+# constant value to limit the WCs when profiling
+LIM_VAL = 10
+#LIM_VAL = 20
+#LIM_VAL = 50
+# LIM_VAL = 100
+# LIM_VAL = 200 # DEFAULT
+#LIM_VAL = 500
+
+# always use the same list of WCs to freeze while profiling
+# None (full treatment)
+prof_freeze_WCs = []
+# turning some off
+# good with range -10,10 for 1L and combination with 2L_SS
+#prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
+#prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
+# 0L debug
+# 50 limit
+#prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB'] # good -- results agree with 1D
+#prof_freeze_WCs = ['cll1'] # good! some signs of bad behavior for larger cW (3FJ), but seems ok. mild degradation from 1D
+# 2L_OS debugs -- SFZ fine, SFnoZ and OF weird
+#prof_freeze_WCs = ['cHWB', 'cHDD', 'cHbox']
+# prof_freeze_WCs = ['cll1']
+
+# original
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+--X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND"""
+# extra options -- with outputs of best fit values for nuisances and profiled values
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
+# extra options -- with outputs of best fit values for nuisances and profiled values; include RooFit results
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD --saveFitResult
+# """
+# (modified by hand) extra options -- with outputs of best fit values for nuisances and profiled values
+# prevent negative bin yields from forcing MIGRAD to back out of the region.
+# secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --saveSpecifiedNuis all"""# \
+# --trackParameters k_cW,k_cHq3,k_cHq1,k_cHu,k_cHd,k_cHW,k_cHWB,k_cHl3,k_cHB,k_cll1,k_cHbox,k_cHDD"""
+
+# extras
+# don't back out of negative regions
+extra_no_backout = " --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT"
+extra_track_params = " --saveSpecifiedNuis all --trackParameters "
 
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
@@ -85,7 +134,69 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     return grid_dict, prec
 
 def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20.):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True, fastScan=False, Backout=False, TrackParams=False, WCs_all=dim6_WCs):
+    points = grid_dict['steps']
+    LL = grid_dict['LL']
+    UL = grid_dict['UL']
+    cmd_str = 'combine -M %s %s --algo=grid --points %s ' % (method, workspace_file, points)
+    cmd_str += '--alignEdges 1 %s --redefineSignalPOIs k_%s ' % (asimov_str, WC)
+    if with_syst:
+        freeze_group = 'nosyst'
+    else:
+        freeze_group = 'allsyst'
+    if WCs_freeze is None:
+        if True:
+        # if freeze_group == 'allsyst':
+            cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
+        else:
+            # TEST remove PDF
+            cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r ' % freeze_group
+    else:
+        WCs_ = ['k_'+w for w in WCs_freeze]
+        WCs_str = ','.join(WCs_)
+        if True:
+        # if freeze_group == 'allsyst':
+            cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
+        else:
+            # TEST remove PDF
+            cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
+    cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
+    if WCs_limit is None:
+        # TEST LIMITING PDF
+        # cmd_str += ':PDF_=-2,2'
+        ###
+        cmd_str += ' '
+    else:
+        WCs_ = ['k_'+w for w in WCs_limit]
+        val = '%0.1f' % limit_val
+        mval = '%0.1f' % -limit_val
+        #WCs_str = ','.join(WCs_)
+        # WCs_str = ''
+        for WC_ in WCs_:
+            cmd_str += ':%s=%s,%s' % (WC_, mval, val)
+        # TEST LIMITING PDF
+        # cmd_str += ':PDF_=-2,2'
+        ###
+        cmd_str += ' '
+    # if fastScan:
+    #     # appends to "syst" part of the output file
+    #     name_str +='_fastScan'
+    cmd_str += '--verbose -1 -n %s' % name_str
+    if with_extra:
+        cmd_str += secret_options
+    if fastScan:
+        # nuisance parameters are fixed to their best-fit values
+        cmd_str += ' --fastScan'
+    if not Backout:
+        # args to prevent backout from regions with negative yield
+        cmd_str += extra_no_backout
+    if TrackParams:
+        # add nuisance tracking and POIs
+        cmd_str += extra_track_params
+        cmd_str += ','.join(['k_'+w for w in WCs_all])
+    return cmd_str
+
+    '''
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -115,10 +226,15 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         cmd_str += ' '
     cmd_str += '--verbose -1 -n %s' % name_str
     return cmd_str
+    '''
 
 # full analysis
 def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff=''):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', Backout=False, TrackParams=False):
+    if dim == 'dim6':
+        WCs_track = dim6_WCs
+    else:
+        WCs_track = dim8_WCs
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
@@ -195,7 +311,8 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
     cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict, asi_str,
                                         name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                         # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
-                                        WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                        WCs_limit=WCs_limit, limit_val=LIM_VAL,
+                                        Backout=Backout, TrackParams=False, WCs_all=WCs_track)
     print('Coarse scan to determine appropriate WC range and number of steps:')
     print(cmd_str)
     proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
@@ -210,7 +327,8 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
         name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                             name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
-                                            WCs_limit=WCs_limit, limit_val=LIM_VAL)
+                                            WCs_limit=WCs_limit, limit_val=LIM_VAL,
+                                            Backout=Backout, TrackParams=False, WCs_all=WCs_track)
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
     print('Finished running combine. Expected file output: %s' % outfile)
@@ -237,6 +355,10 @@ if __name__=='__main__':
     parser.add_argument('-pc', '--PrecisionCoarse', help='What is desired precision / step size when POI range > 10? e.g. "0.5" (default)')
     parser.add_argument('-v', '--VersionSuff',
                         help='String to append on version number, e.g. for NDIM files. ["" (default), "_NDIM",...]')
+    parser.add_argument('-B', '--Backout',
+                        help='Back out of regions where yield becomes negative? "n" (default), "y"')
+    parser.add_argument('-T', '--TrackParams',
+                        help='Save POI values from the scan (useful for profiling)? "n" (default), "y"')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
@@ -283,6 +405,16 @@ if __name__=='__main__':
         vsuff = ''
     else:
         vsuff = args.VersionSuff
+    if args.Backout is None:
+        Backout = 'n'
+    else:
+        Backout = args.Backout
+    Backout_bool = Backout == 'y'
+    if args.TrackParams is None:
+        TrackParams = 'n'
+    else:
+        TrackParams = args.TrackParams
+    TrackParams_bool = TrackParams == 'y'
     if args.Verbose is None:
         args.Verbose = 0
     else:
@@ -310,6 +442,7 @@ if __name__=='__main__':
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
-                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff,
+                             Backout=Backout_bool, TrackParams=TrackParams_bool)
             print('=================================================\n')
         #########################
