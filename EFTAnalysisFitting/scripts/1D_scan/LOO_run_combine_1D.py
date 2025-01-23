@@ -118,7 +118,7 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
 
 # full analysis
 def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff=''):
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
@@ -138,7 +138,8 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
     print('Full Analysis:')
     sname_ch = 'all'
     sname_sch = '_combined_LOO_'+channel_leave_out
-    version = 'vCONFIG_VERSIONS'
+    #version = 'vCONFIG_VERSIONS'
+    version = 'vCONFIG_VERSIONS'+vsuff
     SO_lab = ''
     # SO_lab = '_StatOnly' # stat only
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
@@ -234,6 +235,8 @@ if __name__=='__main__':
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-p', '--Precision', help='What is desired precision / step size? e.g. "0.005" (default)')
     parser.add_argument('-pc', '--PrecisionCoarse', help='What is desired precision / step size when POI range > 10? e.g. "0.5" (default)')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for NDIM files. ["" (default), "_NDIM",...]')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
@@ -276,6 +279,10 @@ if __name__=='__main__':
         args.PrecisionCoarse = 0.5
     else:
         args.PrecisionCoarse = float(args.PrecisionCoarse)
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     if args.Verbose is None:
         args.Verbose = 0
     else:
@@ -303,6 +310,6 @@ if __name__=='__main__':
                              ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
-                             stdout=stdout, verbose=args.Verbose)
+                             stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
             print('=================================================\n')
         #########################

@@ -21,7 +21,7 @@ str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNeg
 x_flag = '--X-allow-no-signal'
 
 # full analysis
-def make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None, file_suff=None):
+def make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs, ScanType, verbose=1, StatOnly=False, SignalInject=False, WC=None, file_suff=None, vsuff=''):
     if file_suff is None:
         file_suff = channels_leave_out[0]
     if StatOnly:
@@ -34,13 +34,13 @@ def make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs, Sca
     else:
         suff_purp = ''
     # tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='txt')
     dc_file = os.path.join(dcdir, tfile_comb)
     print('Full Analysis')
     cmd_str = 'text2workspace.py '
     cmd_str += '%s %s ' % (dc_file, str_module)
     # wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
-    wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='root')
+    wsfile = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='root')
     wsfile = os.path.join(datacard_dir, 'workspaces', 'leave_one_out', wsfile)
     cmd_str += '-o %s %s ' % (wsfile, x_flag)
     # add correct WCs
@@ -72,6 +72,8 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for NDIM files. ["" (default), "_NDIM",...]')
     parser.add_argument('-V', '--Verbose',
                         help='Include "combine" output? 0 / 1 (default). "combine" output included if Verbose>0.')
     args = parser.parse_args()
@@ -96,6 +98,10 @@ if __name__=='__main__':
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     if args.Verbose is None:
         args.Verbose = 1
     else:
@@ -146,6 +152,6 @@ if __name__=='__main__':
                 print('Stat only? ', StatOnly)
                 make_workspace_full_analysis_leave_one_out(channels_leave_out, dim, WCs=WCs, ScanType=args.ScanType,
                                                            verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC,
-                                                           file_suff=file_suff)
+                                                           file_suff=file_suff, vsuff=vsuff)
         print('=================================================\n')
         #########################

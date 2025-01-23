@@ -12,7 +12,7 @@ from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 # combine all channels
 # def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
-def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None):
+def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None, vsuff=''):
     if type(channels_leave_out) is str:
         print("Caution! 'channels_leave_out' should be a list, not a str. Creating a length 1 list.")
         channels_leave_out = [channels_leave_out]
@@ -46,7 +46,10 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
             if not has_dim8:
                 continue
         str_ += ch
-        v = versions_dict[ch]['v']
+        if vsuff == '_NDIM':
+            v = versions_dict[ch]['v_NDIM']
+        else:
+            v = versions_dict[ch]['v']
         version = 'v' + str(v)
         if versions_dict[ch]['lumi'] == '2018':
             str_ + ' (2018 scaled)'
@@ -73,7 +76,7 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
     else:
         suff_purp = ''
     #tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
-    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
+    tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='txt')
     comb_file = os.path.join(datacard_dir, 'combined_datacards', 'leave_one_out', tfile_comb)
     cmd_str += ' > ' + comb_file
     # run combine script
@@ -90,6 +93,8 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for NDIM files. ["" (default), "_NDIM",...]')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -116,6 +121,10 @@ if __name__=='__main__':
         if not WC in dim6_ops:
             dims.append('dim8')
             break
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     #########################
     # outer loop (over EFT dimension)
     for dim in dims:
@@ -164,7 +173,7 @@ if __name__=='__main__':
                 print('Stat only? ', StatOnly)
                 #combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType,
                 combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType=args.ScanType,
-                                                   StatOnly=StatOnly, SignalInject=SignalInject, WC=WC,
+                                                   StatOnly=StatOnly, SignalInject=SignalInject, WC=WC, vsuff=vsuff,
                                                    file_suff=file_suff)
         print('=================================================\n')
         #########################
