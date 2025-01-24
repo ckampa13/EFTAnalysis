@@ -10,13 +10,20 @@ from CONFIG_VERSIONS import versions_dict, WC_ALL
 from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 # combine subchannels in a channel
-def combine_channel_subchannels(channel, version, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, vsuff='', subdir=''):
+def combine_channel_subchannels(channel, version, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, vsuff='', subdir='', Unblind=False):
+    if Unblind:
+        ch_unbl = versions_dict[channel]['unblind']
+        if not ch_unbl:
+            print('Channel %s is not unblinded, skipping!' % channel)
+            return
     version_full = version + vsuff
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
         SO_lab = ''
     dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
     cmd_str = 'combineCards.py'
@@ -50,7 +57,7 @@ def combine_channel_subchannels(channel, version, datacard_dict, dim, ScanType, 
     else:
         suff_purp = ''
     tfile_comb = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version=version_full, file_type='txt')
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'channel', tfile_comb)
+    comb_file = os.path.join(dcdir, 'combined_datacards', 'channel', tfile_comb)
     cmd_str += ' > '+ comb_file
     #print(cmd_str)
     # run combine script
@@ -58,12 +65,14 @@ def combine_channel_subchannels(channel, version, datacard_dict, dim, ScanType, 
     proc = subprocess.call(cmd_str, shell=True, stdout=stdout)
 
 # combine all channels
-def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, vsuff='', subdir=''):
+def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, vsuff='', subdir='', Unblind=False):
     if StatOnly:
         SO_lab = '_StatOnly'
     else:
         SO_lab = ''
     dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
     channels = datacard_dict.keys()
     cmd_str = 'combineCards.py'
     str_ = 'Channel: '
@@ -77,6 +86,10 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS', '1Lepton_1T', '2Lepton_1T']):
     # ALL
     for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS']):
+        if Unblind:
+            ch_unbl = versions_dict[ch]['unblind']
+            if not ch_unbl:
+                continue
         # channels may not always have dim8
         has_NDIM = True
         if vsuff == '_NDIM':
@@ -146,7 +159,7 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     else:
         suff_purp = ''
     tfile_comb = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='txt')
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis', tfile_comb)
+    comb_file = os.path.join(dcdir, 'combined_datacards', 'full_analysis', tfile_comb)
     cmd_str += ' > ' + comb_file
     print(cmd_str)
     # run combine script
@@ -163,6 +176,7 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-w', '--WC',
                         help='Which Wilson Coefficient to study in the signal injection case? ["cW", ...]')
     parser.add_argument('-v', '--VersionSuff',
@@ -183,6 +197,12 @@ if __name__=='__main__':
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     if args.WC is None:
         WC_SI = 'cW'
     else:
@@ -252,7 +272,7 @@ if __name__=='__main__':
             VERSION = 'v' + str(v)
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                combine_channel_subchannels(channel, VERSION, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, subdir=subdir)
+                combine_channel_subchannels(channel, VERSION, datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, subdir=subdir, Unblind=Unblind)
         print('=================================================\n')
         #########################
         # combine all channels
@@ -260,6 +280,6 @@ if __name__=='__main__':
         print('=================================================')
         for StatOnly in [False, True]:
             print('Stat only? ', StatOnly)
-            combine_all_channels(datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, subdir=subdir)
+            combine_all_channels(datacard_dict, dim, ScanType=args.ScanType, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, subdir=subdir, Unblind=Unblind)
         print('=================================================\n')
         #########################

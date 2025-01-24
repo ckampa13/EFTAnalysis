@@ -197,7 +197,7 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
 
 # all bins in a subchannel / channel
 def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
     version_full = version + vsuff
     if dim == 'dim6':
         WCs_track = dim6_WCs
@@ -220,8 +220,11 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
         asi = 'Asimov'
     else:
         asi = 'Data'
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'single_bin')
-    outdir = os.path.join(datacard_dir, 'output', 'single_bin')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'single_bin')
+    outdir = os.path.join(dcdir, 'output', 'single_bin')
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -314,7 +317,7 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
 
 # all subchannels in a channel
 def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False):
+                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
     version_full = version + vsuff
     if dim == 'dim6':
         WCs_track = dim6_WCs
@@ -341,8 +344,11 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'subchannel')
-    outdir = os.path.join(datacard_dir, 'output', 'subchannel')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'subchannel')
+    outdir = os.path.join(dcdir, 'output', 'subchannel')
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -441,7 +447,7 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
 
 # channels
 def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
     if dim == 'dim6':
         WCs_track = dim6_WCs
     else:
@@ -467,8 +473,11 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
-    outdir = os.path.join(datacard_dir, 'output', 'channel')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'channel')
+    outdir = os.path.join(dcdir, 'output', 'channel')
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -612,7 +621,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
 
 # full analysis
 def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
     if dim == 'dim6':
         WCs_track = dim6_WCs
     else:
@@ -638,8 +647,11 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'full_analysis')
-    outdir = os.path.join(datacard_dir, 'output', 'full_analysis')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'full_analysis')
+    outdir = os.path.join(dcdir, 'output', 'full_analysis')
     os.chdir(outdir)
     print('Full Analysis:')
     sname_ch = 'all'
@@ -789,6 +801,7 @@ if __name__=='__main__':
     parser.add_argument('-f', '--fastScan',
                         help='Do you want to run a "fast scan" where the nuisance parameters are fixed to best-fit values (instead of profiling)? "n" (default) / "y"')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-p', '--Precision', help='What is desired precision / step size? e.g. "0.001" (default)')
@@ -856,6 +869,12 @@ if __name__=='__main__':
     else:
         asi_str = ''
         args.Asimov=False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -942,7 +961,8 @@ if __name__=='__main__':
                                  #stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
                                  stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                                  fastScan=fastScan, LinearOnly=LinearOnly_bool,
-                                 Backout=Backout_bool, TrackParams=TrackParams_bool)
+                                 Backout=Backout_bool, TrackParams=TrackParams_bool,
+                                 Unblind=Unblind)
             print('=================================================\n')
         #########################
         # subchannel calculations
@@ -962,7 +982,8 @@ if __name__=='__main__':
                                  # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
                                  stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                                  fastScan=fastScan, LinearOnly=LinearOnly_bool,
-                                 Backout=Backout_bool, TrackParams=TrackParams_bool)
+                                 Backout=Backout_bool, TrackParams=TrackParams_bool,
+                                 Unblind=Unblind)
             print('=================================================\n')
         #########################
         # channel calculations
@@ -976,7 +997,8 @@ if __name__=='__main__':
                              # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
                              stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                              fastScan=fastScan, LinearOnly=LinearOnly_bool,
-                             Backout=Backout_bool, TrackParams=TrackParams_bool)
+                             Backout=Backout_bool, TrackParams=TrackParams_bool,
+                             Unblind=Unblind)
             print('=================================================\n')
         #########################
         # full analysis calculation
@@ -990,6 +1012,7 @@ if __name__=='__main__':
                              # stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_loop)
                              stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                              fastScan=fastScan, LinearOnly=LinearOnly_bool,
-                             Backout=Backout_bool, TrackParams=TrackParams_bool)
+                             Backout=Backout_bool, TrackParams=TrackParams_bool,
+                             Unblind=Unblind)
             print('=================================================\n')
         #########################

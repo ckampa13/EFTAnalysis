@@ -230,7 +230,7 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
 
 # full analysis
 def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', Backout=False, TrackParams=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', Backout=False, TrackParams=False, Unblind=False):
     if dim == 'dim6':
         WCs_track = dim6_WCs
     else:
@@ -248,8 +248,11 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'leave_one_out')
-    outdir = os.path.join(datacard_dir, 'output', 'leave_one_out')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'leave_one_out')
+    outdir = os.path.join(dcdir, 'output', 'leave_one_out')
     os.chdir(outdir)
     print('Full Analysis:')
     sname_ch = 'all'
@@ -349,6 +352,7 @@ if __name__=='__main__':
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default), "_1D" (freeze WCs)]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-p', '--Precision', help='What is desired precision / step size? e.g. "0.005" (default)')
@@ -389,6 +393,12 @@ if __name__=='__main__':
     else:
         asi_str = ''
         args.Asimov=False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -443,6 +453,7 @@ if __name__=='__main__':
                              SignalInject=SignalInject, Precision=args.Precision,
                              PrecisionCoarse=args.PrecisionCoarse,
                              stdout=stdout, verbose=args.Verbose, vsuff=vsuff,
-                             Backout=Backout_bool, TrackParams=TrackParams_bool)
+                             Backout=Backout_bool, TrackParams=TrackParams_bool,
+                             Unblind=Unblind)
             print('=================================================\n')
         #########################

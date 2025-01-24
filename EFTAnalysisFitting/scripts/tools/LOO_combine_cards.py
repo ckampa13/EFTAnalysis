@@ -12,7 +12,7 @@ from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
 # combine all channels
 # def combine_all_channels_leave_one_out(channel_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None):
-def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None, vsuff=''):
+def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType, StatOnly, SignalInject=False, WC=None, file_suff=None, vsuff='', Unblind=False):
     if type(channels_leave_out) is str:
         print("Caution! 'channels_leave_out' should be a list, not a str. Creating a length 1 list.")
         channels_leave_out = [channels_leave_out]
@@ -27,6 +27,8 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
     else:
         SO_lab = ''
     dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
     channels = datacard_dict.keys()
     cmd_str = 'combineCards.py'
     str_ = 'Channel: '
@@ -35,6 +37,10 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
         # if ch == channel_leave_out:
         if ch in channels_leave_out:
             continue
+        if Unblind:
+            ch_unbl = versions_dict[ch]['unblind']
+            if not ch_unbl:
+                continue
         # channels may not always have dim8
         WCs_ch = versions_dict[ch]['EFT_ops']
         if dim=='dim8':
@@ -77,7 +83,7 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
         suff_purp = ''
     #tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+channel_leave_out, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS', file_type='txt')
     tfile_comb = template_filename.substitute(channel='all', subchannel='_combined_LOO_'+file_suff, WC=dim, ScanType=ScanType, purpose='DataCard_Yields'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='txt')
-    comb_file = os.path.join(datacard_dir, 'combined_datacards', 'leave_one_out', tfile_comb)
+    comb_file = os.path.join(dcdir, 'combined_datacards', 'leave_one_out', tfile_comb)
     cmd_str += ' > ' + comb_file
     # run combine script
     stdout = None
@@ -93,6 +99,7 @@ if __name__=='__main__':
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be combined. n(default)/y.')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-v', '--VersionSuff',
                         help='String to append on version number, e.g. for NDIM files. ["" (default), "_NDIM",...]')
     args = parser.parse_args()
@@ -109,6 +116,12 @@ if __name__=='__main__':
         SignalInject = False
     else:
         SignalInject = args.SignalInject == 'y'
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     # if args.WC is None:
     #     args.WC = 'cW'
     # check if dim6 and dim8 in WC_ALL
@@ -174,6 +187,6 @@ if __name__=='__main__':
                 #combine_all_channels_leave_one_out(channel, datacard_dict, dim, ScanType=args.ScanType,
                 combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, ScanType=args.ScanType,
                                                    StatOnly=StatOnly, SignalInject=SignalInject, WC=WC, vsuff=vsuff,
-                                                   file_suff=file_suff)
+                                                   file_suff=file_suff, Unblind=Unblind)
         print('=================================================\n')
         #########################
