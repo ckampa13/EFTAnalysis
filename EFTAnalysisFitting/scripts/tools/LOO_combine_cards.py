@@ -33,6 +33,7 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
     cmd_str = 'combineCards.py'
     str_ = 'Channel: '
     n_ch_added = 0
+    n_sch_added = 0
     for i, ch in enumerate(channels):
         # if ch == channel_leave_out:
         if ch in channels_leave_out:
@@ -42,7 +43,23 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
             if not ch_unbl:
                 continue
         # channels may not always have dim8
-        WCs_ch = versions_dict[ch]['EFT_ops']
+        has_NDIM = True
+        if vsuff == '_NDIM':
+            if 'v_NDIM' in versions_dict[ch].keys():
+                has_NDIM = True
+                WCs_ch = versions_dict[ch]['EFT_ops_NDIM']
+            else:
+                has_NDIM = False
+                #WCs_ch = versions_dict[channel]['EFT_ops']
+                WCs_ch = []
+        else:
+            WCs_ch = versions_dict[ch]['EFT_ops']
+        # FIXME! This is a bit misleading. We pass through for 1D files
+        # as has_NDIM defaults to True.
+        if not has_NDIM:
+            continue
+        # channels may not always have dim8
+        # WCs_ch = versions_dict[ch]['EFT_ops']
         if dim=='dim8':
             has_dim8 = False
             for WC in WCs_ch:
@@ -57,6 +74,7 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
         else:
             v = versions_dict[ch]['v']
         version = 'v' + str(v)
+        version_full = version+vsuff
         if versions_dict[ch]['lumi'] == '2018':
             str_ + ' (2018 scaled)'
         sname_ch = datacard_dict[ch]['info']['short_name']
@@ -67,15 +85,19 @@ def combine_all_channels_leave_one_out(channels_leave_out, datacard_dict, dim, S
             # update subchannel name if there is rescaling
             if versions_dict[ch]['lumi'] == '2018':
                 sname_sch += '_2018_scaled'
-            tfile_ch = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
+            tfile_ch = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType, purpose='DataCard_Yields', proc=SO_lab, version=version_full, file_type='txt')
             if SignalInject:
                 dc_file = os.path.join(dcdir, ch, version, 'signal_injection_'+WC, tfile_ch)
             else:
                 dc_file = os.path.join(dcdir, ch, version, tfile_ch)
             dc_name = ' ch'+sname_ch+'sch'+sname_sch
             cmd_str += '%s=%s' % (dc_name, dc_file)
+            n_sch_added += 1
         str_ += ', '
     print(str_)
+    if n_sch_added < 1:
+        print('No channels to add, moving on...\n')
+        return
     # construct output file
     if SignalInject:
         suff_purp = '_SignalInject_'+WC
