@@ -171,7 +171,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     if WC in dim6_ops:
         suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
     else:
-        suff = r'$ / \Lambda^4$ [TeV$^{-4}$]$'
+        suff = r'$ / \Lambda^4$ [TeV$^{-4}$]'
     if WC == 'sm':
         suff = r' ($\mu_{\mathrm{SM}}$)'
     ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right', labelpad=-2.0)#, fontsize=20.)

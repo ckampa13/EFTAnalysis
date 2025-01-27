@@ -126,7 +126,7 @@ def make_summary_table(WCs, LLs, ULs, LLs_p, ULs_p, dim='dim6', tex_file=None):
     table += r"\hline" + "\n"
 
     # Add the rows to the table
-    for WC, val_L, val_U, val_L_p, val_U_p in zip(WCs, LLs, ULs, LLs_p, LLs_p):
+    for WC, val_L, val_U, val_L_p, val_U_p in zip(WCs, LLs, ULs, LLs_p, ULs_p):
         WC_p = WC_pretty_print_dict[WC].rstrip('$') + wc_suff
         table += f"{WC_p} & $[{val_L_p}, {val_U_p}]$ & $[{val_L}, {val_U}]$ \\\\" + "\n"
 

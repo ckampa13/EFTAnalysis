@@ -196,7 +196,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     # ULs_all = np.array(ULs_all)
     if WC == 'sm':
         #ax.set_xlim([xmin, xmax])
-        ax.set_xlim([-0.5, xmax])
+        #ax.set_xlim([-0.5, xmax])
+        ax.set_xlim([-0.5, 8.0])
     else:
         xlim_factor = 2.
         xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
@@ -271,6 +272,9 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
+        # DEBUG
+        # if '0Lepton_2FJ' in ch or '0Lepton_3FJ' in ch:
+        #     continue
         WCs = versions_dict[ch]['EFT_ops'] + ['sm']
         if not WC in WCs:
             continue

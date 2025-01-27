@@ -1,4 +1,5 @@
 import os
+import argparse
 import numpy as np
 # local imports
 import sys
@@ -128,6 +129,20 @@ def make_table(WCs, pdiffs, dim='dim6', tex_file=None):
 
 
 if __name__=='__main__':
+    # parse commmand line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--Dimension',
+                        help='Which dimension? ["all" (default), "dim6", "dim8"]')
+    args = parser.parse_args()
+    if args.Dimension is None:
+        dims = 'all'
+    else:
+        dims = args.Dimension
+    if dims == 'all':
+        dims_list = ['dim6', 'dim8']
+    else:
+        dims_list = [dims]
+
     dim_dict = {'dim6': dim6_WCs, 'dim8': dim8_WCs,
                 #'cW_test': ['cW'],
                 #'dim8_partial': ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4'],
@@ -137,7 +152,8 @@ if __name__=='__main__':
     # with syst
     results_dict = {}
     print('Limits with systematics...')
-    for dim in ['dim6', 'dim8']:
+    for dim in dims_list:
+    # for dim in ['dim6', 'dim8']:
     #for dim in ['cW_test']:
     # for dim in ['dim6', 'dim8_partial']:
         print(f'{dim} Current Limit Ranking (full analysis):')
@@ -146,12 +162,14 @@ if __name__=='__main__':
         print('\n')
     #print(results_dict)
     # make tables
-    for dim in ['dim6', 'dim8']:
+    for dim in dims_list:
+    # for dim in ['dim6', 'dim8']:
         make_table(results_dict[dim]['WCs_sorted'], results_dict[dim]['pdiffs'], dim=dim, tex_file=plotdir+f'tau_impact_{dim}.tex')
     # stat only
     results_dict_s = {}
     print('Limits with stat only...')
-    for dim in ['dim6', 'dim8']:
+    for dim in dims_list:
+    # for dim in ['dim6', 'dim8']:
     #for dim in ['cW_test']:
     # for dim in ['dim6', 'dim8_partial']:
         print(f'{dim} Current Limit Ranking (full analysis):')
