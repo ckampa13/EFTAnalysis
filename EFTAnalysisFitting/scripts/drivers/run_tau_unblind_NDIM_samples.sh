@@ -1,25 +1,29 @@
 #!/usr/bin/bash
 
-echo Running scripts for NDIM file for tau channels...
-echo Combining cards channel level...
-python tools/combine_cards.py -v _NDIM -U y
-echo Combining cards all taus...
-python tools/LOO_combine_cards.py -c not_tau -v _NDIM -U y
-echo Making workspaces for channel level...
-python tools/make_workspaces.py -c 1Lepton_1T -d dim6 -t c -v _NDIM -U y
-python tools/make_workspaces.py -c 2Lepton_1T -d dim6 -t c -v _NDIM -U y
-echo Making workspaces for tau combination...
-python tools/LOO_make_workspaces.py -c not_tau -d dim6 -v _NDIM -U y
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
+LOGDIR=$SCRIPT_DIR'/../../unblind/output/logs/tau/'
+echo "LOGDIR=${LOGDIR}"
+
+# echo Running scripts for NDIM file for tau channels...
+# echo Combining cards channel level...
+# python tools/combine_cards.py -v _NDIM -U y
+# echo Combining cards all taus...
+# python tools/LOO_combine_cards.py -c not_tau -v _NDIM -U y
+# echo Making workspaces for channel level...
+# python tools/make_workspaces.py -c 1Lepton_1T -d dim6 -t c -v _NDIM -U y
+# python tools/make_workspaces.py -c 2Lepton_1T -d dim6 -t c -v _NDIM -U y
+# echo Making workspaces for tau combination...
+# python tools/LOO_make_workspaces.py -c not_tau -d dim6 -v _NDIM -U y
 echo Running combine...
 echo Asimov...
 # cW only tests -- update -w to "dim6". also consider adding -s _All for profiling in another run
-python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w cW -t c -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y
-python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w cW -t c -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y
-python 1D_scan/LOO_run_combine_1D.py -c not_tau -w cW -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y
+python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w cW -t c -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}1L_1T_Asi_cW.txt 2>&1 &
+python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w cW -t c -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}2L_1T_Asi_cW.txt 2>&1 &
+python 1D_scan/LOO_run_combine_1D.py -c not_tau -w cW -s _1D -a y -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}tau_comb_Asi_cW.txt 2>&1 &
 echo Data...
-python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w cW -t c -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y
-python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w cW -t c -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y
-python 1D_scan/LOO_run_combine_1D.py -c not_tau -w cW -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y
+python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w cW -t c -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}1L_1T_Data_cW.txt 2>&1 &
+python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w cW -t c -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}2L_1T_Data_cW.txt 2>&1 &
+python 1D_scan/LOO_run_combine_1D.py -c not_tau -w cW -s _1D -a n -p 0.05 -pc 0.5 -v _NDIM -U y > ${LOGDIR}tau_comb_Data_cW.txt 2>&1 &
 
 # OLD BELOW
 # arguments: 1 (optional) -- profile or freeze other WCs, e.g. "_All2D" (default), "_2D"
