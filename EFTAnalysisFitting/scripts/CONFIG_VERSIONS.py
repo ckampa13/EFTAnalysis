@@ -103,23 +103,23 @@ versions_dict = {
     #'1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
     #'1Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #               'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs}, # added NDIM (to update 1D)
-    # '1Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-    #                'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # added NDIM; 1D signal fix
+    '1Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # added NDIM; 1D signal fix
     # '1Lepton_1T': {'v': 17, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 17, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
-    '1Lepton_1T': {'v': 19, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 19, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
+    # '1Lepton_1T': {'v': 19, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #                'v_NDIM': 19, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
     #'1Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-    # '2Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-    #                'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # added NDIM; 1D signal fix
+    '2Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # added NDIM; 1D signal fix
     # '2Lepton_1T': {'v': 17, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 17, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
-    '2Lepton_1T': {'v': 19, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 19, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
+    # '2Lepton_1T': {'v': 19, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #                'v_NDIM': 19, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
 
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
 }
