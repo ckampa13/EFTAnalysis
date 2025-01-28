@@ -194,7 +194,7 @@ python WC_quad_vs_linear_table.py
 
 # # NLL full combination and channels
 # # no signal injection -- WCs and SM
-# echo "Make NLL with full analysis and channels..."
+#echo "Make NLL with full analysis and channels..."
 # python summary_NLL_limits_plot.py
 # dim6 only
 # python summary_NLL_limits_plot.py -w dim6
