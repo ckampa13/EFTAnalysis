@@ -200,7 +200,8 @@ if __name__=='__main__':
         asi_str = ''
         args.Asimov=False
     if args.ExpectSignal is None:
-        expect_signal = None
+        #expect_signal = None
+        expect_signal = '1'
     else:
         expect_signal = args.ExpectSignal.strip()
     if args.Precision is None:
