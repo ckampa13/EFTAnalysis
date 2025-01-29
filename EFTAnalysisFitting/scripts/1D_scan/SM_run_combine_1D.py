@@ -30,6 +30,12 @@ METHOD = 'MultiDimFit'
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
 
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+--X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+--stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND"""
+
+extra_no_backout = " --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT"
+
 # str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
 # x_flag = '--X-allow-no-signal'
 ### SM RUN
@@ -37,7 +43,7 @@ rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py'
 
 # utility functions
 def construct_combine_cmd_str(datacard_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', expect_signal='1'):
+                              name_str, with_syst=True, method='MultiDimFit', expect_signal='1', with_extra=True, Backout=False):
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -54,12 +60,17 @@ def construct_combine_cmd_str(datacard_file, grid_dict, asimov_str,
     if not expect_signal is None:
         cmd_str += '--expectSignal %s ' % expect_signal
     cmd_str += '--verbose -1 -n %s' % name_str
+    if with_extra:
+        cmd_str += secret_options
+    if not Backout:
+        # args to prevent backout from regions with negative yield
+        cmd_str += extra_no_backout
     return cmd_str
 
 
 # channels
 def run_combine_channels(channels, datacard_dict, Asimov, asi_str,
-                     Precision, stdout, expect_signal='1', LL=-2, UL=4, verbose=0):
+                     Precision, stdout, expect_signal='1', LL=-2, UL=4, verbose=0, Backout=False):
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -92,7 +103,8 @@ def run_combine_channels(channels, datacard_dict, Asimov, asi_str,
             name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC='sm',ScanType='',version=version,syst=syst_label)
             cmd_str = construct_combine_cmd_str(dc_file, grid_dict, asi_str,
                                                 name_str, with_syst=syst_bool,
-                                                method=METHOD, expect_signal=expect_signal)
+                                                method=METHOD, expect_signal=expect_signal,
+                                                Backout=Backout)
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
         print('Finished running combine. Expected file output: %s' % outfile)
@@ -102,7 +114,7 @@ def run_combine_channels(channels, datacard_dict, Asimov, asi_str,
 
 # full analysis
 def run_combine_full_analysis(Asimov, asi_str, Precision,
-                              stdout, expect_signal='1', LL=-2, UL=4, verbose=0):
+                              stdout, expect_signal='1', LL=-2, UL=4, verbose=0, Backout=False):
     start_dir = os.getcwd()
     if Asimov:
         asi = 'Asimov'
@@ -133,7 +145,8 @@ def run_combine_full_analysis(Asimov, asi_str, Precision,
         name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC='sm',ScanType='',version=version,syst=syst_label)
         cmd_str = construct_combine_cmd_str(dc_file, grid_dict, asi_str,
                                             name_str, with_syst=syst_bool,
-                                            method=METHOD, expect_signal=expect_signal)
+                                            method=METHOD, expect_signal=expect_signal,
+                                            Backout=Backout)
         print(cmd_str)
         proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
     print('Finished running combine. Expected file output: %s' % outfile)
@@ -155,6 +168,8 @@ if __name__=='__main__':
     parser.add_argument('-p', '--Precision', help='What is desired precision / step size? e.g. "0.05" (default)')
     parser.add_argument('-l', '--LL', help='Lower limit in the grid scan? e.g. "-2" (default), "0", ...')
     parser.add_argument('-u', '--UL', help='Upper limit in the grid scan? e.g. "4" (default), "20", ...')
+    parser.add_argument('-B', '--Backout',
+                        help='Back out of regions where yield becomes negative? "n" (default), "y"')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
@@ -200,6 +215,11 @@ if __name__=='__main__':
         args.UL = 4.0
     else:
         args.UL = float(args.UL)
+    if args.Backout is None:
+        Backout = 'n'
+    else:
+        Backout = args.Backout
+    Backout_bool = Backout == 'y'
     if args.Verbose is None:
         args.Verbose = 0
     else:
@@ -221,7 +241,8 @@ if __name__=='__main__':
             run_combine_channels(channels, datacard_dict, Asimov=args.Asimov,
                                  asi_str=asi_str, Precision=args.Precision,
                                  stdout=stdout, expect_signal=expect_signal,
-                                 LL=args.LL, UL=args.UL, verbose=args.Verbose)
+                                 LL=args.LL, UL=args.UL, verbose=args.Verbose,
+                                 Backout=Backout_bool)
             print('=================================================\n')
         #########################
         # full analysis calculation
@@ -231,6 +252,7 @@ if __name__=='__main__':
             run_combine_full_analysis( Asimov=args.Asimov, asi_str=asi_str,
                              Precision=args.Precision, stdout=stdout,
                              expect_signal=expect_signal, LL=args.LL, UL=args.UL,
-                             verbose=args.Verbose)
+                             verbose=args.Verbose,
+                             Backout=Backout_bool)
             print('=================================================\n')
         #########################
