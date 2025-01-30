@@ -21,11 +21,11 @@ conda activate HCOMB
 # dim8 only
 # python tau_impact_table.py -d dim8
 # profile vs. freeze (dim6)
-# echo "Making tex table comparing profile to freeze limits (dim6)..."
-# python WC_prof_vs_freeze_table.py
+#echo "Making tex table comparing profile to freeze limits (dim6)..."
+#python WC_prof_vs_freeze_table.py
 # quad+linear vs. linear only
-echo "Making tex table comparing quad+linear to linear only (dim6, dim8)..."
-python WC_quad_vs_linear_table.py
+#echo "Making tex table comparing quad+linear to linear only (dim6, dim8)..."
+#python WC_quad_vs_linear_table.py
 
 # copy impact plots from plots/
 # echo "Copy impact plots..."
@@ -203,7 +203,7 @@ python WC_quad_vs_linear_table.py
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 #python summary_NLL_limits_plot.py -w cHq3
-#python summary_NLL_limits_plot.py -w sm
+python summary_NLL_limits_plot.py -w sm
 # debug dim8
 #python summary_NLL_limits_plot.py -w FT0
 # python summary_NLL_limits_plot.py -w FT7

@@ -28,7 +28,7 @@ WC_pretty_print_dict = WC_pretty_print_dict_AN
 SR_pretty_print_dict = SR_pretty_print_dict_AN
 #from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
 from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
-from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter
+from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter, numerical_formatter_with_ndec_return
 
 config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
@@ -142,7 +142,30 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                 # multi interval
                 #label_NLL += '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
                 # multi interval, numerical formatter
-                label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
+                if WC != 'sm':
+                    label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
+                else:
+                    C_, ndc = numerical_formatter_with_ndec_return(C_best)
+                    el, ndl = numerical_formatter_with_ndec_return(err_low)
+                    eh, ndh = numerical_formatter_with_ndec_return(err_high)
+                    nd = np.min([ndc, ndl, ndh])
+                    if nd == 0:
+                        C_ = f'{C_best:0.0f}'
+                        el = f'{err_low:0.0f}'
+                        eh = f'{err_high:0.0f}'
+                    elif nd == 1:
+                        C_ = f'{C_best:0.1f}'
+                        el = f'{err_low:0.1f}'
+                        eh = f'{err_high:0.1f}'
+                    elif nd == 2:
+                        C_ = f'{C_best:0.2f}'
+                        el = f'{err_low:0.2f}'
+                        eh = f'{err_high:0.2f}'
+                    else:
+                        C_ = f'{C_best:0.3f}'
+                        el = f'{err_low:0.3f}'
+                        eh = f'{err_high:0.3f}'
+                    label_NLL += r'$\hat{\mu}_{\mathrm{SM}}=$'+rf'${C_} \substack{{ +{eh} \\ -{el} }}$'+'\n'
                 if (i + 1) % 2 == 0:
                     ls = ':'
                     lw *= 2.0

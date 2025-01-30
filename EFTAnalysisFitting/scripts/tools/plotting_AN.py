@@ -74,3 +74,26 @@ def numerical_formatter(value_float):
         # or just use f-string, which rounds appropriately
         s = f'{value_float:0.0f}'
     return s
+
+def numerical_formatter_with_ndec_return(value_float):
+    if abs(value_float) < 0.1:
+        s = f'{value_float:0.3f}'
+        nd = 3
+    elif abs(value_float) < 2.0:
+        s = f'{value_float:0.2f}'
+        nd = 2
+    elif abs(value_float) < 10.:
+        s = f'{value_float:0.1f}'
+        nd = 1
+    else:
+        # above 10, round to integer
+        # use decimal package to avoid bankers rounding
+        # with localcontext() as ctx:
+        #     ctx.rounding = ROUND_HALF_UP
+        #     dval = Decimal(value_float)
+        #     rval = dval.to_integral_value()
+        # s = f'{rval}'
+        # or just use f-string, which rounds appropriately
+        s = f'{value_float:0.0f}'
+        nd = 0
+    return s, nd
