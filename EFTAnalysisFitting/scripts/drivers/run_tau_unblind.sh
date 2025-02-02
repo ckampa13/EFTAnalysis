@@ -42,6 +42,7 @@ echo "python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w ${WC} -t c -s ${S} -a y 
 python 1D_scan/run_combine_1D.py -c 2Lepton_1T -w ${WC} -t c -s ${S} -a y -p 0.05 -pc 0.5 -U y ${V} > ${LOGDIR}2L_1T_Asi_${WC}${S}${VF}.txt 2>&1 &
 echo "python 1D_scan/LOO_run_combine_1D.py -c not_tau -w ${WC} -s ${S} -a y -p 0.05 -pc 0.5 -U y ${V} > ${LOGDIR}tau_comb_Asi_${WC}${S}${VF}.txt 2>&1 &"
 python 1D_scan/LOO_run_combine_1D.py -c not_tau -w ${WC} -s ${S} -a y -p 0.05 -pc 0.5 -U y ${V} > ${LOGDIR}tau_comb_Asi_${WC}${S}${VF}.txt 2>&1 &
+sleep 3
 echo Data...
 echo "python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w ${WC} -t c -s ${S} -a n -p 0.05 -pc 0.5 -U y ${V} > ${LOGDIR}1L_1T_Data_${WC}${S}${VF}.txt 2>&1 &"
 python 1D_scan/run_combine_1D.py -c 1Lepton_1T -w ${WC} -t c -s ${S} -a n -p 0.05 -pc 0.5 -U y ${V} > ${LOGDIR}1L_1T_Data_${WC}${S}${VF}.txt 2>&1 &
