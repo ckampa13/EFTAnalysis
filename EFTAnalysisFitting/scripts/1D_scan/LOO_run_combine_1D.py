@@ -46,8 +46,10 @@ LIM_VAL = 10
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+# prof_freeze_WCs = []
 # turning some off
+# TAU UNBLINDING
+prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox']
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
@@ -306,7 +308,15 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
         else:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     else:
-        grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+            grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+        elif WC in ['cHl3']:
+            # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            #grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
+            grid_dict = {'LL':-23, 'UL':40, 'steps': 64}
+        else:
+            grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
     name_str = '_coarse_%s_all_LOO_%s_%s' % (WC, channel_leave_out, str(time()))
     outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst, method=METHOD)
     outfile_ = 'higgsCombine%s.%s.mH120.root' % (name_str, METHOD)
