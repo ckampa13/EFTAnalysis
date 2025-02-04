@@ -30,7 +30,7 @@ from MISC_CONFIGS import (
 
 def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plot_dir,
                         WCs_freeze=None, WCs_limit=None, limit_val=10.):
-    params_to_freeze = WCs
+    # params_to_freeze = WCs
     cmd1 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
     cmd2 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
     cmd3 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
@@ -80,21 +80,25 @@ def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plo
     cmd2 += '--doFits -n %s' % name_str
     cmd3 += ' -o %s.json -n %s' % (json_name, name_str)
     # plot impacts command
-    cmd4 = 'plotImpacts.py -i %s.json -o %s' % (json_name, json_name)
+    # blinded
+    cmd4 = 'plotImpacts.py -i %s.json -o %s --blind' % (json_name, json_name+'_blinded')
+    # unblinded
+    cmd5 = 'plotImpacts.py -i %s.json -o %s' % (json_name, json_name)
     # mv from cwd to final plot directory
-    cmd5 = 'mv %s.pdf %s' % (json_name, plot_dir)
-    cmds = [cmd1, cmd2, cmd3, cmd4, cmd5]
+    cmd6 = 'mv %s.pdf %s' % (json_name+'_blinded', plot_dir)
+    cmd7 = 'mv %s.pdf %s' % (json_name, plot_dir)
+    cmds = [cmd1, cmd2, cmd3, cmd4, cmd5, cmd6, cmd7]
     return cmds
 
 def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
-                           ScanType, Asimov, asi_str, SignalInject, stdout, verbose=0):
+                           ScanType, Asimov, asi_str, SignalInject, stdout, verbose=0, Unblind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
         scan_dir = 'profile'
-    plot_dir = os.path.join(datacard_dir, 'plots', 'subchannel', scan_dir)
+    # plot_dir = os.path.join(datacard_dir, 'plots', 'subchannel', scan_dir)
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
@@ -107,8 +111,12 @@ def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'subchannel')
-    outdir = os.path.join(datacard_dir, 'output', 'subchannel')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'subchannel')
+    outdir = os.path.join(dcdir, 'output', 'subchannel')
+    plot_dir = os.path.join(dcdir, 'plots', 'subchannel', scan_dir)
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -158,14 +166,14 @@ def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
     os.chdir(start_dir)
 
 def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, ScanType,
-                       Asimov, asi_str, SignalInject, stdout, verbose=0):
+                       Asimov, asi_str, SignalInject, stdout, verbose=0, Unblind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
         scan_dir = 'profile'
-    plot_dir = os.path.join(datacard_dir, 'plots', 'channel', scan_dir)
+    # plot_dir = os.path.join(datacard_dir, 'plots', 'channel', scan_dir)
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
@@ -178,8 +186,12 @@ def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, Scan
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
-    outdir = os.path.join(datacard_dir, 'output', 'channel')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'channel')
+    outdir = os.path.join(dcdir, 'output', 'channel')
+    plot_dir = os.path.join(dcdir, 'plots', 'channel', scan_dir)
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -220,14 +232,14 @@ def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, Scan
     os.chdir(start_dir)
 
 def run_impact_full_analysis(dim, datacard_dict, WC, limit_val, ScanType, Asimov,
-                             asi_str, SignalInject, stdout, verbose=0):
+                             asi_str, SignalInject, stdout, verbose=0, Unblind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
         scan_dir = 'profile'
-    plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
+    # plot_dir = os.path.join(datacard_dir, 'plots', 'full_analysis', scan_dir)
     if ScanType == '_1D':
         ScanTypeWS = '_All'
     else:
@@ -240,8 +252,12 @@ def run_impact_full_analysis(dim, datacard_dict, WC, limit_val, ScanType, Asimov
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'full_analysis')
-    outdir = os.path.join(datacard_dir, 'output', 'full_analysis')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'full_analysis')
+    outdir = os.path.join(dcdir, 'output', 'full_analysis')
+    plot_dir = os.path.join(dcdir, 'plots', 'full_analysis', scan_dir)
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_1D':
@@ -297,6 +313,7 @@ if __name__=='__main__':
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default), "_1D" (freeze WCs)]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 1 (default) / 0. "combine" output only included if Verbose>0.')
@@ -334,6 +351,12 @@ if __name__=='__main__':
     else:
         asi_str = ''
         args.Asimov=False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -366,7 +389,8 @@ if __name__=='__main__':
                                    limit_val=args.LimitValue, ScanType=args.ScanType,
                                    Asimov=args.Asimov, asi_str=asi_str,
                                    SignalInject=SignalInject,
-                                   stdout=stdout, verbose=args.Verbose)
+                                   stdout=stdout, verbose=args.Verbose,
+                                   Unblind=Unblind)
     print('=================================================\n')
     if generate_ch:
         print('Making impact plot for the selected channel:')
@@ -379,7 +403,8 @@ if __name__=='__main__':
                                limit_val=args.LimitValue, ScanType=args.ScanType,
                                Asimov=args.Asimov, asi_str=asi_str,
                                SignalInject=SignalInject,
-                               stdout=stdout, verbose=args.Verbose)
+                               stdout=stdout, verbose=args.Verbose,
+                               Unblind=Unblind)
     print('=================================================\n')
     if generate_full:
         print('Making impact plot for full analysis:')
@@ -390,5 +415,6 @@ if __name__=='__main__':
                                      limit_val=args.LimitValue, ScanType=args.ScanType,
                                      Asimov=args.Asimov, asi_str=asi_str,
                                      SignalInject=SignalInject,
-                                     stdout=stdout, verbose=args.Verbose)
+                                     stdout=stdout, verbose=args.Verbose,
+                                     Unblind=Unblind)
     print('=================================================\n')

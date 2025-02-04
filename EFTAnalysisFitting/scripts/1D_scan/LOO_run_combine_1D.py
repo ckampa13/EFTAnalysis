@@ -46,10 +46,12 @@ LIM_VAL = 10
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-# prof_freeze_WCs = []
+prof_freeze_WCs = []
 # turning some off
 # TAU UNBLINDING
-prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox']
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd'] # GOOD FOR cW
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHu']
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHd']
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
@@ -276,7 +278,10 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
                     WCs_freeze.append(WC_)
         WCs_limit = None
     else:
-        WCs_freeze = None
+        WCs_freeze = []
+        for WC_ in prof_freeze_WCs:
+            if WC != WC_:
+                WCs_freeze.append(WC_)
         WCs_limit = []
         for WC_ in WC_ALL:
             if WC_ != WC:

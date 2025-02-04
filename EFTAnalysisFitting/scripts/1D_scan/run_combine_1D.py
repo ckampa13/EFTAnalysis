@@ -44,6 +44,10 @@ LIM_VAL = 10
 # None (full treatment)
 prof_freeze_WCs = []
 # turning some off
+# TAU UNBLINDING
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd'] # GOOD FOR cW
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHu']
+# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHd']
 # good with range -10,10 for 1L and combination with 2L_SS
 #prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHWB', 'cHB']
 #prof_freeze_WCs = ['cHDD', 'cHbox', 'cHWB', 'cHB']
