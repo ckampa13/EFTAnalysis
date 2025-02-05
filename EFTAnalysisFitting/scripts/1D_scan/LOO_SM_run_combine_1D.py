@@ -67,56 +67,8 @@ def construct_combine_cmd_str(datacard_file, grid_dict, asimov_str,
         cmd_str += extra_no_backout
     return cmd_str
 
-
-# channels
-def run_combine_channels(channels, datacard_dict, Asimov, asi_str,
-                     Precision, stdout, expect_signal='1', LL=-2, UL=4, verbose=0, Backout=False, Unblind=False):
-    start_dir = os.getcwd()
-    if Asimov:
-        asi = 'Asimov'
-    else:
-        asi = 'Data'
-    if expect_signal is None:
-        suff_purp = '_expect_signal_0'
-    else:
-        suff_purp = '_expect_signal_' + expect_signal
-    dcdir = datacard_dir
-    if Unblind:
-        dcdir = os.path.join(dcdir, 'unblind')
-    outdir = os.path.join(dcdir, 'output', 'channel')
-    os.chdir(outdir)
-    for i, ch in enumerate(channels):
-        print('Channel: %s' % ch)
-        v = versions_dict[ch]['v']
-        version = 'v' + str(v)
-        sname_ch = datacard_dict[ch]['info']['short_name']
-        sname_sch = '_combined'
-        # set up grid dict
-        grid_dict = {'LL': LL, 'UL': UL}
-        grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/Precision) + 2
-        grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * Precision
-        # filename to print at the end
-        outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC='sm',ScanType='',version=version,syst='syst', method=METHOD)
-        # loop through stat/syst
-        for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
-            print('Running "%s"' % syst_label)
-            dc_file = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC='REMOVE', ScanType='', purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
-            dc_file = dc_file.replace('VVV.', 'SM.').replace('.REMOVE.', '.')
-            dc_file = os.path.join(dcdir, 'combined_datacards', 'channel', dc_file)
-            name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC='sm',ScanType='',version=version,syst=syst_label)
-            cmd_str = construct_combine_cmd_str(dc_file, grid_dict, asi_str,
-                                                name_str, with_syst=syst_bool,
-                                                method=METHOD, expect_signal=expect_signal,
-                                                Backout=Backout)
-            print(cmd_str)
-            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        print('Finished running combine. Expected file output: %s' % outfile)
-    # go back to original directory
-    print('Going back to original directory...')
-    os.chdir(start_dir)
-
 # full analysis
-def run_combine_full_analysis(Asimov, asi_str, Precision,
+def run_combine_full_analysis_leave_one_out(channel_leave_out, Asimov, asi_str, Precision,
                               stdout, expect_signal='1', LL=-2, UL=4, verbose=0, Backout=False, Unblind=False):
     start_dir = os.getcwd()
     if Asimov:
@@ -130,11 +82,11 @@ def run_combine_full_analysis(Asimov, asi_str, Precision,
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    outdir = os.path.join(dcdir, 'output', 'full_analysis')
+    outdir = os.path.join(dcdir, 'output', 'leave_one_out')
     os.chdir(outdir)
     print('Full Analysis:')
     sname_ch = 'all'
-    sname_sch = '_combined'
+    sname_sch = '_combined_LOO_'+channel_leave_out
     version = 'vCONFIG_VERSIONS'
     # set up grid dict
     grid_dict = {'LL': LL, 'UL': UL}
@@ -145,9 +97,9 @@ def run_combine_full_analysis(Asimov, asi_str, Precision,
     # loop through stat/syst
     for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
         print('Running "%s"' % syst_label)
-        dc_file = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC='REMOVE', ScanType='', purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
+        dc_file = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC='REMOVE', ScanType='', purpose='DataCard_Yields', proc=SO_lab, version=version, file_type='txt')
         dc_file = dc_file.replace('VVV.', 'SM.').replace('.REMOVE.', '.')
-        dc_file = os.path.join(dcdir, 'combined_datacards', 'full_analysis', dc_file)
+        dc_file = os.path.join(dcdir, 'combined_datacards', 'leave_one_out', dc_file)
         name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC='sm',ScanType='',version=version,syst=syst_label)
         cmd_str = construct_combine_cmd_str(dc_file, grid_dict, asi_str,
                                             name_str, with_syst=syst_bool,
@@ -165,9 +117,7 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
-                        help='Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
-    parser.add_argument('-t', '--theLevels',
-                        help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "c" (channel), "f" (full analysis). e.g. "c" will run only the channel level.')
+                        help='Which channel to leave out? ["all" (default, looping), "all_tau" (remove tau channels), "not_tau" (combine tau channels), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-e', '--ExpectSignal',
@@ -180,24 +130,13 @@ if __name__=='__main__':
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
-        args.Channel = 'all'
+        # args.Channel = 'all'
+        args.Channel = '0Lepton_2FJ'
     # list of channels
     if args.Channel == 'all':
-        channels = datacard_dict.keys()
+        channels = datacard_dict.keys()+['all_tau', 'not_tau']
     else:
         channels = [args.Channel]
-    if (args.theLevels is None) or (args.theLevels == 'all'):
-        generate_ch = True
-        generate_full = True
-    else:
-        if 'c' in args.theLevels:
-            generate_ch = True
-        else:
-            generate_ch = False
-        if 'f' in args.theLevels:
-            generate_full = True
-        else:
-            generate_full = False
     if args.Asimov is None:
         args.Asimov = 'y'
     if args.Asimov == 'y':
@@ -248,25 +187,14 @@ if __name__=='__main__':
     for sig in ['sm']:
         print('Calculations for %s' % sig)
         #########################
-        # channel calculations
-        if generate_ch:
-            print('Running combine for each channel:')
-            print('=================================================')
-            run_combine_channels(channels, datacard_dict, Asimov=args.Asimov,
-                                 asi_str=asi_str, Precision=args.Precision,
-                                 stdout=stdout, expect_signal=expect_signal,
-                                 LL=args.LL, UL=args.UL, verbose=args.Verbose,
-                                 Backout=Backout_bool, Unblind=Unblind)
-            print('=================================================\n')
-        #########################
         # full analysis calculation
-        if generate_full:
-            print('Running combine for full analysis:')
-            print('=================================================')
-            run_combine_full_analysis( Asimov=args.Asimov, asi_str=asi_str,
+        print('Running combine for full analysis (leave one out):')
+        print('=================================================')
+        for channel_leave_out in channels:
+            run_combine_full_analysis_leave_one_out(channel_leave_out, Asimov=args.Asimov, asi_str=asi_str,
                              Precision=args.Precision, stdout=stdout,
                              expect_signal=expect_signal, LL=args.LL, UL=args.UL,
                              verbose=args.Verbose,
                              Backout=Backout_bool, Unblind=Unblind)
-            print('=================================================\n')
+        print('=================================================\n')
         #########################

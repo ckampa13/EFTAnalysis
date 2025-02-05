@@ -37,7 +37,8 @@ METHOD = 'MultiDimFit'
 #LIM_VAL = 100
 
 # constant value to limit the WCs when profiling
-LIM_VAL = 10
+LIM_VAL = 2
+# LIM_VAL = 10
 #LIM_VAL = 20
 #LIM_VAL = 50
 # LIM_VAL = 100
@@ -46,10 +47,14 @@ LIM_VAL = 10
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+# prof_freeze_WCs = []
 # turning some off
 # TAU UNBLINDING
-# prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd'] # GOOD FOR cW
+#prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd'] # GOOD FOR cW
+# prof_freeze_WCs = ['cW', 'cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd']
+# prof_freeze_WCs = ['cW', 'cHq3', 'cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd']
+#prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHW', 'cHd', 'cHu']
+prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHW', 'cHq3']
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHu']
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHd']
 # good with range -10,10 for 1L and combination with 2L_SS
@@ -292,6 +297,7 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
     # coarse scan (using syst)
     syst = 'syst_coarse'
     if ScanType == '_1D':
+        '''
         if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
             grid_dict = {'LL': -4, 'UL': 4, 'steps': 9}
         elif WC in ['cHWB', 'cHl3', 'cHB', 'cll1']:
@@ -310,6 +316,20 @@ def run_combine_full_analysis_leave_one_out(channel_leave_out, dim, WC, ScanType
         elif 'FS' in WC:
             #grid_dict = {'LL': -20, 'UL': 20, 'steps': 41}
             grid_dict = {'LL': -40, 'UL': 40, 'steps': 81}
+        else:
+            grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        '''
+        # TAU UNBLIND
+        if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+            grid_dict = {'LL': -10, 'UL': 10, 'steps': 21}
+        elif WC in ['cHWB', 'cHl3', 'cll1']:
+            grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+        elif WC in ['cHDD']:
+            grid_dict = {'LL': -200, 'UL': 200, 'steps': 201}
+        elif WC in ['FT4', 'FT7', 'FS0', 'FS1', 'FS2']:
+            grid_dict = {'LL': -150, 'UL': 150, 'steps': 201}
+        elif WC in ['FT9', 'FM2', 'FM3', 'FM4', 'FM5']:
+            grid_dict = {'LL': -200, 'UL': 200, 'steps': 201}
         else:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     else:
@@ -396,6 +416,9 @@ if __name__=='__main__':
         WCs_loop = dim6_WCs
     elif args.WC == 'dim8':
         WCs_loop = dim8_WCs
+        #WCs_loop = ['FT4', 'FT5', 'FT6', 'FT7', 'FT8', 'FT9']
+        # WCs_loop = ['FT4', 'FT7', 'FT9', 'FS0', 'FS1', 'FS2']
+        # WCs_loop = ['FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7']
     else:
         WCs_loop = [args.WC]
     if args.ScanType is None:

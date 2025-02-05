@@ -345,7 +345,7 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
 
 # channels
 def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimov, asi_str, SignalInject,
-                         grid_dict, stdout, verbose=0, vsuff=''):
+                         grid_dict, stdout, verbose=0, vsuff='', Unblind=False):
     # if ScanType == '_2D':
     #     ScanTypeWS = '_All'
     # else:
@@ -360,8 +360,11 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'channel')
-    outdir = os.path.join(datacard_dir, 'output', 'channel')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'channel')
+    outdir = os.path.join(dcdir, 'output', 'channel')
     os.chdir(outdir)
     # add any frozen WC
     if ScanType == '_2D':
@@ -474,7 +477,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC1, WC2, ScanType, Asimo
 
 # full analysis
 def run_combine_full_analysis(dim, WC1, WC2, ScanType, Asimov, asi_str, SignalInject,
-                              grid_dict, stdout, verbose=0, vsuff=''):
+                              grid_dict, stdout, verbose=0, vsuff='', Unblind=False):
     # if ScanType == '_1D':
     #     ScanTypeWS = '_All'
     # else:
@@ -489,8 +492,11 @@ def run_combine_full_analysis(dim, WC1, WC2, ScanType, Asimov, asi_str, SignalIn
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
-    wsdir = os.path.join(datacard_dir, 'workspaces', 'full_analysis')
-    outdir = os.path.join(datacard_dir, 'output', 'full_analysis')
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    wsdir = os.path.join(dcdir, 'workspaces', 'full_analysis')
+    outdir = os.path.join(dcdir, 'output', 'full_analysis')
     os.chdir(outdir)
     print('Full Analysis:')
     sname_ch = 'all'
@@ -596,6 +602,7 @@ if __name__=='__main__':
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All2D" (default), "_2D" (freeze WCs)]')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-p1', '--Precision1', help='What is desired precision / step size for WC1? e.g. "0.01" (default)')
@@ -669,6 +676,12 @@ if __name__=='__main__':
     else:
         asi_str = ''
         args.Asimov=False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -773,7 +786,8 @@ if __name__=='__main__':
         run_combine_channels(dim, channels, datacard_dict, WC1=args.WC1, WC2=args.WC2,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                          SignalInject=SignalInject, grid_dict=grid_dict,
-                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
+                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff,
+                         Unblind=Unblind)
         print('=================================================\n')
     #########################
     # full analysis calculation
@@ -783,6 +797,7 @@ if __name__=='__main__':
         run_combine_full_analysis(dim, WC1=args.WC1, WC2=args.WC2,
                          ScanType=args.ScanType, Asimov=args.Asimov, asi_str=asi_str,
                          SignalInject=SignalInject, grid_dict=grid_dict,
-                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff)
+                         stdout=stdout, verbose=args.Verbose, vsuff=vsuff,
+                         Unblind=Unblind)
         print('=================================================\n')
     #########################

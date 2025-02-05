@@ -569,10 +569,26 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         if ScanType == '_1D':
             # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            # nominal
+            '''
             if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
                 grid_dict = {'LL': -10, 'UL': 10, 'steps': 21}
             elif WC in ['cHWB', 'cHl3', 'cHB', 'cll1']:
                 grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+            else:
+                grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            '''
+            # TAU UNBLIND
+            if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+                grid_dict = {'LL': -10, 'UL': 10, 'steps': 21}
+            elif WC in ['cHWB', 'cHl3', 'cll1']:
+                grid_dict = {'LL': -50, 'UL': 50, 'steps': 101}
+            elif WC in ['cHDD']:
+                grid_dict = {'LL': -200, 'UL': 200, 'steps': 201}
+            elif WC in ['FT4', 'FT7', 'FS0', 'FS1', 'FS2']:
+                grid_dict = {'LL': -150, 'UL': 150, 'steps': 201}
+            elif WC in ['FT9', 'FM2', 'FM3', 'FM4', 'FM5']:
+                grid_dict = {'LL': -200, 'UL': 200, 'steps': 201}
             else:
                 grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         else:
@@ -835,6 +851,9 @@ if __name__=='__main__':
         WCs_loop = dim6_WCs
     elif args.WC == 'dim8':
         WCs_loop = dim8_WCs
+        # WCs_loop = ['FT4', 'FT5', 'FT6', 'FT7', 'FT8', 'FT9']
+        # WCs_loop = ['FT4', 'FT7', 'FT9', 'FS0', 'FS1', 'FS2']
+        # WCs_loop = ['FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7']
     else:
         WCs_loop = [args.WC]
     if (args.theLevels is None) or (args.theLevels == 'all'):
