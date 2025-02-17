@@ -45,7 +45,10 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
     fig, ax = plt.subplots()
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
-    WC_l = WC_pretty_print_dict[WC]
+    if WC == 'sm':
+        WC_l = 'SM'
+    else:
+        WC_l = WC_pretty_print_dict[WC]
     # get limits and plot
     # total
     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
@@ -97,10 +100,13 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             #        linewidth=3,) #label=label)
             ax.plot([-largest_lim, largest_lim], [NLL_cut, NLL_cut], 'r', linestyle=ls,
                    linewidth=3,) #label=label)
-    if WC in dim6_ops:
-        suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
+    if WC == 'sm':
+        suff = r' ($\mu_{\mathrm{SM}}$)'
     else:
-        suff = r'$ / \Lambda^4$ [TeV$^{-4}$]'
+        if WC in dim6_ops:
+            suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
+        else:
+            suff = r'$ / \Lambda^4$ [TeV$^{-4}$]'
     ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right',)# fontsize=20.)
     ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top',)# fontsize=20.)
     ##ax.set_title(title+'\n', pad=3.)
@@ -279,11 +285,18 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
     else:
         scan_dir = 'profile'
         scan_title = '(Profile Other WCs)'
+    if WC == 'sm':
+        ST = ''
+    else:
+        ST = ScanType+LinO_str
     if fastScan:
         FS_suff = '_fastScan'
     else:
         FS_suff = ''
-    WC_l = WC_pretty_print_dict[WC]
+    if WC == 'sm':
+        WC_l = 'SM'
+    else:
+        WC_l = WC_pretty_print_dict[WC]
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
@@ -295,6 +308,8 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
     else:
         asi_prestr = 'data_'
         asi_output = 'Data'
+    if WC == 'sm':
+        asi_output += '_expect_signal_1'
     fname_ch = datacard_dict[channel]['info']['file_name']
     sname_ch = datacard_dict[channel]['info']['short_name']
     # version number
@@ -309,8 +324,8 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
                 'version': version, 'bin_': 'All',
                 }
     # construct root file name
-    file_syst = template_outfilename.substitute(asimov=asi_output, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType+LinO_str,version=version,syst='syst'+FS_suff, method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov=asi_output, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ScanType+LinO_str,version=version,syst='nosyst'+FS_suff, method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov=asi_output, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ST,version=version,syst='syst'+FS_suff, method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov=asi_output, channel=sname_ch, subchannel='_combined', WC=WC, ScanType=ST,version=version,syst='nosyst'+FS_suff, method='MultiDimFit')
     root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
     root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -336,11 +351,18 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
     else:
         scan_dir = 'profile'
         scan_title = '(Profile Other WCs)'
+    if WC == 'sm':
+        ST = ''
+    else:
+        ST = ScanType+LinO_str
     if fastScan:
         FS_suff = '_fastScan'
     else:
         FS_suff = ''
-    WC_l = WC_pretty_print_dict[WC]
+    if WC == 'sm':
+        WC_l = 'SM'
+    else:
+        WC_l = WC_pretty_print_dict[WC]
     if version is None:
         version = 'vCONFIG_VERSIONS'
     version += vsuff
@@ -363,9 +385,11 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
     else:
         asi_prestr = 'data_'
         asi_output = 'Data'
+    if WC == 'sm':
+        asi_output += '_expect_signal_1'
     # construct root file name
-    file_syst = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ScanType+LinO_str,version=version, syst='syst'+FS_suff, method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ScanType+LinO_str,version=version, syst='nosyst'+FS_suff, method='MultiDimFit')
+    file_syst = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='syst'+FS_suff, method='MultiDimFit')
+    file_stat = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='nosyst'+FS_suff, method='MultiDimFit')
     root_file_syst = os.path.join(output_dir_full, file_syst)
     root_file_stat = os.path.join(output_dir_full, file_stat)
     root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': None}
@@ -467,6 +491,10 @@ if __name__=='__main__':
         #     if not WC_ in dim6_ops:
         #         WCs.append(WC_)
         WCs = dim8_WCs
+    elif args.WC == 'tau_profile':
+        #WCs = ["cW", "cHq3", "cHq1", "cHu", "cHd", "cHW", "cHWB", "cHl3"]
+        #WCs = ["cW", "cHq3", "cHq1"]
+        WCs = ["cW", "cHq1", "cHu", "cHd"]
     else:
         WCs = [args.WC]
     if args.ScanType is None:
@@ -526,12 +554,16 @@ if __name__=='__main__':
     for WC in WCs:
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
+        if WC == 'sm':
+            pstats_ = [False]
+        else:
+            pstats_ = pstats
         if generate_bins:
             # loop through all bins and plot
             #'''
             print("=========================================================")
             print("Making likelihood plots for each bin...")
-            for pstat in pstats:
+            for pstat in pstats_:
                 print(f'Include stat-only? {pstat}')
                 for ch in datacard_dict.keys():
                     if WC not in versions_dict[ch]['EFT_ops']:
@@ -552,7 +584,7 @@ if __name__=='__main__':
             # loop through all subchannels and plot
             print("=========================================================")
             print("Making likelihood plots for each subchannel...")
-            for pstat in pstats:
+            for pstat in pstats_:
                 print(f'Include stat-only? {pstat}')
                 #for ch in datacard_dict.keys():
                 for ch in chs:
@@ -572,12 +604,13 @@ if __name__=='__main__':
             # loop through all channels and plot
             print("=========================================================")
             print("Making likelihood plots for each channel...")
-            for pstat in pstats:
+            for pstat in pstats_:
                 print(f'Include stat-only? {pstat}')
                 #for ch in datacard_dict.keys():
                 for ch in chs:
-                    if WC not in versions_dict[ch]['EFT_ops']:
-                        continue
+                    if WC != 'sm':
+                        if WC not in versions_dict[ch]['EFT_ops']:
+                            continue
                     print(ch)
                     fig, ax = run_lim_plot_channel(WC, ch, datacard_dict, CL_list, ScanType, plot_stat_only=pstat,
                         legend=legend, tight_layout=tight_layout,
@@ -590,7 +623,7 @@ if __name__=='__main__':
             #####
             print("=========================================================")
             print("Making likelihood plots for full analysis...")
-            for pstat in pstats:
+            for pstat in pstats_:
                 print(f'Include stat-only? {pstat}')
                 fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat, legend=legend, tight_layout=tight_layout,
                                                 vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,

@@ -31,24 +31,65 @@ echo "Input files for unblinding? $UNBL_STR"
 echo
 
 ASI_STRS=("n" "y")
+#SCAN_STRS=("_1D" "_All")
 
+# SCAN_STRS=("_1D") # for 1D files
+SCAN_STRS=("_All") # for profile files
+
+# 1D
+# WC_1D="cW"
+# WC_1D="cHB"
+# WC_1D="cHDD"
+# WC_1D="cHWB"
+# WC_1D="dim6"
+WC_1D="dim8"
+# WC_1D="all"
+# NDIM
+# WC="cW" # single WC test
+WC="tau_profile" # profiling
+# WC="cHB" # single WC test
+#WC="cHDD" # single WC test
+# WC="cHWB" # single WC test
+# WC="dim6" # all WC (for NDIM file)
+
+
+# for SCAN_STR in "${SCAN_STRS[@]}"
+# do
+#   for ASI_STR in "${ASI_STRS[@]}"
+#   do
+#     echo "Asimov dataset? $ASI_STR"
+#     # NLL vs. WC
+#     echo "NLL vs. WC main plots..."
+#     # 1D file
+#     # echo "1D Samples:"
+#     # python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w $WC_1D -s $SCAN_STR -l y -U $UNBL_STR -a $ASI_STR # 1L
+#     # python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w $WC_1D -s $SCAN_STR -l y -U $UNBL_STR -a $ASI_STR # 2L
+#     # python NLL_limits_plot_from_dir.py -c tau -t f -w $WC_1D -s $SCAN_STR -l y -U $UNBL_STR -a $ASI_STR # combined
+#     ####
+#     echo "NDIM Samples:"
+#     if [[ "$WC" != "tau_profile" ]]; then
+#       python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w $WC -s $SCAN_STR -l y -v _NDIM -U $UNBL_STR -a $ASI_STR # 1L
+#       python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w $WC -s $SCAN_STR -l y -v _NDIM  -U $UNBL_STR -a $ASI_STR # 2L
+#     fi
+#     python NLL_limits_plot_from_dir.py -c tau -t f -w $WC -s $SCAN_STR -l y -v _NDIM -U $UNBL_STR -a $ASI_STR # combined
+#   done
+# done
+
+
+## SM sensitivity
+echo
+echo "SM Sensitivity plots..."
 for ASI_STR in "${ASI_STRS[@]}"
-do
-  echo "Asimov dataset? $ASI_STR"
-  # NLL vs. WC
-  echo "NLL vs. WC main plots..."
-  # 1D file
-  #echo "1D Samples:"
-  ## cW only -- tests
-  # python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -l y -U $UNBL_STR -a $ASI_STR # 1L
-  # python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -l y -U $UNBL_STR -a $ASI_STR # 2L
-  # python NLL_limits_plot_from_dir.py -c tau -t f -w cW -s _1D -l y -U $UNBL_STR -a $ASI_STR # combined
-  echo "NDIM Samples:"
-  # cW only -- tests
-  python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w cW -s _1D -l y -v _NDIM -U $UNBL_STR -a $ASI_STR # 1L
-  python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w cW -s _1D -l y -v _NDIM  -U $UNBL_STR -a $ASI_STR # 2L
-  python NLL_limits_plot_from_dir.py -c tau -t f -w cW -s _1D -l y -v _NDIM -U $UNBL_STR -a $ASI_STR # combined
-done
+  do
+    echo "Asimov dataset? $ASI_STR"
+    # NLL vs. WC
+    echo "NLL vs. WC main plots..."
+    # 1D file
+    echo "1D Samples:"
+    # python NLL_limits_plot_from_dir.py -c 1Lepton_1T -t c -w sm -l y -U $UNBL_STR -a $ASI_STR # 1L
+    # python NLL_limits_plot_from_dir.py -c 2Lepton_1T -t c -w sm -l y -U $UNBL_STR -a $ASI_STR # 2L
+    python NLL_limits_plot_from_dir.py -c tau -t f -w sm -l y -U $UNBL_STR -a $ASI_STR # combined
+  done
 
 ## OLD BELOW -- to consider adding
 # dim6, then dim8 -- MAIN

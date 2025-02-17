@@ -203,7 +203,7 @@ conda activate HCOMB
 # debug 1 WC
 #python summary_NLL_limits_plot.py -w cW
 #python summary_NLL_limits_plot.py -w cHq3
-python summary_NLL_limits_plot.py -w sm
+#python summary_NLL_limits_plot.py -w sm
 # debug dim8
 #python summary_NLL_limits_plot.py -w FT0
 # python summary_NLL_limits_plot.py -w FT7
@@ -221,22 +221,22 @@ python summary_NLL_limits_plot.py -w sm
 # LOO (all_tau)
 #python all_tau_LOO_summary_NLL_limits_plot.py -w cW
 
-#echo "WC limit summary plots (horizontal band plots)..."
-# echo "dim6..."
-# echo "all WC..."
-# python WC_summary_plot.py -w all -d dim6
-# echo "top 6 WC..."
-# python WC_summary_plot.py -w top_6 -d dim6
-# echo "dim8..."
-# echo "all WC..."
-# python WC_summary_plot.py -w all -d dim8
-# echo "top 6 WC..."
-# python WC_summary_plot.py -w top_6 -d dim8
+echo "WC limit summary plots (horizontal band plots)..."
+echo "dim6..."
+echo "all WC..."
+python WC_summary_plot.py -w all -d dim6
+echo "top 6 WC..."
+python WC_summary_plot.py -w top_6 -d dim6
+echo "dim8..."
+echo "all WC..."
+python WC_summary_plot.py -w all -d dim8
+echo "top 6 WC..."
+python WC_summary_plot.py -w top_6 -d dim8
 
-# echo "WC limit summary plots v2 (horizontal band plots)..."
-# echo "dim6..."
-# echo "all WC..."
-# python WC_summary_plot_v2.py -w all -d dim6
-# echo "dim8..."
-# echo "all WC..."
-# python WC_summary_plot_v2.py -w all -d dim8
+echo "WC limit summary plots v2 (horizontal band plots)..."
+echo "dim6..."
+echo "all WC..."
+python WC_summary_plot_v2.py -w all -d dim6
+echo "dim8..."
+echo "all WC..."
+python WC_summary_plot_v2.py -w all -d dim8
