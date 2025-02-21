@@ -6,14 +6,14 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 #from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, dim8_WCs_sort_AN
 from tools.extract_limits_multi_interval import *
 from MISC_CONFIGS import dim6_ops, WC_pretty_print_dict_AN
 from tools.plotting_AN import numerical_formatter
 
 WC_pretty_print_dict = WC_pretty_print_dict_AN
 
-def print_summary_table_lim_sorted(ddir, dim, dim_dict, CL=0.95):
+def print_summary_table_lim_sorted(ddir, dim, dim_dict, CL=0.95, order_sens=True):
     CL_list = [CL]
     WCs = dim_dict[dim]
     # loop and get limits
@@ -99,7 +99,10 @@ def print_summary_table_lim_sorted(ddir, dim, dim_dict, CL=0.95):
     s_prints = np.array(s_prints)
     s_prints_s = np.array(s_prints)
     inds = np.arange(len(WCs))
-    inds_sort = inds[np.argsort(L_widths_s)]
+    if order_sens:
+        inds_sort = inds[np.argsort(L_widths_s)]
+    else:
+        inds_sort = inds
     WCs_sorted = np.array(WCs)[inds_sort]
     pdiffs = pdiffs[inds_sort]
     s_pdiffs = s_pdiffs[inds_sort]
@@ -110,7 +113,7 @@ def print_summary_table_lim_sorted(ddir, dim, dim_dict, CL=0.95):
             print()
     return s_prints[inds_sort], WCs_sorted, s_pdiffs, s_ULs[inds_sort], s_LLs[inds_sort], s_ULs_s[inds_sort], s_LLs_s[inds_sort]
 
-def make_summary_table(WCs, LLs, ULs, dim='dim6', tex_file=None):
+def make_summary_table(WCs, LLs, ULs, dim='dim6', order_sens=True, tex_file=None):
     # Construct the LaTeX table as a string
     table = r"\begin{table}[hbtp!]" + "\n"
     table += r"\centering" + "\n"
@@ -132,11 +135,19 @@ def make_summary_table(WCs, LLs, ULs, dim='dim6', tex_file=None):
 
     table += r"\hline" + "\n"
     table += r"\end{tabular}" + "\n"
-    if dim == 'dim6':
-        table += r"\caption{A summary of the expected 95\% CL limits on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
+
+    if order_sens:
+        if dim == 'dim6':
+            table += r"\caption{A summary of the expected 95\% CL limits on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
+        else:
+            table += r"\caption{A summary of the expected 95\% CL limits on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
+        table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
     else:
-        table += r"\caption{A summary of the expected 95\% CL limits on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
-    table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
+        if dim == 'dim6':
+            table += r"\caption{A summary of the expected 95\% CL limits on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+        else:
+            table += r"\caption{A summary of the expected 95\% CL limits on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+        table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
     table += r"\end{table}" + "\n"
 
     print(table)
@@ -152,6 +163,8 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--Dimension',
                         help='Which dimension? ["all" (default), "dim6", "dim8"]')
+    parser.add_argument('-o', '--OrderBySens',
+                        help='Order by sensitivity? ["y" (default), "n" -- dim8 only so far]')
     args = parser.parse_args()
     if args.Dimension is None:
         dims = 'all'
@@ -161,8 +174,12 @@ if __name__=='__main__':
         dims_list = ['dim6', 'dim8']
     else:
         dims_list = [dims]
+    if args.OrderBySens is None:
+        order_sens = True
+    else:
+        order_sens = args.OrderBySens == 'y'
 
-    dim_dict = {'dim6': dim6_WCs, 'dim8': dim8_WCs,
+    dim_dict = {'dim6': dim6_WCs, 'dim8': dim8_WCs_sort_AN,
                 #'cW_test': ['cW'],
                 #'dim8_partial': ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4'],
                }
@@ -176,7 +193,7 @@ if __name__=='__main__':
     #for dim in ['cW_test']:
     # for dim in ['dim6', 'dim8_partial']:
         print(f'{dim} Current Limit Ranking (full analysis):')
-        s_prints, WCs_sorted, pdiffs, s_ULs, s_LLs, s_ULs_s, s_LLs_s = print_summary_table_lim_sorted(ddir, dim, dim_dict)
+        s_prints, WCs_sorted, pdiffs, s_ULs, s_LLs, s_ULs_s, s_LLs_s = print_summary_table_lim_sorted(ddir, dim, dim_dict, order_sens=order_sens)
         results_dict[dim] = {'s_prints': s_prints, 'WCs_sorted': WCs_sorted, 'pdiffs': pdiffs,
                              's_ULs': s_ULs, 's_LLs': s_LLs, 's_ULs_s': s_ULs_s, 's_LLs_s': s_LLs_s}
         print('\n')
@@ -184,4 +201,9 @@ if __name__=='__main__':
     # make tables, with systematics
     for dim in dims_list:
     #for dim in ['dim6', 'dim8']:
-        make_summary_table(results_dict[dim]['WCs_sorted'], results_dict[dim]['s_LLs'], results_dict[dim]['s_ULs'], dim=dim, tex_file=plotdir+f'limit_summary_{dim}.tex')
+        if order_sens:
+            tex_file = plotdir+f'limit_summary_{dim}.tex'
+        else:
+            tex_file = plotdir+f'limit_summary_{dim}_alt_order.tex'
+        make_summary_table(results_dict[dim]['WCs_sorted'], results_dict[dim]['s_LLs'], results_dict[dim]['s_ULs'], dim=dim, order_sens=order_sens,
+                           tex_file=tex_file)

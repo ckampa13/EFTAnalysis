@@ -13,6 +13,7 @@ conda activate HCOMB
 #python WC_summary_table.py -d dim6
 # dim8 only
 #python WC_summary_table.py -d dim8
+python WC_summary_table.py -d dim8 -o n # don't order by sensitivity
 # tau impact
 # echo "Making tex tables for impact of taus..."
 # python tau_impact_table.py
@@ -221,22 +222,22 @@ conda activate HCOMB
 # LOO (all_tau)
 #python all_tau_LOO_summary_NLL_limits_plot.py -w cW
 
-echo "WC limit summary plots (horizontal band plots)..."
-echo "dim6..."
-echo "all WC..."
-python WC_summary_plot.py -w all -d dim6
-echo "top 6 WC..."
-python WC_summary_plot.py -w top_6 -d dim6
-echo "dim8..."
-echo "all WC..."
-python WC_summary_plot.py -w all -d dim8
-echo "top 6 WC..."
-python WC_summary_plot.py -w top_6 -d dim8
+# echo "WC limit summary plots (horizontal band plots)..."
+# echo "dim6..."
+# echo "all WC..."
+# python WC_summary_plot.py -w all -d dim6
+# echo "top 6 WC..."
+# python WC_summary_plot.py -w top_6 -d dim6
+# echo "dim8..."
+# echo "all WC..."
+# python WC_summary_plot.py -w all -d dim8
+# echo "top 6 WC..."
+# python WC_summary_plot.py -w top_6 -d dim8
 
-echo "WC limit summary plots v2 (horizontal band plots)..."
-echo "dim6..."
-echo "all WC..."
-python WC_summary_plot_v2.py -w all -d dim6
-echo "dim8..."
-echo "all WC..."
-python WC_summary_plot_v2.py -w all -d dim8
+# echo "WC limit summary plots v2 (horizontal band plots)..."
+# echo "dim6..."
+# echo "all WC..."
+# python WC_summary_plot_v2.py -w all -d dim6
+# echo "dim8..."
+# echo "all WC..."
+# python WC_summary_plot_v2.py -w all -d dim8
