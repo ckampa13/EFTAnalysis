@@ -4,7 +4,7 @@
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
 # Initialize our own variables:
-YEAR=2017
+YEAR=2016
 NTHREADS=1 #8 default
 
 while getopts "h?y:s:n:o:a:l:b:dcp:f" opt; do
@@ -97,15 +97,8 @@ case "$YEAR" in
 2016APV) echo "The year is $YEAR"
     ;;	
 2017)  echo "The year is $YEAR"
-    CAMPAIGN=RunIISummer20UL17
-    CONDITIONS=106X_mc2017_realistic_v6
-    CONDITIONS_SIM=106X_mc2017_realistic_v6
-    CONDITIONS_HLT=94X_mc2017_realistic_v15
-    CONDITIONS_MINIAOD=106X_mc2017_realistic_v9
+    CONDITIONS=94X_mc2017_realistic_v17
     BEAMSPOT=Realistic25ns13TeVEarly2017Collision
-    ERA=Run2_2017
-    HLTSTEP=2e34v40
-    NANOERA=Run2_2017,run2_nanoAOD_106Xv2 
     ;;
 2018)  echo "The year is $YEAR"
     CAMPAIGN=RunIISummer20UL18
@@ -198,7 +191,7 @@ sed -i "s/\$GRIDPACK/$PWDESC\/$GRIDPACK/g" $CMSSW_VERSION/src/Configuration/GenP
 
 seed=$SEED
 
-#cmsDriver.py Configuration/GenProduction/python/SMP-RunIISummer20UL17wmLHEGEN-00685-fragment.py --fileout file:SMP-RunIISummer20UL17wmLHEGEN-00685.root --mc --eventcontent RAWSIM,LHE --datatier GEN,LHE --conditions 106X_mc2017_realistic_v6 --beamspot Realistic25ns13TeVEarly2017Collision --step LHE,GEN --geometry DB:Extended --era Run2_2017 
+#cmsDriver.py Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00685-fragment.py --fileout file:SMP-RunIISummer20UL16wmLHEGEN-00685.root --mc --eventcontent RAWSIM,LHE --datatier GEN,LHE --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step LHE,GEN --geometry DB:Extended --era Run2_2016 
 
 cmsDriver.py Configuration/GenProduction/python/$FRAGMENT \
     --python_filename ${STEP0_NAME}_cfg.py \
@@ -238,7 +231,7 @@ eval `scram runtime -sh`
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL17SIM-00447.root --mc --eventcontent RAWSIM --runUnscheduled --datatier GEN-SIM --conditions 106X_mc2017_realistic_v6 --beamspot Realistic25ns13TeVEarly2017Collision --step SIM --geometry DB:Extended --era Run2_2017 --nThreads 4 
+#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL16SIM-00447.root --mc --eventcontent RAWSIM --runUnscheduled --datatier GEN-SIM --conditions 106X_mcRun2_asymptotic_v13 --beamspot Realistic25ns13TeV2016Collision --step SIM --geometry DB:Extended --era Run2_2016 --nThreads 4 
 
 cmsDriver.py \
   --python_filename ${STEP1_NAME}_cfg.py \
@@ -278,7 +271,7 @@ eval `scram runtime -sh`
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL17DIGIPremix-00443.root  --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL17_106X_mc2017_realistic_v6-v3/PREMIX" --mc --eventcontent PREMIXRAW --runUnscheduled --datatier GEN-SIM-DIGI --conditions 106X_mc2017_realistic_v6 --step DIGI,DATAMIX,L1,DIGI2RAW --geometry DB:Extended --datamix PreMix --era Run2_2017 --nThreads 4 --procModifiers premix_stage2 
+#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL16DIGIPremix-00439.root  --pileup_input "dbs:/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" --mc --eventcontent PREMIXRAW --runUnscheduled --datatier GEN-SIM-DIGI --conditions 106X_mcRun2_asymptotic_v13 --step DIGI,DATAMIX,L1,DIGI2RAW --geometry DB:Extended --datamix PreMix --era Run2_2016 --nThreads 4 --procModifiers premix_stage2 
 
 cmsDriver.py  \
     --python_filename ${STEP2_NAME}_cfg.py \
@@ -309,27 +302,29 @@ cmsRun ${STEP2_NAME}_cfg.py
 export SCRAM_ARCH=slc7_amd64_gcc700
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-if [ -r CMSSW_9_4_14_UL_patch1/src ] ; then
-  echo release CMSSW_9_4_14_UL_patch1 already exists
+if [ -r CMSSW_8_0_36_UL_patch2/src ] ; then
+  echo release CMSSW_8_0_36_UL_patch2 already exists
 else
-  scram p CMSSW CMSSW_9_4_14_UL_patch1
+  scram p CMSSW CMSSW_8_0_36_UL_patch2
 fi
-cd CMSSW_9_4_14_UL_patch1/src
+cd CMSSW_8_0_36_UL_patch2/src
 eval `scram runtime -sh`
 
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL17HLT-00447.root --mc --eventcontent RAWSIM --datatier GEN-SIM-RAW --conditions 94X_mc2017_realistic_v15 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:2e34v40 --geometry DB:Extended --era Run2_2017 --nThreads 4 
+#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL16HLT-00442.root --mc --eventcontent RAWSIM --datatier GEN-SIM-RAW --inputCommands "keep *","drop *_*_BMTF_*","drop *PixelFEDChannel*_*_*_*" --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' --step HLT:25ns15e33_v4 --geometry DB:Extended --era Run2_2016 --outputCommand "keep *_mix_*_*,keep *_genPUProtons_*_*" --nThreads 4 
 
 cmsDriver.py  \
   --python_filename ${STEP3_NAME}_cfg.py \
   --eventcontent RAWSIM \
+  --inputCommands "keep *","drop *_*_BMTF_*","drop *PixelFEDChannel*_*_*_*" \
   --customise Configuration/DataProcessing/Utils.addMonitoring \
   --datatier GEN-SIM-RAW \
   --fileout file:${STEP3_NAME}.root \
   --conditions $CONDITIONS_HLT \
   --customise_commands 'process.source.bypassVersionCheck = cms.untracked.bool(True)' \
+  --outputCommand "keep *_mix_*_*,keep *_genPUProtons_*_*"\
   --step HLT:$HLTSTEP \
   --geometry DB:Extended \
   --filein file:${STEP2_NAME}.root \
@@ -359,7 +354,7 @@ eval `scram runtime -sh`
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL17RECO-00447.root --mc --eventcontent AODSIM --runUnscheduled --datatier AODSIM --conditions 106X_mc2017_realistic_v6 --step RAW2DIGI,L1Reco,RECO,RECOSIM --geometry DB:Extended --era Run2_2017 --nThreads 4 
+#cmsDriver.py step1 --fileout file:SMP-RunIISummer20UL16RECO-00442.root --mc --eventcontent AODSIM --runUnscheduled --datatier AODSIM --conditions 106X_mcRun2_asymptotic_v13 --step RAW2DIGI,L1Reco,RECO,RECOSIM --geometry DB:Extended --era Run2_2016 --nThreads 4 
 
 cmsDriver.py  \
   --python_filename ${STEP4_NAME}_cfg.py \
@@ -387,18 +382,18 @@ cmsRun ${STEP4_NAME}_cfg.py
 export SCRAM_ARCH=slc7_amd64_gcc700
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
-if [ -r CMSSW_10_6_20/src ] ; then
-  echo release CMSSW_10_6_20 already exists
+if [ -r CMSSW_10_6_25/src ] ; then
+  echo release CMSSW_10_6_25 already exists
 else
-  scram p CMSSW CMSSW_10_6_20
+  scram p CMSSW CMSSW_10_6_25
 fi
-cd CMSSW_10_6_20/src
+cd CMSSW_10_6_25/src
 eval `scram runtime -sh`
 
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --filein "dbs:/WZZ_DileptonDecay_1J_dim8_LO_5f_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17RECO-106X_mc2017_realistic_v6-v1/AODSIM" --fileout file:SMP-RunIISummer20UL17MiniAODv2-00431.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 106X_mc2017_realistic_v9 --step PAT --geometry DB:Extended --era Run2_2017 --nThreads 4 --procModifiers run2_miniAOD_UL 
+#cmsDriver.py step1 --filein "dbs:/WWZ_DileptonDecay_1J_dim8_LO_5f_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM" --fileout file:SMP-RunIISummer20UL16MiniAODv2-00415.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 106X_mcRun2_asymptotic_v17 --step PAT --geometry DB:Extended --era Run2_2016 --nThreads 4 --procModifiers run2_miniAOD_UL 
 
 cmsDriver.py  \
   --python_filename ${STEP5_NAME}_cfg.py \
@@ -436,7 +431,7 @@ eval `scram runtime -sh`
 scram b -j4
 cd ../..
 
-#cmsDriver.py step1 --filein "dbs:/WZZ_DileptonDecay_1J_dim8_LO_5f_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v1/MINIAODSIM" --fileout file:SMP-RunIISummer20UL17NanoAODv9-00418.root --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_mc2017_realistic_v9 --step NANO --era Run2_2017,run2_nanoAOD_106Xv2 --nThreads 4
+#cmsDriver.py step1 --filein "dbs:/WWZ_DileptonDecay_1J_dim8_LO_5f_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM" --fileout file:SMP-RunIISummer20UL16NanoAODv9-00410.root --mc --eventcontent NANOEDMAODSIM --datatier NANOAODSIM --conditions 106X_mcRun2_asymptotic_v17 --step NANO --era Run2_2016,run2_nanoAOD_106Xv2 --nThreads 4
 
 #cmsDriver.py --python_filename NanoTest_cfg.py --eventcontent NANOAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAODSIM --fileout file:NanoTest.root --conditions 106X_upgrade2018_realistic_v16_L1v1 --step NANO --filein file:MiniTest.root --era Run2_2018,run2_nanoAOD_106Xv2 --no_exec --mc
 
