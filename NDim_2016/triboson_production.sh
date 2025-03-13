@@ -95,10 +95,27 @@ case "$YEAR" in
     HLTSTEP=25ns15e33_v4
     ;;
 2016APV) echo "The year is $YEAR"
-    ;;	
+    CAMPAIGN=RunIISummer20UL16APV
+    ERA=Run2_2016_HIPM
+    CONDITIONS=106X_mcRun2_asymptotic_preVFP_v8
+    CONDITIONS_SIM=106X_mcRun2_asymptotic_preVFP_v8
+    CONDITIONS_HLT=80X_mcRun2_asymptotic_2016_TrancheIV_v6
+    BEAMSPOT=Realistic25ns13TeV2016Collision
+    HLTSTEP=25ns15e33_v4
+    CONDITIONS_MINIAOD=106X_mcRun2_asymptotic_preVFP_v11
+    NANOERA=Run2_2016_HIPM,run2_nanoAOD_106Xv2
+    ERA_HLT=Run2_2016
+    ;;
 2017)  echo "The year is $YEAR"
-    CONDITIONS=94X_mc2017_realistic_v17
+    CAMPAIGN=RunIISummer20UL17
+    CONDITIONS=106X_mc2017_realistic_v6
+    CONDITIONS_SIM=106X_mc2017_realistic_v6
+    CONDITIONS_HLT=94X_mc2017_realistic_v15
+    CONDITIONS_MINIAOD=106X_mc2017_realistic_v9
     BEAMSPOT=Realistic25ns13TeVEarly2017Collision
+    ERA=Run2_2017
+    HLTSTEP=2e34v40
+    NANOERA=Run2_2017,run2_nanoAOD_106Xv2
     ;;
 2018)  echo "The year is $YEAR"
     CAMPAIGN=RunIISummer20UL18
@@ -137,10 +154,9 @@ FRAGMENT_BASE_URL=http://nuhep.northwestern.edu/~sapta/LeptonFilter/OneJet/
 GRIDPACK_BASE_URL=http://nuhep.northwestern.edu/~sapta/1JetGridpacks
 
 FRAGMENT=wmLHEGS-fragment-${YEAR}_${LEPTONFILTER}.py
-#GRIDPACK=${SAMPLE}_Dim6_cW_cHd_cHWB_cHW_4F_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
 GRIDPACK=${SAMPLE}_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz
-RUN_CARD_LOCATION=http://nuhep.northwestern.edu/~sapta/Diboson_Runcard/
-RUN_CARD=WW_2Jets_xqcut15_4F_NP_reweight_card.dat
+REWEIGHT_CARD_LOCATION=http://nuhep.northwestern.edu/~sapta/Triboson_ReweightCard/
+REWEIGHT_CARD=${SAMPLE}_reweight_card.dat
 
 STEP0_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}wmLHEGEN_${NPART}
 STEP1_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}SIM_${NPART}
@@ -149,6 +165,15 @@ STEP3_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}HLT_${NPART}
 STEP4_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}RECO_${NPART}
 STEP5_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}MiniAODv2_${NPART}
 STEP6_NAME=${SAMPLE}-${LEPTONFILTER}-${CAMPAIGN}NanoAODv9_${NPART}
+
+curl -s --insecure https://test-qiguo.web.cern.ch/test-qiguo/VVV/Sample_Production/LHEReweight/CMSSW_10_6_26_PhysicsTools_NanoAOD_plugins.patch --retry 2 --create-dirs -o CMSSW_10_6_26_PhysicsTools_NanoAOD_plugins.patch
+if [ -s CMSSW_10_6_26_PhysicsTools_NanoAOD_plugins.patch ]
+then
+  echo "get CMSSW_10_6_26_PhysicsTools_NanoAOD_plugins.patch"
+else
+  echo "can not get CMSSW_10_6_26_PhysicsTools_NanoAOD_plugins.patch"
+  exit $?;
+fi
 
 curl -s --insecure $GRIDPACK_BASE_URL/$GRIDPACK --retry 2 --create-dirs -o $GRIDPACK
 if [ -s $GRIDPACK ]
@@ -449,18 +474,18 @@ cmsDriver.py  \
     --mc \
     -n $NEVENTS
 
-curl -s --insecure $RUN_CARD_LOCATION/$RUN_CARD --retry 2 --create-dirs -o $RUN_CARD
-if [ -s $RUN_CARD ]
+curl -s --insecure $REWEIGHT_CARD_LOCATION/$REWEIGHT_CARD --retry 2 --create-dirs -o $REWEIGHT_CARD
+if [ -s $REWEIGHT_CARD ]
 then
-  echo "get $RUN_CARD"
+  echo "get $REWEIGHT_CARD"
 else
-  echo "can not get $RUN_CARD_LOCATION/$RUN_CARD"
-  echo "curl -s --insecure $RUN_CARD_LOCATION/$RUN_CARD --retry 2 --create-dirs -o $RUN_CARD"
+  echo "can not get $REWEIGHT_CARD_LOCATION/$REWEIGHT_CARD"
+  echo "curl -s --insecure $REWEIGHT_CARD_LOCATION/$REWEIGHT_CARD --retry 2 --create-dirs -o $REWEIGHT_CARD"
   exit $?;
 fi
 
 echo "named_weights = [" >> ${STEP6_NAME}_cfg.py
-cat $RUN_CARD | grep launch | sed 's/launch --rwgt_name=/"/' | sed 's/$/",/' >> ${STEP6_NAME}_cfg.py
+cat $REWEIGHT_CARD | grep launch | sed 's/launch --rwgt_name=/"/' | sed 's/$/",/' >> ${STEP6_NAME}_cfg.py
 echo -e "]\nprocess.genWeightsTable.namedWeightIDs = named_weights\nprocess.genWeightsTable.namedWeightLabels = named_weights" >> ${STEP6_NAME}_cfg.py
 
 cmsRun ${STEP6_NAME}_cfg.py
