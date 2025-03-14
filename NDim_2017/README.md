@@ -18,7 +18,7 @@
 
 ### Create the minimum bias file: 
 
-dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" > pileup_files.txt
+dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL17_106X_mc2017_realistic_v6-v3/PREMIX" > pileup_files.txt
 
 ### Running the production script
 
