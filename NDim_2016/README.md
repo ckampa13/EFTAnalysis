@@ -18,7 +18,7 @@
 
 ### Create the minimum bias file: 
 
-dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL18_106X_upgrade2018_realistic_v11_L1v1-v2/PREMIX" > pileup_files.txt
+dasgoclient -query="file dataset=/Neutrino_E-10_gun/RunIISummer20ULPrePremix-UL16_106X_mcRun2_asymptotic_v13-v1/PREMIX" > pileup_files.txt
 
 ### Running the production script
 
@@ -80,6 +80,10 @@ sh triboson_production.sh -p pileup_files.txt -s ZZZ_1Jet_xqcut15_12Operators_4F
 | WWZ          | 2016      | ✅          | ✅                    |             1M                        |
 | WZZ          | 2016      | ✅          | ✅                    |             1M                        |
 | ZZZ          | 2016      | ✅          | ✅                    |             1M                        |
+
+## To generate different processes, set the sample variable to:
+
+$SAMPLE=WWW_1Jet_xqcut15_12Operators_NDimensional_Test_Oct4, WWZ_1Jet_xqcut15_12Operators_NDimensional_Test_Oct5, WZZ_1Jet_xqcut15_12Operators_NDimensional_Test_Oct5, ZZZ_1Jet_xqcut15_12Operators_NDimensional_Test_Oct5
 
 ## For keeping track of sample production, we have the following spreadsheet:
 
