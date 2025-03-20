@@ -1,13 +1,1 @@
-INFO: (function: run) Combine.cc: 679 -- Freezing the following parameters: 
-INFO: (function: run) Combine.cc: 682  r 
-INFO: (function: run) Combine.cc: 682  k_cHl3 
-INFO: (function: run) Combine.cc: 682  k_cHbox 
-INFO: (function: run) Combine.cc: 682  k_cHDD 
-INFO: (function: run) Combine.cc: 682  k_cHq1 
-INFO: (function: run) Combine.cc: 682  k_cHq3 
-INFO: (function: run) Combine.cc: 682  k_cHW 
-INFO: (function: run) Combine.cc: 682  k_cHWB 
-INFO: (function: run) Combine.cc: 682  k_cll1 
-INFO: (function: run) Combine.cc: 682  k_cHB 
-INFO: (function: run) Combine.cc: 682  k_cHu 
-INFO: (function: run) Combine.cc: 682  k_cHd 
+INFO: (function: applyOptionsBase) FitterAlgoBase.cc: 113 -- Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer were taken where option not specified)
