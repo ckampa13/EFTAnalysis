@@ -142,8 +142,8 @@ versions_dict = {
 
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     # 3L
-    '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
-               'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
+    # '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
+               # 'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
 }
 
 # WC_ALL = ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB'] # 2L_SS v2
