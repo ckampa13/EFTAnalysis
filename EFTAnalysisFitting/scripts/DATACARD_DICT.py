@@ -216,22 +216,22 @@ datacard_dict = {
         }
     },
     # channel 9
-    '3Lepton': {
-        'subchannels': {
-            '1FJ': {
-                'bins': [1, 2, 3],
-                'info': {
-                    'short_name': '_1FJ',
-                    'file_name': '1FatJet',
-                    'ylabel_name': r'3 Leptons, 1 fat jet',
-                }
-            }
-        },
-        'info': {
-            'short_name': '3L',
-            'file_name': '3Lep',
-            'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
-            'ylabel_name': '3 Leptons            ',
-        }
-    },
+    # '3Lepton': {
+    #     'subchannels': {
+    #         '1FJ': {
+    #             'bins': [1, 2, 3],
+    #             'info': {
+    #                 'short_name': '_1FJ',
+    #                 'file_name': '1FatJet',
+    #                 'ylabel_name': r'3 Leptons, 1 fat jet',
+    #             }
+    #         }
+    #     },
+    #     'info': {
+    #         'short_name': '3L',
+    #         'file_name': '3Lep',
+    #         'variable_of_choice': r'$\mathrm{s}_{\mathrm{T}}$',
+    #         'ylabel_name': '3 Leptons            ',
+    #     }
+    # },
 }
