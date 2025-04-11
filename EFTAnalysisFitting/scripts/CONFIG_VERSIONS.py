@@ -78,8 +78,10 @@ versions_dict = {
     #               'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # includes pT dependent SFs; bkg uncertainties no longer flat; dim8 WCs added 10-10-24; MultiDim (refactored)
     #'2Lepton_OS': {'v': 21, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #              'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # dim6 central; dim8 copied from v20
-    '2Lepton_OS': {'v': 22, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                   'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # syst bug fix dim6 central; dim8 copied from v20
+    # '2Lepton_OS': {'v': 22, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+    #                'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # syst bug fix dim6 central; dim8 copied from v20
+    '2Lepton_OS': {'v': 23, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+                   'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # SM to NLO for dim6 central; dim8 copied from v20
     #'2Lepton_OS_2FJ': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete / first official pass, with all systematics.
     #'2Lepton_OS_2FJ': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete. everything in place except wtag sf
     #'2Lepton_OS_2FJ': {'v': 5, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # wtag sf added. switched from 2018 scaled to Run2 lumi to using all 3 years.
