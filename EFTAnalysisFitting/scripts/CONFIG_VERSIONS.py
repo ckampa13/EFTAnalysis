@@ -127,8 +127,8 @@ versions_dict = {
     # '1Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
     #'1Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
-    '1Lepton_1T': {'v': 33, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 33, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #
+    '1Lepton_1T': {'v': 36, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 36, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, updated BDT
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
@@ -141,10 +141,11 @@ versions_dict = {
     #                'v_NDIM': 19, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
     # '2Lepton_1T': {'v': 26, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 26, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding for Joseph's thesis
-    '2Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # unblinding for Joseph's thesis
-
+    # '2Lepton_1T': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #                'v_NDIM': 7, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # unblinding for Joseph's thesis
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
+    '2Lepton_1T': {'v': 36, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 36, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, updated BDT
     # 3L
     # '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
                # 'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
