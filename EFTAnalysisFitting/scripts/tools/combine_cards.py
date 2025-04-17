@@ -85,9 +85,9 @@ def combine_all_channels(datacard_dict, dim, ScanType, StatOnly, SignalInject=Fa
     # FAILS
     # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS', '1Lepton_1T', '2Lepton_1T']):
     # ALL
-    # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS']):
+    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS']):
     # 3L test
-    for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS', '3Lepton']):
+    # for i, ch in enumerate(['0Lepton_2FJ', '0Lepton_3FJ', '1Lepton', '2Lepton_SS', '2Lepton_OS_2FJ', '1Lepton_1T', '2Lepton_1T', '2Lepton_OS', '3Lepton']):
         if Unblind:
             ch_unbl = versions_dict[ch]['unblind']
             if not ch_unbl:
