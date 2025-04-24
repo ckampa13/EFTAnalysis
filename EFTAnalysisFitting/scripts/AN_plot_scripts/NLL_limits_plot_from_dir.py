@@ -80,7 +80,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             # build label
             #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
             # multi interval
-            label = WC_l+f'@{CL*100:0.1f}\%:\n'
+            label = WC_l+f'@{CL*100:0.1f}%:\n'
             label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n\n'
             label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL_s, UL_s)]) + '\n(stat. only)\n'
             # add to the plot
@@ -93,7 +93,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             # build label
             #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]'
             # multi interval
-            label = WC_l+f'@{CL*100:0.1f}\%:\n'
+            label = WC_l+f'@{CL*100:0.1f}%:\n'
             label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n'
             # add to the plot
             #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
