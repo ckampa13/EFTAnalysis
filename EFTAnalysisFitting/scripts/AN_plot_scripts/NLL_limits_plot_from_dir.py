@@ -145,7 +145,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False):
+def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
     else:
@@ -205,13 +205,16 @@ def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, Scan
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}')
+    pfilename = f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
+    if save_vers:
+        pfilename += '_' + version
+    plotfile = os.path.join(plot_dir, pfilename)
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
                               legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
     return fig, ax
 
-def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False):
+def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
     else:
@@ -268,13 +271,16 @@ def run_lim_plot_subchannel(WC, channel, subchannel, datacard_dict, CL_list, Sca
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}')
+    pfilename = f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_subchannel-{subchannel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
+    if save_vers:
+        pfilename += '_' + version
+    plotfile = os.path.join(plot_dir, pfilename)
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {subchannel}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
                               legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
     return fig, ax
 
-def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_stat_only,legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False):
+def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_stat_only,legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
     else:
@@ -334,13 +340,16 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}')
+    pfilename = f'{asi_prestr}NLL_vs_{WC}_channel-{channel}_bin{bin_info["bin_"]}{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
+    if save_vers:
+        pfilename += '_' + version
+    plotfile = os.path.join(plot_dir, pfilename)
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: {bin_info["channel"]}, {bin_info["subchannel"]}; Bin: {bin_info["bin_"]}'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
                               legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
     return fig, ax
 
-def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, version=None, legend=True, tight_layout=False, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, channels=[''], Asimov=True, Unblind=False):
+def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, version=None, legend=True, tight_layout=False, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, channels=[''], Asimov=True, Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
     else:
@@ -398,7 +407,10 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
-    plotfile = os.path.join(plot_dir, f'{asi_prestr}NLL_vs_{WC}_channel-All{suff_ch_file}_binAll{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}')
+    pfilename = f'{asi_prestr}NLL_vs_{WC}_channel-All{suff_ch_file}_binAll{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
+    if save_vers:
+        pfilename += '_' + version
+    plotfile = os.path.join(plot_dir, pfilename)
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: All; Bin: All'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
                               legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
@@ -451,6 +463,8 @@ if __name__=='__main__':
                         help='Optional suffix for plot file (if you want multiple versions).')
     parser.add_argument('-L', '--LinearOnly',
                         help='Drop quadratic and mixed terms in the EFT model? "n" (default), "y"')
+    parser.add_argument('-sv', '--SaveVers',
+                        help='Save version string in the filename? "n" (default), "y"')
     args = parser.parse_args()
     if (args.theLevels is None) or (args.theLevels == 'all'):
         generate_bins = True
@@ -550,6 +564,11 @@ if __name__=='__main__':
     else:
         LinearOnly = args.LinearOnly
     LinearOnly_bool = LinearOnly == 'y'
+    if args.SaveVers is None:
+        SaveVers = 'n'
+    else:
+        SaveVers = args.SaveVers
+    SaveVers_bool = SaveVers == 'y'
     # loop
     for WC in WCs:
     # for WC in ['cW']: # testing
@@ -577,7 +596,7 @@ if __name__=='__main__':
                                 legend=legend, tight_layout=tight_layout,
                                 vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
                                 fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool,
-                                Asimov=Asimov, Unblind=Unblind)
+                                Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
                         print()
             print("=========================================================\n")
         if generate_subch:
@@ -597,7 +616,7 @@ if __name__=='__main__':
                             legend=legend, tight_layout=tight_layout,
                             vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
                             fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool,
-                            Asimov=Asimov, Unblind=Unblind)
+                            Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
         #'''
         if generate_ch:
@@ -616,7 +635,7 @@ if __name__=='__main__':
                         legend=legend, tight_layout=tight_layout,
                         vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
                         fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool,
-                        Asimov=Asimov, Unblind=Unblind)
+                        Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
         #'''
         if generate_full:
@@ -628,7 +647,7 @@ if __name__=='__main__':
                 fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat, legend=legend, tight_layout=tight_layout,
                                                 vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
                                                 fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool, channels=chs,
-                                                Asimov=Asimov, Unblind=Unblind)
+                                                Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
             #'''
     # plt.show()

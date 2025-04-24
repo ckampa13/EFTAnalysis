@@ -129,10 +129,10 @@ versions_dict = {
     #'1Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     #'1Lepton_1T': {'v': 36, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #               'v_NDIM': 36, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, updated BDT
-    '1Lepton_1T': {'v': 38, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                  'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
-    # '1Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-    #               'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
+    # '1Lepton_1T': {'v': 38, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #               'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
+    '1Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                  'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
@@ -150,10 +150,10 @@ versions_dict = {
     #'2Lepton_1T': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs}, # dim8 bug fix; adding multi-WC inputs
     # '2Lepton_1T': {'v': 36, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 36, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, updated BDT
-    '2Lepton_1T': {'v': 38, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
-    # '2Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-    #                'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
+    # '2Lepton_1T': {'v': 38, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #                'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
+    '2Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                   'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
     # 3L
     # '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
                # 'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
