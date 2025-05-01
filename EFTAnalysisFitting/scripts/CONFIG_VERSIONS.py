@@ -55,8 +55,10 @@ versions_dict = {
     #            'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # includes dim8, MultiDim (refactored)
     # '1Lepton': {'v': 9, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #            'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # update to central
-    '1Lepton': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-               'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central; TH1D, JES new defn
+    #'1Lepton': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+    #           'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central; TH1D, JES new defn
+    '1Lepton': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+              'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},
     #'2Lepton_OS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # removed WWZ ggH
@@ -106,8 +108,10 @@ versions_dict = {
     #               'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # includes pT dependent SFs, dim8, MultiDim (refactored)
     #'2Lepton_SS': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #              'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # update to central
-    '2Lepton_SS': {'v': 12, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                 'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central; TH1D, JES new defn, WZ new estimation
+    # '2Lepton_SS': {'v': 12, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+    #              'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central; TH1D, JES new defn, WZ new estimation
+    '2Lepton_SS': {'v': 13, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+                 'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     # '2Lepton_SS': {'v': 1001, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # TEST!! of Yulun's proposal for EFTfitCoefficient matrix for analysts to report yields. This is supplied for dim6 at the inclusive level of the analysis with dilepton filter. I have rebinned the matrix for sT to look like Yulun's SR binning. I added a single background that roughly corresponds to...
     #'2Lepton_SS': {'v': 1002, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # TEST!! of Yulun's proposal for EFTfitCoefficient matrix for analysts to report yields. This is supplied for dim6 in the signal region. I added a single background that corresponds to...
     # ...Yulun's total backgrounds. 30% flat systematic applied, and 10% MC stat uncertainty applied. dim8 files copied directly from v4 so I don't see errors.
