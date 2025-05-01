@@ -235,7 +235,7 @@ def make_workspace_full_analysis(dim, WCs, ScanType, verbose=1, StatOnly=False, 
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    comb_dcdir = os.path.join(datacard_dir, 'combined_datacards', 'full_analysis')
+    comb_dcdir = os.path.join(dcdir, 'combined_datacards', 'full_analysis')
     if SignalInject:
         suff_purp = '_SignalInject_'+WC
     else:
