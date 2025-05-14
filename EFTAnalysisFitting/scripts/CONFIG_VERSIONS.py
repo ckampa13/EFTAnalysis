@@ -97,7 +97,7 @@ versions_dict = {
     #'2Lepton_OS_2FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #                   'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #  includes pT dependent SFs; background uncertainties updated; dim8 WCs added 10-10-24; MultiDim (refactored)
     '2Lepton_OS_2FJ': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                      'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #  unblinding; dim6 (central) only (dim8 private copied from v6)
+                      'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding; dim6 (central) only (dim8 private copied from v6)
     # '2Lepton_SS': {'v': 1, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '2Lepton_SS': {'v': 2, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # only WWW
     # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW -- first batch
