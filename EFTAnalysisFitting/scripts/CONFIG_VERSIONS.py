@@ -171,7 +171,7 @@ versions_dict = {
     # '2Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
     '2Lepton_1T': {'v': 44, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # unblinding
+                   'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     # 3L
     # '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
                # 'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
