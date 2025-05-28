@@ -47,6 +47,7 @@ versions_dict = {
     #                'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #  dim8 added, NDIM added
     '0Lepton_3FJ': {'v': 28, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
                    'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding
+                   # 'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #  unblinding
     # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '1Lepton': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # cW -> VVV+1Jet, all other dim6 added. autoMCStats should be turned off.
     #'1Lepton': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # All dim8 added (dim6 bugged). Processed only FT0, FM0. autoMCStats should be turned off.

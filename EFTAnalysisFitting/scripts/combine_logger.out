@@ -1,13 +1,18 @@
-INFO: (function: run) Combine.cc: 679 -- Freezing the following parameters: 
-INFO: (function: run) Combine.cc: 682  r 
-INFO: (function: run) Combine.cc: 682  k_cHl3 
-INFO: (function: run) Combine.cc: 682  k_cHbox 
-INFO: (function: run) Combine.cc: 682  k_cHDD 
-INFO: (function: run) Combine.cc: 682  k_cHq1 
-INFO: (function: run) Combine.cc: 682  k_cHq3 
-INFO: (function: run) Combine.cc: 682  k_cHW 
-INFO: (function: run) Combine.cc: 682  k_cHWB 
-INFO: (function: run) Combine.cc: 682  k_cll1 
-INFO: (function: run) Combine.cc: 682  k_cHB 
-INFO: (function: run) Combine.cc: 682  k_cHu 
-INFO: (function: run) Combine.cc: 682  k_cHd 
+INFO: (function: applyOptionsBase) FitterAlgoBase.cc: 113 -- Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer were taken where option not specified)
+INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
+INFO: (function: doFit) FitterAlgoBase.cc: 359 -- Running RobustFit for POI k_cW. Configured with strategy 0  
+INFO: (function: findCrossingNew) FitterAlgoBase.cc: 530 -- Searching for crossing at nll = -67.0562 in the interval [ 0.000999869 , 0.001 ] 
+ERROR: (function: findCrossingNew) FitterAlgoBase.cc: 653 -- Closed range without finding crossing! 
+INFO: (function: findCrossingNew) FitterAlgoBase.cc: 530 -- Searching for crossing at nll = -67.0562 in the interval [ 0.000999869 , -0.001 ] 
+ERROR: (function: findCrossingNew) FitterAlgoBase.cc: 653 -- Closed range without finding crossing! 
