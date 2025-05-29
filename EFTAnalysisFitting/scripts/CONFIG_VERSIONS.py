@@ -62,8 +62,10 @@ versions_dict = {
     #            'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # update to central
     #'1Lepton': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #           'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central; TH1D, JES new defn
-    '1Lepton': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-              'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    #'1Lepton': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+    #          'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    '1Lepton': {'v': 13, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
+             'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; fixed missing overlap removal
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},
     #'2Lepton_OS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # removed WWZ ggH
