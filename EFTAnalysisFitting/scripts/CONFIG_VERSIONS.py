@@ -156,8 +156,10 @@ versions_dict = {
     #               'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
     # '1Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #               'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
-    '1Lepton_1T': {'v': 44, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                  'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    #'1Lepton_1T': {'v': 44, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #              'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    '1Lepton_1T': {'v': 45, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                 'v_NDIM': 45, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; assigned updated; JES SM VVV bug fixed
     #'2Lepton_1T': {'v': 0, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']},
     #'2Lepton_1T': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs}, # updated uncertainties (bkg summed in quadrature; more signal systematics)
     #'2Lepton_1T': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T}, # dim8 added
@@ -179,8 +181,10 @@ versions_dict = {
     #                'v_NDIM': 38, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, loose BDT
     # '2Lepton_1T': {'v': 39, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
     #                'v_NDIM': 39, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # central, tight BDT
-    '2Lepton_1T': {'v': 44, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
-                   'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    #'2Lepton_1T': {'v': 44, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+    #               'v_NDIM': 44, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+    '2Lepton_1T': {'v': 45, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs_1T,
+                  'v_NDIM': 45, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; assigned updated; JES SM VVV bug fixed
     # 3L
     # '3Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs,
                # 'v_NDIM': None, 'EFT_ops_NDIM': None, 'unblind': False}, # update to central
