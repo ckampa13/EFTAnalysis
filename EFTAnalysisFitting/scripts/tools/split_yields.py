@@ -77,8 +77,14 @@ def update_datacard(ddir, dc_name, bin_n):
             f.write(line_new+'\n')
 
 # split subchannels in a channel
-def split_channel_subchannels(channel, version, datacard_dict, dims, ScanType):
+def split_channel_subchannels(channel, version, datacard_dict, dims, ScanType, Unblind=False):
     dcdir = datacard_dir
+    if Unblind:
+        ch_unbl = versions_dict[channel]['unblind']
+        if not ch_unbl:
+            print('Channel %s is not unblinded, skipping!' % channel)
+            return
+        dcdir = os.path.join(dcdir, 'unblind')
     sname_ch = datacard_dict[channel]['info']['short_name']
     subchannels = datacard_dict[channel]['subchannels'].keys()
     str_ = 'Channel: %s; version: %s:' % (channel, version)
@@ -117,6 +123,7 @@ if __name__=='__main__':
                         help='Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -127,6 +134,12 @@ if __name__=='__main__':
         channels = [args.Channel]
     if args.ScanType is None:
         args.ScanType = '_All'
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     #########################
     # split channel subchannels
     print('Splitting subchannels into single bins for each available channel:')
@@ -147,6 +160,7 @@ if __name__=='__main__':
                 break
         v = versions_dict[channel]['v']
         VERSION = 'v' + str(v)
-        split_channel_subchannels(channel, VERSION, datacard_dict, dims, ScanType=args.ScanType)
+        split_channel_subchannels(channel, VERSION, datacard_dict, dims, ScanType=args.ScanType,
+                                  Unblind=Unblind)
     print('=================================================\n')
     #########################
