@@ -128,7 +128,8 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     else:
         #ax.set_xlim([-xlim2, xlim2])
         ax.set_xlim([-largest_lim, largest_lim])
-    ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
+    ###ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
+    ax.set_ylim([-0.25, 2.5*np.max(NLL_cuts)])
     # force xlim
     if not xlim_force is None:
         ax.set_xlim([-xlim_force, xlim_force])
@@ -140,7 +141,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     # DEBUG!!
     #ax.set_xlim([-1, 1])
     # DEBUG!!
-    ax.set_ylim([0.000, 0.03])
+    #ax.set_ylim([0.000, 0.03])
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')

@@ -51,7 +51,7 @@ rescale_dict = {
     },
 }
 
-# FIXME! Harmonize with the function in "limit_summary_plto_from_dir.py"
+# FIXME! Harmonize with the function in "limit_summary_plot_from_dir.py"
 # main feature that would need to change is passing in multiple WCs
 # which should be embedded in root_file_dict_full
 def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=False, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,

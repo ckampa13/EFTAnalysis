@@ -14,7 +14,12 @@ template_outfilename_stub = Template("_$asimov.$channel$subchannel.$WC$ScanType.
 # 2D scan
 template_outfilename_2D = Template("higgsCombine_$asimov.$channel$subchannel.$WC1$WC2$ScanType.$version.$syst.$method.mH120.root")
 template_outfilename_2D_stub = Template("_$asimov.$channel$subchannel.$WC1$WC2$ScanType.$version.$syst")
+template_fitDiagfilename = Template("fitDiagnostics_${asimov}_FitDiag_Test_Uncertainties_${NTOYS}_Toys.root")
 
+# backgrounds
+bkgs_all = ['WW', 'QCD', 'Top', 'WZ', 'DY', 'ZZ', 'VH', 'WJets', 'VG', 'nonprompt', 'VV'] # not including sm
+
+# signals
 # copied from: https://github.com/amassiro/AnalyticAnomalousCoupling/blob/master/python/AnomalousCouplingEFTNegative.py
 # dimension 6 -- 81 ops
 dim6_ops = [
