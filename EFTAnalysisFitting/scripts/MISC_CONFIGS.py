@@ -118,6 +118,48 @@ WC_pretty_print_dict_AN = {
     'FT9': r'$f_{T,9}$',
 }
 
+# aliases defined for paper
+WC_pretty_print_dict_paper = {
+    # dim6
+    'cW': r'\cW',
+    'cHq3': r'\cHqthree',
+    'cHq1': r'\cHqone',
+    'cHu': r'\cHu',
+    'cHd': r'\cHd',
+    'cHW': r'\cHW',
+    'cHB': r'\cHB',
+    'cHWB': r'\cHWB',
+    'cHl3': r'\cHlthree',
+    'cll1': r'\cllone',
+    'cHbox': r'\cHsquare',
+    'cHDD': r'\cHDD',
+    # dim6 (old)
+    'cT0': r'\fT{0}',
+    'cM0': r'\fM{0}',
+    # dim8
+    'FS0': r'\fS{0}',
+    'FS1': r'\fS{1}',
+    'FS2': r'\fS{2}',
+    'FM0': r'\fM{0}',
+    'FM1': r'\fM{1}',
+    'FM2': r'\fM{2}',
+    'FM3': r'\fM{3}',
+    'FM4': r'\fM{4}',
+    'FM5': r'\fM{5}',
+    'FM6': r'\fM{6}', # not in final analysis
+    'FM7': r'\fM{7}',
+    'FT0': r'\fT{0}',
+    'FT1': r'\fT{1}',
+    'FT2': r'\fT{2}',
+    'FT3': r'\fT{3}',
+    'FT4': r'\fT{4}',
+    'FT5': r'\fT{5}',
+    'FT6': r'\fT{6}',
+    'FT7': r'\fT{7}',
+    'FT8': r'\fT{8}',
+    'FT9': r'\fT{9}',
+}
+
 SR_pretty_print_dict_AN = {
     # subchannel file names
     '0L_2FJ': r'SR-0l-2fj',

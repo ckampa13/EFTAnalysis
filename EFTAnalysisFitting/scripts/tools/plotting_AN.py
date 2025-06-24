@@ -57,12 +57,17 @@ def CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True):
     ax.set_title(righttitle, loc='right')
 
 def numerical_formatter(value_float):
-    if abs(value_float) < 0.1:
-        s = f'{value_float:0.3f}'
-    elif abs(value_float) < 2.0:
-        s = f'{value_float:0.2f}'
-    elif abs(value_float) < 10.:
-        s = f'{value_float:0.1f}'
+    # check if we should remove the preceding negative
+    if abs(np.round(value_float, decimals=3)) < 0.001:
+        vf = abs(value_float)
+    else:
+        vf = value_float
+    if abs(vf) < 0.1:
+        s = f'{vf:0.3f}'
+    elif abs(vf) < 2.0:
+        s = f'{vf:0.2f}'
+    elif abs(vf) < 10.:
+        s = f'{vf:0.1f}'
     else:
         # above 10, round to integer
         # use decimal package to avoid bankers rounding
@@ -72,7 +77,7 @@ def numerical_formatter(value_float):
         #     rval = dval.to_integral_value()
         # s = f'{rval}'
         # or just use f-string, which rounds appropriately
-        s = f'{value_float:0.0f}'
+        s = f'{vf:0.0f}'
     return s
 
 def numerical_formatter_with_ndec_return(value_float):
@@ -97,3 +102,26 @@ def numerical_formatter_with_ndec_return(value_float):
         s = f'{value_float:0.0f}'
         nd = 0
     return s, nd
+
+def get_ndec(value_str):
+    s_spl = value_str.split('.')
+    if len(s_spl) < 2:
+        ndec = 0
+    else:
+        ndec = len(s_spl[1])
+    return ndec
+
+def match_ndec(value_float, str_match):
+    s_spl = str_match.split('.')
+    if len(s_spl) < 2:
+        ndec = 0
+    else:
+        ndec = len(s_spl[1])
+    s = f'{value_float:0.{ndec}f}'
+    return s, ndec
+
+def check_all_zero(value_str):
+    # this is to determine if leading negative should be removed
+    v_ = value_str.replace('-', '').replace('+', '').replace('.', '')
+    all_zero = v_.count('0') == len(v_)
+    return all_zero

@@ -584,3 +584,35 @@ def get_lims_quad_interp(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', ex
     Cs_best = np.array(Cs_best)
     #return Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best
     return Cs, NLL, CL_list, NLL_cuts, LLs, ULs, LLs_interp, ULs_interp, C_best, NLL_best
+
+def get_point_estimate_pm_1sigma(Cs, NLL, LLs_interp_1sigma, ULs_interp_1sigma, C_best_combine, use_best=True, dC=0.0001, kind='quadratic'):
+    # assumes LLs_interp_1sigma and ULs_interp_1sigma were grabbed from LLs_interp and ULs_interp
+    # generated with CL_1sigma
+    bounds = []
+    C_bests = []
+    NLL_bests = []
+    pluss = []
+    minuss = []
+    for LL, UL in zip(LLs_interp_1sigma, ULs_interp_1sigma):
+        # find point estimate only within this range
+        # set up interpolation function
+        interp_func = interp1d(Cs, NLL, kind=kind, fill_value='extrapolate')
+        LL_ = np.round(LL) - 1
+        UL_ = np.round(UL) + 1
+        Cs_fine = np.arange(LL_, UL_, dC)
+        NLL_fine = interp_func(Cs_fine)
+        imin = np.argmin(NLL_fine)
+        C_best = Cs_fine[imin]
+        if use_best:
+            if abs(C_best - C_best_combine) < 1.:
+                C_best = C_best_combine
+        C_bests.append(C_best)
+        NLL_best = NLL_fine[imin]
+        NLL_bests.append(NLL_best)
+        plus = UL - C_best
+        minus = C_best - LL
+        pluss.append(plus)
+        minuss.append(minus)
+        bounds.append([LL, UL])
+    return C_bests, NLL_bests, pluss, minuss, bounds
+

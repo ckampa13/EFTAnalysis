@@ -223,7 +223,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # plot MC stat error as hatched bar
     # error as hatched bar
     axs[0].bar(inds, 2*df_yields[f'total_bkg_err_{use_fit}'].values, 1.0, bottom=df_yields[f'total_bkg_plu_SM_{use_fit}']-df_yields[f'total_bkg_err_{use_fit}'].values,
-               color=None, fill=False, edgecolor='cornflowerblue', hatch='//', linewidth=1, label='Error (SM)', zorder=11)
+               color=None, fill=False, edgecolor='cornflowerblue', hatch='//', linewidth=1, label='Uncertainty (SM)', zorder=11)
     # WC @ 95% exclusion
     axs[0].hist(inds, bins=bin_edges, weights=df_yields[ycol_cW].values, histtype='step', color='red', linewidth=2, label=lab_cW, zorder=13)
     # data

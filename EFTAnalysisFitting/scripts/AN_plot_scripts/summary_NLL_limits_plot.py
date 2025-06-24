@@ -35,11 +35,17 @@ plt.rcParams['figure.constrained_layout.use'] = True
 
 #colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
 
-colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta', 'saddlebrown', 'dimgray', 'cyan']
+#colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'magenta', 'saddlebrown', 'dimgray', 'cyan']
 
-colors_dict = {'0L_2FJ': 'green', '0L_3FJ': 'blue', '1L_2FJ': 'magenta',
-               '2L_OS': 'darkorange', '2L_OS_2FJ': 'cyan', '2L_SS': 'saddlebrown',
-               '0L_2FJ_1T': 'gold', '1L_1FJ_1T': 'limegreen', '2L_0FJ_1T': 'dimgray'}
+#colors_dict = {'0L_2FJ': 'green', '0L_3FJ': 'blue', '1L_2FJ': 'magenta',
+#               '2L_OS': 'darkorange', '2L_OS_2FJ': 'cyan', '2L_SS': 'saddlebrown',
+#               '0L_2FJ_1T': 'gold', '1L_1FJ_1T': 'limegreen', '2L_0FJ_1T': 'dimgray'}
+
+colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange', 'salmon', 'saddlebrown', 'dimgray', 'cyan']
+
+colors_dict = {'0L_2FJ': 'green', '0L_3FJ': 'blue', '1L_2FJ': 'salmon',
+              '2L_OS': 'darkorange', '2L_OS_2FJ': 'cyan', '2L_SS': 'saddlebrown',
+              '0L_2FJ_1T': 'gold', '1L_1FJ_1T': 'limegreen', '2L_0FJ_1T': 'dimgray'}
 
 N_ch = len(colors_dict) + 1
 
@@ -129,9 +135,16 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     lw = 2.
                 zorder = N_ch + 10 - i
                 ##label_NLL = info_dict['ylabel']+f'\n'
+                is_overlay = False
                 if 'Full analysis' in info_dict['ylabel']:
                     ch_l = info_dict['ylabel']
-                    color = 'black'
+                    # FIXME! This is an abuse of notation -- this isn't really what this variable was meant for
+                    # and it could be confusing
+                    if info_dict['variable_of_choice'] == "OVERLAY":
+                        color = 'magenta'
+                        is_overlay = True
+                    else:
+                        color = 'black'
                 else:
                     ch_ = info_dict['ylabel']
                     #ch_ = rdict_full['bin_info']['channel']
@@ -171,6 +184,10 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     lw *= 2.0
                 else:
                     ls = '-'
+                if is_overlay:
+                    ls = '-'
+                    lw = 4.0
+                    zorder += 20
                 ax.plot(Cs, NLL, c=color, linestyle=ls, linewidth=lw, label=label_NLL, zorder=zorder)
                 if plot_stat_only:
                     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
@@ -223,10 +240,15 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         ax.set_xlim([-0.5, 8.0])
     else:
         xlim_factor = 2.
+        # xlim_factor = 2.5
         xlim = xlim_factor*np.max(np.abs(np.concatenate([np.concatenate([LL for LL in LLs_all]), np.concatenate([UL for UL in ULs_all])])))
         ax.set_xlim([-xlim, xlim])
+        ##print(xlim)
         # FIXME! for tau debug
-        max_ = 10*np.min(np.abs(np.concatenate([UL for UL in ULs_all])))
+        ##print(ULs_all)
+        #max_ = 10*np.min(np.abs(np.concatenate([UL for UL in ULs_all])))
+        max_ = 10*np.min(np.abs([np.max(UL) for UL in ULs_all]))
+        ##print(max_)
         #max_ = 100.
         if xlim > max_:
             ax.set_xlim([-max_, max_])
@@ -264,7 +286,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, OverlayData=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -275,6 +297,9 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         Asi = f'Data_SignalInject_{WC}'
     else:
         Asi = 'Asimov'
+    # update Asi if we are using Data
+    if not Asimov:
+        Asi = 'Data'
     # custom SM
     if WC == 'sm':
         scan_dir = ''
@@ -289,9 +314,12 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         WC_l = 'SM'
     else:
         WC_l = WC_pretty_print_dict[WC]
-    output_dir_ch = os.path.join(datacard_dir, 'output', 'channel')
-    output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'AN_plots', 'full_analysis', scan_dir)
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    output_dir_ch = os.path.join(dcdir, 'output', 'channel')
+    output_dir_full = os.path.join(dcdir, 'output', 'full_analysis')
+    plot_dir = os.path.join(dcdir, 'AN_plots', 'full_analysis', scan_dir)
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -332,18 +360,49 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
     if SignalInject:
         ylabel = f'Full analysis\nSignal Injected\n{WC}={InjectValue:0.2f}'
     else:
-        ylabel = 'Full analysis\nAsimov Dataset'
+        if Asimov:
+            ylabel = 'Full analysis\nAsimov Dataset'
+        else:
+            ylabel = 'Full analysis\nData'
     root_file_dict_full[N+1] = {'root_file_dict': root_file_dict, 'ylabel': ylabel,
                                    'variable_of_choice': ''}
+    # add data for overlay?
+    if OverlayData:
+        Asi_ = 'Data'
+        if WC == 'sm':
+            #scan_dir = ''
+            #ScanType = ''
+            #if expect_signal is None:
+            #    expect_signal = '0'
+            # scan_title = f'(Expected Signal = {expect_signal})'
+            Asi_ += f'_expect_signal_{expect_signal}'
+            # SignalInject = False
+        file_syst = template_outfilename.substitute(asimov=Asi_, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov=Asi_, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
+        root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
+        root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
+        root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
+        ylabel = 'Full analysis\nData'
+        root_file_dict_full[N+2] = {'root_file_dict': root_file_dict, 'ylabel': ylabel,
+                                       'variable_of_choice': 'OVERLAY'}
+
     # plot
+    if not Asimov:
+        prefix='data_'
+    else:
+        prefix=''
+    if OverlayData:
+        postfix='_OverlayData'
+    else:
+        postfix=''
     if plot_stat_only:
         stat_str = '_w_stat_only'
     else:
         stat_str = ''
     if SignalInject:
-        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}')
+        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{postfix}')
     else:
-        plotfile = os.path.join(plot_dir, f'full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}')
+        plotfile = os.path.join(plot_dir, f'{prefix}full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{postfix}')
     #title = f'{CL*100:0.1f}\% CL Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     title = f'Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     if SignalInject:
@@ -397,6 +456,9 @@ if __name__=='__main__':
                         help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", "dim6", "dim8"...]')
     parser.add_argument('-v', '--InjectValue',
                         help='What value for the WC was used in the signal injection test? 0.0 (default), 1.0, ...')
+    parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
+    parser.add_argument('-OD', '--OverlayData', help='Add another full analysis curveUse datacards from unblinded private repo? "n"(default)/"y".')
     args = parser.parse_args()
     if args.InjectSignal is None:
         args.InjectSignal = 'n'
@@ -416,6 +478,24 @@ if __name__=='__main__':
         InjectValue = 0.0
     else:
         InjectValue = float(args.InjectValue)
+    if args.Asimov is None:
+        args.Asimov = 'y'
+    if args.Asimov == 'y':
+        Asimov = True
+    else:
+        Asimov = False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
+    if args.OverlayData is None:
+        args.OverlayData = 'n'
+    if args.OverlayData == 'y':
+        OverlayData = True
+    else:
+        OverlayData = False
     # loop over WCs
     for WC in WCs:
         #if WC == 'sm':
@@ -432,7 +512,8 @@ if __name__=='__main__':
             run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, pstat,
                                           SignalInject=SignalInject, InjectValue=InjectValue,
                                           ScanType=ScanType, expect_signal=expect_signal,
-                                          legend=legend)
+                                          legend=legend, Asimov=Asimov, Unblind=Unblind,
+                                          OverlayData=OverlayData)
         print("=========================================================\n")
     # plt.show()
 
