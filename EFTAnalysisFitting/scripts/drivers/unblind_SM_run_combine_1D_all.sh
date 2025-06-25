@@ -115,8 +115,8 @@ while read channel version; do
         # else
         #     CHF=${channel}
         # fi
-        echo "python 1D_scan/SM_run_combine_1D.py -c $channel -t c -p 0.05 -l -2 -u 8 -U y -a ${ALoop[$i]} > ${LOGDIR}SM_run_combine_1D_${A}_${channel}_c.txt 2>&1 &"
-        python 1D_scan/SM_run_combine_1D.py -c $channel -t c -p 0.05 -l -2 -u 8 -U y -a ${ALoop[$i]} > ${LOGDIR}SM_run_combine_1D_${A}_${channel}_c.txt 2>&1 &
+        echo "python 1D_scan/SM_run_combine_1D.py -c $channel -t c -p 0.05 -l -10 -u 20 -U y -a ${ALoop[$i]} > ${LOGDIR}SM_run_combine_1D_${A}_${channel}_c.txt 2>&1 &"
+        python 1D_scan/SM_run_combine_1D.py -c $channel -t c -p 0.05 -l -10 -u 20 -U y -a ${ALoop[$i]} > ${LOGDIR}SM_run_combine_1D_${A}_${channel}_c.txt 2>&1 &
     done
 done < <(python -c "
 import sys
@@ -133,8 +133,8 @@ for i, tup in enumerate(sorted(versions_dict.items())):
 
 echo "Full Analysis:"
 echo "Asimov"
-echo "python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -2 -u 8 -U y -a y > ${LOGDIR}SM_run_combine_1D_Asimov_full_analysis_f.txt 2>&1 &"
-python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -2 -u 8 -U y -a y > ${LOGDIR}SM_run_combine_1D_Asimov_full_analysis_f.txt 2>&1 &
+echo "python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -10 -u 20 -U y -a y > ${LOGDIR}SM_run_combine_1D_Asimov_full_analysis_f.txt 2>&1 &"
+python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -10 -u 20 -U y -a y > ${LOGDIR}SM_run_combine_1D_Asimov_full_analysis_f.txt 2>&1 &
 echo "Data"
-echo "python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -2 -u 8 -U y -a n > ${LOGDIR}SM_run_combine_1D_Data_full_analysis_f.txt 2>&1 &"
-python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -2 -u 8 -U y -a n > ${LOGDIR}SM_run_combine_1D_Data_full_analysis_f.txt 2>&1 &
+echo "python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -10 -u 20 -U y -a n > ${LOGDIR}SM_run_combine_1D_Data_full_analysis_f.txt 2>&1 &"
+python 1D_scan/SM_run_combine_1D.py -t sf -p 0.05 -l -10 -u 20 -U y -a n > ${LOGDIR}SM_run_combine_1D_Data_full_analysis_f.txt 2>&1 &

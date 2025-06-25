@@ -755,7 +755,7 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         elif WC in ['cHbox', 'cHDD']:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # TEMPORARY -- AN prep
-        elif 'FS' in WC:
+        elif 'FS' in WC or WC in ['cll1']:
             grid_dict = {'LL':-40, 'UL':40, 'steps': 81}
         else:
             grid_dict = {'LL':-30, 'UL':30, 'steps': 61}

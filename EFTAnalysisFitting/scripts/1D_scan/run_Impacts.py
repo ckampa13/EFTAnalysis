@@ -31,7 +31,7 @@ from MISC_CONFIGS import (
 secret_options = """ --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT"""
 
 def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plot_dir,
-                        WCs_freeze=None, WCs_limit=None, limit_val=10., runBlind=False, plotsOnly=False):
+                        WCs_freeze=None, WCs_limit=None, limit_val=10., runBlind=False):
     # params_to_freeze = WCs
     cmd1 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
     cmd2 = 'combineTool.py -M Impacts -d %s -m 120 %s --redefineSignalPOIs k_%s --freezeNuisanceGroups nosyst ' % (workspace_file, asimov_str, WC)
@@ -111,25 +111,24 @@ def get_impact_commands(WC, workspace_file, asimov_str, name_str, json_name, plo
     cmd2 += secret_options
     cmd3 += secret_options
     # mv from cwd to final plot directory
-    cmd5 = 'mv %s.pdf %s' % (json_name+'_blinded', plot_dir)
-    cmd6 = 'mv %s.pdf %s' % (json_name, plot_dir)
-    # cmds = [cmd1, cmd2, cmd3, cmd4, cmd5, cmd6, cmd7]
-    if plotsOnly:
-        cmds = [cmd4, cmd5, cmd6]
+    if runBlind:
+        cmd5 = 'mv %s.pdf %s' % (json_name+'_blinded', plot_dir)
     else:
-        cmds = [cmd1, cmd2, cmd3, cmd4, cmd5, cmd6]
+        cmd5 = 'mv %s.pdf %s' % (json_name, plot_dir)
+    # cmds = [cmd1, cmd2, cmd3, cmd4, cmd5, cmd6, cmd7]
+    # cmds = [cmd1, cmd2, cmd3, cmd4, cmd5, cmd6]
+    cmds = [cmd1, cmd2, cmd3, cmd4, cmd5]
     return cmds
 
 def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
                            ScanType, Asimov, asi_str, SignalInject, stdout, verbose=0,
-                           Unblind=False, runBlind=False, plotOnly=False):
+                           Unblind=False, runBlind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if runBlind:
         bl_label='_blindFlag'
     else:
         bl_label=''
-    bl_label_rB = '_blindFlag'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
@@ -187,13 +186,12 @@ def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         name_str = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
-        json_name = 'Impacts'+bl_label_rB+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+        json_name = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
         # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
         # print("json_name: %s, type: %s" % (json_name, str(type(json_name))))
         # print("plot_name: %s, type: %s" % (plot_name, str(type(plot_name))))
         cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
-                                   WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,
-                                   plotsOnly=plotsOnly)
+                                   WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,)
         for cmd in cmds:
             print(cmd)
             proc = subprocess.call(cmd, stdout=stdout, shell=True)
@@ -204,14 +202,13 @@ def run_impact_subchannels(dim, channel, version, datacard_dict, WC, limit_val,
 
 def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, ScanType,
                        Asimov, asi_str, SignalInject, stdout, verbose=0,
-                       Unblind=False, runBlind=False, plotsOnly=False):
+                       Unblind=False, runBlind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if runBlind:
         bl_label='_blindFlag'
     else:
         bl_label=''
-    bl_label_rB = '_blindFlag'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
@@ -262,11 +259,10 @@ def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, Scan
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     name_str = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
-    json_name = 'Impacts'+bl_label_rB+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    json_name = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
     # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
     cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
-                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,
-                               plotsOnly=plotsOnly)
+                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,)
     for cmd in cmds:
         print(cmd)
         proc = subprocess.call(cmd, stdout=stdout, shell=True)
@@ -277,14 +273,13 @@ def run_impact_channel(dim, channel, version, datacard_dict, WC, limit_val, Scan
 
 def run_impact_full_analysis(dim, datacard_dict, WC, limit_val, ScanType, Asimov,
                              asi_str, SignalInject, stdout, verbose=0,
-                             Unblind=False, runBlind=False, plotsOnly=False):
+                             Unblind=False, runBlind=False):
     start_dir = os.getcwd()
     syst_label='syst'
     if runBlind:
         bl_label='_blindFlag'
     else:
         bl_label=''
-    bl_label_rB = '_blindFlag'
     if ScanType == '_1D':
         scan_dir = 'freeze'
     else:
@@ -336,11 +331,10 @@ def run_impact_full_analysis(dim, datacard_dict, WC, limit_val, ScanType, Asimov
     wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     name_str = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
-    json_name = 'Impacts'+bl_label_rB+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
+    json_name = 'Impacts'+bl_label+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label)
     # plot_name = os.path.join(plot_dir, 'Impacts'+template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType,version=version,syst=syst_label))
     cmds = get_impact_commands(WC, wsfile, asi_str, name_str, json_name, plot_dir,
-                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,
-                               plotsOnly=plotsOnly)
+                               WCs_freeze=WCs_freeze, WCs_limit=[WC], limit_val=limit_val, runBlind=runBlind,)
     for cmd in cmds: # all commands
     # for cmd in cmds[:1]: # TESTING -- first command only
         print(cmd)
@@ -367,7 +361,6 @@ if __name__=='__main__':
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-rB', '--runBlind', help='Run with "--blind" to hide the signal strengths? Do this for initial unblinding phase. "n"(default)/"y".')
-    parser.add_argument('-pO', '--plotsOnly', help='Only generate plots and copy to the correct directory? Useful e.g. when unblinding the signal strength. "n" (default)/"y".')
     parser.add_argument('-i', '--SignalInject',
                         help='Do you want to use generated signal injection files? If n, default files will be used. Note that Asimov must also be set to "n" for signal injection to work!  n(default)/y.')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 1 (default) / 0. "combine" output only included if Verbose>0.')
@@ -417,12 +410,6 @@ if __name__=='__main__':
         runBlind = True
     else:
         runBlind = False
-    if args.plotsOnly is None:
-        args.plotsOnly = 'n'
-    if args.plotsOnly == 'y':
-        plotsOnly = True
-    else:
-        plotsOnly = False
     if args.SignalInject is None:
         SignalInject = False
     else:
@@ -456,8 +443,7 @@ if __name__=='__main__':
                                    Asimov=args.Asimov, asi_str=asi_str,
                                    SignalInject=SignalInject,
                                    stdout=stdout, verbose=args.Verbose,
-                                   Unblind=Unblind, runBlind=runBlind,
-                                   plotsOnly=plotsOnly)
+                                   Unblind=Unblind, runBlind=runBlind,)
     print('=================================================\n')
     if generate_ch:
         print('Making impact plot for the selected channel:')
@@ -471,8 +457,7 @@ if __name__=='__main__':
                                Asimov=args.Asimov, asi_str=asi_str,
                                SignalInject=SignalInject,
                                stdout=stdout, verbose=args.Verbose,
-                               Unblind=Unblind, runBlind=runBlind,
-                               plotsOnly=plotsOnly)
+                               Unblind=Unblind, runBlind=runBlind,)
     print('=================================================\n')
     if generate_full:
         print('Making impact plot for full analysis:')
@@ -484,6 +469,5 @@ if __name__=='__main__':
                                      Asimov=args.Asimov, asi_str=asi_str,
                                      SignalInject=SignalInject,
                                      stdout=stdout, verbose=args.Verbose,
-                                     Unblind=Unblind, runBlind=runBlind,
-                                     plotsOnly=plotsOnly)
+                                     Unblind=Unblind, runBlind=runBlind,)
     print('=================================================\n')

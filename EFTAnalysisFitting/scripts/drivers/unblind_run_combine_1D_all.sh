@@ -5,12 +5,14 @@ LOGDIR=$SCRIPT_DIR'/../../unblind/output/logs/combine/'
 # path for grabbing versions_dict
 VDICT_DIR=$(realpath "${SCRIPT_DIR}/../")
 
+WCsNDIM=("cW" "cHq3" "cHq1" "cHu" "cHd" "cHW" "cHWB" "cHl3" "cHB")
+
 echo "LOGDIR=${LOGDIR}"
 # echo "VDICT_DIR=${VDICT_DIR}"
 
 # arguments: 4 (optional)
 # 1. Data or Asimov? "Asimov" (default), "Data"
-# 2. WC to run combine for, e.g. "all" (default), "dim6", "dim8", "cW";
+# 2. WC to run combine for, e.g. "all" (default), "dim6", "dim8", "NDIM", "cW";
 # 3. level, e.g. "f" (default), "c", "s", "b";
 # 4. split WCs to different procs? "n" (default), "y"
 # 5. NDIM or not, e.g. "" (default), "_NDIM"
@@ -34,7 +36,7 @@ else
 fi
 
 # handle the different WC input types
-if [[ "$W" == "all" || "$W" == "dim6" || "$W" == "dim8" ]]; then
+if [[ "$W" == "all" || "$W" == "dim6" || "$W" == "dim8" || "$W" == "NDIM" ]]; then
     Wmany=true
 else
     Wmany=false
@@ -63,7 +65,10 @@ fi
 if [ "$S" = "y" ]; then
     #SB="True"
     if [ "$Wmany" = true ]; then
-        mapfile -t WCloop < <(python -c "
+        if [ "$W" = "NDIM" ]; then
+            WCloop=WCsNDIM
+        else
+            mapfile -t WCloop < <(python -c "
 import sys
 sys.path.append('${VDICT_DIR}')
 from CONFIG_VERSIONS import WC_ALL, dim6_WCs, dim8_WCs
@@ -76,7 +81,8 @@ else:
     WCs = dim8_WCs
 for WC in WCs:
     print WC
-        ")
+            ")
+        fi
     else
         WCloop=(${W})
     fi
