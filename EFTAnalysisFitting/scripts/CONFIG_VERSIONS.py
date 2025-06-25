@@ -30,7 +30,7 @@ versions_dict = {
     #'0Lepton_2FJ': {'v': 28, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #               'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     '0Lepton_2FJ': {'v': 29, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                  'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; parabolas debugged
+                  'v_NDIM': 29, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; parabolas debugged
     # '0Lepton_3FJ': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'points'},
     # '0Lepton_3FJ': {'v': 6, 'lumi': 'Run2', 'EFT_type': 'points'}, # rebinning test, no systematics, more 1D scans
     # '0Lepton_3FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW']}, # no systematics, multi-operators not finished yet
@@ -51,7 +51,7 @@ versions_dict = {
     #                'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding
                    # 'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, #  unblinding
     '0Lepton_3FJ': {'v': 29, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                   'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding; parabolas debugged
+                   'v_NDIM': 29, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding; parabolas debugged
     # '1Lepton': {'v': 1, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '1Lepton': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # cW -> VVV+1Jet, all other dim6 added. autoMCStats should be turned off.
     #'1Lepton': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # All dim8 added (dim6 bugged). Processed only FT0, FM0. autoMCStats should be turned off.
@@ -69,7 +69,7 @@ versions_dict = {
     #'1Lepton': {'v': 11, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #          'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     '1Lepton': {'v': 13, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-             'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; fixed missing overlap removal; JES fix
+             'v_NDIM': 13, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; fixed missing overlap removal; JES fix
     # '2Lepton_OS': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'params'}, # bin error
     # '2Lepton_OS': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'params'},
     #'2Lepton_OS': {'v': 4, 'lumi': 'Run2', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # removed WWZ ggH
@@ -100,7 +100,7 @@ versions_dict = {
     #'2Lepton_OS': {'v': 24, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #              'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': False}, # dim8 central added, with systematics
     '2Lepton_OS': {'v': 25, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                 'v_NDIM': 20, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
+                 'v_NDIM': 25, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     #'2Lepton_OS_2FJ': {'v': 2, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete / first official pass, with all systematics.
     #'2Lepton_OS_2FJ': {'v': 3, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # dim6 complete. everything in place except wtag sf
     #'2Lepton_OS_2FJ': {'v': 5, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd']}, # wtag sf added. switched from 2018 scaled to Run2 lumi to using all 3 years.
@@ -110,7 +110,7 @@ versions_dict = {
     #'2Lepton_OS_2FJ': {'v': 7, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #                  'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding; dim6 (central) only (dim8 private copied from v6)
     '2Lepton_OS_2FJ': {'v': 8, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                     'v_NDIM': 6, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding, dim8 added
+                     'v_NDIM': 8, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, #  unblinding, dim8 added
     # '2Lepton_SS': {'v': 1, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']},
     # '2Lepton_SS': {'v': 2, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1']}, # only WWW
     # '2Lepton_SS': {'v': 3, 'lumi': '2018', 'EFT_type': 'params', 'EFT_ops': ['cW']}, # VVV, but only cW -- first batch
@@ -132,7 +132,7 @@ versions_dict = {
     #'2Lepton_SS': {'v': 13, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
     #             'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding
     '2Lepton_SS': {'v': 14, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': dim6_WCs+dim8_WCs,
-                 'v_NDIM': 9, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; JES fix
+                 'v_NDIM': 14, 'EFT_ops_NDIM': dim6_WCs, 'unblind': True}, # unblinding; JES fix
     # '2Lepton_SS': {'v': 1001, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # TEST!! of Yulun's proposal for EFTfitCoefficient matrix for analysts to report yields. This is supplied for dim6 at the inclusive level of the analysis with dilepton filter. I have rebinned the matrix for sT to look like Yulun's SR binning. I added a single background that roughly corresponds to...
     #'2Lepton_SS': {'v': 1002, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHbox', 'cHDD', 'cHl3', 'cHq1', 'cHq3', 'cHW', 'cHWB', 'cll1', 'cHB', 'cHu', 'cHd', 'cT0', 'cM0']}, # TEST!! of Yulun's proposal for EFTfitCoefficient matrix for analysts to report yields. This is supplied for dim6 in the signal region. I added a single background that corresponds to...
     # ...Yulun's total backgrounds. 30% flat systematic applied, and 10% MC stat uncertainty applied. dim8 files copied directly from v4 so I don't see errors.
