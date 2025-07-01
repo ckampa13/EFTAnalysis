@@ -12,7 +12,7 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, WCs_NDIM
 from MISC_CONFIGS import (
     datacard_dir,
     #template_filename,
@@ -56,7 +56,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     label = 'With Systematics'
     if limits_legend:
         label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])])# + '\n'
-    ax.plot(Cs, NLL, c=c_syst, linestyle='-', linewidth=4, zorder=5, label=label)# label='Expected\nAsimov Dataset')
+    ax.plot(Cs, 2.*NLL, c=c_syst, linestyle='-', linewidth=4, zorder=5, label=label)# label='Expected\nAsimov Dataset')
     # stat only
     if plot_stat_only:
         hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
@@ -65,7 +65,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         label='Statistical\nUncertainties Only'
         if limits_legend:
             label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])])# + '\n'
-        ax.plot(Cs_stat, NLL_stat, c=c_stat, linestyle=':', linewidth=4, zorder=6, label=label)#label='Expected (stat. only)')
+        ax.plot(Cs_stat, 2.*NLL_stat, c=c_stat, linestyle=':', linewidth=4, zorder=6, label=label)#label='Expected (stat. only)')
     # loop through CLs to determine limits
     xmin = np.min(Cs)
     xmax = np.max(Cs)
@@ -86,7 +86,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             # add to the plot
             #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
             #        linewidth=3,) #label=label)
-            ax.plot([-largest_lim, largest_lim], [NLL_cut, NLL_cut], 'r', linestyle=ls,
+            ax.plot([-largest_lim, largest_lim], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls,
                    linewidth=3,) #label=label)
     else:
         for CL, NLL_cut, LL, UL, ls in zip(CL_list, NLL_cuts, LLs, ULs, ['--', '-.', ':',]):
@@ -98,7 +98,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             # add to the plot
             #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
             #        linewidth=3,) #label=label)
-            ax.plot([-largest_lim, largest_lim], [NLL_cut, NLL_cut], 'r', linestyle=ls,
+            ax.plot([-largest_lim, largest_lim], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls,
                    linewidth=3,) #label=label)
     if WC == 'sm':
         suff = r' ($\mu_{\mathrm{SM}}$)'
@@ -108,7 +108,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         else:
             suff = r'$ / \Lambda^4$ [TeV$^{-4}$]'
     ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right',)# fontsize=20.)
-    ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top',)# fontsize=20.)
+    ax.set_ylabel(r'$2\Delta$NLL', fontweight='bold', loc='top',)# fontsize=20.)
     ##ax.set_title(title+'\n', pad=3.)
     # ticks
     ax = ticks_in(ax)
@@ -129,7 +129,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         #ax.set_xlim([-xlim2, xlim2])
         ax.set_xlim([-largest_lim, largest_lim])
     ###ax.set_ylim([-0.01, 2.5*np.max(NLL_cuts)])
-    ax.set_ylim([-0.25, 2.5*np.max(NLL_cuts)])
+    ax.set_ylim([-0.25, 2.5*np.max(2*NLL_cuts)])
     # force xlim
     if not xlim_force is None:
         ax.set_xlim([-xlim_force, xlim_force])
@@ -142,6 +142,8 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     #ax.set_xlim([-1, 1])
     # DEBUG!!
     #ax.set_ylim([0.000, 0.03])
+    ##ax.set_ylim([0.000, 50.0])
+    #ax.set_ylim([0.000, 1.0])
     # save?
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
@@ -512,6 +514,8 @@ if __name__=='__main__':
         #WCs = ["cW", "cHq3", "cHq1", "cHu", "cHd", "cHW", "cHWB", "cHl3"]
         #WCs = ["cW", "cHq3", "cHq1"]
         WCs = ["cW", "cHq1", "cHu", "cHd"]
+    elif args.WC == 'NDIM':
+        WCs = WCs_NDIM
     else:
         WCs = [args.WC]
     if args.ScanType is None:
@@ -532,6 +536,7 @@ if __name__=='__main__':
         chs = datacard_dict.keys()
     else:
         chs = [Channel]
+    #print(chs)
     # limited
     #chs = ['2Lepton_SS']
     if args.Asimov is None:
@@ -587,7 +592,8 @@ if __name__=='__main__':
             print("Making likelihood plots for each bin...")
             for pstat in pstats_:
                 print(f'Include stat-only? {pstat}')
-                for ch in datacard_dict.keys():
+                # for ch in datacard_dict.keys():
+                for ch in chs:
                     if WC not in versions_dict[ch]['EFT_ops']:
                         continue
                     print(f'Channel: {ch}')

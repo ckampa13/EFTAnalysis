@@ -3,8 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Define the source and destination directories
-SOURCE_DIR=$SCRIPT_DIR"/../../plots/full_analysis/freeze/"
-DEST_DIR=$SCRIPT_DIR"/../../AN_plots/full_analysis/freeze/"
+#SOURCE_DIR=$SCRIPT_DIR"/../../plots/full_analysis/freeze/"
+#DEST_DIR=$SCRIPT_DIR"/../../AN_plots/full_analysis/freeze/"
+# unblind
+SOURCE_DIR=$SCRIPT_DIR"/../../unblind/plots/full_analysis/freeze/"
+DEST_DIR=$SCRIPT_DIR"/../../unblind/AN_plots/full_analysis/freeze/"
 
 # Check if the source file is provided as an argument
 if [ -z "$1" ]; then

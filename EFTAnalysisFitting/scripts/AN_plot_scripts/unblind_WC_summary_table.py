@@ -291,6 +291,20 @@ def make_summary_table(WCs, LLs_a, ULs_a , LLs_d, ULs_d, WCs_bests_a, WCs_bests_
     # Construct the LaTeX table as a string
     table = r"\begin{table}[hbtp!]" + "\n"
     table += r"\centering" + "\n"
+    # caption
+    if order_sens:
+        table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
+        if dim == 'dim6':
+            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+        else:
+            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+    else:
+        table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
+        if dim == 'dim6':
+            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+        else:
+            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+    #table += r"\end{table}" + "\n"
     table += r"\begin{tabular}{r|c|c|c}" + "\n"
     table += r"\hline" + "\n"
     #table += r"Wilson coefficient & Impact on 95\% CL Limits \\ [\% Change in Interval Width] \\" + "\n"
@@ -327,18 +341,18 @@ def make_summary_table(WCs, LLs_a, ULs_a , LLs_d, ULs_d, WCs_bests_a, WCs_bests_
     table += r"\hline" + "\n"
     table += r"\end{tabular}" + "\n"
 
-    if order_sens:
-        if dim == 'dim6':
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
-        else:
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
-        table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
-    else:
-        if dim == 'dim6':
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
-        else:
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
-        table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
+    # if order_sens:
+    #     if dim == 'dim6':
+    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+    #     else:
+    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+    #     table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
+    # else:
+    #     if dim == 'dim6':
+    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+    #     else:
+    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+    #     table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
     table += r"\end{table}" + "\n"
 
     print(table)

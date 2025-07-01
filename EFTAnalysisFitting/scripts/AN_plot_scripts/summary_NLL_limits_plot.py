@@ -188,7 +188,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     ls = '-'
                     lw = 4.0
                     zorder += 20
-                ax.plot(Cs, NLL, c=color, linestyle=ls, linewidth=lw, label=label_NLL, zorder=zorder)
+                ax.plot(Cs, 2.*NLL, c=color, linestyle=ls, linewidth=lw, label=label_NLL, zorder=zorder)
                 if plot_stat_only:
                     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
                     Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
@@ -197,7 +197,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     #label_NLL = '\n'.join([f'[{LL:0.3f}, {UL:0.3f}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
                     # multi interval, numerical formatter
                     label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + '\n(stat. only)\n'
-                    ax.plot(Cs_stat, NLL_stat, c=colors_list[i], linestyle='-.', linewidth=lw, label=label_NLL)
+                    ax.plot(Cs_stat, 2.*NLL_stat, c=colors_list[i], linestyle='-.', linewidth=lw, label=label_NLL)
                 # track limits for the x limits later
                 LLs_all.append(LLs[0])
                 ULs_all.append(ULs[0])
@@ -214,7 +214,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #label = WC_l+f'@{CL*100:0.1f}\% CL'
         #label = r'$\Delta$NLL Threshold' + f'\n{int(CL*100):d}\% CL'
         label = r'$\Delta$NLL Threshold' + f'\n{int(CL_list[0]*100):d}\% CL'
-        ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls, linewidth=2, label=label, zorder=100)
+        ax.plot([xmin, xmax], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls, linewidth=2, label=label, zorder=100)
     # axis labels
     if WC in dim6_ops:
         suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
@@ -223,7 +223,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     if WC == 'sm':
         suff = r' ($\mu_{\mathrm{SM}}$)'
     ax.set_xlabel(WC_l+suff, fontweight ='bold', loc='right', labelpad=-2.0)#, fontsize=20.)
-    ax.set_ylabel(r'$\Delta$NLL', fontweight='bold', loc='top')#, fontsize=20.)
+    ax.set_ylabel(r'$2\Delta$NLL', fontweight='bold', loc='top')#, fontsize=20.)
     if title_on:
         ax.set_title(title+'\n', pad=3.)
     # ticks
@@ -260,9 +260,11 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         yu = 2.5 * np.max(NLL_cuts)
     else:
         yu = ymax_min
-    ax.set_ylim([-0.01, yu])
+    ax.set_ylim([-0.01, 2.*yu])
     #if WC == 'sm':
     #    ax.set_ylim([-0.01, 3.])
+    # DEBUG
+    #ax.set_ylim([-0.01, 0.5])
     if legend:
         ###ax.legend(loc='upper left', bbox_to_anchor=(1,1), ncol=ncol)
         #ax.legend(loc='upper left', bbox_to_anchor=(0.0,-0.1), ncol=3)
@@ -286,7 +288,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         fig.savefig(savefile+'.png')
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, OverlayData=False):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, vsuff='', OverlayData=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -333,6 +335,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         sname_ch = datacard_dict[ch]['info']['short_name']
         v = versions_dict[ch]['v']
         version = f'v{v}'
+        version += vsuff
         bin_info = {'output_dir': output_dir_ch, 'plot_dir': plot_dir,
                     #'channel': fname_ch, 'subchannel': 'All',
                     'channel': sname_ch, 'subchannel': 'All',
@@ -348,6 +351,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
     # construct root file for full analysis
     N = len(datacard_dict.keys())-1
     version = 'vCONFIG_VERSIONS'
+    version += vsuff
     bin_info = {'output_dir': output_dir_full, 'plot_dir': plot_dir,
                 'channel': 'All', 'subchannel': 'All',
                 'version': version, 'bin_': 'All',
@@ -400,9 +404,9 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
     else:
         stat_str = ''
     if SignalInject:
-        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{postfix}')
+        plotfile = os.path.join(plot_dir, f'signal_inject_{WC}_full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{vsuff}{postfix}')
     else:
-        plotfile = os.path.join(plot_dir, f'{prefix}full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{postfix}')
+        plotfile = os.path.join(plot_dir, f'{prefix}full_analysis_and_channels_NLL_vs_{WC}{stat_str}{ScanType}{vsuff}{postfix}')
     #title = f'{CL*100:0.1f}\% CL Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     title = f'Limits on '+WC_l+f' {scan_title}\nFull Combination and Channel Results'
     if SignalInject:
@@ -454,10 +458,12 @@ if __name__=='__main__':
                         help='Plot the results of a signal injection test? "n" (default) / "y". If "y", must supply --WC and --InjectValue')
     parser.add_argument('-w', '--WC',
                         help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "cW", "dim6", "dim8"...]')
-    parser.add_argument('-v', '--InjectValue',
+    parser.add_argument('-V', '--InjectValue',
                         help='What value for the WC was used in the signal injection test? 0.0 (default), 1.0, ...')
     parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
     parser.add_argument('-OD', '--OverlayData', help='Add another full analysis curveUse datacards from unblinded private repo? "n"(default)/"y".')
     args = parser.parse_args()
     if args.InjectSignal is None:
@@ -490,6 +496,10 @@ if __name__=='__main__':
         Unblind = True
     else:
         Unblind = False
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     if args.OverlayData is None:
         args.OverlayData = 'n'
     if args.OverlayData == 'y':
@@ -513,7 +523,7 @@ if __name__=='__main__':
                                           SignalInject=SignalInject, InjectValue=InjectValue,
                                           ScanType=ScanType, expect_signal=expect_signal,
                                           legend=legend, Asimov=Asimov, Unblind=Unblind,
-                                          OverlayData=OverlayData)
+                                          vsuff=vsuff, OverlayData=OverlayData)
         print("=========================================================\n")
     # plt.show()
 

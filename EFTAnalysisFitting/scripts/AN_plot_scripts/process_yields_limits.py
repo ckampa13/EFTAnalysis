@@ -1,4 +1,5 @@
 import os
+import argparse
 import sys
 from copy import deepcopy
 from collections.abc import Iterable
@@ -58,9 +59,9 @@ def process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=200, Unblind=T
     # pick the widest range of the limit
     # FIXME! Allow multi-intervals?
     LL_f_a = np.min(LLs_interp_f_a[0])
-    UL_f_a = np.min(ULs_interp_f_a[0])
+    UL_f_a = np.max(ULs_interp_f_a[0])
     LL_f_d = np.min(LLs_interp_f_d[0])
-    UL_f_d = np.min(ULs_interp_f_d[0])
+    UL_f_d = np.max(ULs_interp_f_d[0])
     # load the original yield files -- need SM for prefit
     # also load bins
     bins_dict = {}
@@ -87,9 +88,9 @@ def process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=200, Unblind=T
             # pick the widest range of the limit
             # FIXME! Allow multi-intervals?
             LL_s_a = np.min(LLs_interp_s_a[0])
-            UL_s_a = np.min(ULs_interp_s_a[0])
+            UL_s_a = np.max(ULs_interp_s_a[0])
             LL_s_d = np.min(LLs_interp_s_d[0])
-            UL_s_d = np.min(ULs_interp_s_d[0])
+            UL_s_d = np.max(ULs_interp_s_d[0])
             # yields
             if WC in dim6_WCs:
                 suff_proc = ''
@@ -260,14 +261,29 @@ def process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=200, Unblind=T
 
 if __name__=='__main__':
     Unblind=True
-    WC = 'cW'
+    #WC = 'cW'
     NTOYS = 200
-    df = process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=NTOYS, Unblind=Unblind)
-    # save to output
-    dcdir = datacard_dir
-    if Unblind:
-        dcdir = os.path.join(dcdir, 'unblind')
-    output_dir = os.path.join(dcdir, 'output', 'dataframes')
-    output_file = os.path.join(output_dir, f'{WC}_summary_df_NTOYS_{NTOYS}.pkl')
-    df.to_pickle(output_file)
-    print(df)
+
+    # parse commmand line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--WC',
+                        help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default), "cHl3", ...]')
+    args = parser.parse_args()
+    if args.WC is None:
+        args.WC = 'cW'
+    if args.WC == 'all':
+        WCs = WC_ALL
+    else:
+        WCs = [args.WC]
+
+    for WC in WCs:
+        print(f'{WC}')
+        df = process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=NTOYS, Unblind=Unblind)
+        # save to output
+        dcdir = datacard_dir
+        if Unblind:
+            dcdir = os.path.join(dcdir, 'unblind')
+        output_dir = os.path.join(dcdir, 'output', 'dataframes')
+        output_file = os.path.join(output_dir, f'{WC}_summary_df_NTOYS_{NTOYS}.pkl')
+        df.to_pickle(output_file)
+        print(df)

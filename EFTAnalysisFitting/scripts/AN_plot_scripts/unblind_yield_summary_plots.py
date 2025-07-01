@@ -167,7 +167,8 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     df_yields.reset_index(drop=True, inplace=True)
 
     # plot
-    fig = plt.figure(figsize=(18, 16))
+    #fig = plt.figure(figsize=(18, 16))
+    fig = plt.figure(figsize=(18, 16), layout='constrained')
     axs = []
     axs.append(fig.add_axes((0.1, 0.44, 0.6, 0.45)))
     axs.append(fig.add_axes((0.1, 0.20, 0.6, 0.22))) #, sharex=ax1)
@@ -285,6 +286,9 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         axs[1].set_ylim([-ym-0.1*yr, ym+0.1*yr])
     # FIXME! Check carefully if this is what I want
     axs[1].set_ylim([-20 * max_l, 20 * max_l])
+    # WC specific? -- debug
+    if WC == 'cHl3':
+        axs[1].set_ylim([-40., 80.])
     # xlims
     axs[0].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     axs[1].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
@@ -294,7 +298,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     WC_l = WC_pretty_print_dict[WC]
     axs[0].set_title('VVV Yield Summary for '+rf'{WC_l}'+'\n\n')
     axs[2].set_title('Combined Limit')
-    axs[1].set_ylabel(ylabel)
+    axs[1].set_ylabel(ylabel, labelpad=-5.0)
     # set tick labels by bin labels
     axs[0].set_xticks(bin_edges)
     axs[0].set_xticklabels([])

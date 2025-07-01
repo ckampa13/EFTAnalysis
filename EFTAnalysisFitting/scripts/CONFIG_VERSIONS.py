@@ -11,6 +11,11 @@ WCs_clip_dim8 = dim8_WCs # all
 #WCs_clip = ['FT0'] # dev
 # 2 dim8 for debug
 #dim8_WCs = ['FT0', 'FM0']
+# WCs used in NDIM calculations (1D)
+#WCs_NDIM = ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHWB', 'cHl3', 'cHB']
+WCs_NDIM = dim6_WCs
+# FIXME! Waiting for cHq3 profiling to finish.
+##WCs_NDIM = ['cW', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHWB', 'cHl3', 'cHB']
 versions_dict = {
     # '0Lepton_2FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW']}, # no systematics, multi-operators not finished yet
     # '0Lepton_2FJ': {'v': 10, 'lumi': 'Run2', 'EFT_type': 'points', 'EFT_ops': ['cW', 'cHDD', 'cHW', 'cHB', 'cHWB']}, # no systematics
