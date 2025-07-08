@@ -78,6 +78,7 @@ def update_datacard(ddir, dc_name, bin_n):
 
 # split subchannels in a channel
 def split_channel_subchannels(channel, version, datacard_dict, dims, ScanType, Unblind=False):
+    version_dir = version.split('_')[0]
     dcdir = datacard_dir
     if Unblind:
         ch_unbl = versions_dict[channel]['unblind']
@@ -110,7 +111,7 @@ def split_channel_subchannels(channel, version, datacard_dict, dims, ScanType, U
             dc_file = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType, purpose='DataCard_Yields', proc='', version=version, file_type='txt')
             dc_files = [dc_file]
             # run helper functions
-            dir_ = os.path.join(dcdir, channel, version)
+            dir_ = os.path.join(dcdir, channel, version_dir)
             # split to new ROOT files for each bin and make a new dc file for each
             split_func(dir_, tfile, sname_sch, dc_files)
         str_ += '\n'
@@ -121,9 +122,13 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
                         help='Which channel? ["all" (default), "0Lepton_2FJ", "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
+    parser.add_argument('-d', '--Dimension',
+                        help='Which dim of EFT ops to process? "all" (default), "dim6", "dim8"')
     parser.add_argument('-s', '--ScanType',
                         help='What type of EFT scan was included in this file? ["_All" (default),]')
     parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
+    parser.add_argument('-v', '--VersionSuff',
+                        help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
     args = parser.parse_args()
     # list of channels
     if args.Channel is None:
@@ -132,6 +137,16 @@ if __name__=='__main__':
         channels = datacard_dict.keys()
     else:
         channels = [args.Channel]
+    if args.Dimension is None:
+        args.Dimension = 'all'
+    if args.Dimension == 'all':
+        dims = ['dim6', 'dim8']
+    elif args.Dimension == 'dim6':
+        dims = ['dim6']
+    elif args.Dimension == 'dim8':
+        dims = ['dim8']
+    else:
+        raise ValueError('The input args.Dimension="%s" is not implemented. Please select from: ["all", "dim6", "dim8"].' % args.Dimension)
     if args.ScanType is None:
         args.ScanType = '_All'
     if args.Unblind is None:
@@ -140,6 +155,10 @@ if __name__=='__main__':
         Unblind = True
     else:
         Unblind = False
+    if args.VersionSuff is None:
+        vsuff = ''
+    else:
+        vsuff = args.VersionSuff
     #########################
     # split channel subchannels
     print('Splitting subchannels into single bins for each available channel:')
@@ -147,19 +166,19 @@ if __name__=='__main__':
     for channel in channels:
         WCs = versions_dict[channel]['EFT_ops']
         # check which dims are in the samples
-        dims = []
-        # dim6
-        for WC in WCs:
-            if WC in dim6_ops:
-                dims.append('dim6')
-                break
-        # dim8
-        for WC in WCs:
-            if not WC in dim6_ops:
-                dims.append('dim8')
-                break
+        # dims = []
+        # # dim6
+        # for WC in WCs:
+        #     if WC in dim6_ops:
+        #         dims.append('dim6')
+        #         break
+        # # dim8
+        # for WC in WCs:
+        #     if not WC in dim6_ops:
+        #         dims.append('dim8')
+        #         break
         v = versions_dict[channel]['v']
-        VERSION = 'v' + str(v)
+        VERSION = 'v' + str(v) + vsuff
         split_channel_subchannels(channel, VERSION, datacard_dict, dims, ScanType=args.ScanType,
                                   Unblind=Unblind)
     print('=================================================\n')

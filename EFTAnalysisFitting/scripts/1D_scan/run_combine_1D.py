@@ -21,29 +21,64 @@ import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
 from DATACARD_DICT import datacard_dict
-from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, WCs_clip_dim6, WCs_clip_dim8
+from CONFIG_VERSIONS import versions_dict, WC_ALL, dim6_WCs, dim8_WCs, WCs_clip_dim6, WCs_clip_dim8, WCs_NDIM
 from MISC_CONFIGS import (
     datacard_dir,
     template_filename,
     template_outfilename,
     template_outfilename_stub,
     dim6_ops,
+    prof_grid_dict,
+    NPs_to_promote_dict,
+    USE_NP_POI_DICT,
 )
 
 # FIXME! method should be a cmdline arg, but need to make sure it works
 METHOD = 'MultiDimFit'
 # constant value to limit the WCs when profiling
-LIM_VAL = 10
+###### GRID JOBS
+# 07-02-25
+# LIM_VAL = 10
+# prof_freeze_WCs = []
+# 07-03-25
+# LIM_VAL = 20
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1']
+# 07-07-25
+# LIM_VAL = 10
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHl3']
+# 07-08-25
+# promoting PDF_, QCDScale_, jes_ to POIs for randomized initializations
+# don't freeze anything
+LIM_VAL = 20
+prof_freeze_WCs = []
+###### OLD BELOW
+# LIM_VAL = 2 # keep to theoretically interesting values
+# LIM_VAL = 10 # first grid run (07-02-25)
 #LIM_VAL = 20
-#LIM_VAL = 50
+# LIM_VAL = 50
 # LIM_VAL = 100
 # LIM_VAL = 200 # DEFAULT
 #LIM_VAL = 500
 
 # always use the same list of WCs to freeze while profiling
 # None (full treatment)
-prof_freeze_WCs = []
+# prof_freeze_WCs = []
 # turning some off
+# unblinding (06-25-25)
+# prof_freeze_WCs = []
+# prof_freeze_WCs = ['cll1']
+# prof_freeze_WCs = ['cll1', 'cHDD', 'cHbox']
+# prof_freeze_WCs = ['cll1', 'cHDD', 'cHbox', 'cHW', 'cHq3', 'cHq1']
+# prof_freeze_WCs = ['cll1', 'cHDD', 'cHbox', 'cHW', 'cHq3', 'cHq1', 'cHl3'] # GOOD, some WC match freeze and profile
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3'] # 5 weakest WCs
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHd', 'cHu', 'cW'] # freeze all but cHq1, cHq3, cHW -- these show the worst behavior
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHd', 'cHu', 'cW', 'cHW'] # freeze all but cHq1, cHq3
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHd', 'cHu', 'cW', 'cHW', 'cHq3'] # freeze all but cHq1
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHd', 'cHu', 'cW', 'cHW', 'cHq1'] # freeze all but cHq3
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHB', 'cHl3', 'cHWB', 'cHd', 'cHu', 'cW', 'cHq1', 'cHq3'] # freeze all but cHW
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHl3', 'cHq1', 'cHq3'] # FINAL (first pass) -- no impact on cW
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1'] # STOPPED HERE. FINAL (first pass) -- LIM_VAL=50
+# prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHl3'] # FINAL (first pass) -- LIM_VAL=50
 # TAU UNBLINDING
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHd'] # GOOD FOR cW
 # prof_freeze_WCs = ['cHl3', 'cll1', 'cHDD', 'cHbox', 'cHB', 'cHWB', 'cHu']
@@ -61,9 +96,20 @@ prof_freeze_WCs = []
 # prof_freeze_WCs = ['cll1']
 
 # original
-secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
+secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=1 \
 --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
 --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND"""
+####
+# DEBUG (try to limit nuisance parameter ranges)
+# also play with settings, e.g. MinimizerStrategy
+# secret_options = """ --X-rtd MINIMIZER_respect_parameters_limits --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=1 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND"""
+# secret_options = """ --robustFit=0 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=1 \
+# --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
+# --stepSize=0.005 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP --X-rtd FITTER_BOUND"""
+# secret_options = """ --X-rtd=MINIMIZER_analytic"""
+###
 # extra options -- with outputs of best fit values for nuisances and profiled values
 # secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMinimizerStrategy=0 \
 # --X-rtd=MINIMIZER_analytic --X-rtd MINIMIZER_MaxCalls=99999999999 --cminFallbackAlgo Minuit2,Migrad,0:0.2 \
@@ -84,6 +130,8 @@ secret_options = """ --robustFit=1 --setRobustFitTolerance=0.2 --cminDefaultMini
 # don't back out of negative regions
 extra_no_backout = " --X-rtd SIMNLL_NO_LEE --X-rtd NO_ADDNLL_FASTEXIT"
 extra_track_params = " --saveSpecifiedNuis all --trackParameters "
+# random points to check for profile
+random_prof_points_str = " --pointsRandProf=NUM_POINTS"
 
 # for finding appropriate scan range
 rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py')
@@ -93,10 +141,11 @@ rangescript = os.path.join(datacard_dir, 'scripts', 'tools', 'find_POI_range.py'
 
 # utility functions
 def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
-    cmd_str = 'python %s -f %s -w %s -T %s ' % (rangescript, output_file_name, WC, Threshold)
+    cmd_str = 'python3 %s -f %s -w %s -T %s ' % (rangescript, output_file_name, WC, Threshold)
     cmd_str += '-s %s -sc %s' % (Precision, PrecisionCoarse)
     proc = subprocess.Popen(cmd_str, shell=True, stdout=subprocess.PIPE)
     proc, err = proc.communicate()
+    proc = proc.decode() # python3 returns byte string
     # print('find_range output: %s' % proc)
     # parse results
     grid_dict = {i.split(':')[0]:float(i.split(':')[1]) for i in proc.strip('\n').split(';')}
@@ -117,12 +166,15 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
         #print('Using prec = 0.1')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
-    elif range_ > 4.5:
+    # elif range_ > 4.5:
+    elif range_ > 6.0:
         prec = 0.1
         #print('Using prec = 0.1')
         grid_dict['steps'] = int((grid_dict['UL']-grid_dict['LL'])/prec) + 2
         grid_dict['UL'] = grid_dict['LL'] + (grid_dict['steps'] - 1) * prec
-    elif range_ > 2.5:
+    # elif range_ > 2.5:
+    # elif range_ > 3.0:
+    elif range_ > 4.5:
         #prec = 0.01
         prec = 0.05
         #print('Using prec = 0.01')
@@ -137,7 +189,7 @@ def find_range(WC, output_file_name, Precision, PrecisionCoarse, Threshold=4.0):
     return grid_dict, prec
 
 def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
-                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True, fastScan=False, Backout=False, TrackParams=False, WCs_all=dim6_WCs):
+                              name_str, with_syst=True, method='MultiDimFit', WCs_freeze=None, WCs_limit=None, limit_val=20., with_extra=True, fastScan=False, Backout=False, TrackParams=False, WCs_all=dim6_WCs, random_prof_points='0', track_NPs=None):
     points = grid_dict['steps']
     LL = grid_dict['LL']
     UL = grid_dict['UL']
@@ -147,7 +199,12 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         freeze_group = 'nosyst'
     else:
         freeze_group = 'allsyst'
+    nps_str = ''
+    nps_val = ''
     if WCs_freeze is None:
+        WCs_freeze = []
+    if len(WCs_freeze) < 1:
+        # print('WCs_freeze is None')
         if True:
         # if freeze_group == 'allsyst':
             cmd_str += '--freezeNuisanceGroups %s --freezeParameters r ' % freeze_group
@@ -157,13 +214,46 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     else:
         WCs_ = ['k_'+w for w in WCs_freeze]
         WCs_str = ','.join(WCs_)
-        if True:
-        # if freeze_group == 'allsyst':
+        # print(WCs_str)
+        # if True:
+        if freeze_group == 'allsyst':
             cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s ' % (freeze_group, WCs_str)
         else:
             # TEST remove PDF
-            cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
-    cmd_str += '--setParameters r=1 --setParameterRanges k_%s=%s,%s' % (WC, LL, UL)
+            # cmd_str += '--freezeNuisanceGroups %s,badsyst --freezeParameters r,%s ' % (freeze_group, WCs_str)
+            # cHl3 1L debug: PDF, JES, JER freeze
+            # nps_freeze = ['PDF_', 'jes_', 'jer_'] # fixes all problems
+            # nps_freeze = ['PDF_', 'jes_'] # still fine with JER
+            # nps_freeze = ['PDF_'] # BAD -- means JES is bad.
+            # nps_freeze = ['jes_'] # everything is fine with JES frozen
+            # dim8 debugs (e.g. FT0)
+            # nps_freeze = ['PDF_', 'QCDScale', 'jes_'] # fixes all problems
+            # nps_freeze = ['PDF_', 'QCDScale'] # fine
+            # nps_freeze = ['PDF_'] # fine. issue must be PDF.
+            nps_freeze = [] # nothing frozen
+            if len(nps_freeze) > 0:
+                np_pre = ','
+                nps_str = np_pre + ','.join(nps_freeze)
+                nps_val = np_pre + '=0,'.join(nps_freeze) + '=0'
+            else:
+                np_pre = ''
+                nps_str = ''
+                nps_val = ''
+            cmd_str += '--freezeNuisanceGroups %s --freezeParameters r,%s%s ' % (freeze_group, WCs_str, nps_str)
+    cmd_str += '--setParameters r=1%s --setParameterRanges k_%s=%s,%s' % (nps_val, WC, LL, UL)
+    # add parameter ranges for NP?
+    lim_NP = dict()
+    # lim_NP = {'PDF_': ['-1', '1']}
+    # lim_NP = {'PDF_': ['-0.8', '0.8']}
+    # lim_NP = {'PDF_': ['-0.5', '0.5']}
+    # lim_NP = {'PDF_': ['-0.2', '0.2']}
+    # lim_NP = {'jes_': ['-1.0', '1.0']}
+    if len(lim_NP) > 0:
+        lim_NP_list = []
+        for k, v in lim_NP.items():
+            lim_NP_list.append('%s=%s,%s' % (k, v[0], v[1]))
+        lim_NP_str = ':' + ':'.join(lim_NP_list)
+        cmd_str += lim_NP_str
     if WCs_limit is None:
         # TEST LIMITING PDF
         # cmd_str += ':PDF_=-2,2'
@@ -184,6 +274,12 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
     # if fastScan:
     #     # appends to "syst" part of the output file
     #     name_str +='_fastScan'
+    # if len(lim_NP) > 0:
+    #     lim_NP_list = []
+    #     for k, v in lim_NP.items():
+    #         lim_NP_list.append('%s=%s,%s' % (k, v[0], v[1]))
+    #     lim_NP_str = '--setPhysicsModelParameterRanges ' + ':'.join(lim_NP_list)
+    #     cmd_str += lim_NP_str + ' '
     cmd_str += '--verbose -1 -n %s' % name_str
     if with_extra:
         cmd_str += secret_options
@@ -197,11 +293,17 @@ def construct_combine_cmd_str(WC, workspace_file, grid_dict, asimov_str,
         # add nuisance tracking and POIs
         cmd_str += extra_track_params
         cmd_str += ','.join(['k_'+w for w in WCs_all])
+        # track NPs promoted to POI
+        if not track_NPs is None:
+            cmd_str += ',' + ','.join(track_NPs)
+    # random prof points
+    if int(random_prof_points) > 0:
+        cmd_str += random_prof_points_str.replace('NUM_POINTS', random_prof_points)
     return cmd_str
 
 # all bins in a subchannel / channel
 def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False, JustPrint=False, UseProfileGridDict=False, PointsRandProf='0', PointsRandProfStat=True):
     version_full = version + vsuff
     if dim == 'dim6':
         WCs_track = dim6_WCs
@@ -224,6 +326,10 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
         asi = 'Asimov'
     else:
         asi = 'Data'
+    if PointsRandProfStat:
+        PRPS = PointsRandProf
+    else:
+        PRPS = '0'
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
@@ -284,6 +390,9 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
             # override if doing linear only
             if LinearOnly:
                 grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+            # use profile grid dict?
+            if UseProfileGridDict:
+                grid_dict = prof_grid_dict[WC]
             #name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
             name_str = '_coarse_%s_%s_%s_%s' % (WC, channel, version_full, str(time()))
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -293,15 +402,26 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
                                                 name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                                 # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                                Backout=Backout, TrackParams=False, WCs_all=WCs_track)
-            print('Coarse scan to determine appropriate WC range and number of steps:')
-            print(cmd_str)
-            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-            grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+                                                Backout=Backout, TrackParams=False, WCs_all=WCs_track,
+                                                random_prof_points=PointsRandProf)
+            if not JustPrint:
+                print('Coarse scan to determine appropriate WC range and number of steps:')
+            if not UseProfileGridDict:
+                print(cmd_str)
+                if JustPrint:
+                    grid_dict_f = grid_dict
+                    prec= Precision
+                else:
+                    proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+                    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+            else:
+                grid_dict_f = grid_dict
+                prec= Precision
             # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
             # loop through stat/syst
-            for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
-                print('Running "%s"' % syst_label)
+            for syst_bool, syst_label, SO_lab, PRP in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly'], [PointsRandProf, PRPS]):
+                if not JustPrint:
+                    print('Running "%s"' % syst_label)
                 # update to the appropriate workspace file (stat only or with syst)
                 wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace', proc=SO_lab, version=version_full, file_type='root')
                 wsfile = os.path.join(wsdir, wsfile)
@@ -309,19 +429,24 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
                 cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                     name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                                     WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                                    Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track)
+                                                    Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track,
+                                                    random_prof_points=PRP)
                 print(cmd_str)
-                proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-            print('Finished running combine. Expected file output: %s' % outfile)
+                if not JustPrint:
+                    proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+            if not JustPrint:
+                print('Finished running combine. Expected file output: %s' % outfile)
             # remove coarse file, else they will build up (added time)
-            os.remove(outfile_)
+            if not JustPrint and not UseProfileGridDict:
+                os.remove(outfile_)
     # go back to original directory
-    print('Going back to original directory...')
+    if not JustPrint:
+        print('Going back to original directory...')
     os.chdir(start_dir)
 
 # all subchannels in a channel
 def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, Asimov, asi_str,
-                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
+                     SignalInject, Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False, JustPrint=False, UseProfileGridDict=False, PointsRandProf='0', PointsRandProfStat=True):
     version_full = version + vsuff
     if dim == 'dim6':
         WCs_track = dim6_WCs
@@ -348,6 +473,10 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
+    if PointsRandProfStat:
+        PRPS = PointsRandProf
+    else:
+        PRPS = '0'
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
@@ -414,6 +543,9 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
         # override if doing linear only
         if LinearOnly:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        # use profile grid dict?
+        if UseProfileGridDict:
+            grid_dict = prof_grid_dict[WC]
         #name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
         name_str = '_coarse_%s_%s_%s_%s' % (WC, channel, version_full, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -423,15 +555,26 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
                                             name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                             # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                            Backout=Backout, TrackParams=False, WCs_all=WCs_track)
-        print('Coarse scan to determine appropriate WC range and number of steps:')
-        print(cmd_str)
-        proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+                                            Backout=Backout, TrackParams=False, WCs_all=WCs_track,
+                                            random_prof_points=PointsRandProf)
+        if not JustPrint:
+            print('Coarse scan to determine appropriate WC range and number of steps:')
+        if not UseProfileGridDict:
+            print(cmd_str)
+            if JustPrint:
+                grid_dict_f = grid_dict
+                prec= Precision
+            else:
+                proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+                grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+        else:
+            grid_dict_f = grid_dict
+            prec= Precision
         # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
         # loop through stat/syst
-        for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
-            print('Running "%s"' % syst_label)
+        for syst_bool, syst_label, SO_lab, PRP in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly'], [PointsRandProf, PRPS]):
+            if not JustPrint:
+                print('Running "%s"' % syst_label)
             # update to the appropriate workspace file (stat only or with syst)
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
@@ -439,19 +582,24 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                                Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track)
+                                                Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track,
+                                                random_prof_points=PRP)
             print(cmd_str)
-            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        print('Finished running combine. Expected file output: %s' % outfile)
+            if not JustPrint:
+                proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+        if not JustPrint:
+            print('Finished running combine. Expected file output: %s' % outfile)
         # remove coarse file, else they will build up (added time)
-        os.remove(outfile_)
+        if not JustPrint and not UseProfileGridDict:
+            os.remove(outfile_)
     # go back to original directory
-    print('Going back to original directory...')
+    if not JustPrint:
+        print('Going back to original directory...')
     os.chdir(start_dir)
 
 # channels
 def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False, JustPrint=False, UseProfileGridDict=False, PointsRandProf='0', PointsRandProfStat=True, PromoteNPs=False):
     if dim == 'dim6':
         WCs_track = dim6_WCs
     else:
@@ -477,6 +625,19 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
+    if PointsRandProfStat:
+        PRPS = PointsRandProf
+    else:
+        PRPS = '0'
+    track_NPs = None
+    if PromoteNPs:
+        if WC in USE_NP_POI_DICT[dim]:
+            ws_suff = '_NPsPromote' # FIXME! Add to arguments?
+            track_NPs = NPs_to_promote_dict[dim]
+        else:
+            ws_suff = ''
+    else:
+        ws_suff = ''
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
@@ -552,7 +713,7 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         sname_sch = '_combined'
         SO_lab = '' # with syst
         # SO_lab = '_StatOnly' # stat only
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp+ws_suff, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         # coarse scan (using syst)
         syst = 'syst_coarse'
@@ -603,6 +764,9 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
         # override if doing linear only
         if LinearOnly:
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+        # use profile grid dict?
+        if UseProfileGridDict:
+            grid_dict = prof_grid_dict[WC]
         #name_str = '_coarse_%s_%s_%s' % (WC, ch, str(time()))
         name_str = '_coarse_%s_%s_%s_%s' % (WC, ch, version_full, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -612,36 +776,53 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
                                             name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                             # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                            Backout=Backout, TrackParams=False, WCs_all=WCs_track)
-        print('Coarse scan to determine appropriate WC range and number of steps:')
-        print(cmd_str)
-        proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+                                            Backout=Backout, TrackParams=False, WCs_all=WCs_track,
+                                            # random_prof_points=PointsRandProf) # no pointsRandProf on init scan (??)
+                                            random_prof_points='0', track_NPs=track_NPs) # no pointsRandProf on init scan (??)
+        if not JustPrint:
+            print('Coarse scan to determine appropriate WC range and number of steps:')
+        if not UseProfileGridDict:
+            print(cmd_str)
+            if JustPrint:
+                grid_dict_f = grid_dict
+                prec= Precision
+            else:
+                proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+                grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+        else:
+            grid_dict_f = grid_dict
+            prec= Precision
         # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
         # loop through stat/syst
-        for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
-            print('Running "%s"' % syst_label)
+        for syst_bool, syst_label, SO_lab, ws_suff_, track_NPs_, PRP in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly'], [ws_suff, ''], [track_NPs, None], [PointsRandProf, PRPS]):
+            if not JustPrint:
+                print('Running "%s"' % syst_label)
             # update to the appropriate workspace file (stat only or with syst)
-            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
+            wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp+ws_suff_, proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(wsdir, wsfile)
             name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst_label+FS_suff)
             cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                                 name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                                 WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                                Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track)
+                                                Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track,
+                                                random_prof_points=PRP, track_NPs=track_NPs_)
             print(cmd_str)
             # proc = subprocess.run(cmd_str, stdout=stdout, shell=True)
-            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-        print('Finished running combine. Expected file output: %s' % outfile)
+            if not JustPrint:
+                proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+        if not JustPrint:
+            print('Finished running combine. Expected file output: %s' % outfile)
         # remove coarse file, else they will build up (added time)
-        os.remove(outfile_)
+        if not JustPrint and not UseProfileGridDict:
+            os.remove(outfile_)
     # go back to original directory
-    print('Going back to original directory...')
+    if not JustPrint:
+        print('Going back to original directory...')
     os.chdir(start_dir)
 
 # full analysis
 def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
-                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False):
+                     Precision, PrecisionCoarse, stdout, verbose=0, vsuff='', WCs_list=WC_ALL, fastScan=False, LinearOnly=False, Backout=False, TrackParams=False, Unblind=False, JustPrint=False, UseProfileGridDict=False, PointsRandProf='0', PointsRandProfStat=True, PromoteNPs=False):
     if dim == 'dim6':
         WCs_track = dim6_WCs
     else:
@@ -667,19 +848,33 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         suff_purp = '_SignalInject_'+WC
     else:
         suff_purp = ''
+    if PointsRandProfStat:
+        PRPS = PointsRandProf
+    else:
+        PRPS = '0'
+    track_NPs = None
+    if PromoteNPs:
+        if WC in USE_NP_POI_DICT[dim]:
+            ws_suff = '_NPsPromote' # FIXME! Add to arguments?
+            track_NPs = NPs_to_promote_dict[dim]
+        else:
+            ws_suff = ''
+    else:
+        ws_suff = ''
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
     wsdir = os.path.join(dcdir, 'workspaces', 'full_analysis')
     outdir = os.path.join(dcdir, 'output', 'full_analysis')
     os.chdir(outdir)
-    print('Full Analysis:')
+    if not JustPrint:
+        print('Full Analysis:')
     sname_ch = 'all'
     sname_sch = '_combined'
     version = 'vCONFIG_VERSIONS'+vsuff
     SO_lab = '' # with syst
     # SO_lab = '_StatOnly' # stat only
-    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+    wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp+ws_suff, proc=SO_lab, version=version, file_type='root')
     wsfile = os.path.join(wsdir, wsfile)
     # add any frozen WC
     if ScanType == '_1D':
@@ -761,7 +956,11 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
             grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
     else:
         if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW']:
+        # if WC in ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd']:
             grid_dict = {'LL':-5, 'UL':5, 'steps': 11}
+            # grid_dict = {'LL':-3, 'UL':3, 'steps': 6}
+        # elif WC in ['cHW']:
+        #    grid_dict = {'LL':-3, 'UL':3, 'steps': 6}
         elif WC in ['cHl3']:
             # grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             #grid_dict = {'LL':-30, 'UL':30, 'steps': 61}
@@ -771,6 +970,9 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
     # override if doing linear only
     if LinearOnly:
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
+    # use profile grid dict?
+    if UseProfileGridDict:
+        grid_dict = prof_grid_dict[WC]
     #name_str = '_coarse_%s_all_%s' % (WC, str(time()))
     name_str = '_coarse_%s_all_%s_%s' % (WC, version, str(time()))
     outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version,syst=syst, method=METHOD)
@@ -780,30 +982,49 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
                                         name_str, with_syst=True, method=METHOD, WCs_freeze=WCs_freeze,
                                         # name_str, with_syst=False, method=METHOD, WCs_freeze=WCs_freeze,
                                         WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                        Backout=Backout, TrackParams=False, WCs_all=WCs_track)
-    print('Coarse scan to determine appropriate WC range and number of steps:')
-    print(cmd_str)
-    proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-    grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+                                        Backout=Backout, TrackParams=False, WCs_all=WCs_track,
+                                        # random_prof_points=PointsRandProf) # no pointsRandProf on init scan (??)
+                                        random_prof_points='0', track_NPs=track_NPs) # no pointsRandProf on init scan (??)
+    if not JustPrint:
+        print('Coarse scan to determine appropriate WC range and number of steps:')
+    if not UseProfileGridDict:
+        print(cmd_str)
+        # '''
+        if JustPrint:
+            grid_dict_f = grid_dict
+            prec= Precision
+        else:
+            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+            grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=4.0)
+    else:
+        grid_dict_f = grid_dict
+        prec= Precision
     # grid_dict_f, prec = find_range(WC, outfile_, Precision, PrecisionCoarse, Threshold=6.0)
     # loop through stat/syst
-    for syst_bool, syst_label, SO_lab in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly']):
-        print('Running "%s"' % syst_label)
+    for syst_bool, syst_label, SO_lab, ws_suff_, track_NPs_, PRP in zip([True, False], ['syst', 'nosyst'], ['', '_StatOnly'], [ws_suff, ''], [track_NPs, None], [PointsRandProf, PRPS]):
+        if not JustPrint:
+            print('Running "%s"' % syst_label)
         # update to the appropriate workspace file (stat only or with syst)
-        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version, file_type='root')
+        wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanTypeWS+LinO_str, purpose='workspace'+suff_purp+ws_suff_, proc=SO_lab, version=version, file_type='root')
         wsfile = os.path.join(wsdir, wsfile)
         name_str = template_outfilename_stub.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version,syst=syst_label+FS_suff)
         cmd_str = construct_combine_cmd_str(WC, wsfile, grid_dict_f, asi_str,
                                             name_str, with_syst=syst_bool, method=METHOD, WCs_freeze=WCs_freeze,
                                             WCs_limit=WCs_limit, limit_val=LIM_VAL, fastScan=fastScan,
-                                            Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track)
+                                            Backout=Backout, TrackParams=TrackParams, WCs_all=WCs_track,
+                                            random_prof_points=PRP, track_NPs=track_NPs_)
         print(cmd_str)
-        proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
-    print('Finished running combine. Expected file output: %s' % outfile)
+        if not JustPrint:
+            proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
+    if not JustPrint:
+        print('Finished running combine. Expected file output: %s' % outfile)
     # remove coarse file, else they will build up (added time)
-    os.remove(outfile_)
+    if not JustPrint and not UseProfileGridDict:
+        os.remove(outfile_)
+    # '''
     # go back to original directory
-    print('Going back to original directory...')
+    if not JustPrint:
+        print('Going back to original directory...')
     os.chdir(start_dir)
 
 
@@ -813,7 +1034,7 @@ if __name__=='__main__':
     parser.add_argument('-c', '--Channel',
                         help='Which channel? ["all" (default), "0Lepton_3FJ", "2Lepton_OS", "2Lepton_SS"]')
     parser.add_argument('-w', '--WC',
-                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "dim6", "dim8", "cW", ...]')
+                        help='Which Wilson Coefficient to study for 1D limits? ["all" (default), "dim6", "dim8", "NDIM", "cW", ...]')
     parser.add_argument('-t', '--theLevels',
                         help='Which levels of analysis to run combine for? "all" (default). Any combination in any order of the following characters will work: "b" (bin), "s" (subchannel), "c" (channel), "f" (full analysis). e.g. "bsc" will run all but the full analysis.')
     parser.add_argument('-s', '--ScanType',
@@ -834,6 +1055,16 @@ if __name__=='__main__':
                         help='Back out of regions where yield becomes negative? "n" (default), "y"')
     parser.add_argument('-T', '--TrackParams',
                         help='Save POI values from the scan (useful for profiling)? "n" (default), "y"')
+    parser.add_argument('-J', '--JustPrint',
+                        help='Construct the combine string but do no not run it? Useful e.g. for preparing grid jobs. "n" (default), "y"')
+    parser.add_argument('-UP', '--UseProfGridDict',
+                        help='Use the hard coded grid_dict for profiling WCs? "n" (default), "y"')
+    parser.add_argument('-PRP', '--PointsRandProf',
+                        help='How many random initializations of profiled params per point? "0" (default), "1", "2", ..., "49"')
+    parser.add_argument('-PRPS', '--PointsRandProfStat',
+                        help='Use pointsRandProf in StatOnly calculation? Usually want "n" for 1D scans and "y" for profiling scans. "y" (default) / n.')
+    parser.add_argument('-PNP', '--PromoteNPs',
+                        help='Use the workspaces with some NPs promoted to POIs? Useful e.g. to use --pointsRandProf on NPs, or limiting NP ranges. "n" (default) / "y"')
     parser.add_argument('-V', '--Verbose', help='Include "combine" output? 0 (default) / 1. "combine" output only included if Verbose>0.')
     args = parser.parse_args()
     if args.Channel is None:
@@ -854,6 +1085,8 @@ if __name__=='__main__':
         # WCs_loop = ['FT4', 'FT5', 'FT6', 'FT7', 'FT8', 'FT9']
         # WCs_loop = ['FT4', 'FT7', 'FT9', 'FS0', 'FS1', 'FS2']
         # WCs_loop = ['FM0', 'FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM7']
+    elif args.WC == 'NDIM':
+        WCs_loop = WCs_NDIM
     else:
         WCs_loop = [args.WC]
     if (args.theLevels is None) or (args.theLevels == 'all'):
@@ -934,6 +1167,30 @@ if __name__=='__main__':
     else:
         TrackParams = args.TrackParams
     TrackParams_bool = TrackParams == 'y'
+    if args.JustPrint is None:
+        JustPrint = 'n'
+    else:
+        JustPrint = args.JustPrint
+    JustPrint_bool = JustPrint == 'y'
+    if args.UseProfGridDict is None:
+        UseProfGridDict = 'n'
+    else:
+        UseProfGridDict = args.UseProfGridDict
+    UseProfGridDict_bool = UseProfGridDict == 'y'
+    if args.PointsRandProf is None:
+        PointsRandProf = '0'
+    else:
+        PointsRandProf = args.PointsRandProf
+    if args.PointsRandProfStat is None:
+        PointsRandProfStat = 'y'
+    else:
+        PointsRandProfStat = args.PointsRandProfStat
+    PointsRandProfStat_bool = PointsRandProfStat == 'y'
+    if args.PromoteNPs is None:
+        PromoteNPs = 'n'
+    else:
+        PromoteNPs = args.PromoteNPs
+    PromoteNPs_bool = PromoteNPs == 'y'
     if args.Verbose is None:
         args.Verbose = 0
     else:
@@ -985,7 +1242,9 @@ if __name__=='__main__':
                                  stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                                  fastScan=fastScan, LinearOnly=LinearOnly_bool,
                                  Backout=Backout_bool, TrackParams=TrackParams_bool,
-                                 Unblind=Unblind)
+                                 Unblind=Unblind, JustPrint=JustPrint_bool,
+                                 UseProfileGridDict=UseProfGridDict_bool,
+                                 PointsRandProf=PointsRandProf, PointsRandProfStat=PointsRandProfStat_bool)#, PromoteNPs=PromoteNPs_bool)
             print('=================================================\n')
         #########################
         # subchannel calculations
@@ -1006,7 +1265,9 @@ if __name__=='__main__':
                                  stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                                  fastScan=fastScan, LinearOnly=LinearOnly_bool,
                                  Backout=Backout_bool, TrackParams=TrackParams_bool,
-                                 Unblind=Unblind)
+                                 Unblind=Unblind, JustPrint=JustPrint_bool,
+                                 UseProfileGridDict=UseProfGridDict_bool,
+                                 PointsRandProf=PointsRandProf, PointsRandProfStat=PointsRandProfStat_bool)#, PromoteNPs=PromoteNPs_bool)
             print('=================================================\n')
         #########################
         # channel calculations
@@ -1021,7 +1282,9 @@ if __name__=='__main__':
                              stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                              fastScan=fastScan, LinearOnly=LinearOnly_bool,
                              Backout=Backout_bool, TrackParams=TrackParams_bool,
-                             Unblind=Unblind)
+                             Unblind=Unblind, JustPrint=JustPrint_bool,
+                             UseProfileGridDict=UseProfGridDict_bool,
+                             PointsRandProf=PointsRandProf, PointsRandProfStat=PointsRandProfStat_bool, PromoteNPs=PromoteNPs_bool)
             print('=================================================\n')
         #########################
         # full analysis calculation
@@ -1036,6 +1299,8 @@ if __name__=='__main__':
                              stdout=stdout, verbose=args.Verbose, vsuff=vsuff, WCs_list=WCs_ALL_,
                              fastScan=fastScan, LinearOnly=LinearOnly_bool,
                              Backout=Backout_bool, TrackParams=TrackParams_bool,
-                             Unblind=Unblind)
+                             Unblind=Unblind, JustPrint=JustPrint_bool,
+                             UseProfileGridDict=UseProfGridDict_bool,
+                             PointsRandProf=PointsRandProf, PointsRandProfStat=PointsRandProfStat_bool, PromoteNPs=PromoteNPs_bool)
             print('=================================================\n')
         #########################

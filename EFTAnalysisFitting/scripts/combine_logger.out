@@ -1,18 +1,3 @@
-INFO: (function: applyOptionsBase) FitterAlgoBase.cc: 113 -- Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer were taken where option not specified)
-INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
-INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
-INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
-INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 184 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=0, tolerance=0.1
-INFO: (function: improveOnce) CascadeMinimizer.cc: 207 -- Minimisation finished with status=0
-INFO: (function: improveOnce) CascadeMinimizer.cc: 212 -- Minimization success! status=0
-INFO: (function: doFit) FitterAlgoBase.cc: 359 -- Running RobustFit for POI k_cW. Configured with strategy 0  
-INFO: (function: findCrossingNew) FitterAlgoBase.cc: 530 -- Searching for crossing at nll = -67.0562 in the interval [ 0.000999869 , 0.001 ] 
-ERROR: (function: findCrossingNew) FitterAlgoBase.cc: 653 -- Closed range without finding crossing! 
-INFO: (function: findCrossingNew) FitterAlgoBase.cc: 530 -- Searching for crossing at nll = -67.0562 in the interval [ 0.000999869 , -0.001 ] 
-ERROR: (function: findCrossingNew) FitterAlgoBase.cc: 653 -- Closed range without finding crossing! 
+CascadeMinimizer.cc[815] : (in function: applyOptions) - Configured fallback algorithm, type Minuit2, algo Migrad, strategy 0, tolerance 0.2
+FitterAlgoBase.cc[122] : (in function: applyOptionsBase) - Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer if these options were not specified)
+MultiDimFit.cc[649] : (in function: doGrid) - Random starting point set to non-zero value. This will take some time to complete.

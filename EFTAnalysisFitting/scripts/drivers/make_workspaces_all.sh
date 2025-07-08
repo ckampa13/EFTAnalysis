@@ -59,9 +59,9 @@ while read channel version; do
         CHF=${channel}
     fi
     echo "Running for channel=$channel, version=$version"
-    echo "python tools/make_workspaces.py -c $channel -d ${D} -t ${T} -U y ${V} > ${LOGDIR}make_workspaces_${CHF}_${T}_${D}${VF}.txt 2>&1 &"
-    python tools/make_workspaces.py -c $channel -d ${D} -t ${T} -U y ${V} > ${LOGDIR}make_workspaces_${CHF}_${T}_${D}${VF}.txt 2>&1 &
-done < <(python -c "
+    echo "python3 tools/make_workspaces.py -c $channel -d ${D} -t ${T} -U y ${V} > ${LOGDIR}make_workspaces_${CHF}_${T}_${D}${VF}.txt 2>&1 &"
+    python3 tools/make_workspaces.py -c $channel -d ${D} -t ${T} -U y ${V} > ${LOGDIR}make_workspaces_${CHF}_${T}_${D}${VF}.txt 2>&1 &
+done < <(python3 -c "
 import sys
 sys.path.append('${VDICT_DIR}')
 from CONFIG_VERSIONS import versions_dict
@@ -71,5 +71,6 @@ for i, tup in enumerate(sorted(versions_dict.items())):
     if ${TB}: # if full analysis, only use one channel
         if i > 0:
             continue
-    print '%s %s' % (ch, meta[\"v\"])
+    #print '%s %s' % (ch, meta[\"v\"])
+    print('%s %s' % (ch, meta[\"v\"]))
 ")

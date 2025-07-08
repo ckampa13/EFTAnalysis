@@ -55,7 +55,8 @@ def check_file_threshold(rootfile, WC, NLL_threshold, stepsize, stepsize_coarse)
     # else:
     #     print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
     # use range regardless...using +-100 is a sort of nonsense range already.
-    print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
+    # print 'LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps)
+    print('LL:{0:0.4f};UL:{1:0.4f};steps:{2:d}'.format(LL, UL, steps))
 
     return LL, UL, steps
 
