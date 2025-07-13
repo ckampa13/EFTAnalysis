@@ -26,7 +26,7 @@ from MISC_CONFIGS import (
 WC_pretty_print_dict = WC_pretty_print_dict_AN
 SR_pretty_print_dict = SR_pretty_print_dict_AN
 #from tools.extract_limits import get_lims, get_lims_w_best, CL_1sigma
-from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1sigma
+from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, get_lims_quad_interp, CL_1sigma
 from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter
 
 config_plots()
@@ -55,7 +55,7 @@ rescale_dict = {
 # main feature that would need to change is passing in multiple WCs
 # which should be embedded in root_file_dict_full
 def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=False, plot_stat_only=True, xlim_factor=2.0, fixed_xlim=None, savefile=None, sort_by_lim=True,
-                                plot_var_of_choice=False, title_on=False, top_6=True, WIDTH_MAX=5., RESCALE_FACTOR=0.1):
+                                plot_var_of_choice=False, title_on=False, top_6=True, WIDTH_MAX=5., RESCALE_FACTOR=0.1, Asimov=True):
     # bottom to top, plots 0, 1, 2, 3, ....
     # plot
     # if plot_var_of_choice:
@@ -77,6 +77,10 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
     #     fig = plt.figure(figsize=(14, height))
     #     ax = fig.add_axes([0.05, y0, 0.75, yfrac])
     #if len(root_file_dict_full) <= 6:
+    if Asimov:
+        stat_color = 'magenta'
+    else:
+        stat_color = 'lime'
     N_rescaled = 0
     #N_rescaled_s = 0
     if top_6:
@@ -127,7 +131,13 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             if i==1:
                 #label_total = r'Proj. (stat. $\bigoplus$ syst.)'+'\nAsimov Dataset'
                 #label_stat = 'stat. only'
-                label_total = 'With Systematics\nAsimov Dataset'
+                #label_total = 'With Systematics\nAsimov Dataset'
+                #label_stat = 'Statistical Uncertainties Only'
+                label_total = 'With Systematics\n'
+                if Asimov:
+                    label_total += 'Asimov Dataset'
+                else:
+                    label_total += 'Data'
                 label_stat = 'Statistical Uncertainties Only'
             else:
                 label_total = None
@@ -144,14 +154,25 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             # total
             # Cs, NLL, CL_list, NLL_cuts, LLs, ULs, C_best, NLL_best = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC)
             # Cs_s, NLL_s, CL_list_s, NLL_cuts_s, LLs_s, ULs_s, C_best_stat_s, NLL_best_s = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC)
-            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+            if Asimov:
+                hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+            else:
+                #hold = get_lims([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+                hold = get_lims_quad_interp([CL], Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True, kind='linear')
             Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
-            hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+            if Asimov:
+                hold = get_lims_w_best([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+            else:
+                #hold = get_lims([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
+                hold = get_lims_quad_interp([CL], Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True, kind='linear')
             Cs_s, NLL_s, CL_list_s, NLL_cuts_s, _, _, LLs_s, ULs_s, C_best_s, NLL_best_s = hold
+            Nlims = len(ULs[0])
+            Nlims_s = len(ULs_s[0])
+            Nlims_max = np.max([Nlims, Nlims_s])
             err_low = C_best - LLs[0][0]
             err_high = ULs[0][-1] - C_best
-            err_low_s = C_best - LLs_s[0][0]
-            err_high_s = ULs_s[0][-1] - C_best
+            err_low_s = C_best_s - LLs_s[0][0]
+            err_high_s = ULs_s[0][-1] - C_best_s
             if loop == 0:
                 W_rs = (ULs[0][-1] - LLs[0][0]) > WIDTH_MAX
                 widths_to_rescale.append(W_rs)
@@ -166,6 +187,11 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             else:
                 #best_str = f'{C_best:0.3f}'
                 best_str = numerical_formatter(C_best)
+            if abs(np.round(C_best_s, 3)) < 0.001:
+                best_str_s = f'{0.0:0.3f}'
+            else:
+                #best_str = f'{C_best:0.3f}'
+                best_str_s = numerical_formatter(C_best_s)
             # text_annot = rf'${best_str}\ ~^{{+ {err_high:0.3f} }}_{{- {err_low:0.3f} }}$'
             # text_annot += rf'$\ ~^{{+ {err_high_s:0.3f} }}_{{- {err_low_s:0.3f} }}$'
             # numerical formatter
@@ -176,9 +202,11 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             s_low_s = '-'+numerical_formatter(err_low_s)
             text_annot = rf'${best_str}\ ~^{{ {s_high} }}_{{ {s_low} }}$'
             ls = [len(s_high), len(s_low)]
-            if (max(ls) < 5) and (max(abs(err_high), abs(err_low)) < 100):
-                text_annot += r'$\ $'
-            text_annot += rf'$\ \ ~^{{ {s_high_s} }}_{{ {s_low_s} }}$'
+            # if (max(ls) < 5) and (max(abs(err_high), abs(err_low)) < 100):
+            #     text_annot += r'$\ $'
+            if Asimov:
+                text_annot += rf'$\ \ ~^{{ {s_high_s} }}_{{ {s_low_s} }}$'
+            #text_annot += rf'$\ {best_str_s}\ ~^{{ {s_high_s} }}_{{ {s_low_s} }}$'
             if len(LLs[0]) > 1:
                 # asterisk will be explained in figure caption (means discontinuous interval)
                 text_annot += '  *'
@@ -208,56 +236,117 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
                 else:
                     to_rescale = False
                 # find the interval that the best val is actually in
-                for UL_, LL_, UL_s, LL_s in zip(ULs[0], LLs[0], ULs_s[0], LLs_s[0]):
+                #for UL_, LL_, UL_s, LL_s in zip(ULs[0], LLs[0], ULs_s[0], LLs_s[0]):
+                for i in range(Nlims_max):
+                    try:
+                        UL_ = ULs[0][i]
+                        LL_ = LLs[0][i]
+                    except:
+                        UL_ = ULs[0][-1]
+                        LL_ = LLs[0][-1]
+                    try:
+                        UL_s = ULs_s[0][i]
+                        LL_s = LLs_s[0][i]
+                    except:
+                        UL_s = ULs_s[0][-1]
+                        LL_s = LLs_s[0][-1]
                     # for UL_, LL_ in zip(UL, LL):
+                    to_plot = False
+                    to_plot_s = False
                     if (C_best > LL_) and (C_best < UL_):
-                        if to_rescale:
-                        #if (UL_-LL_) > WIDTH_MAX:
-                            #if N_rescaled == 0:
-                            # print(f'{i}, {WC}, will be rescaled...')
-                            # print(f'i={i}, N_to_rescale={N_to_rescale}')
-                            # if i == (N_to_rescale-1):
-                            #     add_hrule_scale = True
-                            # else:
-                            #     add_hrule_scale = False
-                            #N_rescaled += 1
-                            C_best *= RESCALE_FACTOR
-                            LL_ *= RESCALE_FACTOR
-                            LL_s *= RESCALE_FACTOR
-                            UL_ *= RESCALE_FACTOR
-                            UL_s *= RESCALE_FACTOR
-
-                        err_low = C_best - LL_
-                        err_high = UL_ - C_best
-                        err_low_s = C_best - LL_s
-                        err_high_s = UL_s - C_best
-                        ax.errorbar([C_best],[yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
-                        if plot_stat_only:
-                            ax.errorbar([C_best], [yval], xerr=[[err_low_s],[err_high_s]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
-                        if add_hrule_scale:
-                            # debug
-                            print(f'Adding hrule for {WC}, where we start scaling.')
-                            ax.plot([-500, 500], 2*[yval+0.5], '-', color='darkblue', linewidth=2)
-                            ax.annotate(f'Limit x{RESCALE_FACTOR:0.2f}', (-xlim_track, yval), (-xlim_track, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
-                    # an additional interval to plot
+                        to_plot = True
+                    if (C_best_s > LL_s) and (C_best_s < UL_s):
+                        to_plot_s = True
+                    if to_rescale:
+                    #if (UL_-LL_) > WIDTH_MAX:
+                        #if N_rescaled == 0:
+                        # print(f'{i}, {WC}, will be rescaled...')
+                        # print(f'i={i}, N_to_rescale={N_to_rescale}')
+                        # if i == (N_to_rescale-1):
+                        #     add_hrule_scale = True
+                        # else:
+                        #     add_hrule_scale = False
+                        #N_rescaled += 1
+                        print('Rescaling!')
+                        print(f'C_best={C_best}, LL_={LL_}, LL_s={LL_s}, UL_={UL_}, UL_s={UL_s}')
+                        #C_best *= RESCALE_FACTOR
+                        #C_best_s *= RESCALE_FACTOR
+                        C_best_sc = RESCALE_FACTOR * deepcopy(C_best)
+                        C_best_sc_s = RESCALE_FACTOR * deepcopy(C_best_s)
+                        LL_ *= RESCALE_FACTOR
+                        LL_s *= RESCALE_FACTOR
+                        UL_ *= RESCALE_FACTOR
+                        UL_s *= RESCALE_FACTOR
+                        # Cs to be rescaled?
+                        Cs_sc = RESCALE_FACTOR * deepcopy(Cs)
+                        Cs_s_sc = RESCALE_FACTOR * deepcopy(Cs_s)
+                        print(f'C_best={C_best}, LL_={LL_}, LL_s={LL_s}, UL_={UL_}, UL_s={UL_s}')
                     else:
-                        if to_rescale:
-                            C_best *= RESCALE_FACTOR
-                            LL_ *= RESCALE_FACTOR
-                            LL_s *= RESCALE_FACTOR
-                            UL_ *= RESCALE_FACTOR
-                            UL_s *= RESCALE_FACTOR
+                        C_best_sc = deepcopy(C_best)
+                        C_best_sc_s = deepcopy(C_best_s)
+                        Cs_sc = deepcopy(Cs)
+                        Cs_s_sc = deepcopy(Cs_s)
+
+
+
+                    err_low = C_best_sc - LL_
+                    err_high = UL_ - C_best_sc
+                    err_low_s = C_best_sc_s - LL_s
+                    err_high_s = UL_s - C_best_sc_s
+                    if to_plot:
+                        print(f'C_best_sc={C_best_sc}, yval={yval}, err_low={err_low}, err_high={err_high}')
+                        ax.errorbar([C_best_sc],[yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, markersize=16, marker='.', zorder=8, label=label_total)
+                    if plot_stat_only:
+                        if to_plot_s:
+                            print(f'C_best_sc_s={C_best_sc_s}, yval={yval}, err_low_s={err_low_s}, err_high_s={err_high_s}')
+                            ax.errorbar([C_best_sc_s], [yval], xerr=[[err_low_s],[err_high_s]], c=stat_color, capsize=0., linestyle='-', linewidth=6, zorder=7, label=label_stat)
+                    if add_hrule_scale:
+                        # debug
+                        print(f'Adding hrule for {WC}, where we start scaling.')
+                        ax.plot([-500, 500], 2*[yval+0.5], '-', color='darkblue', linewidth=2)
+                        ax.annotate(f'Limit x{RESCALE_FACTOR:0.2f}', (-xlim_track, yval), (-xlim_track, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
+                    # an additional interval to plot
+                    #else:
+                        # if to_rescale:
+                        #     C_best *= RESCALE_FACTOR
+                        #     C_best_s *= RESCALE_FACTOR
+                        #     LL_ *= RESCALE_FACTOR
+                        #     LL_s *= RESCALE_FACTOR
+                        #     UL_ *= RESCALE_FACTOR
+                        #     UL_s *= RESCALE_FACTOR
+                        #     # Cs to be rescaled?
+                        #     Cs *= RESCALE_FACTOR
+                        #     Cs_s *= RESCALE_FACTOR
                         #cval = (UL_ + LL_) / 2.
-                        m = (Cs >= LL_) & (Cs <= UL_)
+                    print('Trying to plot extra interval (syst)...')
+                    try:
+                        m = (Cs_sc >= LL_) & (Cs_sc <= UL_)
                         ibest = np.argmin(NLL[m])
-                        cval = Cs[ibest]
+                        if WC == 'cHl3':
+                            print(ibest)
+                            print(Cs_sc[m], NLL[m])
+
+                        cval = Cs_sc[m][ibest]
                         err_low = cval - LL_
                         err_high = UL_ - cval
-                        err_low_s = cval - LL_s
-                        err_high_s = UL_s - cval
+                        print(f'cval={cval}, yval={yval}, LL_={LL_}, UL_={UL_}, err_low={err_low}, err_high={err_high}')
                         ax.errorbar([cval], [yval], xerr=[[err_low],[err_high]], c='black', capsize=8.0, linestyle='-', linewidth=2, capthick=2, marker='', zorder=8)
+                    except:
+                        pass
+                        print('Could not plot extra interval (syst)...')
+                    print('Trying to plot extra interval (stat)...')
+                    try:
+                        m_s = (Cs_sc_s >= LL_s) & (Cs_sc_s <= UL_s)
+                        ibest_s = np.argmin(NLL_s[m_s])
+                        cval_s = Cs_sc_s[m_s][ibest_s]
+                        err_low_s = cval_s - LL_s
+                        err_high_s = UL_s - cval_s
                         if plot_stat_only:
-                            ax.errorbar([cval], [yval], xerr=[[err_low_s],[err_high_s]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7)
+                            print(f'cval_s={cval_s}, yval={yval}, LL_s={LL_s}, UL_s={UL_s}, err_low_s={err_low_s}, err_high_s={err_high_s}')
+                            ax.errorbar([cval_s], [yval], xerr=[[err_low_s],[err_high_s]], c='magenta', capsize=0., linestyle='-', linewidth=6, zorder=7)
+                    except:
+                        pass
+                        print('Could not plot extra interval (stat)...')
                 LLs_all.append(LLs[0][0])
                 ULs_all.append(ULs[0][-1])
                 text_annot_all.append(text_annot)
@@ -308,7 +397,10 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
             ax.annotate(var_annot, (1.0*xlim, yval), (1.65*xlim, yval), xycoords='data', wrap=False, verticalalignment='center', zorder=100)
     # additional annotations
     # total, stat
-    header_str = r'best$\ \ \ \ $total$\ \ \ $stat.'
+    if Asimov:
+        header_str = r'best$\ \ \ \ $total$\ \ \ $stat.'
+    else:
+        header_str = r'best$\ \ \ \ $total'
     header_y = np.min([np.max(yvals) + 0.5, np.max(yvals) + 0.30 * yrange])
     #ax.annotate(header_str, (1.00*xlim, header_y), (1.22*xlim, header_y), xycoords='data')
     ax.annotate(header_str, (1.00*xlim, header_y), (1.05*xlim, header_y), xycoords='data')
@@ -334,15 +426,24 @@ def make_limit_summary_plot_WCs(root_file_dict_full, title, CL=0.95, add_hrule=F
     return fig, ax
 
 
-def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim, top_6):
+def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xlim, top_6, Asimov, Unblind):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
     else:
         scan_dir = 'profile'
         scan_title = '(Profile Other WCs)'
-    output_dir_full = os.path.join(datacard_dir, 'output', 'full_analysis')
-    plot_dir = os.path.join(datacard_dir, 'AN_plots', 'full_analysis')
+    if Asimov:
+        asi_prestr = ''
+        asi_output = 'Asimov'
+    else:
+        asi_prestr = 'data_'
+        asi_output = 'Data'
+    dcdir = datacard_dir
+    if Unblind:
+        dcdir = os.path.join(dcdir, 'unblind')
+    output_dir_full = os.path.join(dcdir, 'output', 'full_analysis')
+    plot_dir = os.path.join(dcdir, 'AN_plots', 'full_analysis')
     root_file_dict_full = {}
     # version & bin info fixed for all WC
     version = 'vCONFIG_VERSIONS'
@@ -353,8 +454,8 @@ def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xl
     # construct root file for each WC
     for i, WC in enumerate(WCs):
         WC_l = WC_pretty_print_dict[WC]
-        file_syst = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
-        file_stat = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
+        file_syst = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='syst', method='MultiDimFit')
+        file_stat = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined', WC=WC, ScanType=ScanType,version=version,syst='nosyst', method='MultiDimFit')
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
@@ -373,14 +474,14 @@ def run_plot_WC_summary(WCs, CL, ScanType, plot_stat_only, xlim_factor, fixed_xl
     else:
         stat_str = ''
     if top_6:
-        plotfile = os.path.join(plot_dir, f'{dim}_sensitivity_summary{stat_str}{ScanType}_top6_v2')
+        plotfile = os.path.join(plot_dir, f'{asi_prestr}{dim}_sensitivity_summary{stat_str}{ScanType}_top6_v2')
     else:
-        plotfile = os.path.join(plot_dir, f'{dim}_sensitivity_summary{stat_str}{ScanType}_v2')
+        plotfile = os.path.join(plot_dir, f'{asi_prestr}{dim}_sensitivity_summary{stat_str}{ScanType}_v2')
     title = f'{int(CL*100)}\% CL Sensitivity to '+dim_l+f' Wilson Coefficients {scan_title}'
 
     fig, ax = make_limit_summary_plot_WCs(root_file_dict_full, title, CL=CL, add_hrule=False, plot_stat_only=plot_stat_only,
                                           xlim_factor=xlim_factor, fixed_xlim=fixed_xlim, savefile=plotfile,
-                                          sort_by_lim=True, plot_var_of_choice=False, top_6=top_6, WIDTH_MAX=rescale_dict[dim]['WIDTH_MAX'], RESCALE_FACTOR=rescale_dict[dim]['RESCALE_FACTOR'])
+                                          sort_by_lim=True, plot_var_of_choice=False, top_6=top_6, WIDTH_MAX=rescale_dict[dim]['WIDTH_MAX'], RESCALE_FACTOR=rescale_dict[dim]['RESCALE_FACTOR'], Asimov=Asimov)
 
     return fig, ax
 
@@ -411,6 +512,8 @@ if __name__=='__main__':
                         help=f'Which Wilson Coefficient to study for 1D limits? ["all" (default), "top_6", ...]')
     parser.add_argument('-d', '--Dim',
                         help='dim6 or dim8? ["dim6" (default), "dim8"]')
+    parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
+    parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     args = parser.parse_args()
     if args.WC is None:
         args.WC = 'all'
@@ -431,6 +534,18 @@ if __name__=='__main__':
         dim6 = True
     else:
         dim6 = False
+    if args.Asimov is None:
+        args.Asimov = 'y'
+    if args.Asimov == 'y':
+        Asimov = True
+    else:
+        Asimov = False
+    if args.Unblind is None:
+        args.Unblind = 'n'
+    if args.Unblind == 'y':
+        Unblind = True
+    else:
+        Unblind = False
     # make correct dim list
     WCs_dim = []
     for WC in WCs_full:
@@ -449,7 +564,8 @@ if __name__=='__main__':
         print(f"Making sensitivity plots for {dim}...")
         for pstat in pstats:
             print(f'Include stat-only? {pstat}')
-            fig, ax = run_plot_WC_summary(WCs, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None, top_6=top_6)
+            fig, ax = run_plot_WC_summary(WCs, CL=CL, ScanType=ScanType, plot_stat_only=pstat, xlim_factor=1.2, fixed_xlim=None, top_6=top_6,
+                                          Asimov=Asimov, Unblind=Unblind)
             # fig, ax = run_plot_WC_summary(WCs, CL=CL, plot_stat_only=pstat, xlim_factor=None, fixed_xlim=[-1.5, 1.5])
         print("=========================================================\n")
 

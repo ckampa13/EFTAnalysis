@@ -6,6 +6,60 @@ from scipy.interpolate import interp1d
 
 CL_1sigma = 1. - 2.*norm.cdf(-1, loc=0, scale=1)
 
+class MultiDimFitResults:
+    def __init__(self, files, WC='cW', i0=1):
+        self.files = files
+        self.WC = WC
+        self.i0 = i0
+        self.sort_key = 'k_' + WC if WC != 'sm' else 'r'
+        self._cache = dict()
+        self.trees = []
+        # open the files, grabbing "limit" tree
+        for f in self.files:
+            file_ = uproot.open(f)
+            self.trees.append(file_['limit'])
+        # create sorting
+        all_sort_vals = [np.array(tree[self.sort_key].array()[self.i0:].tolist()) for tree in self.trees]
+        self._sort_values = np.concatenate(all_sort_vals)
+        self._sorted_idx = np.argsort(self._sort_values)
+        # store C_best and NLL_best from the first file
+        self.C_best = self.trees[0][self.sort_key].array()[0]
+        self.NLL_best = self.trees[0]['deltaNLL'].array()[0]
+
+    # overload []
+    def __getitem__(self, key):
+        if key in self._cache:
+            return self._cache[key]
+
+        all_vals = [np.array(tree[key].array()[self.i0:].tolist()) for tree in self.trees]
+        merged = np.concatenate(all_vals)
+        merged = merged[self._sorted_idx]
+        self._cache[key] = merged
+        return merged
+
+    def keys(self):
+        return self.trees[0].keys()
+
+    # finding the best NLL for each WC point
+    def best_nll_by_wc(self):
+        """Return indices of best-fit points (min deltaNLL) for each unique WC value."""
+        x = self[self.sort_key]
+        nll = self['deltaNLL']
+
+        # Group by unique WC values
+        unique_vals = np.unique(x)
+        best_indices = []
+
+        for val in unique_vals:
+            # Find indices where WC equals this value
+            match_idx = np.where(x == val)[0]
+            # match_idx = np.isclose(x, val)
+            # Among them, find index of minimum NLL
+            best_idx = match_idx[np.argmin(nll[match_idx])]
+            best_indices.append(best_idx)
+
+        return np.array(best_indices), unique_vals
+
 def lin_interp_to_cutoff(x0, x1, y0, y1, cutoff):
     slope = (y1-y0) / (x1-x0)
     # y = slope * (x-x0) + y0
@@ -13,30 +67,65 @@ def lin_interp_to_cutoff(x0, x1, y0, y1, cutoff):
     x = (cutoff - y0) / slope + x0
     return x
 
-def get_NLL(root_file, WC='cW', update_min=True):
-    file_ = uproot.open(root_file)
-    NLL = np.array(file_['limit']['deltaNLL'].array()[1:].tolist())
-    if update_min:
-        NLL = NLL - np.min(NLL)
+def get_NLL(root_file, WC='cW', update_min=True, useClass=True):
     if WC == 'sm':
         x_col = 'r'
     else:
         x_col = 'k_'+WC
-    Cs = np.array(file_['limit'][x_col].array()[1:].tolist())
-
+    if useClass:
+        files_list = [root_file]
+        #results = MultiDimFitResults(files_list, WC=WC, i0=1) # does not work with hadd results
+        results = MultiDimFitResults(files_list, WC=WC, i0=0)
+        # all value
+        Cs = results[x_col]
+        NLL = results['deltaNLL']
+        C_best = results.C_best
+        #NLLmin = np.min(NLL)
+        # best values
+        best_idx, unique_wc_vals = results.best_nll_by_wc()
+        Cs = Cs[best_idx]
+        NLL = NLL[best_idx]
+        mask_C_best = (~np.isclose(Cs, C_best))
+        Cs = Cs[mask_C_best]
+        NLL = NLL[mask_C_best]
+    else:
+        file_ = uproot.open(root_file)
+        NLL = np.array(file_['limit']['deltaNLL'].array()[1:].tolist())
+        Cs = np.array(file_['limit'][x_col].array()[1:].tolist())
+    if update_min:
+        NLL = NLL - np.min(NLL)
     return Cs, NLL
 
-def get_NLL_full(root_file, WC='cW', update_min=True):
-    file_ = uproot.open(root_file)
-    NLL = np.array(file_['limit']['deltaNLL'].array().tolist())
-    if update_min:
-        NLL = NLL - np.min(NLL)
+def get_NLL_full(root_file, WC='cW', update_min=True, useClass=True):
     if WC == 'sm':
         x_col = 'r'
     else:
         x_col = 'k_'+WC
-    Cs = np.array(file_['limit'][x_col].array().tolist())
-
+    if useClass:
+        files_list = [root_file]
+        results = MultiDimFitResults(files_list, WC=WC, i0=0)
+        # all value
+        Cs = results[x_col]
+        NLL = results['deltaNLL']
+        C_best = results.C_best
+        NLL_best = results.NLL_best
+        # NLLmin = np.min(NLL)
+        # best values
+        best_idx, unique_wc_vals = results.best_nll_by_wc()
+        Cs = Cs[best_idx]
+        NLL = NLL[best_idx]
+        # mask out the best values (copied file to file) and add to the front
+        mask_C_best = (~np.isclose(Cs, C_best))
+        Cs = Cs[mask_C_best]
+        NLL = NLL[mask_C_best]
+        Cs = np.concatenate([[C_best], Cs])
+        NLL = np.concatenate([[NLL_best], NLL])
+    else:
+        file_ = uproot.open(root_file)
+        NLL = np.array(file_['limit']['deltaNLL'].array().tolist())
+        Cs = np.array(file_['limit'][x_col].array().tolist())
+    if update_min:
+        NLL = NLL - np.min(NLL)
     return Cs, NLL
 
 def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=True):

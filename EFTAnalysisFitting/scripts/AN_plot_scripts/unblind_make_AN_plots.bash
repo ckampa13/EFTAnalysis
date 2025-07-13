@@ -7,13 +7,13 @@ conda activate HCOMB
 
 # summary tables
 # WCs (fully combined)
-echo "Making tex tables for WC limit summary..."
-python unblind_WC_summary_table.py
+#######echo "Making tex tables for WC limit summary..."
+#######python unblind_WC_summary_table.py
 # dim6 only
 #python unblind_WC_summary_table.py -d dim6
 # dim8 only
 #python unblind_WC_summary_table.py -d dim8
-python unblind_WC_summary_table.py -d dim8 -o n # don't order by sensitivity
+#######python unblind_WC_summary_table.py -d dim8 -o n # don't order by sensitivity
 # tau impact
 # echo "Making tex tables for impact of taus..."
 # python tau_impact_table.py
@@ -29,45 +29,48 @@ python unblind_WC_summary_table.py -d dim8 -o n # don't order by sensitivity
 #python WC_quad_vs_linear_table.py
 
 # copy impact plots from plots/
-echo "Copy impact plots..."
-WCs=("cW" "cHl3" "cHq3")
-for WC in "${WCs[@]}"; do
-  echo ${WC}
-  bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.${WC}_1D.vCONFIG_VERSIONS.syst.pdf
-  bash copy_impact_plots_to_AN.bash Impacts_Data.all_combined.${WC}_1D.vCONFIG_VERSIONS.syst.pdf
-done
-echo "Done."
-echo
+# echo "Copy impact plots..."
+# WCs=("cW" "cHl3" "cHq3")
+# for WC in "${WCs[@]}"; do
+#   echo ${WC}
+#   bash copy_impact_plots_to_AN.bash Impacts_Asimov.all_combined.${WC}_1D.vCONFIG_VERSIONS.syst.pdf
+#   bash copy_impact_plots_to_AN.bash Impacts_Data.all_combined.${WC}_1D.vCONFIG_VERSIONS.syst.pdf
+# done
+# echo "Done."
+# echo
 
 # summary yield
-echo "Yield summary plots..."
-echo "cW"
-echo "make table"
-python process_yields_limits.py -w cW
-echo "make plot"
-python unblind_yield_summary_plots.py -w cW
-echo "cHl3"
-echo "make table"
-python process_yields_limits.py -w cHl3
-echo "make plot"
-python unblind_yield_summary_plots.py -w cHl3
+# echo "Yield summary plots..."
+# echo "cW"
+# echo "make table"
+# python process_yields_limits.py -w cW
+# echo "make plot"
+# python unblind_yield_summary_plots.py -w cW
+# echo "cHl3"
+# echo "make table"
+# python process_yields_limits.py -w cHl3
+# echo "make plot"
+# python unblind_yield_summary_plots.py -w cHl3
 
 # Summary NLL full analysis + channel level
-echo "Summary NLL vs. WC plots..."
-echo "Asimov"
-echo "Without Data full analysis overlay:"
-python summary_NLL_limits_plot.py -w all -U y -a y -OD n
-echo "With Data full analysis overlay:"
-python summary_NLL_limits_plot.py -w all -U y -a y -OD y
-echo "Data"
-python summary_NLL_limits_plot.py -w all -U y -a n -OD n
+# echo "Summary NLL vs. WC plots..."
+# echo "Asimov"
+# echo "Without Data full analysis overlay:"
+#python summary_NLL_limits_plot.py -w all -U y -a y -OD n
+# python summary_NLL_limits_plot.py -w dim8 -U y -a y -OD n
+# echo "With Data full analysis overlay:"
+# python summary_NLL_limits_plot.py -w all -U y -a y -OD y
+# python summary_NLL_limits_plot.py -w dim8 -U y -a y -OD y
+# echo "Data"
+# python summary_NLL_limits_plot.py -w all -U y -a n -OD n
+# python summary_NLL_limits_plot.py -w dim8 -U y -a n -OD n
 
 
 # NLL full combination multi-panel figure
-echo "NLL vs. WC main plots (1D)..."
-echo "freeze other WCs"
-python NLL_limits_plot_from_dir.py -t f -s _1D -l y -U y -a y
-python NLL_limits_plot_from_dir.py -t f -s _1D -l y -U y -a n
+# echo "NLL vs. WC main plots (1D)..."
+# echo "freeze other WCs"
+# python NLL_limits_plot_from_dir.py -t f -s _1D -l y -U y -a y
+# python NLL_limits_plot_from_dir.py -t f -s _1D -l y -U y -a n
 # dim6 only
 # python NLL_limits_plot_from_dir.py -t f -w dim6 -s _1D -l y -U y -a y
 # python NLL_limits_plot_from_dir.py -t f -w dim6 -s _1D -l y -U y -a n
@@ -75,6 +78,21 @@ python NLL_limits_plot_from_dir.py -t f -s _1D -l y -U y -a n
 # python NLL_limits_plot_from_dir.py -t f -w dim8 -s _1D -l y -U y -a y
 # python NLL_limits_plot_from_dir.py -t f -w dim8 -s _1D -l y -U y -a n
 
+
+
+echo "WC limit summary plots v2 (horizontal band plots)..."
+echo "dim6..."
+echo "all WC..."
+# echo "Asimov"
+# python WC_summary_plot_v2.py -w all -d dim6 -a y -U y
+echo "Data"
+python WC_summary_plot_v2.py -w all -d dim6 -a n -U y
+echo "dim8..."
+echo "all WC..."
+# echo "Asimov"
+# python WC_summary_plot_v2.py -w all -d dim8 -a y -U y
+echo "Data"
+python WC_summary_plot_v2.py -w all -d dim8 -a n -U y
 
 
 #####################

@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from string import Template
 from CONFIG_VERSIONS import dim6_WCs, dim8_WCs
 
@@ -236,4 +237,52 @@ USE_NP_POI_DICT = {
     # 'dim6': [], # cHl3?
     'dim6': dim6_WCs,
     'dim8': dim8_WCs,
+}
+
+### Clipping configs
+clip_points = np.concatenate([[0.6, 0.7, 0.8, 0.85, 0.9, 0.95], np.arange(1.0, 5.01, 0.4), [5.05]]) * 1e3 # include the overflow
+clip_inds = np.arange(len(clip_points))[::-1]
+
+# ranges and points to use for clipping
+# based on similar dict for profiling
+clip_grid_dict = {
+    'cW': {'LL': -0.2, 'UL': 0.2, 'steps': 30},
+    'cHbox': {'LL': -100, 'UL': 100, 'steps': 60},
+    # 'cHDD': {'LL': -130, 'UL': 130, 'steps': 60},
+    'cHDD': {'LL': -150, 'UL': 150, 'steps': 60},
+    # 'cHl3': {'LL': -30, 'UL': 30, 'steps': 60},
+    'cHl3': {'LL': -50, 'UL': 50, 'steps': 60},
+    # 'cHq1': {'LL': -0.5, 'UL': 0.5, 'steps': 30},
+    # 'cHq3': {'LL': -0.5, 'UL': 0.5, 'steps': 30},
+    'cHq1': {'LL': -0.6, 'UL': 0.6, 'steps': 30},
+    'cHq3': {'LL': -0.8, 'UL': 0.8, 'steps': 30},
+    'cHW': {'LL': -5, 'UL': 5, 'steps': 30},
+    'cHWB': {'LL': -15, 'UL': 15, 'steps': 30},
+    # 'cll1': {'LL': -50, 'UL': 50, 'steps': 60},
+    'cll1': {'LL': -100, 'UL': 100, 'steps': 60},
+    'cHB': {'LL': -20, 'UL': 20, 'steps': 30},
+    # 'cHu': {'LL': -1, 'UL': 1, 'steps': 30},
+    'cHu': {'LL': -1.75, 'UL': 1.75, 'steps': 30},
+    'cHd': {'LL': -1.75, 'UL': 1.75, 'steps': 30},
+    # dim8 -- not actually profiled, but useful to set ranges
+    'FT0': {'LL': -1.0, 'UL': 1.0, 'steps': 41},
+    'FT1': {'LL': -1.0, 'UL': 1.0, 'steps': 41},
+    'FT2': {'LL': -2.0, 'UL': 2.0, 'steps': 41},
+    'FT3': {'LL': -2.0, 'UL': 2.0, 'steps': 41},
+    'FT4': {'LL': -16.0, 'UL': 16.0, 'steps': 33},
+    'FT5': {'LL': -5.0, 'UL': 5.0, 'steps': 51},
+    'FT6': {'LL': -7.0, 'UL': 7.0, 'steps': 71},
+    'FT7': {'LL': -16.0, 'UL': 16.0, 'steps': 33},
+    'FT8': {'LL': -20.0, 'UL': 20.0, 'steps': 41},
+    'FT9': {'LL': -30.0, 'UL': 30.0, 'steps': 61},
+    'FS0': {'LL': -50.0, 'UL': 50.0, 'steps': 51},
+    'FS1': {'LL': -40.0, 'UL': 40.0, 'steps': 41},
+    'FS2': {'LL': -50.0, 'UL': 50.0, 'steps': 51},
+    'FM0': {'LL': -6.0, 'UL': 6.0, 'steps': 61},
+    'FM1': {'LL': -10.0, 'UL': 10.0, 'steps': 21},
+    'FM2': {'LL': -25.0, 'UL': 25.0, 'steps': 51},
+    'FM3': {'LL': -40.0, 'UL': 40.0, 'steps': 41},
+    'FM4': {'LL': -25.0, 'UL': 25.0, 'steps': 51},
+    'FM5': {'LL': -20.0, 'UL': 20.0, 'steps': 41},
+    'FM7': {'LL': -20.0, 'UL': 20.0, 'steps': 41},
 }

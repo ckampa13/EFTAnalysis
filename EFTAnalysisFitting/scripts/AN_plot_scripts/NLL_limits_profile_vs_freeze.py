@@ -50,6 +50,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefi
     # get limits and plot
     # profile
     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['prof'], WC=WC, extrapolate=True)
+    # hold = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['prof'], WC=WC, extrapolate=True)
     Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
     label = 'Profile Other WCs'
     if limits_legend:
@@ -59,6 +60,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefi
     ax.plot(Cs, 2.*NLL, c=c_prof, linestyle='-', linewidth=4, zorder=6, label=label)
     # freeze
     hold_f = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['freeze'], WC=WC, extrapolate=True)
+    # hold_f = get_lims(CL_list, Cs=None, NLL=None, root_file=root_file_dict['freeze'], WC=WC, extrapolate=True)
     Cs_f, NLL_f, CL_list_f, NLL_cuts_f, _, _, LLs_f, ULs_f, C_best_f, NLL_best_f = hold_f
     label_f = 'Freeze Other WCs'
     if limits_legend:
