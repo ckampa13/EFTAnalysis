@@ -38,6 +38,6 @@ fi
 for i in $(seq 0 17); # adding a few points just below 1 TeV
 do
     echo Making workspaces for clip index $i...
-    echo "python3 tools/make_workspaces.py -c $CH -d $DIM -t $L -v _clip_mVVV_$i -U y > ${LOGDIR}make_workspaces_${CHF}_${L}_${DIM}_clip_${i}.txt 2>&1 &"
-    python3 tools/make_workspaces.py -c $CH -d $DIM -t $L -v _clip_mVVV_$i -U y > ${LOGDIR}make_workspaces_${CHF}_${L}_${DIM}_clip_${i}.txt 2>&1 &
+    echo "python3 tools/promote_NP_to_POI_workspace.py -d $DIM -t $L -s _All -v _clip_mVVV_$i -U y > ${LOGDIR}promote_NP_to_POI_${CHF}_${L}_${DIM}_clip_${i}.txt 2>&1 &"
+    python3 tools/promote_NP_to_POI_workspace.py -d $DIM -t $L -s _All -v _clip_mVVV_$i -U y > ${LOGDIR}promote_NP_to_POI_${CHF}_${L}_${DIM}_clip_${i}.txt 2>&1 &
 done

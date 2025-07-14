@@ -31,6 +31,7 @@ from MISC_CONFIGS import (
     prof_grid_dict,
     NPs_to_promote_dict,
     USE_NP_POI_DICT,
+    clip_grid_dict,
 )
 
 # FIXME! method should be a cmdline arg, but need to make sure it works
@@ -392,7 +393,10 @@ def run_combine_bins(dim, channel, version, datacard_dict, WC, ScanType, Asimov,
                 grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
             # use profile grid dict?
             if UseProfileGridDict:
-                grid_dict = prof_grid_dict[WC]
+                if '_clip_mVVV' in vsuff:
+                    grid_dict = clip_grid_dict[WC]
+                else:
+                    grid_dict = prof_grid_dict[WC]
             #name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
             name_str = '_coarse_%s_%s_%s_%s' % (WC, channel, version_full, str(time()))
             outfile = template_outfilename.substitute(asimov=asi, channel=sname_ch,subchannel=sname_sch_b,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -545,7 +549,10 @@ def run_combine_subchannels(dim, channel, version, datacard_dict, WC, ScanType, 
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # use profile grid dict?
         if UseProfileGridDict:
-            grid_dict = prof_grid_dict[WC]
+            if '_clip_mVVV' in vsuff:
+                grid_dict = clip_grid_dict[WC]
+            else:
+                grid_dict = prof_grid_dict[WC]
         #name_str = '_coarse_%s_%s_%s' % (WC, channel, str(time()))
         name_str = '_coarse_%s_%s_%s_%s' % (WC, channel, version_full, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -766,7 +773,10 @@ def run_combine_channels(dim, channels, datacard_dict, WC, ScanType, Asimov, asi
             grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
         # use profile grid dict?
         if UseProfileGridDict:
-            grid_dict = prof_grid_dict[WC]
+            if '_clip_mVVV' in vsuff:
+                grid_dict = clip_grid_dict[WC]
+            else:
+                grid_dict = prof_grid_dict[WC]
         #name_str = '_coarse_%s_%s_%s' % (WC, ch, str(time()))
         name_str = '_coarse_%s_%s_%s_%s' % (WC, ch, version_full, str(time()))
         outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version_full,syst=syst, method=METHOD)
@@ -972,7 +982,10 @@ def run_combine_full_analysis(dim, WC, ScanType, Asimov, asi_str, SignalInject,
         grid_dict = {'LL':-100, 'UL':100, 'steps': 201}
     # use profile grid dict?
     if UseProfileGridDict:
-        grid_dict = prof_grid_dict[WC]
+        if '_clip_mVVV' in vsuff:
+            grid_dict = clip_grid_dict[WC]
+        else:
+            grid_dict = prof_grid_dict[WC]
     #name_str = '_coarse_%s_all_%s' % (WC, str(time()))
     name_str = '_coarse_%s_all_%s_%s' % (WC, version, str(time()))
     outfile = template_outfilename.substitute(asimov=asi+suff_purp, channel=sname_ch,subchannel=sname_sch,WC=WC,ScanType=ScanType+LinO_str,version=version,syst=syst, method=METHOD)
@@ -1202,18 +1215,19 @@ if __name__=='__main__':
     # update WCs_loop if we are clipping
     # FIXME! This is clunky and was only in place to avoid freezing WCs not present in the file
     # during development.
-    if "clip" in vsuff:
-        WCs_ALL_ = []
-        WCs_loop_new = []
-        WCs_clip = WCs_clip_dim6 + WCs_clip_dim8
-        for WC in WCs_loop:
-            if WC in WCs_clip:
-                WCs_loop_new.append(WC)
-                WCs_ALL_.append(WC)
-        WCs_loop = WCs_loop_new
-        print('Clipping -- using an alternative set of WCs: %s' % str(WCs_loop))
-    else:
-        WCs_ALL_ = WC_ALL
+    # if "clip" in vsuff:
+    #     WCs_ALL_ = []
+    #     WCs_loop_new = []
+    #     WCs_clip = WCs_clip_dim6 + WCs_clip_dim8
+    #     for WC in WCs_loop:
+    #         if WC in WCs_clip:
+    #             WCs_loop_new.append(WC)
+    #             WCs_ALL_.append(WC)
+    #     WCs_loop = WCs_loop_new
+    #     print('Clipping -- using an alternative set of WCs: %s' % str(WCs_loop))
+    # else:
+    #    WCs_ALL_ = WC_ALL
+    WCs_ALL_ = WC_ALL
 
     #########################
     # outer loop (over WC)
