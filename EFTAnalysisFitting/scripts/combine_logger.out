@@ -1,3 +1,411 @@
 CascadeMinimizer.cc[815] : (in function: applyOptions) - Configured fallback algorithm, type Minuit2, algo Migrad, strategy 0, tolerance 0.2
-FitterAlgoBase.cc[122] : (in function: applyOptionsBase) - Setting robust fit options to Tolerance=0.2 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer if these options were not specified)
-MultiDimFit.cc[649] : (in function: doGrid) - Random starting point set to non-zero value. This will take some time to complete.
+FitterAlgoBase.cc[122] : (in function: applyOptionsBase) - Setting robust fit options to Tolerance=0.1 / Strategy=0 / Type,Algo=Minuit2,Migrad (note that defaults of CascadeMinimizer if these options were not specified)
+Combine.cc[682] : (in function: run) - Freezing the following parameters: 
+Combine.cc[684] : (in function: run) - r_sm
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch0L_2FJsch_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch0L_3FJsch_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch1L_2FJsch_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_OSsch_OF_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_OSsch_SFnoZ_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_OSsch_SFZ_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_OS_2FJsch_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_SSsch_1FJ_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch1L_1FJ_1Tsch_bonly_obsOnly: in 22 x-bins
+ToyMCSamplerOpt.cc[143] : (in function: generateAsimov) - Using internal logic for binned/unbinned Asimov dataset generation
+ToyMCSamplerOpt.cc[211] : (in function: generateWithHisto) - Generating asimov with histogram for pdf pdf_binch2L_0FJ_1Tsch_bonly_obsOnly: in 22 x-bins
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+CascadeMinimizer.cc[131] : (in function: improve) - Failed minimization with Minuit2, Migrad and tolerance 0.1
+CascadeMinimizer.cc[142] : (in function: improve) - Will fall back to minimization using Migrad, strategy 0 and tolerance 0.2
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.2
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b1. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 1.62995e-05 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 1.62995e-05 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b2. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -2.67447e-05 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -2.67447e-05 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b3. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 3.06766e-05 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 3.06766e-05 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b4. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -5.49014e-05 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -5.49014e-05 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b5. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 5.75561e-05 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 5.75561e-05 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0499427
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b5 = -0.0496927
+FitterAlgoBase.cc[684] : (in function: findCrossingNew) - [WARNING] Search for crossing did not converge, will return approximate answer -0.0496927
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_mu_mVVV_b6. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -1.01238e-06 , 20 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ -1.01238e-06 , -10 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b6 = -0.050001
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b6 = -0.050001
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+FitterAlgoBase.cc[638] : (in function: findCrossingNew) - [ERROR] Minimization failed at r_mu_mVVV_b6 = -0.050001
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=-1
+CascadeMinimizer.cc[216] : (in function: improveOnce) - Minimization ended with latest status != 0 or 1
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[684] : (in function: findCrossingNew) - [WARNING] Search for crossing did not converge, will return approximate answer -0.0410529
+FitterAlgoBase.cc[367] : (in function: doFit) - Running RobustFit for POI r_sm. Configured with strategy 0  
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 1 , 3 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+FitterAlgoBase.cc[538] : (in function: findCrossingNew) - Searching for crossing at nll = -2006.17 in the interval [ 1 , 0 ] 
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0
+CascadeMinimizer.cc[184] : (in function: improveOnce) - Minimization configured with Type=Minuit2, Algo=Migrad, strategy=2, tolerance=0.1
+CascadeMinimizer.cc[211] : (in function: improveOnce) - Minimization finished with status=0
+CascadeMinimizer.cc[215] : (in function: improveOnce) - Minimization success! status=0

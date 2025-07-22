@@ -17,10 +17,30 @@ from DATACARD_DICT import datacard_dict
 from CONFIG_VERSIONS import versions_dict, WC_ALL, WCs_clip_dim6, WCs_clip_dim8
 from MISC_CONFIGS import template_filename, datacard_dir, dim6_ops
 
-str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
-str_module_LinO = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingLinearEFTNegative:analiticAnomalousCouplingLinearEFTNegative'
+# json maker
+# python3 tools/createCombineJson.py --datacard ../unblind/combined_datacards/full_analysis/VVV.all_combined.dim6_All.DataCard_Yields.vCONFIG_VERSIONS.txt --output jsonComb.json
+json_script = os.path.join(datacard_dir, 'scripts', 'tools', 'createCombineJson.py')
+
+# old physics model -- cHW and cHWB broken
+# str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative:analiticAnomalousCouplingEFTNegative'
+# str_module_LinO = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingLinearEFTNegative:analiticAnomalousCouplingLinearEFTNegative'
+# new phsyics model -- cHW and cHWB fixed
+str_module = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingEFTNegative_comb:analiticAnomalousCouplingEFTNegative_comb'
+str_module_LinO = '-P HiggsAnalysis.AnalyticAnomalousCoupling.AnomalousCouplingLinearEFTNegative_comb:analiticAnomalousCouplingLinearEFTNegative_comb'
 str_extra_PO_LinO = ' --PO reuseCompleteDatacards'
 x_flag = '--X-allow-no-signal'
+# extras from SMP combination group
+# all args
+# extras = ' --X-pack-asympows --optimize-simpdf-constraints=cms --X-optimizeMHDependency=fixed'
+# only those I think we need
+extras = ''
+
+def make_json(dc_file, json_file, stdout, verbose=1):
+    cmd_str = json_script + ' --datacard %s --output %s' % (dc_file, json_file)
+    if verbose:
+        print('making json...')
+        print(cmd_str)
+    _ = subprocess.call(cmd_str, shell=True, stdout=stdout)
 
 # all bins in a subchannel / channel
 def make_workspace_bins(dim, channel, version, datacard_dict, WCs, ScanType, verbose=1, StatOnly=False, vsuff='', LinearOnly=False, Unblind=False):
@@ -62,17 +82,22 @@ def make_workspace_bins(dim, channel, version, datacard_dict, WCs, ScanType, ver
             cmd_str += '%s %s ' % (dc_file, str_module_)
             wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch_b, WC=dim, ScanType=ScanType+LinO_str, purpose='workspace', proc=SO_lab, version=version_full, file_type='root')
             wsfile = os.path.join(dcdir, 'workspaces', 'single_bin', wsfile)
+            json_file = wsfile.replace('.root', '.json')
             cmd_str += '-o %s %s ' % (wsfile, x_flag)
             # add correct WCs
             WCs_str = ','.join(WCs)
+            cmd_str += '--PO addToCompleteOperators=%s ' % WCs_str
+            cmd_str += '--PO fileCombination=%s ' % json_file
             cmd_str += '--PO eftOperators=%s' % WCs_str
             # add suffix (reuse datacard for Linear only)
             cmd_str += str_extra_
+            cmd_str += extras
             # run script
             if verbose > 0:
                 stdout = None
             else:
                 stdout = subprocess.PIPE
+            make_json(dc_file, json_file, stdout, verbose)
             if verbose > 0:
                 print('generating workspace...')
                 print(cmd_str)
@@ -122,17 +147,22 @@ def make_workspace_subchannels(dim, channel, version, datacard_dict, WCs, ScanTy
         cmd_str += '%s %s ' % (dc_file, str_module_)
         wsfile = template_filename.substitute(channel=sname_ch, subchannel=sname_sch, WC=dim, ScanType=ScanType+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(dcdir, 'workspaces', 'subchannel', wsfile)
+        json_file = wsfile.replace('.root', '.json')
         cmd_str += '-o %s %s ' % (wsfile, x_flag)
         # add correct WCs
         WCs_str = ','.join(WCs)
+        cmd_str += '--PO addToCompleteOperators=%s ' % WCs_str
+        cmd_str += '--PO fileCombination=%s ' % json_file
         cmd_str += '--PO eftOperators=%s' % WCs_str
         # add suffix (reuse datacard for Linear only)
         cmd_str += str_extra_
+        cmd_str += extras
         # run script
         if verbose > 0:
             stdout = None
         else:
             stdout = subprocess.PIPE
+        make_json(dc_file, json_file, stdout, verbose)
         if verbose > 0:
             print('generating workspace...')
             print(cmd_str)
@@ -198,17 +228,22 @@ def make_workspace_channels(dim, channels, datacard_dict, WCs, ScanType, verbose
         cmd_str += '%s %s ' % (dc_file, str_module_)
         wsfile = template_filename.substitute(channel=sname_ch, subchannel='_combined', WC=dim, ScanType=ScanType+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version=version_full, file_type='root')
         wsfile = os.path.join(dcdir, 'workspaces', 'channel', wsfile)
+        json_file = wsfile.replace('.root', '.json')
         cmd_str += '-o %s %s ' % (wsfile, x_flag)
         # add correct WCs
         WCs_str = ','.join(WCs)
+        cmd_str += '--PO addToCompleteOperators=%s ' % WCs_str
+        cmd_str += '--PO fileCombination=%s ' % json_file
         cmd_str += '--PO eftOperators=%s' % WCs_str
         # add suffix (reuse datacard for Linear only)
         cmd_str += str_extra_
+        cmd_str += extras
         # run script
         if verbose > 0:
             stdout = None
         else:
             stdout = subprocess.PIPE
+        make_json(dc_file, json_file, stdout, verbose)
         if verbose > 0:
             print('generating workspace...')
             print(cmd_str)
@@ -247,17 +282,22 @@ def make_workspace_full_analysis(dim, WCs, ScanType, verbose=1, StatOnly=False, 
     cmd_str += '%s %s ' % (dc_file, str_module_)
     wsfile = template_filename.substitute(channel='all', subchannel='_combined', WC=dim, ScanType=ScanType+LinO_str, purpose='workspace'+suff_purp, proc=SO_lab, version='vCONFIG_VERSIONS'+vsuff, file_type='root')
     wsfile = os.path.join(dcdir, 'workspaces', 'full_analysis', wsfile)
+    json_file = wsfile.replace('.root', '.json')
     cmd_str += '-o %s %s ' % (wsfile, x_flag)
     # add correct WCs
     WCs_str = ','.join(WCs)
+    cmd_str += '--PO addToCompleteOperators=%s ' % WCs_str
+    cmd_str += '--PO fileCombination=%s ' % json_file
     cmd_str += '--PO eftOperators=%s' % WCs_str
     # add suffix (reuse datacard for Linear only)
     cmd_str += str_extra_
+    cmd_str += extras
     # run script
     if verbose > 0:
         stdout = None
     else:
         stdout = subprocess.PIPE
+    make_json(dc_file, json_file, stdout, verbose)
     if verbose > 0:
         print('generating workspace...')
         print(cmd_str)

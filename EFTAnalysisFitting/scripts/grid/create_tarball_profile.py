@@ -13,8 +13,8 @@ from MISC_CONFIGS import (
 
 if __name__=='__main__':
     Unblind=True
-    # NP_promote=False
-    NP_promote=True
+    NP_promote=False
+    # NP_promote=True
     if NP_promote:
         ws_suff='_NPsPromote'
     else:

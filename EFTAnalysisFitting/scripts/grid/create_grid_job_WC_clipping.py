@@ -235,18 +235,21 @@ if __name__=='__main__':
                 dim = 'dim6'
                 ws_suff = ''
                 PNP = 'n'
+                PointsRandProf_ = '0'
             else:
                 dim = 'dim8'
                 if syst_bool:
                     ws_suff = '_NPsPromote'
                     PNP = 'y'
+                    PointsRandProf_ = PointsRandProf
                 else:
                     ws_suff = ''
                     PNP = 'n'
+                    PointsRandProf_ = '0'
             # run_combine_1D.py with "JustPrint" option --> dump to temp file
             dumpfile = 'dump_%s_asi_%s_syst_%s.txt' % (WC, asi, syst)
             print('dumpfile=%s' % dumpfile)
-            cmd_str = "python3 %s1D_scan/run_combine_1D.py -w %s -t f -s _1D -U y -a %s -T y -v %s -J y -UP y -PRP %s -PNP %s > %s" % (scripts_dir, WC, asi, vsuff, PointsRandProf, PNP, dumpfile)
+            cmd_str = "python3 %s1D_scan/run_combine_1D.py -w %s -t f -s _1D -U y -a %s -T y -v %s -J y -UP y -PRP %s -PRPS n -PNP %s > %s" % (scripts_dir, WC, asi, vsuff, PointsRandProf_, PNP, dumpfile)
             print(cmd_str)
             proc = subprocess.call(cmd_str, stdout=stdout, shell=True)
             # parse the output

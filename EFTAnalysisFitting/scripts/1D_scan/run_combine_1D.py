@@ -50,8 +50,18 @@ METHOD = 'MultiDimFit'
 # 07-08-25
 # promoting PDF_, QCDScale_, jes_ to POIs for randomized initializations
 # don't freeze anything
-LIM_VAL = 20
-prof_freeze_WCs = []
+# LIM_VAL = 20
+# prof_freeze_WCs = []
+# 07-17-25_nofreeze
+# workspace fixed with new physics model (cHW, cHWB fix)
+# don't freeze anything
+# LIM_VAL = 20
+# prof_freeze_WCs = []
+# 07-17-25_freeze
+# workspace fixed with new physics model (cHW, cHWB fix)
+# redoing "best results" from before
+LIM_VAL = 10
+prof_freeze_WCs = ['cHDD', 'cHbox', 'cll1', 'cHl3']
 ###### OLD BELOW
 # LIM_VAL = 2 # keep to theoretically interesting values
 # LIM_VAL = 10 # first grid run (07-02-25)

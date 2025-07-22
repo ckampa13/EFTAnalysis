@@ -105,7 +105,7 @@ if __name__=='__main__':
                              lambda x: 'all_combined' in x, # full_analysis
                              lambda x: WC+args.ScanType in x, # WC and scan type
                              lambda x: syst_str in x, # syst string
-                             lambda x: version in x, # version
+                             lambda x: version+'.' in x, # version, cutting off any matching keys e.g. so _clip_mVVV_1 does not pick up values from _clip_mVVV_10/11/12,...
                              ]
             # output filename
             file_out = template_outfilename.substitute(asimov=asi_str, channel='all', subchannel='_combined', WC=WC, ScanType=args.ScanType, version=version, syst=syst_str.replace('.', ''), method='MultiDimFit')
