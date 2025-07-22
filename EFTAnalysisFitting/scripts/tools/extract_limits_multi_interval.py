@@ -1,4 +1,5 @@
 # import from this file to get limits from an output root file
+from copy import deepcopy
 import numpy as np
 import uproot
 from scipy.stats import norm
@@ -179,6 +180,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y1 > y0:
+                        y0 = deepcopy(y1) + 0.001
                     iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 # interpolate for UL
                 iUL = []
@@ -193,6 +197,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y0 > y1:
+                        y1 = deepcopy(y0) + 0.001
                     iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 if not to_add is None:
                     for i in to_add:
@@ -211,6 +218,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y1 > y0:
+                        y0 = deepcopy(y1) + 0.001
                     iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 # interpolate for UL
                 iUL = []
@@ -219,6 +229,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y0 > y1:
+                        y1 = deepcopy(y0) + 0.001
                     iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 #LL_interp = np.concatenate([[Cs[0]], iLL])
                 #UL_interp = np.concatenate([iUL, [Cs[-1]]])
@@ -246,6 +259,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y1 > y0:
+                    y0 = deepcopy(y1) + 0.001
                 iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             # interpolate for UL
             iUL = []
@@ -254,6 +270,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y0 > y1:
+                    y1 = deepcopy(y0) + 0.001
                 iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             #LL_interp = np.concatenate([[Cs[0]], iLL])
             #UL_interp = np.concatenate([iUL, [Cs[-1]]])
@@ -271,6 +290,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y1 > y0:
+                    y0 = deepcopy(y1) + 0.001
                 iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             # interpolate for UL
             iUL = []
@@ -285,6 +307,9 @@ def get_lims(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapolate=Tr
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y0 > y1:
+                    y1 = deepcopy(y0) + 0.001
                 iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             if not to_add is None:
                 for i in to_add:
@@ -361,6 +386,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y1 > y0:
+                        y0 = deepcopy(y1) + 0.001
                     iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 # interpolate for UL
                 iUL = []
@@ -375,6 +403,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y0 > y1:
+                        y1 = deepcopy(y0) + 0.001
                     iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 if not to_add is None:
                     for i in to_add:
@@ -393,6 +424,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y1 > y0:
+                        y0 = deepcopy(y1) + 0.001
                     iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 # interpolate for UL
                 iUL = []
@@ -401,6 +435,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                     x1 = Cs[ind+1]
                     y0 = NLL[ind]
                     y1 = NLL[ind+1]
+                    # make sure slope sign is correct, or force correct
+                    if y0 > y1:
+                        y1 = deepcopy(y0) + 0.001
                     iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
                 #LL_interp = np.concatenate([[Cs[0]], iLL])
                 #UL_interp = np.concatenate([iUL, [Cs[-1]]])
@@ -428,6 +465,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y1 > y0:
+                    y0 = deepcopy(y1) + 0.001
                 iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             # interpolate for UL
             iUL = []
@@ -436,6 +476,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y0 > y1:
+                    y1 = deepcopy(y0) + 0.001
                 iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             #LL_interp = np.concatenate([[Cs[0]], iLL])
             #UL_interp = np.concatenate([iUL, [Cs[-1]]])
@@ -453,6 +496,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y1 > y0:
+                    y0 = deepcopy(y1) + 0.001
                 iLL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             # interpolate for UL
             iUL = []
@@ -467,6 +513,9 @@ def get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=None, WC='cW', extrapo
                 x1 = Cs[ind+1]
                 y0 = NLL[ind]
                 y1 = NLL[ind+1]
+                # make sure slope sign is correct, or force correct
+                if y0 > y1:
+                    y1 = deepcopy(y0) + 0.001
                 iUL.append(lin_interp_to_cutoff(x0, x1, y0, y1, NLL_cut))
             if not to_add is None:
                 for i in to_add:
@@ -686,14 +735,21 @@ def get_point_estimate_pm_1sigma(Cs, NLL, LLs_interp_1sigma, ULs_interp_1sigma, 
         # find point estimate only within this range
         # set up interpolation function
         interp_func = interp1d(Cs, NLL, kind=kind, fill_value='extrapolate')
-        LL_ = np.round(LL) - 1
-        UL_ = np.round(UL) + 1
+        if (UL - LL) > 1:
+            d = 1
+            ndec = 0
+        else:
+            d = 0.01
+            ndec = 2
+        LL_ = np.round(LL, decimals=ndec) - d
+        UL_ = np.round(UL, decimals=ndec) + d
         Cs_fine = np.arange(LL_, UL_, dC)
         NLL_fine = interp_func(Cs_fine)
         imin = np.argmin(NLL_fine)
         C_best = Cs_fine[imin]
         if use_best:
-            if abs(C_best - C_best_combine) < 1.:
+            #if abs(C_best - C_best_combine) < 1.:
+            if abs(C_best - C_best_combine) < 0.1:
                 C_best = C_best_combine
         C_bests.append(C_best)
         NLL_best = NLL_fine[imin]

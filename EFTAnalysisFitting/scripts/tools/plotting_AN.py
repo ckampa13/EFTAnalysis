@@ -22,6 +22,10 @@ def config_plots():
         # apply in each file as needed
         #plt.rcParams['figure.constrained_layout.use'] = True
         plt.rc('axes', labelsize=34.0)     # fontsize of the axes title
+        # switch font
+        plt.rc('font', serif=['Times New Roman']) # only use Times New Roman
+        plt.rc('font', family='serif') # switch to serif
+
 
 def ticks_in(ax, top_and_right=True):
     if top_and_right:

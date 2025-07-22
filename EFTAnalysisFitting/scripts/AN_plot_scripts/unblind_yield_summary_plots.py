@@ -293,12 +293,12 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     axs[0].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     axs[1].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     # labels
-    axs[1].set_xlabel('Analysis Channel SR')
-    axs[0].set_ylabel('Events')
+    axs[1].set_xlabel('Analysis Channel SR', loc='right')
+    axs[0].set_ylabel('Events', loc='top')
     WC_l = WC_pretty_print_dict[WC]
     axs[0].set_title('VVV Yield Summary for '+rf'{WC_l}'+'\n\n')
     axs[2].set_title('Combined Limit')
-    axs[1].set_ylabel(ylabel, labelpad=-5.0)
+    axs[1].set_ylabel(ylabel, labelpad=-5.0, loc='top')
     # set tick labels by bin labels
     axs[0].set_xticks(bin_edges)
     axs[0].set_xticklabels([])

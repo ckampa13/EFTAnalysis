@@ -149,7 +149,8 @@ def make_summary_table(WCs, LLs, ULs, LLs_p, ULs_p, dim='dim6', tex_file=None):
 
 if __name__=='__main__':
     # FIXME! I don't want this to be hard-coded
-    WCs = ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHWB', 'cHl3', 'cHB']
+    #WCs = ['cW', 'cHq3', 'cHq1', 'cHu', 'cHd', 'cHW', 'cHWB', 'cHl3', 'cHB']
+    WCs = dim6_WCs
 
     dim_dict = {'dim6': WCs,
                 #'dim6': dim6_WCs,
@@ -157,8 +158,8 @@ if __name__=='__main__':
                 #'cW_test': ['cW'],
                 #'dim8_partial': ['FS0', 'FS1', 'FS2', 'FM0', 'FM1', 'FM2', 'FM3', 'FM4'],
                }
-    ddir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'output')), '')
-    plotdir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'AN_plots', 'tables')), '')
+    ddir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'output')), '')
+    plotdir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'AN_plots', 'tables')), '')
     # with syst
     results_dict = {}
     print('Limits (prof vs. freeze, with systematics)...')

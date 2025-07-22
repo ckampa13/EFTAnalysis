@@ -293,29 +293,29 @@ def make_summary_table(WCs, LLs_a, ULs_a , LLs_d, ULs_d, WCs_bests_a, WCs_bests_
     table += r"\centering" + "\n"
     # caption
     if order_sens:
-        table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
+        # table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
         if dim == 'dim6':
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+            table += r"\topcaption{Summary of the 95\% \CL bounds and measurements on the dim-6 Wilson coefficients, when considering a single varying Wilson coefficient at a time. The Wilson coefficients are ordered by increasing confidence interval width. \label{tab:old_limit_summary_"+f"{dim}"+"}}" + "\n"
         else:
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
+            table += r"\topcaption{Summary of the 95\% \CL bounds and measurements on the dim-8 Wilson coefficients, when considering a single varying Wilson coefficient at a time. The Wilson coefficients are ordered by increasing confidence interval width. \label{tab:limit_summary_"+f"{dim}"+"}}" + "\n"
     else:
-        table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
+        # table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
         if dim == 'dim6':
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+            table += r"\caption{Summary of the 95\% \CL bounds and measurements on the dim-6 Wilson coefficients, when considering a single varying Wilson coefficient at a time. \label{tab:old_limit_summary_"+f"{dim}"+"_alt_order}}" + "\n"
         else:
-            table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
+            table += r"\caption{Summary of the 95\% \CL bounds and measurements on the dim-8 Wilson coefficients, when considering a single varying Wilson coefficient at a time. \label{tab:limit_summary_"+f"{dim}"+"_alt_order}}" + "\n"
     #table += r"\end{table}" + "\n"
     table += r"\begin{tabular}{r|c|c|c}" + "\n"
     table += r"\hline" + "\n"
     #table += r"Wilson coefficient & Impact on 95\% CL Limits \\ [\% Change in Interval Width] \\" + "\n"
     if dim == 'dim6':
         #table += r"\multicolumn{1}{p{2cm}|}{\raggedleft Wilson \\ coefficient} & \multicolumn{1}{p{3.5cm}|}{\centering Observed \\ 95\% CL Limits \\ $[$TeV$^{-2}]$} & \multicolumn{1}{p{3.5cm}|}{\centering Expected \\ 95\% CL Limits \\ $[$TeV$^{-2}]$} & \multicolumn{1}{p{2cm}|}{\centering Observed \\ Point Estimate \\ $[$TeV$^{-2}]$} & \multicolumn{1}{p{2cm}}{\centering Expected \\ Point Estimate \\ $[$TeV$^{-2}]$} \\" + "\n"
-        table += r"Wilson & \multicolumn{2}{p{7cm}|}{\centering 95\% CL Bounds $[$TeV$^{-2}]$} & \multicolumn{1}{p{4cm}}{\centering Measurement $[$TeV$^{-2}]$} \\" + "\n"
+        table += r"Wilson & \multicolumn{2}{p{7cm}|}{\centering 95\% CL Bounds $[\TeV^{-2}]$} & \multicolumn{1}{p{4cm}}{\centering Measurement $[\TeV^{-2}]$} \\" + "\n"
         table += r"coefficient & \multicolumn{1}{p{3.5cm}|}{\centering Observed} & Expected & Observed\\" + "\n"
         wc_suff = r'/\Lambda^{2}$'
     else:
         #table += r"\multicolumn{1}{p{2cm}|}{\raggedleft Wilson \\ coefficient} & \multicolumn{1}{p{3.5cm}|}{\centering Observed \\ 95\% CL Limits \\ $[$TeV$^{-4}]$} & \multicolumn{1}{p{3.5cm}|}{\centering Expected \\ 95\% CL Limits \\ $[$TeV$^{-4}]$} & \multicolumn{1}{p{2cm}|}{\centering Observed \\ Point Estimate \\ $[$TeV$^{-4}]$} & \multicolumn{1}{p{2cm}}{\centering Expected \\ Point Estimate \\ $[$TeV$^{-4}]$} \\" + "\n"
-        table += r"Wilson & \multicolumn{2}{p{7cm}|}{\centering 95\% CL Bounds $[$TeV$^{-4}]$} & \multicolumn{1}{p{4cm}}{\centering Measurement $[$TeV$^{-4}]$} \\" + "\n"
+        table += r"Wilson & \multicolumn{2}{p{7cm}|}{\centering 95\% CL Bounds $[\TeV^{-4}]$} & \multicolumn{1}{p{4cm}}{\centering Measurement $[\TeV^{-4}]$} \\" + "\n"
         table += r"coefficient & \multicolumn{1}{p{3.5cm}|}{\centering Observed} & Expected & Observed\\" + "\n"
         wc_suff = r'/\Lambda^{4}$'
     table += r"\hline" + "\n"
@@ -340,19 +340,6 @@ def make_summary_table(WCs, LLs_a, ULs_a , LLs_d, ULs_d, WCs_bests_a, WCs_bests_
 
     table += r"\hline" + "\n"
     table += r"\end{tabular}" + "\n"
-
-    # if order_sens:
-    #     if dim == 'dim6':
-    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
-    #     else:
-    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing bounds interval width.}" + "\n"
-    #     table += r"\label{tab:limit_summary_"+f"{dim}"+"}" + "\n"
-    # else:
-    #     if dim == 'dim6':
-    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-6 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
-    #     else:
-    #         table += r"\caption{A summary of the 95\% CL bounds and measurements on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time.}" + "\n"
-    #     table += r"\label{tab:limit_summary_"+f"{dim}"+"_alt_order}" + "\n"
     table += r"\end{table}" + "\n"
 
     print(table)
@@ -416,10 +403,14 @@ if __name__=='__main__':
     # make tables, with systematics
     for dim in dims_list:
     #for dim in ['dim6', 'dim8']:
-        if order_sens:
-            tex_file = plotdir+f'limit_summary_{dim}.tex'
+        if dim == 'dim6':
+            pre = 'old_'
         else:
-            tex_file = plotdir+f'limit_summary_{dim}_alt_order.tex'
+            pre = ''
+        if order_sens:
+            tex_file = plotdir+f'{pre}limit_summary_{dim}.tex'
+        else:
+            tex_file = plotdir+f'{pre}limit_summary_{dim}_alt_order.tex'
         make_summary_table(results_dict[dim]['WCs_sorted'],
                            results_dict[dim]['s_LLs_a'], results_dict[dim]['s_ULs_a'],
                            results_dict[dim]['s_LLs_d'], results_dict[dim]['s_ULs_d'],
