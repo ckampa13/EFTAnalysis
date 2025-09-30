@@ -63,12 +63,15 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     #ax_leg.axis('off')
     #fig, ax = plt.subplots(figsize=(18, 18))
     if not SignalInject:
-        fig, ax = plt.subplots(figsize=(12, 12))
+        if WC == 'sm':
+            fig, ax = plt.subplots(figsize=(12, 15))
+        else:
+            fig, ax = plt.subplots(figsize=(12, 12))
     else:
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
     fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
     if WC == 'sm':
         WC_l = 'SM'
     else:
@@ -149,6 +152,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     ch_ = info_dict['ylabel']
                     #ch_ = rdict_full['bin_info']['channel']
                     ch_l = SR_pretty_print_dict[ch_]
+                    ch_l = '\n'+ch_l
                     color = colors_dict[ch_]
                 label_NLL = ch_l + '\n'
                 # label_NLL += f'[{LLs[0]:0.3f}, {ULs[0]:0.3f}]\n'
@@ -213,7 +217,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #NLL_cut = NLL_cuts[0]
         #label = WC_l+f'@{CL*100:0.1f}\% CL'
         #label = r'$\Delta$NLL Threshold' + f'\n{int(CL*100):d}\% CL'
-        label = r'$\Delta$NLL Threshold' + f'\n{int(CL_list[0]*100):d}\% CL'
+        label = r'$\Delta$NLL threshold' + f'\n{int(CL_list[0]*100):d}' + r'$\%$ CL'
         ax.plot([xmin, xmax], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls, linewidth=2, label=label, zorder=100)
     # axis labels
     if WC in dim6_ops:
@@ -276,7 +280,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         else:
             #fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
             #fig.legend(loc='outside lower left', ncol=4, fontsize=18.0)
-            fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
+            fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
+                       handlelength=1.5, columnspacing=1.0)
         # separate axis
         #handles, labels = ax.get_legend_handles_labels()
         #ncol_ = ncol
@@ -284,6 +289,12 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #ax_leg.legend(handles, labels, loc='upper left', clip_on=True)#, ncol=ncol_)
     # save?
     if not savefile is None:
+        fig.savefig(savefile+'.pdf')
+        fig.savefig(savefile+'.png')
+    if WC == 'sm' and OverlayData:
+        # FOR PAPER
+        savefile = '/'.join(savefile.split('/')[:-1]) + '/'
+        savefile += 'fig_full_analysis_and_channels_NLL_vs_sm'
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
     return fig, ax
@@ -365,9 +376,11 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         ylabel = f'Full analysis\nSignal Injected\n{WC}={InjectValue:0.2f}'
     else:
         if Asimov:
-            ylabel = 'Full analysis\nAsimov Dataset'
+            #ylabel = 'Full analysis\nAsimov Dataset'
+            ylabel = 'Full analysis\nAsimov'
         else:
-            ylabel = 'Full analysis\nData'
+            #ylabel = 'Full analysis\nData'
+            ylabel = 'Full analysis\ndata'
     root_file_dict_full[N+1] = {'root_file_dict': root_file_dict, 'ylabel': ylabel,
                                    'variable_of_choice': ''}
     # add data for overlay?
@@ -386,7 +399,8 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         root_file_syst = os.path.join(bin_info['output_dir'], file_syst)
         root_file_stat = os.path.join(bin_info['output_dir'], file_stat)
         root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': bin_info}
-        ylabel = 'Full analysis\nData'
+        #ylabel = 'Full analysis\nData'
+        ylabel = 'Full analysis\ndata'
         root_file_dict_full[N+2] = {'root_file_dict': root_file_dict, 'ylabel': ylabel,
                                        'variable_of_choice': 'OVERLAY'}
 

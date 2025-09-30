@@ -119,7 +119,8 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # use limits?
     if limit_rank:
         WC_l = WC_pretty_print_dict[WC]
-        ylabel = rf'{WC_l}'+' Limit\n95\% CL'
+        ylabel = rf'{WC_l}'+' Bounds\n(95'+r'$\%$ CL)'
+        #ylabel = 'Bounds\n95'+r'$\%$ CL'
         ysymm = True
         # channel rank?
         if channel_rank:
@@ -130,7 +131,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
             sort_cols = [f'{WC}_95CL_{fit}']
             asc_list = [False]
         ycol_cW = f'all_comb_yield_{fit}'
-        lab_cW = f'VVV Yield\n(Total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
+        lab_cW = f'VVV yield\n(total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
     # use median significance
     # note here channel ranking will still rely on combine output
     else:
@@ -148,7 +149,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
             ycol_cW = f'yield_sm_{use_fit}'
             lab_cW = f'{WC}=0.0 (SM)'
         else:
-            ylabel = f'Median Significance\n{WC} Exclusion Point\n95\% CL'
+            ylabel = f'Median Significance\n{WC} Exclusion Point\n95'+r'$\%$ CL'
             ycol = f'med_sig_{WC}_{use_fit}'
             ysymm = False
             # channel rank?
@@ -159,7 +160,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
                 sort_cols = [f'med_sig_{WC}_{use_fit}']
                 asc_list = [True]
             ycol_cW = f'all_comb_yield_{fit}'
-            lab_cW = f'Yield @ {WC}={limit_95CL:0.3f} (95\% CL UL)\n'+r'$-$SM VVV'
+            lab_cW = f'Yield @ {WC}={limit_95CL:0.3f} (95'+r'$\%$ CL UL)'+'\n'+r'$-$SM VVV'
     df_yields.sort_values(by=sort_cols, ascending=asc_list, inplace=True)
     # don't include dummy bins (b = 0, s = 0) -- appear in early versions of tau channels
     df_yields = df_yields.query(f'total_bkg_{use_fit} > 1e-3').copy()
@@ -167,18 +168,19 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     df_yields.reset_index(drop=True, inplace=True)
 
     # plot
-    #fig = plt.figure(figsize=(18, 16))
-    fig = plt.figure(figsize=(18, 16), layout='constrained')
+    fig = plt.figure(figsize=(18, 16))
+    #fig = plt.figure(figsize=(18, 16), layout='constrained')
     axs = []
-    axs.append(fig.add_axes((0.1, 0.44, 0.6, 0.45)))
-    axs.append(fig.add_axes((0.1, 0.20, 0.6, 0.22))) #, sharex=ax1)
+    dy = 0.06
+    axs.append(fig.add_axes((0.1, 0.44+dy, 0.6, 0.45)))
+    axs.append(fig.add_axes((0.1, 0.20+dy, 0.6, 0.22))) #, sharex=ax1)
     CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
     ticks_in(axs[0])
     ticks_in(axs[1])
     # for the combined limit bin
     # try inset axis
     #axin = axs[1].inset_axes([1.1, 0.0, 0.1, 1.0])
-    axin = axs[1].inset_axes([1.1, 0.3, 0.1, 1.0])
+    axin = axs[1].inset_axes([1.125, 0.3, 0.1, 1.0])
     axs.append(axin)
     df_yields.loc[:, 'channel_subchannel'] = df_yields.loc[:, 'channel'] + df_yields.loc[:, 'subchannel']
     if channel_rank:
@@ -217,7 +219,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         xticklabels_bot = np.concatenate([xticklabels, ['Combined Limit']])
     # plot background
     # background with sm
-    axs[0].hist(inds, bins=bin_edges, weights=df_yields[f'total_bkg_plu_SM_{use_fit}'], histtype='bar', color='khaki', alpha=0.7, label=f'Total Background\n({use_fit.capitalize()})', zorder=10)
+    axs[0].hist(inds, bins=bin_edges, weights=df_yields[f'total_bkg_plu_SM_{use_fit}'], histtype='bar', color='khaki', alpha=0.7, label=f'Total background\n({use_fit.lower()})', zorder=10)
     #axs[0].errorbar(inds, df_yields[f'total_bkg_plu_SM_{fit}'], yerr=df_yields[[f'total_bkg_err_{use_fit}', f'total_bkg_err_{use_fit}']].values.T,
     #                marker='', ls='none', color='black', elinewidth=3,
     #                label='Systematics', zorder=12)
@@ -245,10 +247,12 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         #     ec_c = 'red'
         #     c_c = ec_c
         if c == exp_c:
-            c_c = 'blue'
+            #c_c = 'blue'
+            c_c = 'cyan'
             fill_c = False
         else:
-            c_c = 'red'
+            #c_c = 'red'
+            c_c = 'magenta'
             fill_c = fill
         if limit_rank:
             yheight = (df_yields[f'{WC}_95CL_UL_{fit_}'] - df_yields[f'{WC}_95CL_LL_{fit_}']).values
@@ -279,6 +283,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # right side for combined limit
     axs[2].yaxis.tick_right()
     # limits
+    axs[0].set_ylim([1e-2, 5e4])
     # symm y
     ym = df_yields[[f'{WC}_95CL_LL_{fit}', f'{WC}_95CL_UL_{fit}']].abs().max().max()
     yr = df_yields[f'{WC}_95CL_UL_{fit}'].max()-df_yields[f'{WC}_95CL_LL_{fit}'].min()
@@ -293,10 +298,10 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     axs[0].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     axs[1].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     # labels
-    axs[1].set_xlabel('Analysis Channel SR', loc='right')
+    axs[1].set_xlabel('Analysis Channel', loc='right')
     axs[0].set_ylabel('Events', loc='top')
     WC_l = WC_pretty_print_dict[WC]
-    axs[0].set_title('VVV Yield Summary for '+rf'{WC_l}'+'\n\n')
+    #axs[0].set_title('VVV Yield Summary for '+rf'{WC_l}'+'\n\n')
     axs[2].set_title('Combined Limit')
     axs[1].set_ylabel(ylabel, labelpad=-5.0, loc='top')
     # set tick labels by bin labels
@@ -318,13 +323,35 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         tick.set_horizontalalignment("center")
         tick.set_verticalalignment("top")
     # inset box
-    patches, connectors = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], -3*max_l, 1, 6*max_l), inset_ax=axs[2], edgecolor='black', zorder=11)
+    #patches, connectors = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], -3*max_l, 1, 6*max_l), inset_ax=axs[2], edgecolor='black', zorder=11)
+    inset = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], -3*max_l, 1, 6*max_l), inset_ax=axs[2], edgecolor='black', zorder=11)
+    #patches = inset.rectangle
+    connectors = inset.connectors
     connectors[0].set(visible=True)
     connectors[1].set(visible=True)
     connectors[2].set(visible=False)
     connectors[3].set(visible=False)
     # legends
-    axs[0].legend(loc='upper left', bbox_to_anchor=(1.0, 1.0))
+    #axs[0].legend(loc='upper left', bbox_to_anchor=(1.0, 1.0))
+    # put data on top
+    # First grab the current legend handles/labels
+    handles, labels = axs[0].get_legend_handles_labels()
+
+    # Reorder them so "Data" is first
+    # Example: put "Data" on top, then the rest in the order you want
+    order = []
+    if "Data" in labels:
+        i_data = labels.index("Data")
+        order.append(i_data)
+
+    # Add the other indices, skipping "Data" since it's already added
+    order.extend([i for i in range(len(labels)) if i != i_data])
+
+    # Now apply reordered legend
+    axs[0].legend([handles[i] for i in order],
+              [labels[i] for i in order],
+              frameon=True, loc='upper left', bbox_to_anchor=(1.0, 1.0))
+
     axs[1].legend(loc='upper left', bbox_to_anchor=(1.0, 0.25))
     # log?
     if logy:
@@ -370,7 +397,7 @@ if __name__=='__main__':
             #for logy, log_str in zip([False, True], ['', '_logy']):
             for logy, log_str in zip([True], ['_logy']):
                 print(f'channel_rank={channel_rank} & logy={logy}', end='\n')
-                savefile = plot_dir+f'yield_{WC}{ch_str}{log_str}'
+                savefile = plot_dir+f'fig_yield_{WC}{ch_str}{log_str}'
                 # DEBUG
                 #print(f'datacard_dict = {datacard_dict}, type={type(datacard_dict)}')
                 _ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=logy, channel_rank=channel_rank, limit_rank=True, sm_significance=False, savefile=savefile, NTOYS=NTOYS, Unblind=Unblind)

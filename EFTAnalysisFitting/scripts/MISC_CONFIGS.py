@@ -79,45 +79,88 @@ WC_pretty_print_dict = {
     'FT9': r'$f_{T,9}$',
 }
 
+# WC_pretty_print_dict_AN = {
+#     # dim6
+#     #'cW': r'$c_W$',
+#     'cW': r'$c_\mathrm{W}$',
+#     'cHq3': r'$c_{Hq3}$',
+#     'cHq1': r'$c_{Hq1}$',
+#     'cHu': r'$c_{Hu}$',
+#     'cHd': r'$c_{Hd}$',
+#     'cHW': r'$c_{HW}$',
+#     'cHB': r'$c_{HB}$',
+#     'cHWB': r'$c_{HWB}$',
+#     'cHl3': r'$c_{Hl3}$',
+#     'cll1': r'$c_{ll1}$',
+#     'cHbox': r'$c_{H\square}$',
+#     'cHDD': r'$c_{HDD}$',
+#     # dim6 (old)
+#     'cT0': r'$f_{T0}$',
+#     'cM0': r'$f_{M0}$',
+#     # dim8
+#     'FS0': r'$f_{S,0}$',
+#     'FS1': r'$f_{S,1}$',
+#     'FS2': r'$f_{S,2}$',
+#     'FM0': r'$f_{M,0}$',
+#     'FM1': r'$f_{M,1}$',
+#     'FM2': r'$f_{M,2}$',
+#     'FM3': r'$f_{M,3}$',
+#     'FM4': r'$f_{M,4}$',
+#     'FM5': r'$f_{M,5}$',
+#     'FM6': r'$f_{M,6}$', # not in final analysis
+#     'FM7': r'$f_{M,7}$',
+#     'FT0': r'$f_{T,0}$',
+#     'FT1': r'$f_{T,1}$',
+#     'FT2': r'$f_{T,2}$',
+#     'FT3': r'$f_{T,3}$',
+#     'FT4': r'$f_{T,4}$',
+#     'FT5': r'$f_{T,5}$',
+#     'FT6': r'$f_{T,6}$',
+#     'FT7': r'$f_{T,7}$',
+#     'FT8': r'$f_{T,8}$',
+#     'FT9': r'$f_{T,9}$',
+# }
+
+# mathrm for subscripts
 WC_pretty_print_dict_AN = {
     # dim6
-    'cW': r'$c_W$',
-    'cHq3': r'$c_{Hq3}$',
-    'cHq1': r'$c_{Hq1}$',
-    'cHu': r'$c_{Hu}$',
-    'cHd': r'$c_{Hd}$',
-    'cHW': r'$c_{HW}$',
-    'cHB': r'$c_{HB}$',
-    'cHWB': r'$c_{HWB}$',
-    'cHl3': r'$c_{Hl3}$',
-    'cll1': r'$c_{ll1}$',
-    'cHbox': r'$c_{H\square}$',
-    'cHDD': r'$c_{HDD}$',
+    'cW': r'$c_\mathrm{W}$',
+    'cHq3': r'$c_{\mathrm{Hq}3}$',
+    'cHq1': r'$c_{\mathrm{Hq}1}$',
+    'cHu': r'$c_{\mathrm{Hu}}$',
+    'cHd': r'$c_{\mathrm{Hd}}$',
+    'cHW': r'$c_{\mathrm{HW}}$',
+    'cHB': r'$c_{\mathrm{HB}}$',
+    'cHWB': r'$c_{\mathrm{HWB}}$',
+    'cHl3': r'$c_{\mathrm{H}\ell 3}$',
+    'cll1': r'$c_{\ell \ell 1}$',
+    'cHbox': r'$c_{\mathrm{H}\square}$',
+    'cHDD': r'$c_{\mathrm{HDD}}$',
     # dim6 (old)
-    'cT0': r'$f_{T0}$',
-    'cM0': r'$f_{M0}$',
+    'cT0': r'$f_{\mathrm{T},0}$',
+    'cM0': r'$f_{\mathrm{M},0}$',
     # dim8
-    'FS0': r'$f_{S,0}$',
-    'FS1': r'$f_{S,1}$',
-    'FS2': r'$f_{S,2}$',
-    'FM0': r'$f_{M,0}$',
-    'FM1': r'$f_{M,1}$',
-    'FM2': r'$f_{M,2}$',
-    'FM3': r'$f_{M,3}$',
-    'FM4': r'$f_{M,4}$',
-    'FM5': r'$f_{M,5}$',
-    'FM6': r'$f_{M,6}$', # not in final analysis
-    'FM7': r'$f_{M,7}$',
-    'FT0': r'$f_{T,0}$',
-    'FT1': r'$f_{T,1}$',
-    'FT2': r'$f_{T,2}$',
-    'FT3': r'$f_{T,3}$',
-    'FT4': r'$f_{T,4}$',
-    'FT5': r'$f_{T,5}$',
-    'FT6': r'$f_{T,6}$',
-    'FT7': r'$f_{T,7}$',
-    'FT8': r'$f_{T,8}$',
-    'FT9': r'$f_{T,9}$',
+    'FS0': r'$f_{\mathrm{S},0}$',
+    'FS1': r'$f_{\mathrm{S},1}$',
+    'FS2': r'$f_{\mathrm{S},2}$',
+    'FM0': r'$f_{\mathrm{M},0}$',
+    'FM1': r'$f_{\mathrm{M},1}$',
+    'FM2': r'$f_{\mathrm{M},2}$',
+    'FM3': r'$f_{\mathrm{M},3}$',
+    'FM4': r'$f_{\mathrm{M},4}$',
+    'FM5': r'$f_{\mathrm{M},5}$',
+    'FM6': r'$f_{\mathrm{M},6}$', # not in final analysis
+    'FM7': r'$f_{\mathrm{M},7}$',
+    'FT0': r'$f_{\mathrm{T},0}$',
+    'FT1': r'$f_{\mathrm{T},1}$',
+    'FT2': r'$f_{\mathrm{T},2}$',
+    'FT3': r'$f_{\mathrm{T},3}$',
+    'FT4': r'$f_{\mathrm{T},4}$',
+    'FT5': r'$f_{\mathrm{T},5}$',
+    'FT6': r'$f_{\mathrm{T},6}$',
+    'FT7': r'$f_{\mathrm{T},7}$',
+    'FT8': r'$f_{\mathrm{T},8}$',
+    'FT9': r'$f_{\mathrm{T},9}$',
 }
 
 # aliases defined for paper
@@ -162,25 +205,47 @@ WC_pretty_print_dict_paper = {
     'FT9': r'\fT{9}',
 }
 
+# SR_pretty_print_dict_AN = {
+#     # subchannel file names
+#     '0L_2FJ': r'SR-0l-2fj',
+#     '0L_3FJ': r'SR-0l-3fj',
+#     '1L_2FJ': r'SR-\ensuremath{\ell}-2fj',
+#     '2L_OS_OF': r'SR-2l-OSOF-1fj',
+#     '2L_OS_SFZ': r'SR-2l-OSonZ-1fj',
+#     '2L_OS_SFnoZ': r'SR-2l-OSoffZ-1fj',
+#     '2L_OS_2FJ': r'SR-2l-OS-2fj',
+#     '2L_SS_1FJ': r'SR-2l-SS-1fj',
+#     # tau channels to be confirmed
+#     '0L_2FJ_1T': r'SR-1T-0l-2fj',
+#     '1L_1FJ_1T': r'SR-1T-1l-1fj',
+#     '2L_0FJ_1T': r'SR-1T-2l-0fj',
+#     # additional, e.g. combining 2L_OS
+#     # to be confirmed
+#     '2L_OS': r'SR-2l-OS-1fj',
+#     # copy of 2L_SS
+#     '2L_SS': r'SR-2l-SS-1fj',
+# }
+
+# fj -> VTJ; update to \ell
 SR_pretty_print_dict_AN = {
     # subchannel file names
-    '0L_2FJ': r'SR-0l-2fj',
-    '0L_3FJ': r'SR-0l-3fj',
-    '1L_2FJ': r'SR-\ensuremath{\ell}-2fj',
-    '2L_OS_OF': r'SR-2l-OSOF-1fj',
-    '2L_OS_SFZ': r'SR-2l-OSonZ-1fj',
-    '2L_OS_SFnoZ': r'SR-2l-OSoffZ-1fj',
-    '2L_OS_2FJ': r'SR-2l-OS-2fj',
-    '2L_SS_1FJ': r'SR-2l-SS-1fj',
+    '0L_2FJ': r'SR-0\ensuremath{\ell}-2VTJ',
+    '0L_3FJ': r'SR-0\ensuremath{\ell}-3VTJ',
+    '1L_2FJ': r'SR-\ensuremath{\ell}-2VTJ',
+    '2L_OS_OF': r'SR-2\ensuremath{\ell}-OSDF-1VTJ',
+    '2L_OS_SFZ': r'SR-2\ensuremath{\ell}-OSonZ-1VTJ',
+    '2L_OS_SFnoZ': r'SR-2\ensuremath{\ell}-OSoffZ-1VTJ',
+    '2L_OS_2FJ': r'SR-2\ensuremath{\ell}-OS-2VTJ',
+    '2L_SS_1FJ': r'SR-2\ensuremath{\ell}-SS-1VTJ',
     # tau channels to be confirmed
-    '0L_2FJ_1T': r'SR-1T-0l-2fj',
-    '1L_1FJ_1T': r'SR-1T-1l-1fj',
-    '2L_0FJ_1T': r'SR-1T-2l-0fj',
+    '0L_2FJ_1T': r'SR-0\ensuremath{\ell}-1\ensuremath{\uptau_h}-2VTJ',
+    '1L_1FJ_1T': r'SR-1\ensuremath{\ell}-1\ensuremath{\uptau_h}-1VTJ',
+    '2L_0FJ_1T': r'SR-2\ensuremath{\ell}-1\ensuremath{\uptau_h}-0VTJ',
     # additional, e.g. combining 2L_OS
     # to be confirmed
-    '2L_OS': r'SR-2l-OS-1fj',
+    '2L_OS': r'SR-2\ensuremath{\ell}-OS-1VTJ',
     # copy of 2L_SS
-    '2L_SS': r'SR-2l-SS-1fj',
+    '2L_SS': r'SR-2\ensuremath{\ell}-SS-1VTJ',
 }
 
 # ranges and points to use for profiling

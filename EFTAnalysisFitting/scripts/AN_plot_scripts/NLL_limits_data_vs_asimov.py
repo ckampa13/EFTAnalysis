@@ -33,13 +33,10 @@ config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
 
 # FIXME! Is "ScanType" needed in this function?
-def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanType='_1D', plot_stat_only=True, savefile=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False, Asimov=True):
-    if Asimov:
-        c_stat = 'black'
-        c_syst = 'blue'
-    else:
-        c_stat = 'darkgreen'
-        c_syst = 'magenta'
+def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanType='_1D', plot_stat_only=True, savefile=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False):
+    #c_data = 'magenta'
+    c_data = 'red' # consistent with clipping plot but want to change threshold color
+    c_asi = 'blue'
     # plot
     #fig = plt.figure(figsize=(16, 8))
     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
@@ -50,26 +47,25 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
     else:
         WC_l = WC_pretty_print_dict[WC]
     # get limits and plot
-    # total
-    hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['total'], WC=WC, extrapolate=True)
+    # data
+    hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['data'], WC=WC, extrapolate=True)
     Cs, NLL, CL_list, NLL_cuts, _, _, LLs, ULs, C_best, NLL_best = hold
-    label = 'With systematics'
+    label = 'Data'
     if limits_legend:
         #label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])])# + '\n'
         CL = CL_list[0]
         label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])]) + f' ({CL*100:0.0f}' + r'$\%$ CL)'
-    ax.plot(Cs, 2.*NLL, c=c_syst, linestyle='-', linewidth=4, zorder=5, label=label)# label='Expected\nAsimov Dataset')
-    # stat only
-    if plot_stat_only:
-        hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
-        Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
-        #label='Statistical Uncertainties\nOnly'
-        label='Statistical\nuncertainties only'
-        if limits_legend:
-            #label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])])# + '\n'
-            CL = CL_list[0]
-            label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + f' ({CL*100:0.0f}' + r'$\%$ CL)'
-        ax.plot(Cs_stat, 2.*NLL_stat, c=c_stat, linestyle=':', linewidth=4, zorder=6, label=label)#label='Expected (stat. only)')
+    ax.plot(Cs, 2.*NLL, c=c_data, linestyle='-', linewidth=4, zorder=5, label=label)# label='Expected\nAsimov Dataset')
+    # asimov
+    hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['asi'], WC=WC, extrapolate=True)
+    Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
+    #label='Statistical Uncertainties\nOnly'
+    label='Asimov'
+    if limits_legend:
+        #label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])])# + '\n'
+        CL = CL_list[0]
+        label += '\n'+'\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs_stat[0], ULs_stat[0])]) + f' ({CL*100:0.0f}' + r'$\%$ CL)'
+    ax.plot(Cs_stat, 2.*NLL_stat, c=c_asi, linestyle='-', linewidth=4, zorder=4, label=label)#label='Expected (stat. only)')
     # loop through CLs to determine limits
     xmin = np.min(Cs)
     xmax = np.max(Cs)
@@ -79,37 +75,27 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         largest_lim = 1.25*np.max(np.abs(np.array(np.concatenate([np.concatenate(LLs), np.concatenate(ULs)]))))
     xlim = np.max(np.abs([xmin, xmax]))
     xlim2 = np.min(np.abs([xmin, xmax]))
-    if plot_stat_only:
-        for CL, NLL_cut, LL, UL, LL_s, UL_s, ls in zip(CL_list, NLL_cuts, LLs, ULs, LLs_stat, ULs_stat, ['--', '-.', ':',]):
-            # build label
-            #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
-            # multi interval
-            #label = WC_l+f'@{CL*100:0.1f}%:\n'
-            #label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n\n'
-            #label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL_s, UL_s)]) + '\n(stat. only)\n'
-            if CL > 0.9:
-                #label = r'$2\Delta$NLL threshold'+f'\n{CL*100:0.0f}'+r'$\%$ CL'
-                label = f'{CL*100:0.0f}'+r'$\%$ CL' + '\n threshold'
-            else:
-                # label = r'$2\Delta$NLL threshold'+f'\n{CL*100:0.1f}'+r'$\%$ CL'
-                label = f'{CL*100:0.1f}'+r'$\%$ CL' + '\n threshold'
-            # add to the plot
-            #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
-            #        linewidth=3,) #label=label)
-            ax.plot([-2.*largest_lim, 2.*largest_lim], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls,
-                   linewidth=3, label=label, zorder=100)
-    else:
-        for CL, NLL_cut, LL, UL, ls in zip(CL_list, NLL_cuts, LLs, ULs, ['--', '-.', ':',]):
-            # build label
-            #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]'
-            # multi interval
-            label = WC_l+f'@{CL*100:0.1f}%:\n'
-            label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n'
-            # add to the plot
-            #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
-            #        linewidth=3,) #label=label)
-            ax.plot([-2.*largest_lim, 2.*largest_lim], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls,
-                   linewidth=3, zorder=100) #label=label)
+
+    for CL, NLL_cut, LL, UL, LL_s, UL_s, ls in zip(CL_list, NLL_cuts, LLs, ULs, LLs_stat, ULs_stat, ['--', '-.', ':',]):
+        # build label
+        #label = WC_l+f'@{CL*100:0.1f}\%:\n[{LL:0.3f}, {UL:0.3f}]\n[{LL_s:0.3f}, {UL_s:0.3f}] (stat. only)'
+        # multi interval
+        #label = WC_l+f'@{CL*100:0.1f}%:\n'
+        #label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL, UL)]) + '\n\n'
+        #label += '\n'.join([f'[{LL_:0.3f}, {UL_:0.3f}]' for LL_, UL_ in zip(LL_s, UL_s)]) + '\n(stat. only)\n'
+        if CL > 0.9:
+            #label = r'$2\Delta$NLL threshold'+f'\n{CL*100:0.0f}'+r'$\%$ CL'
+            label = f'{CL*100:0.0f}'+r'$\%$ CL' + '\n threshold'
+        else:
+            # label = r'$2\Delta$NLL threshold'+f'\n{CL*100:0.1f}'+r'$\%$ CL'
+            label = f'{CL*100:0.1f}'+r'$\%$ CL' + '\n threshold'
+        # add to the plot
+        #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
+        #        linewidth=3,) #label=label)
+        # lc = 'red' # original
+        lc = 'gray'
+        ax.plot([-2.*largest_lim, 2.*largest_lim], [2.*NLL_cut, 2.*NLL_cut], color=lc, linestyle=ls,
+               linewidth=3, label=label, zorder=100)
     if WC == 'sm':
         suff = r' ($\mu_{\mathrm{SM}}$)'
     else:
@@ -164,6 +150,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         fig.savefig(savefile+'.png')
     return fig, ax
 
+'''
 def run_lim_plot_bin(WC, channel, subchannel, bin_, datacard_dict, CL_list, ScanType, plot_stat_only, legend, tight_layout, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, Asimov=True, Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
@@ -367,8 +354,9 @@ def run_lim_plot_channel(WC, channel, datacard_dict, CL_list, ScantType, plot_st
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
                               legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
     return fig, ax
+'''
 
-def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, version=None, legend=True, tight_layout=False, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, channels=[''], Asimov=True, Unblind=False, save_vers=False):
+def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, version=None, legend=True, tight_layout=False, vsuff='', xlim_force=None, limits_legend=False, fastScan=False, psuff='', LinearOnly=False, channels=[''], Unblind=False, save_vers=False):
     if LinearOnly:
         LinO_str = '_LinearOnly'
     else:
@@ -407,32 +395,22 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only, 
         dcdir = os.path.join(dcdir, 'unblind')
     output_dir_full = os.path.join(dcdir, 'output', dir_)
     plot_dir = os.path.join(dcdir, 'AN_plots', dir_, scan_dir)
-    if Asimov:
-        asi_prestr = ''
-        asi_output = 'Asimov'
-    else:
-        asi_prestr = 'data_'
-        asi_output = 'Data'
     if WC == 'sm':
         asi_output += '_expect_signal_1'
     # construct root file name
-    file_syst = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='syst'+FS_suff, method='MultiDimFit')
-    file_stat = template_outfilename.substitute(asimov=asi_output, channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='nosyst'+FS_suff, method='MultiDimFit')
-    root_file_syst = os.path.join(output_dir_full, file_syst)
-    root_file_stat = os.path.join(output_dir_full, file_stat)
-    root_file_dict = {'total': root_file_syst, 'stat_only': root_file_stat, 'bin_info': None}
+    file_data = template_outfilename.substitute(asimov='Data', channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='syst'+FS_suff, method='MultiDimFit')
+    file_asi = template_outfilename.substitute(asimov='Asimov', channel='all', subchannel='_combined'+suff_sc, WC=WC, ScanType=ST,version=version, syst='syst'+FS_suff, method='MultiDimFit')
+    root_file_data = os.path.join(output_dir_full, file_data)
+    root_file_asi = os.path.join(output_dir_full, file_asi)
+    root_file_dict = {'data': root_file_data, 'asi': root_file_asi, 'bin_info': None}
     # plot
-    if plot_stat_only:
-        stat_str = '_w_stat_only'
-    else:
-        stat_str = ''
-    pfilename = f'{asi_prestr}NLL_vs_{WC}_channel-All{suff_ch_file}_binAll{stat_str}{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
+    pfilename = f'compare_data_asimov_NLL_vs_{WC}_channel-All{suff_ch_file}_binAll{ScanType}{vsuff}{FS_suff}{LinO_str}{psuff}'
     if save_vers:
         pfilename += '_' + version
     plotfile = os.path.join(plot_dir, pfilename)
     title = 'Limits on '+WC_l+f' {scan_title}\nChannel: All; Bin: All'
-    fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, plot_stat_only=plot_stat_only, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, Asimov=Asimov)
+    fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, ScanType=ScanType, savefile=plotfile,
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
     return fig, ax
 
 
@@ -452,9 +430,6 @@ if __name__=='__main__':
     legend = True
     # tight_layout=False
     tight_layout=True
-    # list of stat on / stat off
-    pstats = [True] # only make the plot that includes stat only
-    # pstats = [True, False] # both
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--Channel',
@@ -471,7 +446,6 @@ if __name__=='__main__':
                         help=f'What strategy was used to handle the other WCs? "_1D" (freeze, default), "_All" (profile)')
     parser.add_argument('-f', '--fastScan',
                         help='Do you want to run a "fast scan" where the nuisance parameters are fixed to best-fit values (instead of profiling)? "n" (default) / "y"')
-    parser.add_argument('-a', '--Asimov', help='Use Asimov? "y"(default)/"n".')
     parser.add_argument('-U', '--Unblind', help='Use datacards from unblinded private repo? "n"(default)/"y".')
     parser.add_argument('-v', '--VersionSuff',
                         help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
@@ -487,23 +461,23 @@ if __name__=='__main__':
                         help='Save version string in the filename? "n" (default), "y"')
     args = parser.parse_args()
     if (args.theLevels is None) or (args.theLevels == 'all'):
-        generate_bins = True
-        generate_subch = True
-        generate_ch = True
+        #generate_bins = True
+        #generate_subch = True
+        #generate_ch = True
         generate_full = True
     else:
-        if 'b' in args.theLevels:
-            generate_bins = True
-        else:
-            generate_bins = False
-        if 's' in args.theLevels:
-            generate_subch = True
-        else:
-            generate_subch = False
-        if 'c' in args.theLevels:
-            generate_ch = True
-        else:
-            generate_ch = False
+        # if 'b' in args.theLevels:
+        #     generate_bins = True
+        # else:
+        #     generate_bins = False
+        # if 's' in args.theLevels:
+        #     generate_subch = True
+        # else:
+        #     generate_subch = False
+        # if 'c' in args.theLevels:
+        #     generate_ch = True
+        # else:
+        #     generate_ch = False
         if 'f' in args.theLevels:
             generate_full = True
         else:
@@ -554,12 +528,6 @@ if __name__=='__main__':
     #print(chs)
     # limited
     #chs = ['2Lepton_SS']
-    if args.Asimov is None:
-        args.Asimov = 'y'
-    if args.Asimov == 'y':
-        Asimov = True
-    else:
-        Asimov = False
     if args.Unblind is None:
         args.Unblind = 'n'
     if args.Unblind == 'y':
@@ -596,13 +564,9 @@ if __name__=='__main__':
     for WC in WCs:
     # for WC in ['cW']: # testing
         print(f'WC: '+WC)
-        if WC == 'sm':
-            pstats_ = [False]
-        else:
-            pstats_ = pstats
+        '''
         if generate_bins:
             # loop through all bins and plot
-            #'''
             print("=========================================================")
             print("Making likelihood plots for each bin...")
             for pstat in pstats_:
@@ -642,7 +606,6 @@ if __name__=='__main__':
                             fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool,
                             Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
-        #'''
         if generate_ch:
             # loop through all channels and plot
             print("=========================================================")
@@ -661,18 +624,15 @@ if __name__=='__main__':
                         fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool,
                         Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
-        #'''
+        '''
         if generate_full:
             #####
             print("=========================================================")
             print("Making likelihood plots for full analysis...")
-            for pstat in pstats_:
-                print(f'Include stat-only? {pstat}')
-                fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, plot_stat_only=pstat, legend=legend, tight_layout=tight_layout,
-                                                vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
-                                                fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool, channels=chs,
-                                                Asimov=Asimov, Unblind=Unblind, save_vers=SaveVers_bool)
+            fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, ScanType, legend=legend, tight_layout=tight_layout,
+                                            vsuff=vsuff, xlim_force=xlim_force, limits_legend=limits_legend,
+                                            fastScan=fastScan, psuff=psuff, LinearOnly=LinearOnly_bool, channels=chs,
+                                            Unblind=Unblind, save_vers=SaveVers_bool)
             print("=========================================================\n")
-            #'''
     # plt.show()
 
