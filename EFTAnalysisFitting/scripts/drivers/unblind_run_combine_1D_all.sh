@@ -155,6 +155,7 @@ while read channel version; do
         fi
         echo "python3 1D_scan/run_combine_1D.py -c $channel -w ${WC} -t ${T} -s _1D -p 0.01 -pc 0.05 -U y -a ${AS} -T y -J n -UP $UP -PRP $PRPcurr -PRPS $PRPS -PNP $PNP ${V} > ${LOGDIR}run_combine_1D_${A}_${CHF}_${T}_${WC}_${VF}.txt 2>&1 &"
         python3 1D_scan/run_combine_1D.py -c $channel -w ${WC} -t ${T} -s _1D -p 0.01 -pc 0.05 -U y -a ${AS} -T y -J n -UP $UP -PRP $PRPcurr -PRPS $PRPS -PNP $PNP ${V} > ${LOGDIR}run_combine_1D_${A}_${CHF}_${T}_${WC}_${VF}.txt 2>&1 &
+
         # python3 1D_scan/run_combine_1D.py -c $channel -w ${WC} -t ${T} -s _1D -p 0.01 -pc 0.05 -U y -a ${AS} -T y ${V} > ${LOGDIR}run_combine_1D_${A}_${CHF}_${T}_${WC}_${VF}.txt 2>&1 &
 
         # python3 1D_scan/run_combine_1D.py -w FT0 -t f -s _1D -U y -a n -T y -J n -UP y -PRP 4 -PRPS n -PNP y
