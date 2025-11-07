@@ -71,7 +71,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
     fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
+    #CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
     if WC == 'sm':
         WC_l = 'SM'
     else:

@@ -39,7 +39,8 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
         c_syst = 'blue'
     else:
         c_stat = 'darkgreen'
-        c_syst = 'magenta'
+        #c_syst = 'magenta'
+        c_syst = 'red'
     # plot
     #fig = plt.figure(figsize=(16, 8))
     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
@@ -96,7 +97,9 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], ScanTy
             # add to the plot
             #ax.plot([xmin, xmax], [NLL_cut, NLL_cut], 'r', linestyle=ls,
             #        linewidth=3,) #label=label)
-            ax.plot([-2.*largest_lim, 2.*largest_lim], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls,
+            # lc = 'red'
+            lc = 'gray'
+            ax.plot([-2.*largest_lim, 2.*largest_lim], [2.*NLL_cut, 2.*NLL_cut], color=lc, linestyle=ls,
                    linewidth=3, label=label, zorder=100)
     else:
         for CL, NLL_cut, LL, UL, ls in zip(CL_list, NLL_cuts, LLs, ULs, ['--', '-.', ':',]):

@@ -118,8 +118,15 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # sort!
     # use limits?
     if limit_rank:
+        if WC in dim6_ops:
+            L = r'$/\Lambda^2$'
+            u = r'TeV$^{-2}$'
+        else:
+            L = r'$/\Lambda^4$'
+            u = r'TeV$^{-4}$'
         WC_l = WC_pretty_print_dict[WC]
-        ylabel = rf'{WC_l}'+' Bounds\n(95'+r'$\%$ CL)'
+        #ylabel = rf'{WC_l}'+' Bounds\n(95'+r'$\%$ CL)'
+        ylabel = rf'{WC_l}{L} [{u}]'+'\nBounds (95'+r'$\%$ CL)'
         #ylabel = 'Bounds\n95'+r'$\%$ CL'
         ysymm = True
         # channel rank?
@@ -131,7 +138,9 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
             sort_cols = [f'{WC}_95CL_{fit}']
             asc_list = [False]
         ycol_cW = f'all_comb_yield_{fit}'
-        lab_cW = f'VVV yield\n(total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
+        #lab_cW = f'VVV yield\n(total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
+        lab_cW = f'VVV yield\n(total - SM)\n'\
+        +rf'{WC_l}{L}'+rf'$={limit_95CL:0.3f}$ {u}'#+' (95\% CL UL)\n'+r'$-$SM VVV'
     # use median significance
     # note here channel ranking will still rely on combine output
     else:
@@ -174,7 +183,8 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     dy = 0.06
     axs.append(fig.add_axes((0.1, 0.44+dy, 0.6, 0.45)))
     axs.append(fig.add_axes((0.1, 0.20+dy, 0.6, 0.22))) #, sharex=ax1)
-    CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
+    #CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
+    CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False)
     ticks_in(axs[0])
     ticks_in(axs[1])
     # for the combined limit bin

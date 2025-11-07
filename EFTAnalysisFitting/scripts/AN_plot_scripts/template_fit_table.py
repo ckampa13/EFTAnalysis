@@ -23,8 +23,13 @@ def parse_template_fit_values(filename):
             template_fit_dict['bin_centers'] = bin_centers
         if 'mVVV_bin_edges' in line:
             bin_edges = line.rstrip().replace('mVVV_bin_edges = [','').replace(']','').split(', ')
+            for i in range(len(bin_edges)):
+                if float(bin_edges[i]) < 0.01:
+                    bin_edges[i] = '0'
             # clean edges to make sure they are ints
-            bin_edges = [str(int(float(b))) for b in bin_edges]
+            #bin_edges = [str(int(float(b))) for b in bin_edges]
+            # want floats in TeV
+            ##### BROKEN bin_edges = [float(b))) for b in bin_edges]
             template_fit_dict['bin_edges'] = bin_edges
         if "cW" in line or "cHq3" in line or "Asimov" in line or "Data" in line:
             dict_label = line.split(' ')[0].rstrip().replace(':', '')
@@ -59,7 +64,7 @@ def make_tex_table(template_fit_dict, fit_order, tex_file=None):
     table += r"\hline" + "\n"
     # header
     header_str = r"\mVVV bin& \multicolumn{" + str(N_exp) + r"}{c}{expected} & measured \\" + "\n"
-    header_str += r"$[$GeV$]$ & "
+    header_str += r"$[$TeV$]$ & "
     for i, fit_name in enumerate(fit_order[:-1]): # don't include Data
         if i == N_fits - 2:
             tail = r"& \\" + "\n"
@@ -67,10 +72,10 @@ def make_tex_table(template_fit_dict, fit_order, tex_file=None):
             tail = r"&"
         if 'cW' in fit_name:
             val = int(float(fit_name.split('_')[1].replace('m', '-').replace('p', '.')))
-            header_str += r" $\cW =" + str(val) + r"\TeV^{-2}$ "
+            header_str += r" $\cW / \Lambda^2 =" + str(val) + r"\TeV^{-2}$ "
         elif 'cHq3' in fit_name:
             val = int(float(fit_name.split('_')[1].replace('m', '-').replace('p', '.')))
-            header_str += r" $\cHqthree =" + str(val) + r"\TeV^{-2}$ "
+            header_str += r" $\cHqthree / \Lambda^2 =" + str(val) + r"\TeV^{-2}$ "
         else: # Asimov
             header_str += r" SM "
         header_str += tail
@@ -84,7 +89,8 @@ def make_tex_table(template_fit_dict, fit_order, tex_file=None):
         le = be[i]
         ue = be[i+1]
         if i == N_bins - 1:
-            ue = r"~~~$\infty$"
+            #ue = r"~~~$\infty$" # GeV
+            ue = r"~$\infty$" # TeV
         row_str += le + ' -- ' + ue + ' &'
         for j, fit_name in enumerate(fit_order): # include Data
             if j == N_fits - 1:
