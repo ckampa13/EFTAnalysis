@@ -150,7 +150,8 @@ def modify_sub_template(clip_ind, output_dict, name, CMSSW_NAME, tarfile_CMSSW, 
 
 
 if __name__=='__main__':
-    date = '07-13-25' # where to save the jobs
+    # date = '07-13-25' # where to save the jobs
+    date = '11-06-25' # where to save the jobs
     Unblind=True
     start_dir = os.getcwd()
     stdout = subprocess.PIPE
@@ -279,9 +280,11 @@ if __name__=='__main__':
             if syst_bool:
                 if dim == 'dim6':
                     # jf = 'espresso'
-                    jf = 'longlunch'
+                    # jf = 'longlunch' # 07-13-25 -- not enough time
+                    jf = 'tomorrow'
                 else:
-                    jf = 'longlunch'
+                    # jf = 'longlunch' # 07-13-25 -- not enough time
+                    jf = 'tomorrow'
             else:
                 jf = 'espresso'
             template_suff = '_%s_asi_%s_syst_%s' % (WC, asi, syst)

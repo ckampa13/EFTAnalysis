@@ -30,7 +30,8 @@ def copy_files_and_tar(wsfiles, clip_ind):
 
 
 if __name__=='__main__':
-    date = '07-13-25' # where to save the jobs
+    # date = '07-13-25' # where to save the jobs
+    date = '11-06-25' # where to save the jobs
     Unblind=True
     # NP_promote=False
     NP_promote=True

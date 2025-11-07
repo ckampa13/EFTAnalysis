@@ -3,7 +3,8 @@ THIS_DIR="$(pwd)/"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}"  )" &> /dev/null && pwd  )
 LOGDIR=$SCRIPT_DIR'/../../unblind/output/logs/grid/clipping/'
 
-DATE="07-13-25"
+# DATE="07-13-25"
+DATE="11-06-25"
 
 echo "LOGDIR=${LOGDIR}"
 echo "DATE=${DATE}"

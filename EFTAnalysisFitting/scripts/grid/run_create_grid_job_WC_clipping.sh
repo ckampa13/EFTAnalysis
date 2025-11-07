@@ -7,8 +7,8 @@ echo "LOGDIR=${LOGDIR}"
 
 WCs_dim6=("cW" "cHbox" "cHDD" "cHl3" "cHq1" "cHq3" "cHW" "cHWB" "cll1" "cHB" "cHu" "cHd")
 WCs_dim8=("FS0" "FS1" "FS2" "FM0" "FM1" "FM2" "FM3" "FM4" "FM5" "FM7" "FT0" "FT1" "FT2" "FT3" "FT4" "FT5" "FT6" "FT7" "FT8" "FT9")
-# WCs=("${WCs_dim6[@]}" "${WCs_dim8[@]}")
-WCs=("FM7") # fix in MISC_CONFIGS
+WCs=("${WCs_dim6[@]}" "${WCs_dim8[@]}")
+# WCs=("FM7") # fix in MISC_CONFIGS
 
 # YN=("y" "n")
 
@@ -48,9 +48,11 @@ echo "A=${A}, S=${S}"
 for WC in "${WCs[@]}"; do
     echo "WC=$WC"
     if [[ "${WCs_dim6[@]}" =~ "$WC" ]]; then
-        SP=200
+        # SP=200 # 07-13-25 -- some jobs took too long
+        SP=100 # 11-06-25
     else
-        SP=90
+        # SP=90 # 07-13-25 -- some jobs took too long
+        SP=50 # 11-06-25
     fi
     # for asi in "${YN[@]}"; do
     #     echo "asi=$asi"

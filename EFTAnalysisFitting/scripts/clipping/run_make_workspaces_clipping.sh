@@ -35,7 +35,12 @@ fi
 
 #for i in $(seq 0 12);
 #for i in $(seq 0 14); # adding a few points just below 1 TeV
+# full
 for i in $(seq 0 17); # adding a few points just below 1 TeV
+# first half
+# for i in $(seq 0 8); # adding a few points just below 1 TeV
+# second half
+# for i in $(seq 9 17); # adding a few points just below 1 TeV
 do
     echo Making workspaces for clip index $i...
     echo "python3 tools/make_workspaces.py -c $CH -d $DIM -t $L -v _clip_mVVV_$i -U y > ${LOGDIR}make_workspaces_${CHF}_${L}_${DIM}_clip_${i}.txt 2>&1 &"

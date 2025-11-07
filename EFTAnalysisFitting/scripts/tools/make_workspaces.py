@@ -348,6 +348,10 @@ if __name__=='__main__':
         dims = ['dim6']
     elif args.Dimension == 'dim8':
         dims = ['dim8']
+    # elif args.Dimension == 'dim8_1':
+    #     dims = ['dim8_1']
+    # elif args.Dimension == 'dim8_2':
+    #     dims = ['dim8_2']
     else:
         raise ValueError('The input args.Dimension="%s" is not implemented. Please select from: ["all", "dim6", "dim8"].' % args.Dimension)
     if (args.theLevels is None) or (args.theLevels == 'all'):
@@ -434,6 +438,8 @@ if __name__=='__main__':
         if not WC in dim6_ops:
             # dims.add('dim8')
             WCs_dim8.append(WC)
+    # N = 10
+    # WCs_dim_dict = {'dim6': WCs_dim6, 'dim8': WCs_dim8, 'dim8_1': WCs_dim8[:N], 'dim8_2': WCs_dim8[N:]}
     WCs_dim_dict = {'dim6': WCs_dim6, 'dim8': WCs_dim8}
     # if args.VersionSuff is None:
     #     vsuff = ''
@@ -448,8 +454,10 @@ if __name__=='__main__':
     # outer loop (over EFT dimension)
     # for dim, WCs in zip(dims, [WCs_dim6, WCs_dim8]):
     for dim in dims:
+        # dim_f = dim.split('_')[0]
+        dim_f = dim
         WCs = WCs_dim_dict[dim]
-        print(dim)
+        print(dim, dim_f)
         if len(WCs) < 1:
             print('No WC in WC_ALL with dim %s! Skipping...' % dim)
             continue
@@ -462,7 +470,7 @@ if __name__=='__main__':
             for channel in channels:
                 # channels may not always have dim8
                 WCs_ch = versions_dict[channel]['EFT_ops']
-                if dim=='dim8':
+                if dim_f=='dim8':
                     has_dim8 = False
                     for WC in WCs_ch:
                         if not WC in dim6_ops:
@@ -482,7 +490,7 @@ if __name__=='__main__':
                 print(channel, VERSION)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
-                    make_workspace_bins(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
+                    make_workspace_bins(dim_f, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
             print('=================================================\n')
         #########################
         # subchannel workspaces
@@ -492,7 +500,7 @@ if __name__=='__main__':
             for channel in channels:
                 # channels may not always have dim8
                 WCs_ch = versions_dict[channel]['EFT_ops']
-                if dim=='dim8':
+                if dim_f=='dim8':
                     has_dim8 = False
                     for WC in WCs_ch:
                         if not WC in dim6_ops:
@@ -511,7 +519,7 @@ if __name__=='__main__':
                 VERSION = 'v'+str(v)
                 for StatOnly in [False, True]:
                     print('Stat only? ', StatOnly)
-                    make_workspace_subchannels(dim, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
+                    make_workspace_subchannels(dim_f, channel, VERSION, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
             print('=================================================\n')
         #########################
         # channel workspaces
@@ -520,7 +528,7 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_channels(dim, channels, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
+                make_workspace_channels(dim_f, channels, datacard_dict, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
             print('=================================================\n')
         #########################
         # full analysis workspace
@@ -529,6 +537,6 @@ if __name__=='__main__':
             print('=================================================')
             for StatOnly in [False, True]:
                 print('Stat only? ', StatOnly)
-                make_workspace_full_analysis(dim, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
+                make_workspace_full_analysis(dim_f, WCs=WCs, ScanType=args.ScanType, verbose=args.Verbose, StatOnly=StatOnly, SignalInject=SignalInject, WC=WC_SI, vsuff=vsuff, LinearOnly=LinearOnly_bool, Unblind=Unblind)
             print('=================================================\n')
         #########################
