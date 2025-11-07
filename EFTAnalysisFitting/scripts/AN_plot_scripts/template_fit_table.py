@@ -7,10 +7,17 @@ def template_vals_list_to_tex(vals):
     for v in vals:
         nums = v.split('=')[1]
         c = nums.split('+')[0]
+        # remove spurious - for 0
+        if abs(float(c)) < 0.0001:
+            c = c.replace('-', '')
         unc = nums.split('+')[1]
         u = unc.split('-')[0]
         d = unc.split('-')[1]
-        str_list.append(rf'${c}^{{+{u}}}_{{-{d}}}$')
+        # whether to use pm or sub/superscripts
+        if u == d:
+            str_list.append(rf'${c} \pm {u}$')
+        else:
+            str_list.append(rf'${c}^{{+{u}}}_{{-{d}}}$')
     return str_list
 
 def parse_template_fit_values(filename):
@@ -63,8 +70,10 @@ def make_tex_table(template_fit_dict, fit_order, tex_file=None):
     table += begin_str
     table += r"\hline" + "\n"
     # header
-    header_str = r"\mVVV bin& \multicolumn{" + str(N_exp) + r"}{c}{expected} & measured \\" + "\n"
-    header_str += r"$[$TeV$]$ & "
+    # header_str = r"\mVVV bin& \multicolumn{" + str(N_exp) + r"}{c}{expected} & measured \\" + "\n"
+    # header_str += r"$[$TeV$]$ & "
+    header_str = r"\mVVV $[$TeV$]$ & \multicolumn{" + str(N_exp) + r"}{c}{expected} & measured \\" + "\n"
+    header_str += r" & "
     for i, fit_name in enumerate(fit_order[:-1]): # don't include Data
         if i == N_fits - 2:
             tail = r"& \\" + "\n"

@@ -305,7 +305,8 @@ USE_NP_POI_DICT = {
 }
 
 ### Clipping configs
-clip_points = np.concatenate([[0.6, 0.7, 0.8, 0.85, 0.9, 0.95], np.arange(1.0, 5.01, 0.4), [5.05]]) * 1e3 # include the overflow
+#clip_points = np.concatenate([[0.6, 0.7, 0.8, 0.85, 0.9, 0.95], np.arange(1.0, 5.01, 0.4), [5.05]]) * 1e3 # include the overflow
+clip_points = np.concatenate([[0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0], np.arange(2.2, 5.01, 0.4), [5.05]]) * 1e3 # include the overflow
 clip_inds = np.arange(len(clip_points))[::-1]
 
 # ranges and points to use for clipping
