@@ -221,13 +221,13 @@ def make_summary_table_lim(results_dict, dim='dim6', order_sens=True, tex_file=N
     if order_sens:
         #table += r"\label{tab:limit_summary_"+f"{dim}"+"_with_profile}" + "\n"
         # if dim == 'dim6':
-        table += r"\topcaption{Summary of the 95\% \CL bounds on the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (``Freeze Other WCs"+'"'+r") as well as the case when the other Wilson coefficients are profiled (``Profile Other WCs"+'"'+r"). The Wilson coefficients are ordered by increasing confidence interval width. \label{tab:limit_summary_"+f"{dim}"+"}}" + "\n"
+        table += r"\topcaption{Summary of the 95\% \CL bounds on the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (``Freeze other WCs"+'"'+r") as well as the case when the other Wilson coefficients are profiled (``Profile other WCs"+'"'+r"). The Wilson coefficients are ordered by increasing confidence interval width. \label{tab:limit_summary_"+f"{dim}"+"}}" + "\n"
     else:
         raise NotImplemented('order_sens=False is not implemented for this table. Try again.')
         # table += r"\topcaption{Summary of the 95\% \CL bounds and measurements on the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (\"Freeze Other WCs\") as well as the case when the other Wilson coefficients are profiled over (``Profile Other WCs''). \label{tab:limit_summary_"+f"{dim}"+"_alt_order}}" + "\n"
     table += r"\begin{tabular}{r|c|c|c|c}" + "\n"
     table += r"\hline" + "\n"
-    table += r"& \multicolumn{2}{p{7cm}|}{\centering Freeze Other WCs} & \multicolumn{2}{p{7cm}}{\centering Profile Other WCs} \\" + "\n"
+    table += r"& \multicolumn{2}{p{7cm}|}{\centering Freeze other WCs} & \multicolumn{2}{p{7cm}}{\centering Profile other WCs} \\" + "\n"
     table += r"\hline" + "\n"
     table += r"Wilson & \multicolumn{2}{p{7cm}|}{\centering 95\% \CL Bounds $[\TeV^{-2}]$} & \multicolumn{2}{p{7cm}}{\centering 95\% \CL Bounds $[\TeV^{-2}]$} \\" + "\n"
     table += r"coefficient & \multicolumn{1}{p{3.5cm}|}{\centering Observed} & Expected & \multicolumn{1}{p{3.5cm}|}{\centering Observed} & Expected \\" + "\n"
@@ -291,13 +291,13 @@ def make_summary_table_meas(results_dict, dim='dim6', order_sens=True, tex_file=
         #table += r"\label{tab:limit_summary_"+f"{dim}"+"_with_profile}" + "\n"
         # if dim == 'dim6':
         # table += r"\topcaption{Summary of the measurements on the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (``Freeze Other WCs'') as well as the case when the other Wilson coefficients are profiled over (``Profile Other WCs''). The Wilson coefficients are ordered by increasing confidence interval width. \label{tab:measurement_summary_"+f"{dim}"+"}}" + "\n"
-        table += r"\topcaption{Summary of the measurements of the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (``Freeze Other WCs"+'"'+r") as well as the case when the other Wilson coefficients are profiled (``Profile Other WCs"+'"'+r"). \label{tab:measurement_summary_"+f"{dim}"+"}}" + "\n"
+        table += r"\topcaption{Summary of the measurements of the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (``Freeze other WCs"+'"'+r") as well as the case when the other Wilson coefficients are profiled (``Profile other WCs"+'"'+r"). \label{tab:measurement_summary_"+f"{dim}"+"}}" + "\n"
     else:
         raise NotImplemented('order_sens=False is not implemented for this table. Try again.')
         # table += r"\topcaption{Summary of the 95\% \CL bounds and measurements on the dim-6 Wilson coefficients. We consider the case of a single varying Wilson coefficient (\"Freeze Other WCs\") as well as the case when the other Wilson coefficients are profiled over (``Profile Other WCs''). \label{tab:limit_summary_"+f"{dim}"+"_alt_order}}" + "\n"
     table += r"\begin{tabular}{r|c|c}" + "\n"
     table += r"\hline" + "\n"
-    table += r"& \multicolumn{1}{p{4cm}|}{\centering Freeze Other WCs} & \multicolumn{1}{p{4cm}}{\centering Profile Other WCs} \\" + "\n"
+    table += r"& \multicolumn{1}{p{4cm}|}{\centering Freeze other WCs} & \multicolumn{1}{p{4cm}}{\centering Profile other WCs} \\" + "\n"
     table += r"\hline" + "\n"
     table += r"Wilson & \multicolumn{1}{p{4cm}|}{\centering Measurement $[\TeV^{-2}]$} & \multicolumn{1}{p{4cm}}{\centering Measurement $[\TeV^{-2}]$} \\" + "\n"
     table += r"coefficient & Observed & Observed \\" + "\n"

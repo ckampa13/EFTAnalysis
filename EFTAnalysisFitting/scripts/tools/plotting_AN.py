@@ -16,7 +16,7 @@ LABELSIZE=34.0
 #         font_manager.fontManager.addfont(f)
 
 # nicer plot formatting
-def config_plots():
+def config_plots(grid=False):
     # Helvetica == TeX Gyre Heros
     family = 'TeX Gyre Heros'
     # add any relevant fonts (with bold and italics) to
@@ -28,7 +28,7 @@ def config_plots():
     for i in range(2):
         plt.rcParams['figure.figsize'] = [10, 8] # larger figures
         #plt.rcParams['axes.grid'] = True         # turn grid lines on
-        plt.rcParams['axes.grid'] = False        # turn grid lines off (CMS convention)
+        plt.rcParams['axes.grid'] = grid        # turn grid lines off (CMS convention)
         #plt.rcParams['axes.axisbelow'] = True    # put grid below points
         #plt.rcParams['grid.linestyle'] = '--'    # dashed grid
         plt.rcParams.update({'font.size': FONTSIZE})   # increase plot font size

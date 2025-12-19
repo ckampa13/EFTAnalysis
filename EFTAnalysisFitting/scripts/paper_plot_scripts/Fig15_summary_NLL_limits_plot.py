@@ -7,6 +7,7 @@ import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
+import json
 
 # local imports
 import sys
@@ -49,7 +50,19 @@ colors_dict = {'0L_2FJ': 'green', '0L_3FJ': 'blue', '1L_2FJ': 'salmon',
 
 N_ch = len(colors_dict) + 1
 
-def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True, title_on=False, SignalInject=False):
+CH_MAP = {
+    '2L_SS': '2Lepton_SS1VTJ',
+    '1L_1FJ_1T': '1Lepton_1T1VTJ',
+    '2L_0FJ_1T': '2Lepton_1T0VTJ',
+    '2L_OS': '2Lepton_OS',
+    '2L_OS_2FJ': '2Lepton_OS_2VTJ',
+    '1L_2FJ': '1Lepton',
+    '0L_3FJ': '0Lepton_3VTJ',
+    '0L_2FJ': '0Lepton_2VTJ',
+}
+
+def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True, title_on=False, SignalInject=False, Asimov=True):
+    output_json = {'points': {}, 'legend': {}}
     # plot
     # if ncol <= 2:
     #     fig = plt.figure(figsize=(16, 8))
@@ -141,7 +154,9 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                 ##label_NLL = info_dict['ylabel']+f'\n'
                 is_overlay = False
                 if 'Full analysis' in info_dict['ylabel']:
+                    ch_ = info_dict['ylabel']
                     ch_l = info_dict['ylabel']
+                    ch_json = info_dict['ylabel'].replace('\n','_').replace(' ', '_')
                     # FIXME! This is an abuse of notation -- this isn't really what this variable was meant for
                     # and it could be confusing
                     if info_dict['variable_of_choice'] == "OVERLAY":
@@ -154,6 +169,12 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     #ch_ = rdict_full['bin_info']['channel']
                     ch_l = SR_pretty_print_dict[ch_]
                     ch_l = '\n'+ch_l
+                    #ch_json = info_dict['ylabel']
+                    ch_json = CH_MAP[info_dict['ylabel']]
+                    if Asimov:
+                        ch_json += '_Asimov'
+                    else:
+                        ch_json += '_data'
                     color = colors_dict[ch_]
                 label_NLL = ch_l + '\n'
                 # label_NLL += f'[{LLs[0]:0.3f}, {ULs[0]:0.3f}]\n'
@@ -184,6 +205,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                         el = f'{err_low:0.3f}'
                         eh = f'{err_high:0.3f}'
                     label_NLL += r'$\hat{\mu}_{\mathrm{SM}}=$'+rf'${C_} \substack{{ +{eh} \\ -{el} }}$'+'\n'
+                    output_json['legend'][ch_json] = {'mu_sm': float(C_), 'mu_sm_uncertainty_up': float(eh), 'mu_sm_uncertainty_down': float(el)}
                 if (i + 1) % 2 == 0:
                     ls = ':'
                     lw *= 2.0
@@ -194,6 +216,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                     lw = 4.0
                     zorder += 20
                 ax.plot(Cs, 2.*NLL, c=color, linestyle=ls, linewidth=lw, label=label_NLL, zorder=zorder)
+                output_json['points'][ch_json] = {'x_vec': Cs.tolist(), 'y_vec': (2.*NLL).tolist()}
                 if plot_stat_only:
                     hold = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=root_file_dict['stat_only'], WC=WC, extrapolate=True)
                     Cs_stat, NLL_stat, CL_list_stat, NLL_cuts_stat, _, _, LLs_stat, ULs_stat, C_best_stat, NLL_best_stat = hold
@@ -220,6 +243,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #label = r'$\Delta$NLL Threshold' + f'\n{int(CL*100):d}\% CL'
         label = r'$2\Delta$NLL threshold' + f'\n{int(CL_list[0]*100):d}' + r'$\%$ CL'
         ax.plot([xmin, xmax], [2.*NLL_cut, 2.*NLL_cut], 'r', linestyle=ls, linewidth=2, label=label, zorder=100)
+        output_json['points'][f'2DeltaNLL_{CL_list[0]*100:0.0f}CL'] = {'x_vec': [xmin, xmax], 'y_vec': 2*[2.*NLL_cut]}
     # axis labels
     if WC in dim6_ops:
         suff = r'$ / \Lambda^2$ [TeV$^{-2}$]'
@@ -289,15 +313,22 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #ncol_ = 6
         #ax_leg.legend(handles, labels, loc='upper left', clip_on=True)#, ncol=ncol_)
     # save?
-    if not savefile is None:
-        fig.savefig(savefile+'.pdf')
-        fig.savefig(savefile+'.png')
     if WC == 'sm' and OverlayData:
         # FOR PAPER
         savefile = '/'.join(savefile.split('/')[:-1]) + '/'
         savefile += 'fig_full_analysis_and_channels_NLL_vs_sm'
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
+    elif not savefile is None:
+        fig.savefig(savefile+'.pdf')
+        fig.savefig(savefile+'.png')
+
+    # includes savefile override for paper
+    if not savefile is None:
+        with open(savefile+'.json', 'w') as json_file:
+            json.dump(output_json, json_file, indent=4)
+
+
     return fig, ax
 
 def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, vsuff='', OverlayData=False):
@@ -333,7 +364,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         dcdir = os.path.join(dcdir, 'unblind')
     output_dir_ch = os.path.join(dcdir, 'output', 'channel')
     output_dir_full = os.path.join(dcdir, 'output', 'full_analysis')
-    plot_dir = os.path.join(dcdir, 'AN_plots', 'full_analysis', scan_dir)
+    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig15')
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -440,7 +471,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         else:
             ncol = 2
         title_on = False
-    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend, title_on=title_on, SignalInject=SignalInject)
+    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend, title_on=title_on, SignalInject=SignalInject, Asimov=Asimov)
     return fig, ax
 
 

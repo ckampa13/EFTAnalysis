@@ -100,6 +100,12 @@ def make_table(WCs, pdiffs, dim='dim6', tex_file=None):
     # Construct the LaTeX table as a string
     table = r"\begin{table}[hbtp!]" + "\n"
     table += r"\centering" + "\n"
+    if dim == 'dim6':
+        table += r"\caption{Impact of tau channels on the dimension-6 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit. "
+        table += r"\label{tab:tau_impact_"+f"{dim}"+"_wcs}" + "}\n"
+    else:
+        table += r"\caption{Impact of tau channels on the dimension-8 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit. "
+        table += r"\label{tab:tau_impact_"+f"{dim}"+"_wcs}" + "}\n"
     table += r"\begin{tabular}{l|c}" + "\n"
     table += r"\hline" + "\n"
     #table += r"Wilson coefficient & Impact on 95\% CL Limits \\ [\% Change in Interval Width] \\" + "\n"
@@ -113,11 +119,11 @@ def make_table(WCs, pdiffs, dim='dim6', tex_file=None):
 
     table += r"\hline" + "\n"
     table += r"\end{tabular}" + "\n"
-    if dim == 'dim6':
-        table += r"\caption{Impact of tau channels on the dimension-6 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit.}" + "\n"
-    else:
-        table += r"\caption{Impact of tau channels on the dimension-8 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit.}" + "\n"
-    table += r"\label{tab:tau_impact_"+f"{dim}"+"_wcs}" + "\n"
+    # if dim == 'dim6':
+    #     table += r"\caption{Impact of tau channels on the dimension-6 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit.}" + "\n"
+    # else:
+    #     table += r"\caption{Impact of tau channels on the dimension-8 Wilson coefficients 95\% CL limit interval widths. A negative impact denotes an improvement to the limit.}" + "\n"
+    # table += r"\label{tab:tau_impact_"+f"{dim}"+"_wcs}" + "\n"
     table += r"\end{table}" + "\n"
 
     print(table)

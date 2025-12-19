@@ -8,6 +8,7 @@ import pandas as pd
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
+import json
 
 # local imports
 import sys
@@ -36,9 +37,10 @@ config_plots()
 
 # FIXME! Don't hard code this.
 #tabledir = '/home/ckampa/coding/VVVTable/EFT_yields/data/'
-tabledir = os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'output', 'dataframes'))
+tabledir = os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'paper_plots', 'Fig11'))
 
 def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=False, channel_rank=False, limit_rank=True, sm_significance=False, savefile=None, NTOYS=200, Unblind=True, use_fit='postfit', use_fit_pretty='post-fit'):
+    output_json = {'top': {}, 'bottom': {}}
     # load table
     # add option to creat on the fly?
     #df_yields = process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=NTOYS, Unblind=Unblind)
@@ -236,6 +238,11 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # background with sm
     #axs[0].hist(inds, bins=bin_edges, weights=df_yields[f'total_bkg_plu_SM_{use_fit}'], histtype='bar', color='khaki', alpha=0.7, label=f'Total background\n({use_fit.lower()})', zorder=10)
     axs[0].hist(inds, bins=bin_edges, weights=df_yields[f'total_bkg_plu_SM_{use_fit}'], histtype='bar', color='khaki', alpha=0.7, label=f'Total {use_fit_pretty.lower()} background', zorder=10)
+    bin_labels = [(c.rstrip('_')+'_bin'+f'{b}').replace('FJ', 'VTJ') for c,b in zip(*df_yields[['channel_subchannel', 'bin']].values.T)]
+    #output_json['top']['bin_centers_index'] = inds.tolist()
+    output_json['top']['bin_centers_index'] = np.arange(len(bin_labels)).tolist()
+    output_json['top']['bin_labels'] = bin_labels
+    output_json['top']['total_background'] = df_yields[f'total_bkg_plu_SM_{use_fit}'].values.tolist()
     #axs[0].errorbar(inds, df_yields[f'total_bkg_plu_SM_{fit}'], yerr=df_yields[[f'total_bkg_err_{use_fit}', f'total_bkg_err_{use_fit}']].values.T,
     #                marker='', ls='none', color='black', elinewidth=3,
     #                label='Systematics', zorder=12)
@@ -243,13 +250,18 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # error as hatched bar
     axs[0].bar(inds, 2*df_yields[f'total_bkg_err_{use_fit}'].values, 1.0, bottom=df_yields[f'total_bkg_plu_SM_{use_fit}']-df_yields[f'total_bkg_err_{use_fit}'].values,
                color=None, fill=False, edgecolor='cornflowerblue', hatch='//', linewidth=1, label='Uncertainty (SM)', zorder=11)
+    output_json['top']['total_background_uncertainty'] = df_yields[f'total_bkg_err_{use_fit}'].values.tolist()
     # WC @ 95% exclusion
     axs[0].hist(inds, bins=bin_edges, weights=df_yields[ycol_cW].values, histtype='step', color='red', linewidth=2, label=lab_cW, zorder=13)
+    output_json['top'][f'{WC}_yield'] = df_yields[ycol_cW].values.tolist()
     # data
     m = (df_yields['data'] > 0)
     axs[0].errorbar(inds[m], df_yields.loc[m, 'data'].values, yerr=(df_yields.loc[m,'data_err_D'], df_yields.loc[m,'data_err_U']), c='black',
                     fmt='o', ls='none', ms=6, zorder=100, capsize=4,
                     label='Data')
+    output_json['top']['data'] = df_yields.loc[m, 'data'].values.tolist()
+    output_json['top']['data_uncertainty_down'] = df_yields.loc[m,'data_err_D'].values.tolist()
+    output_json['top']['data_uncertainty_up'] = df_yields.loc[m,'data_err_U'].values.tolist()
     # exclusion
     #fit_ = 'Asimov'
     #for fit_, yl, c, ec, zorder_ in zip(['Asimov', 'Data'], ['Expected', 'Observed'], [None, 'salmon'], ['black', 'salmon'], [11, 10]):
@@ -277,12 +289,23 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
             yheight = df_yields.loc[:, ycol].values
             ybot = np.zeros_like(df_yields.loc[:,ycol])
         axs[1].bar(inds_bot[:-1], yheight, 1.0, bottom=ybot, color=c, edgecolor=c, fill=fill, hatch=hatch, zorder=zorder_, label=yl+' (bin)')
+        if fit_ == 'Asimov':
+            output_json['bottom']['bin_centers_index'] = np.arange(len(bin_labels)).tolist()
+            output_json['bottom']['bin_labels'] = deepcopy(bin_labels)
+        output_json['bottom'][f'{WC}_LL_{yl}'] = df_yields[f'{WC}_95CL_LL_{fit_}'].values.tolist()
+        output_json['bottom'][f'{WC}_UL_{yl}'] = df_yields[f'{WC}_95CL_UL_{fit_}'].values.tolist()
+
         # combined
         limit_95CL_LL_ = df_yields.loc[:, f'all_comb_{WC}_95CL_LL_{fit_}'].iloc[0]
         limit_95CL_UL_ = df_yields.loc[:, f'all_comb_{WC}_95CL_UL_{fit_}'].iloc[0]
         height = limit_95CL_UL_ - limit_95CL_LL_
         max_l = max([abs(limit_95CL_UL_), abs(limit_95CL_LL_)])
         axs[1].bar([inds_bot[-1]], height, 1.0, bottom=limit_95CL_LL_, color=c_c, edgecolor=c_c, fill=fill_c, hatch=hatch, zorder=zorder_, label=yl+' (combined)')
+        if fit_ == 'Asimov':
+            output_json['bottom']['bin_centers_index'].append(output_json['bottom']['bin_centers_index'][-1]+1)
+            output_json['bottom']['bin_labels'].append('Combined limit')
+        output_json['bottom'][f'{WC}_LL_{yl}'].append(limit_95CL_LL_)
+        output_json['bottom'][f'{WC}_UL_{yl}'].append(limit_95CL_UL_)
         # add combined limit in it's own axis
         axs[2].bar(inds_bot[-1], height, 1.0, bottom=limit_95CL_LL_, color=c_c, edgecolor=c_c, fill=fill_c, hatch=hatch, zorder=zorder_)
         # best fit
@@ -292,6 +315,7 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
             z_ = zorder_ + 4
         best_fit = df_yields[f'{WC}_best_fit_{fit_}'].iloc[0]
         axs[1].scatter([inds_bot[-1]], [best_fit], marker=m, c=mc, s=50, edgecolor='black', zorder=z_, label=yl+' (best fit)')
+        output_json['bottom'][f'{WC}_best_fit_{yl}'] = best_fit
         axs[2].scatter([inds_bot[-1]], [best_fit], marker=m, c=mc, s=100, edgecolor='black', zorder=z_)
     axs[2].set_ylim([-2*max_l, 2*max_l])
     axs[2].set_xlim([inds_bot[-1]-2, inds_bot[-1]+2])
@@ -378,6 +402,9 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     if not savefile is None:
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
+        # json
+        with open(savefile+'.json', 'w') as json_file:
+            json.dump(output_json, json_file, indent=4)
 
     return fig, axs, df_yields
 
@@ -385,8 +412,6 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
 if __name__=='__main__':
     NTOYS=200
     Unblind=True
-    #WCs = ['cW']
-    #WCs = WC_ALL
 
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
@@ -403,22 +428,14 @@ if __name__=='__main__':
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    plot_dir = os.path.join(dcdir, 'AN_plots', 'full_analysis', 'freeze', '')
+    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig11', '')
 
     for WC in WCs:
         print(f'{WC}: ', end='\n')
-        #tablepkl = os.path.join(tabledir, f'yiel_table_{WC}.csv')
-        #tablepkl = os.path.join(tabledir, f'yield_table_{WC}.pkl')
-        tablepkl = os.path.join(tabledir, f'{WC}_summary_df_NTOYS_{NTOYS}.pkl')
-        #for channel_rank, ch_str in zip([False, True], ['_by_bin', '_by_channel']):
+        tablepkl = os.path.join(tabledir, f'Fig11_{WC}_summary_df_NTOYS_{NTOYS}.pkl')
         for channel_rank, ch_str in zip([True], ['_by_channel']):
-            #for logy, log_str in zip([False, True], ['', '_logy']):
             for logy, log_str in zip([True], ['_logy']):
                 print(f'channel_rank={channel_rank} & logy={logy}', end='\n')
                 savefile = plot_dir+f'fig_yield_{WC}{ch_str}{log_str}'
-                # DEBUG
-                #print(f'datacard_dict = {datacard_dict}, type={type(datacard_dict)}')
                 _ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=logy, channel_rank=channel_rank, limit_rank=True, sm_significance=False, savefile=savefile, NTOYS=NTOYS, Unblind=Unblind, use_fit='postfit', use_fit_pretty='post-fit')
-                #_ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, logy=logy, channel_rank=channel_rank, limit_rank=False, sm_significance=False, savefile=savefile)
-                #fig, axs, df_yields = _
         print()

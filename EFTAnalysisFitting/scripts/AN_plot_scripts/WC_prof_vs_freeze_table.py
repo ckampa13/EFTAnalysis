@@ -12,7 +12,11 @@ from tools.plotting_AN import numerical_formatter
 
 WC_pretty_print_dict = WC_pretty_print_dict_AN
 
-def print_summary_table_lim_sorted(WCs, ddir, dim, dim_dict, CL=0.95):
+def print_summary_table_lim_sorted(WCs, ddir, dim, dim_dict, CL=0.95, asi=True):
+    if asi:
+        asi_str = 'Asimov'
+    else:
+        asi_str = 'Data'
     CL_list = [CL]
     #WCs = dim_dict[dim]
     # loop and get limits
@@ -32,8 +36,8 @@ def print_summary_table_lim_sorted(WCs, ddir, dim, dim_dict, CL=0.95):
     s_prints = []
     for WC in WCs:
         #print(WC)
-        fname = ddir+f'full_analysis/higgsCombine_Asimov.all_combined.{WC}_1D.vCONFIG_VERSIONS_NDIM.syst.MultiDimFit.mH120.root'
-        fname_p = ddir+f'full_analysis/higgsCombine_Asimov.all_combined.{WC}_All.vCONFIG_VERSIONS_NDIM.syst.MultiDimFit.mH120.root'
+        fname = ddir+f'full_analysis/higgsCombine_{asi_str}.all_combined.{WC}_1D.vCONFIG_VERSIONS_NDIM.syst.MultiDimFit.mH120.root'
+        fname_p = ddir+f'full_analysis/higgsCombine_{asi_str}.all_combined.{WC}_All.vCONFIG_VERSIONS_NDIM.syst.MultiDimFit.mH120.root'
         _ = get_lims(CL_list, Cs=None, NLL=None, root_file=fname, WC=WC, extrapolate=True)
         Cs, NLL, CL_list_, NLL_cuts, LLs_, ULs_, LLs_interp, ULs_interp, C_best, NLL_best = _
         _ = get_lims(CL_list, Cs=None, NLL=None, root_file=fname_p, WC=WC, extrapolate=True)
@@ -109,10 +113,22 @@ def print_summary_table_lim_sorted(WCs, ddir, dim, dim_dict, CL=0.95):
             print()
     return s_prints[inds_sort], WCs_sorted, s_pdiffs, s_ULs[inds_sort], s_LLs[inds_sort], s_ULs_p[inds_sort], s_LLs_p[inds_sort]
 
-def make_summary_table(WCs, LLs, ULs, LLs_p, ULs_p, dim='dim6', tex_file=None):
+def make_summary_table(WCs, LLs, ULs, LLs_p, ULs_p, dim='dim6', tex_file=None, asi=True):
     # Construct the LaTeX table as a string
+    if asi:
+        asi_str = 'expected'
+        label = r"\label{tab:limit_prof_vs_freeze_dim6}"
+    else:
+        asi_str = 'observed'
+        label = r"\label{tab:data_limit_prof_vs_freeze_dim6}"
     table = r"\begin{table}[hbtp!]" + "\n"
     table += r"\centering" + "\n"
+    if dim == 'dim6':
+        table += r"\topcaption{A summary of the "
+        table += asi_str
+        table += r" 95\% CL limits on the dimension-6 Wilson coefficients. We compare the case where the other WCs are profiled (second column) and the case where the other WCs are frozen at zero. The Wilson coefficients are ordered by increasing limit interval width. "
+        table += label
+        table += r"}\n"
     table += r"\begin{tabular}{l|c|c}" + "\n"
     table += r"\hline" + "\n"
     #table += r"Wilson coefficient & Impact on 95\% CL Limits \\ [\% Change in Interval Width] \\" + "\n"
@@ -132,11 +148,11 @@ def make_summary_table(WCs, LLs, ULs, LLs_p, ULs_p, dim='dim6', tex_file=None):
 
     table += r"\hline" + "\n"
     table += r"\end{tabular}" + "\n"
-    if dim == 'dim6':
-        table += r"\caption{A summary of the expected 95\% CL limits on the dimension-6 Wilson coefficients. We compare the case where the other WCs are profiled (second column) and the case where the other WCs are frozen at zero. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
+    # if dim == 'dim6':
+    #     table += r"\caption{A summary of the expected 95\% CL limits on the dimension-6 Wilson coefficients. We compare the case where the other WCs are profiled (second column) and the case where the other WCs are frozen at zero. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
     # else:
     #     table += r"\caption{A summary of the expected 95\% CL limits on the dimension-8 Wilson coefficients, when considering a single non-zero Wilson coefficient at a time. The Wilson coefficients are ordered by increasing limit interval width.}" + "\n"
-    table += r"\label{tab:limit_prof_vs_freeze_"+f"{dim}"+"}" + "\n"
+    # table += r"\label{tab:limit_prof_vs_freeze_"+f"{dim}"+"}" + "\n"
     table += r"\end{table}" + "\n"
 
     print(table)
@@ -160,18 +176,25 @@ if __name__=='__main__':
                }
     ddir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'output')), '')
     plotdir = os.path.join(os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'AN_plots', 'tables')), '')
-    # with syst
-    results_dict = {}
-    print('Limits (prof vs. freeze, with systematics)...')
-    for dim in ['dim6']:
-    #for dim in ['cW_test']:
-    # for dim in ['dim6', 'dim8_partial']:
-        print(f'{dim} Current Limit Ranking (full analysis):')
-        s_prints, WCs_sorted, pdiffs, s_ULs, s_LLs, s_ULs_p, s_LLs_p = print_summary_table_lim_sorted(dim_dict[dim], ddir, dim, dim_dict)
-        results_dict[dim] = {'s_prints': s_prints, 'WCs_sorted': WCs_sorted, 'pdiffs': pdiffs,
-                             's_ULs': s_ULs, 's_LLs': s_LLs, 's_ULs_p': s_ULs_p, 's_LLs_p': s_LLs_p}
-        print('\n')
-    #print(results_dict)
-    # make tables, with systematics
-    for dim in ['dim6']:
-        make_summary_table(results_dict[dim]['WCs_sorted'], results_dict[dim]['s_LLs'], results_dict[dim]['s_ULs'], results_dict[dim]['s_LLs_p'], results_dict[dim]['s_ULs_p'], dim=dim, tex_file=plotdir+f'limit_prof_vs_freeze_{dim}.tex')
+    for asi in [True, False]:
+        print(f'Asimov? {asi}')
+        # with syst
+        results_dict = {}
+        print('Limits (prof vs. freeze, with systematics)...')
+        for dim in ['dim6']:
+        #for dim in ['cW_test']:
+        # for dim in ['dim6', 'dim8_partial']:
+            print(f'{dim} Current Limit Ranking (full analysis):')
+            s_prints, WCs_sorted, pdiffs, s_ULs, s_LLs, s_ULs_p, s_LLs_p = print_summary_table_lim_sorted(dim_dict[dim], ddir, dim, dim_dict, asi=asi)
+            results_dict[dim] = {'s_prints': s_prints, 'WCs_sorted': WCs_sorted, 'pdiffs': pdiffs,
+                                 's_ULs': s_ULs, 's_LLs': s_LLs, 's_ULs_p': s_ULs_p, 's_LLs_p': s_LLs_p}
+            print('\n')
+        #print(results_dict)
+        # make tables, with systematics
+        if asi:
+            prestr = ''
+        else:
+            prestr = 'data_'
+        for dim in ['dim6']:
+            make_summary_table(results_dict[dim]['WCs_sorted'], results_dict[dim]['s_LLs'], results_dict[dim]['s_ULs'], results_dict[dim]['s_LLs_p'], results_dict[dim]['s_ULs_p'], dim=dim, tex_file=plotdir+f'{prestr}limit_prof_vs_freeze_{dim}.tex', asi=asi)
+        print()
