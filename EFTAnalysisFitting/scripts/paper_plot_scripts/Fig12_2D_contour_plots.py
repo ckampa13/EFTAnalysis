@@ -222,5 +222,5 @@ if __name__=='__main__':
         print(f'{WC1}, {WC2}')
         XYLIM = XYLIMS_dict[f'{WC1}_{WC2}']
         WC_pair = [WC1, WC2]
-        make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=freeze, Asimov=False)
+        fig, ax = make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=freeze, Asimov=False)
     print('Done.')
