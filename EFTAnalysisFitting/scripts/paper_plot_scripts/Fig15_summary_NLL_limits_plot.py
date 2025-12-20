@@ -6,7 +6,7 @@ from copy import deepcopy
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-from matplotlib.ticker import AutoMinorLocator
+from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 import json
 
 # local imports
@@ -79,7 +79,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         if WC == 'sm':
             fig, ax = plt.subplots(figsize=(12, 15))
         else:
-            fig, ax = plt.subplots(figsize=(12, 12))
+            # fig, ax = plt.subplots(figsize=(12, 12))
+            fig, ax = plt.subplots(figsize=(12, 15))
     else:
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
@@ -183,6 +184,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
                 # multi interval, numerical formatter
                 if WC != 'sm':
                     label_NLL += '\n'.join([f'[{numerical_formatter(LL)}, {numerical_formatter(UL)}]' for LL, UL in zip(LLs[0], ULs[0])]) + '\n'
+                    output_json['legend'][ch_json] = {'LL': [float(numerical_formatter(LL)) for LL in LLs[0]], 'UL': [float(numerical_formatter(UL)) for UL in ULs[0]]}
                 else:
                     C_, ndc = numerical_formatter_with_ndec_return(C_best)
                     el, ndl = numerical_formatter_with_ndec_return(err_low)
@@ -257,6 +259,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         ax.set_title(title+'\n', pad=3.)
     # ticks
     ax = ticks_in(ax)
+    if WC == 'cW':
+        ax.xaxis.set_major_locator(MultipleLocator(0.1))
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))
     ax.yaxis.set_minor_locator(AutoMinorLocator(4))
     ax = ticks_sizes(ax, major={'L':15,'W':1.5}, minor={'L':8,'W':1})
@@ -267,6 +271,8 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #ax.set_xlim([xmin, xmax])
         #ax.set_xlim([-0.5, xmax])
         ax.set_xlim([-0.5, 8.0])
+    elif WC == 'cW': # aux
+        ax.set_xlim([-0.55, 0.55])
     else:
         xlim_factor = 2.
         # xlim_factor = 2.5
@@ -301,7 +307,9 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         #          borderpad=10.0)
         if (not SignalInject) and (not WC == 'sm'):
             #fig.legend(loc='outside lower left', ncol=3, fontsize=20.0)
-            fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
+            #fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
+            fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
+                       handlelength=1.5, columnspacing=1.0)
         else:
             #fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
             #fig.legend(loc='outside lower left', ncol=4, fontsize=18.0)
@@ -319,6 +327,12 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         savefile += 'fig_full_analysis_and_channels_NLL_vs_sm'
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
+    elif WC in ['cW'] and OverlayData:
+        # auxiliary
+        savefile = '/'.join(savefile.split('/')[:-1]) + '/'
+        savefile += f'fig_full_analysis_and_channels_NLL_vs_{WC}'
+        fig.savefig(savefile+'.pdf')
+        fig.savefig(savefile+'.png')
     elif not savefile is None:
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
@@ -331,7 +345,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
 
     return fig, ax
 
-def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, vsuff='', OverlayData=False):
+def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, SignalInject=False, InjectValue=0.0, ScanType='_1D', expect_signal='1', legend=True, Asimov=True, Unblind=False, vsuff='', OverlayData=False, aux=False):
     if ScanType == '_1D':
         scan_dir = 'freeze'
         scan_title = '(Freeze Other WCs)'
@@ -364,7 +378,10 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         dcdir = os.path.join(dcdir, 'unblind')
     output_dir_ch = os.path.join(dcdir, 'output', 'channel')
     output_dir_full = os.path.join(dcdir, 'output', 'full_analysis')
-    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig15')
+    if aux:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'auxiliary')
+    else:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig15')
     root_file_dict_full = {}
     # construct root file for each channel
     for i, ch in enumerate(sorted(datacard_dict.keys())):
@@ -511,6 +528,8 @@ if __name__=='__main__':
     parser.add_argument('-v', '--VersionSuff',
                         help='String to append on version number, e.g. for clipping. ["" (default), "_clip_mVVV_0",...]')
     parser.add_argument('-OD', '--OverlayData', help='Add another full analysis curveUse datacards from unblinded private repo? "n"(default)/"y".')
+    parser.add_argument('-aux', '--AUX',
+                        help=f'Auxilliary plot? "n" (default), "y"')
     args = parser.parse_args()
     if args.InjectSignal is None:
         args.InjectSignal = 'n'
@@ -552,6 +571,10 @@ if __name__=='__main__':
         OverlayData = True
     else:
         OverlayData = False
+    if args.AUX is None:
+        aux = False
+    else:
+        aux = args.AUX == 'y'
     # loop over WCs
     for WC in WCs:
         #if WC == 'sm':
@@ -569,7 +592,7 @@ if __name__=='__main__':
                                           SignalInject=SignalInject, InjectValue=InjectValue,
                                           ScanType=ScanType, expect_signal=expect_signal,
                                           legend=legend, Asimov=Asimov, Unblind=Unblind,
-                                          vsuff=vsuff, OverlayData=OverlayData)
+                                          vsuff=vsuff, OverlayData=OverlayData, aux=aux)
         print("=========================================================\n")
     # plt.show()
 

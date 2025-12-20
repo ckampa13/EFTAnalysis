@@ -761,3 +761,44 @@ def get_point_estimate_pm_1sigma(Cs, NLL, LLs_interp_1sigma, ULs_interp_1sigma, 
         bounds.append([LL, UL])
     return C_bests, NLL_bests, pluss, minuss, bounds
 
+# v2: check if NLL is close to min as well -- can be useful for Asimov with double min
+def get_point_estimate_pm_1sigma_v2(Cs, NLL, LLs_interp_1sigma, ULs_interp_1sigma, C_best_combine, NLL_best_combine, use_best=True, dC=0.0001, kind='quadratic'):
+    # assumes LLs_interp_1sigma and ULs_interp_1sigma were grabbed from LLs_interp and ULs_interp
+    # generated with CL_1sigma
+    bounds = []
+    C_bests = []
+    NLL_bests = []
+    pluss = []
+    minuss = []
+    for LL, UL in zip(LLs_interp_1sigma, ULs_interp_1sigma):
+        # find point estimate only within this range
+        # set up interpolation function
+        interp_func = interp1d(Cs, NLL, kind=kind, fill_value='extrapolate')
+        if (UL - LL) > 1:
+            d = 1
+            ndec = 0
+        else:
+            d = 0.01
+            ndec = 2
+        LL_ = np.round(LL, decimals=ndec) - d
+        UL_ = np.round(UL, decimals=ndec) + d
+        Cs_fine = np.arange(LL_, UL_, dC)
+        NLL_fine = interp_func(Cs_fine)
+        imin = np.argmin(NLL_fine)
+        C_best = Cs_fine[imin]
+        NLL_best = NLL_fine[imin]
+        if use_best:
+            #if abs(C_best - C_best_combine) < 1.:
+            if (abs(C_best - C_best_combine) < 0.1) or ((NLL_best_combine - NLL_best) < 0.0001):
+                C_best = C_best_combine
+                NLL_best = NLL_best_combine
+        C_bests.append(C_best)
+        #NLL_best = NLL_fine[imin]
+        NLL_bests.append(NLL_best)
+        plus = UL - C_best
+        minus = C_best - LL
+        pluss.append(plus)
+        minuss.append(minus)
+        bounds.append([LL, UL])
+    return C_bests, NLL_bests, pluss, minuss, bounds
+

@@ -10,32 +10,32 @@ conda activate HCOMB
 # Fig 11 (yield summary)
 # make summary dataframe based on fit with toys (ROOT input, pkl output)
 # -w "WC"
-#python Fig11_process_yields_limits.py -w cW
+python Fig11_process_yields_limits.py -w cW
 # make the plot (pkl input)
 # -w "WC"
-#python Fig11_unblind_yield_summary_plots.py -w cW
+python Fig11_unblind_yield_summary_plots.py -w cW
 
 # Fig 12 (2D plots)
 # test 1 WC pair
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHq3 -f y
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHq3 -f n
 # run all
-#python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f y
-#python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f n
+python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f y
+python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f n
 
 
 # Fig 13 (clipping)
 # test 1 WC
 # python Fig13_clipping_plots.py -w cW
 # run all
-# python Fig13_clipping_plots.py -w all_paper
+python Fig13_clipping_plots.py -w all_paper
 
 # Fig 14 (template fit)
-# python Fig14_template_fit.py
+python Fig14_template_fit.py
 
 # Fig 15 (SM sensitivity)
 # -w "WC" -U "unblind directory" -a "Asimov" -OD "OverlayData"
-#python Fig15_summary_NLL_limits_plot.py -w sm -U y -a y -OD y
+python Fig15_summary_NLL_limits_plot.py -w sm -U y -a y -OD y
 
 ### AUX FIGURES ###
 # Fig 11 (yield summary) -- cHl3 and cHW
@@ -46,3 +46,24 @@ python Fig11_process_yields_limits.py -w cHW -aux y
 python Fig11_unblind_yield_summary_plots.py -w cHl3 -aux y
 python Fig11_unblind_yield_summary_plots.py -w cHW -aux y
 
+# Fig 12 (2D plots)
+# test 1 WC pair
+# python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f y -aux y
+# python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f n -aux y
+# run all
+python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f y -aux y
+python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f n -aux y
+
+# Fig 15 (channel sensitivity for WCs)
+# -w "WC" -U "unblind directory" -a "Asimov" -OD "OverlayData"
+python Fig15_summary_NLL_limits_plot.py -w cW -U y -a y -OD y -aux y
+
+### NLL scans
+# syst vs. stat (cW, FT0)
+python aux_NLL_limits_syst_vs_stat.py -w cW
+python aux_NLL_limits_syst_vs_stat.py -w FT0
+# NLL scan (freeze, +profile for dim8) -- 3 dim6, 3 dim8
+# test 1 WC
+# python aux_NLL_limits_profile_vs_freeze.py -w cW
+# run all
+python aux_NLL_limits_profile_vs_freeze.py -w all_aux

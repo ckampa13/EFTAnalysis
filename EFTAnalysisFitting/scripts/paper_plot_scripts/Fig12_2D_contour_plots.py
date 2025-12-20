@@ -176,12 +176,21 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False):
 
 if __name__=='__main__':
     Unblind=True
+    # paper
     WC1s_paper = ['cW', 'cW', 'cHu']
     WC2s_paper = ['cHq3', 'cHl3', 'cHd']
+    # aux
+    WC1s_aux = ['cW', 'cW', 'cHW']
+    WC2s_aux = ['cHW', 'cHWB', 'cHWB']
     XYLIMS_dict = {
+        # paper
         'cW_cHq3': [[-0.25, 0.25], [-0.75, 1.5]],
         'cW_cHl3': [[-0.25, 0.25], [-10., 50.0]],
         'cHu_cHd': [[-1.5, 1.5], [-1.5, 4.]],
+        # aux
+        'cW_cHW': [[-0.25, 0.25], [-5.5, 12.5]],
+        'cW_cHWB': [[-0.25, 0.25], [-15.5, 30.5]],
+        'cHW_cHWB': [[-5.5, 5.5], [-15.5, 30.5]],
     }
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
@@ -191,12 +200,16 @@ if __name__=='__main__':
                         help=f'Which Wilson Coefficient on y axis to study for 2D limits? ["cHq3" (default), "all_paper", ...]')
     parser.add_argument('-f', '--Freeze',
                         help=f'Freeze other WCs? "y" (default), "n" (profile others)')
+    parser.add_argument('-aux', '--AUX',
+                        help=f'Auxilliary plot? "n" (default), "y"')
     args = parser.parse_args()
     if args.WC1 is None:
         WC1s = ['cW']
     else:
         if args.WC1 == 'all_paper':
             WC1s = WC1s_paper
+        elif args.WC1 == 'all_aux':
+            WC1s = WC1s_aux
         else:
             WC1s = [args.WC1]
     if args.WC2 is None:
@@ -204,17 +217,26 @@ if __name__=='__main__':
     else:
         if args.WC2 == 'all_paper':
             WC2s = WC2s_paper
+        elif args.WC2 == 'all_aux':
+            WC2s = WC2s_aux
         else:
             WC2s = [args.WC2]
     if args.Freeze is None:
         freeze = True
     else:
         freeze = args.Freeze == 'y'
+    if args.AUX is None:
+        aux = False
+    else:
+        aux = args.AUX == 'y'
 
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig12', '')
+    if aux:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'auxiliary', '')
+    else:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig12', '')
     ddir_out = os.path.join(dcdir, 'output', 'full_analysis', '') # where fit files are
 
     print('Making Fig12 plot(s)...')

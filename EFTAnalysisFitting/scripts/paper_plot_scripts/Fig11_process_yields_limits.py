@@ -25,7 +25,7 @@ from MISC_CONFIGS import (
     WC_pretty_print_dict_AN,
     SR_pretty_print_dict_AN,
 )
-from tools.extract_limits_multi_interval import get_lims_w_best, get_lims_quad_interp
+from tools.extract_limits_multi_interval import get_lims_w_best, get_lims_quad_interp, get_point_estimate_pm_1sigma, get_point_estimate_pm_1sigma_v2
 
 def process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=200, Unblind=True, use_fit='fit_b'):
     CL_list = [0.95]
@@ -52,8 +52,21 @@ def process_yields_limits(WC, datacard_dict, versions_dict, NTOYS=200, Unblind=T
     _ = get_lims_w_best(CL_list, Cs=None, NLL=None, root_file=fname_d, WC=WC, extrapolate=True)
     Cs_f_d, NLL_f_d, CL_list_f_d, NLL_cuts_f_d, LLs_f_d, ULs_f_d, LLs_interp_f_d, ULs_interp_f_d, C_best_f_d, NLL_best_f_d = _
     # best fit
-    WC_best_fit_d = C_best_f_d
-    WC_best_fit_a = C_best_f_a
+    ##if WC == 'cHl3': # wrong minimum reported by Combine
+    #     C_bests_1s_a, NLL_bests_1s_a, pluss_1s_a, minuss_1s_a, bounds_1s_a = get_point_estimate_pm_1sigma(Cs_a, NLL_a, LLs_interp_a[1], ULs_interp_a[1], C_best_a, use_best=True, dC=0.001, kind='linear')
+    #     WC_best_fit_d = Cs_f_d[np.argmin(NLL_f_d)]
+    #     WC_best_fit_a = Cs_f_a[np.argmin(NLL_f_a)]
+    # else:
+    ## ORIGINAL (basic -- use the minimum from combine -- not always correct)
+    #     WC_best_fit_d = C_best_f_d
+    #     WC_best_fit_a = C_best_f_a
+    # don't need the +-1 sigma limits
+    #C_bests_f_a, NLL_bests_f_a, _, _, _ = get_point_estimate_pm_1sigma(Cs_f_a, NLL_f_a, LLs_interp_f_a[0], ULs_interp_f_a[0], C_best_f_a, use_best=True, dC=0.001, kind='linear')
+    #C_bests_f_d, NLL_bests_f_d, _, _, _ = get_point_estimate_pm_1sigma(Cs_f_d, NLL_f_d, LLs_interp_f_d[0], ULs_interp_f_d[0], C_best_f_d, use_best=True, dC=0.001, kind='linear')
+    C_bests_f_a, NLL_bests_f_a, _, _, _ = get_point_estimate_pm_1sigma_v2(Cs_f_a, NLL_f_a, LLs_interp_f_a[0], ULs_interp_f_a[0], C_best_f_a, NLL_best_f_a, use_best=True, dC=0.001, kind='linear')
+    C_bests_f_d, NLL_bests_f_d, _, _, _ = get_point_estimate_pm_1sigma_v2(Cs_f_d, NLL_f_d, LLs_interp_f_d[0], ULs_interp_f_d[0], C_best_f_d, NLL_best_f_d, use_best=True, dC=0.001, kind='linear')
+    WC_best_fit_a = C_bests_f_a[np.argmin(NLL_bests_f_a)]
+    WC_best_fit_d = C_bests_f_d[np.argmin(NLL_bests_f_d)]
     # DEBUG
     print(f'Best fit {WC}: {WC_best_fit_a:0.4f} (Asimov), {WC_best_fit_d:0.4f} (Data)')
     # pick the widest range of the limit
@@ -268,6 +281,8 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--WC',
                         help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default), "cHl3", ...]')
+    parser.add_argument('-aux', '--AUX',
+                        help=f'Auxilliary plot? "n" (default), "y"')
     args = parser.parse_args()
     if args.WC is None:
         args.WC = 'cW'
@@ -275,6 +290,10 @@ if __name__=='__main__':
         WCs = WC_ALL
     else:
         WCs = [args.WC]
+    if args.AUX is None:
+        aux = False
+    else:
+        aux = args.AUX == 'y'
 
     for WC in WCs:
         print(f'{WC}')
@@ -283,7 +302,10 @@ if __name__=='__main__':
         dcdir = datacard_dir
         if Unblind:
             dcdir = os.path.join(dcdir, 'unblind')
-        output_dir = os.path.join(dcdir, 'paper_plots', 'Fig11')
+        if aux:
+            output_dir = os.path.join(dcdir, 'paper_plots', 'auxiliary')
+        else:
+            output_dir = os.path.join(dcdir, 'paper_plots', 'Fig11')
         output_file = os.path.join(output_dir, f'Fig11_{WC}_summary_df_NTOYS_{NTOYS}.pkl')
         df.to_pickle(output_file)
         print(df)

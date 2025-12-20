@@ -35,10 +35,6 @@ from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
-# FIXME! Don't hard code this.
-#tabledir = '/home/ckampa/coding/VVVTable/EFT_yields/data/'
-tabledir = os.path.abspath(os.path.join(fpath, '..', '..', 'unblind', 'paper_plots', 'Fig11'))
-
 def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=False, channel_rank=False, limit_rank=True, sm_significance=False, savefile=None, NTOYS=200, Unblind=True, use_fit='postfit', use_fit_pretty='post-fit'):
     output_json = {'top': {}, 'bottom': {}}
     # load table
@@ -142,8 +138,14 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         ycol_cW = f'all_comb_yield_{fit}'
         #lab_cW = f'VVV yield\n(total - SM)\n'+rf'{WC_l}'+rf'$={limit_95CL:0.3f}$'#+' (95\% CL UL)\n'+r'$-$SM VVV'
         #lab_cW = f'VVV yield\n(total - SM)\n'\
+        if WC == 'cHl3':
+            l_str = f'{limit_95CL:0.0f}'
+        elif WC == 'cHW':
+            l_str = f'{limit_95CL:0.2f}'
+        else: # cW, etc.
+            l_str = f'{limit_95CL:0.3f}'
         lab_cW = f'VVV yield (total - SM)\n'\
-        +rf'{WC_l}{L}'+rf'$\ =\ {limit_95CL:0.3f}$ {u}'#+' (95\% CL UL)\n'+r'$-$SM VVV'
+        +rf'{WC_l}{L}'+rf'$\ =\ {l_str}$ {u}'#+' (95\% CL UL)\n'+r'$-$SM VVV'
     # use median significance
     # note here channel ranking will still rely on combine output
     else:
@@ -268,6 +270,11 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     # exp_c = 'black'
     exp_c = 'gray'
     for fit_, yl, c, fill, hatch, m, mc, zorder_ in zip(['Asimov', 'Data'], ['Expected', 'Observed'], [exp_c, 'salmon'], [False, True], ['//', None], ['*', '^'], ['black', 'yellow'], [11, 10]):
+        # enforce max?
+        mU = (df_yields[f'{WC}_95CL_UL_{fit_}'] > 100.)
+        mL = (df_yields[f'{WC}_95CL_LL_{fit_}'] < -100.)
+        df_yields.loc[mU, f'{WC}_95CL_UL_{fit_}'] = 100.
+        df_yields.loc[mL, f'{WC}_95CL_LL_{fit_}'] = -100.
         # if ec == 'black':
         #     ec_c = 'blue'
         #     c_c = None
@@ -333,7 +340,8 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     axs[1].set_ylim([-20 * max_l, 20 * max_l])
     # WC specific? -- debug
     if WC == 'cHl3':
-        axs[1].set_ylim([-40., 80.])
+        # axs[1].set_ylim([-40., 80.])
+        axs[1].set_ylim([-75., 75.])
     # xlims
     axs[0].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
     axs[1].set_xlim([inds_bot[0]-0.5, inds_bot[-1]+0.5])
@@ -366,7 +374,13 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
         tick.set_verticalalignment("top")
     # inset box
     #patches, connectors = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], -3*max_l, 1, 6*max_l), inset_ax=axs[2], edgecolor='black', zorder=11)
-    inset = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], -3*max_l, 1, 6*max_l), inset_ax=axs[2], edgecolor='black', zorder=11)
+    if WC == 'cHl3':
+        y0_ = -30.
+        dy_ = 60.
+    else:
+        y0_ = -3*max_l
+        dy_ = 6*max_l
+    inset = axs[1].indicate_inset(bounds=(bin_edges_bot[-2], y0_, 1, dy_), inset_ax=axs[2], edgecolor='black', zorder=11)
     #patches = inset.rectangle
     connectors = inset.connectors
     connectors[0].set(visible=True)
@@ -417,6 +431,8 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--WC',
                         help=f'Which Wilson Coefficient to study for 1D limits? ["cW" (default), ...]')
+    parser.add_argument('-aux', '--AUX',
+                        help=f'Auxilliary plot? "n" (default), "y"')
     args = parser.parse_args()
     if args.WC is None:
         args.WC = 'cW'
@@ -424,11 +440,19 @@ if __name__=='__main__':
         WCs = WC_ALL
     else:
         WCs = [args.WC]
+    if args.AUX is None:
+        aux = False
+    else:
+        aux = args.AUX == 'y'
 
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig11', '')
+    if aux:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'auxiliary', '')
+    else:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig11', '')
+    tabledir = plot_dir
 
     for WC in WCs:
         print(f'{WC}: ', end='\n')
