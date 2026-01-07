@@ -258,12 +258,16 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     output_json['top'][f'{WC}_yield'] = df_yields[ycol_cW].values.tolist()
     # data
     m = (df_yields['data'] > 0)
+    m_with_zero = (df_yields['data'] >= 0)
     axs[0].errorbar(inds[m], df_yields.loc[m, 'data'].values, yerr=(df_yields.loc[m,'data_err_D'], df_yields.loc[m,'data_err_U']), c='black',
                     fmt='o', ls='none', ms=6, zorder=100, capsize=4,
                     label='Data')
-    output_json['top']['data'] = df_yields.loc[m, 'data'].values.tolist()
-    output_json['top']['data_uncertainty_down'] = df_yields.loc[m,'data_err_D'].values.tolist()
-    output_json['top']['data_uncertainty_up'] = df_yields.loc[m,'data_err_U'].values.tolist()
+    # output_json['top']['data'] = df_yields.loc[m, 'data'].values.tolist()
+    # output_json['top']['data_uncertainty_down'] = df_yields.loc[m,'data_err_D'].values.tolist()
+    # output_json['top']['data_uncertainty_up'] = df_yields.loc[m,'data_err_U'].values.tolist()
+    output_json['top']['data'] = df_yields.loc[m_with_zero, 'data'].values.tolist()
+    output_json['top']['data_uncertainty_down'] = df_yields.loc[m_with_zero,'data_err_D'].values.tolist()
+    output_json['top']['data_uncertainty_up'] = df_yields.loc[m_with_zero,'data_err_U'].values.tolist()
     # exclusion
     #fit_ = 'Asimov'
     #for fit_, yl, c, ec, zorder_ in zip(['Asimov', 'Data'], ['Expected', 'Observed'], [None, 'salmon'], ['black', 'salmon'], [11, 10]):
