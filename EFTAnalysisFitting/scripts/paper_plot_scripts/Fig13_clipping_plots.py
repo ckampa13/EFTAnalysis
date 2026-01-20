@@ -11,6 +11,7 @@ from matplotlib.lines import Line2D
 import json
 
 # local imports
+from unitarity_dim8 import unitarity_bounds_one_coeff_dict
 import sys
 fpath = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(fpath,'..'))
@@ -132,12 +133,32 @@ def prepare_clipped_arrays_for_plot(ddir_out, WC, clip_inds, clip_points, CL=0.9
     ULs_s = ULs_s[inds_sort]
     return clips, clips_idx, LLs, ULs, LLs_s, ULs_s, limit_dict_clip
 
-def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_points):
+def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_points, unitarity_bounds_one_coeff_dict, unitarity=False):
     output_json = {}
     fig, ax = plt.subplots(figsize=(10,8), layout='constrained')
     fig.set_constrained_layout_pads(h_pad=0.0417, w_pad=0.075)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
     ax.plot([0.6, 5.3], [0., 0.], ':', linewidth=1.5, color='gray') # zero marker
+    # unitarity, if available
+    if unitarity:
+        has_unitarity = WC in unitarity_bounds_one_coeff_dict
+        label_unitarity = 'Unitarity bounds'
+        if has_unitarity:
+            udict = unitarity_bounds_one_coeff_dict[WC]
+            coeff = udict['coeff']
+            mVVV_power = udict['mVVV_power']
+            xs_u = np.linspace(0.1, 6, 601-10)
+            ys_u = coeff * 1./xs_u**(mVVV_power)
+            # ax.plot(xs_u, ys_u, color='black', linewidth=2, label=label_unitarity)
+            # ax.plot(xs_u, -ys_u, color='black', linewidth=2)
+            #ax.fill_between(xs_u, -ys_u, ys_u, alpha=0.2, color='gray', label=label_unitarity, edgecolor='black')
+            ax.fill_between(xs_u, -ys_u, ys_u, color=(0.1,0.1,0.1, 0.1), label=label_unitarity, edgecolor=(0.,0.,0.,0.4))
+            # json
+            # output_json[f'x_vec_unitarity'] = xs_u.tolist()
+            output_json[f'x_vec_unitarity'] = [round(x, 5) for x in xs_u]
+            output_json[f'y_vec_unitarity_LL'] = (-ys_u).tolist()
+            output_json[f'y_vec_unitarity_UL'] = ys_u.tolist()
+
     # loop through asimov and data
     # asimov will include stat only, data just with syst
     for Data, color, legend_lab in zip([False, True], ['blue', 'red'], ['Asimov', 'Data']):
@@ -240,35 +261,76 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
         yl = rf'{WC_p}/$\Lambda^4$ [TeV$^{{-4}}$]'
     ax.set_ylabel(yl, loc='top')
     # legend
-    handles, labels = ax.get_legend_handles_labels()
-    # Define the desired order manually
-    dummy = Line2D([], [], color='none')
-    #order = []
-    # First put Data
-    has_data = False
-    for label in labels:
-        if "data" in label:
-            label_d = label
-            has_label = True
-            break
-    order = [labels.index(label_d)]
-    for i, l in enumerate(labels):
-        if l == label_d:
-            continue
-        order.append(i)
+    if unitarity:
+        handles, labels = ax.get_legend_handles_labels()
+        # Define the desired order manually
+        dummy = Line2D([], [], color='none')
+        #order = []
+        # First put Data
+        has_data = False
+        for label in labels:
+            if "data" in label:
+                label_d = label
+                has_data = True
+                break
+        if has_unitarity:
+            order = [labels.index(label_unitarity)]
+        else:
+            order = []
+        if has_data:
+            #order = [labels.index(label_d)]
+            order.append(labels.index(label_d))
+        for i, l in enumerate(labels):
+            if l == label_d or l == label_unitarity:
+                continue
+            order.append(i)
 
-    handles_ordered = [handles[order[0]], dummy, handles[order[1]], handles[order[2]]]
-    labels_ordered = [labels[order[0]], "", labels[order[1]], labels[order[2]]]
-    # Apply the reordered legend
-    if WC in ['cW', 'FT0']: # paper
-        frameon=False
-    else: # supplementary
-        frameon=True
-    ax.legend(handles_ordered,
-              labels_ordered,
-              handlelength=1.0,
-              frameon=frameon, loc='upper right', fontsize=24, ncol=2,
-              bbox_to_anchor=(1.0, 1.0), columnspacing=0.4)
+        if has_unitarity:
+            handles_ordered = [handles[o] for o in order]
+            labels_ordered = [labels[o] for o in order]
+        else:
+            handles_ordered = [handles[order[0]], dummy, handles[order[1]], handles[order[2]]]
+            labels_ordered = [labels[order[0]], "", labels[order[1]], labels[order[2]]]
+        # Apply the reordered legend
+        if WC in ['cW', 'FT0']: # paper
+            frameon=False
+        else: # supplementary
+            frameon=True
+        ax.legend(handles_ordered,
+                  labels_ordered,
+                  handlelength=1.0,
+                  frameon=frameon, loc='upper right', fontsize=24, ncol=2,
+                  bbox_to_anchor=(1.0, 1.0), columnspacing=0.4)
+    else:
+        handles, labels = ax.get_legend_handles_labels()
+        # Define the desired order manually
+        dummy = Line2D([], [], color='none')
+        #order = []
+        # First put Data
+        has_data = False
+        for label in labels:
+            if "data" in label:
+                label_d = label
+                has_label = True
+                break
+        order = [labels.index(label_d)]
+        for i, l in enumerate(labels):
+            if l == label_d:
+                continue
+            order.append(i)
+
+        handles_ordered = [handles[order[0]], dummy, handles[order[1]], handles[order[2]]]
+        labels_ordered = [labels[order[0]], "", labels[order[1]], labels[order[2]]]
+        # Apply the reordered legend
+        if WC in ['cW', 'FT0']: # paper
+            frameon=False
+        else: # supplementary
+            frameon=True
+        ax.legend(handles_ordered,
+                  labels_ordered,
+                  handlelength=1.0,
+                  frameon=frameon, loc='upper right', fontsize=24, ncol=2,
+                  bbox_to_anchor=(1.0, 1.0), columnspacing=0.4)
     if WC in dim6_WCs:
         xl = 0.5
         #xm = 7
@@ -323,20 +385,41 @@ if __name__=='__main__':
     # parse commmand line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-w', '--WC',
-                        help=f'Which Wilson Coefficient to study for clipping limits? ["cW" (default), "FT0", "all_paper",...]')
+                        help=f'Which Wilson Coefficient to study for clipping limits? ["cW" (default), "FT0", "all_paper", "dim6" , "dim8", "all"...]')
+    parser.add_argument('-aux', '--AUX',
+                        help=f'Auxilliary plot? "n" (default), "y"')
+    parser.add_argument('-uni', '--Unitarity',
+                        help='Plot unitarity bounds (as available)? "n" (default), "y"')
     args = parser.parse_args()
     if args.WC is None:
         WCs = ['cW']
     else:
         if args.WC == 'all_paper':
             WC1s = WCs_paper
+        elif args.WC == 'dim6':
+            WC1s = dim6_WCs
+        elif args.WC == 'dim8':
+            WC1s = dim8_WCs
+        elif args.WC == 'all':
+            WC1s = WC_ALL
         else:
             WC1s = [args.WC]
+    if args.AUX is None:
+        aux = False
+    else:
+        aux = args.AUX == 'y'
+    if args.Unitarity is None:
+        unitarity = False
+    else:
+        unitarity = args.Unitarity == 'y'
 
     dcdir = datacard_dir
     if Unblind:
         dcdir = os.path.join(dcdir, 'unblind')
-    plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig13', '')
+    if aux:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'clipping', 'clipping_and_unitarity', '')
+    else:
+        plot_dir = os.path.join(dcdir, 'paper_plots', 'Fig13', '')
     ddir_out = os.path.join(dcdir, 'output', 'full_analysis', '') # where fit files are
 
     print('Making Fig13 plot(s)...')
@@ -344,6 +427,8 @@ if __name__=='__main__':
         print(WC)
         YRANGE = yrange_dict[WC]
         fig, ax = make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL,
-                                     clip_inds, clip_points)
+                                     clip_inds, clip_points,
+                                     unitarity_bounds_one_coeff_dict,
+                                     unitarity)
     print('Done.')
 
