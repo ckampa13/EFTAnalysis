@@ -94,11 +94,13 @@ def get_label(data, bins):
     return label
 
 # CMS wrapper for title
-def CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=True, xloc=None, yloc=None):
+def CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, supp=False, inside_frame=True, xloc=None, yloc=None):
     lefttitle=r'$\bf{CMS}$'
     if prelim:
         #lefttitle += r' $\it{Preliminary}$'
         lefttitle += r' $\text{\sffamily\itshape Preliminary}$'
+    if supp:
+        lefttitle += r' $\text{\sffamily\itshape Supplementary}$'
     righttitle = rf'{lumi} {lumi_unit}$^{{-1}}$ ({energy})'
     if xloc is None:
         xloc = 0.03

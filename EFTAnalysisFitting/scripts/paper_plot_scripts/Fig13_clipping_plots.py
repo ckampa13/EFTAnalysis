@@ -137,7 +137,11 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
     output_json = {}
     fig, ax = plt.subplots(figsize=(10,8), layout='constrained')
     fig.set_constrained_layout_pads(h_pad=0.0417, w_pad=0.075)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
+    if unitarity:
+        supp = True
+    else:
+        supp = False
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, supp=supp, inside_frame=False)
     ax.plot([0.6, 5.3], [0., 0.], ':', linewidth=1.5, color='gray') # zero marker
     # unitarity, if available
     if unitarity:
@@ -292,14 +296,18 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
             handles_ordered = [handles[order[0]], dummy, handles[order[1]], handles[order[2]]]
             labels_ordered = [labels[order[0]], "", labels[order[1]], labels[order[2]]]
         # Apply the reordered legend
-        if WC in ['cW', 'FT0']: # paper
+        if WC in ['cW', 'FT0', 'FM0', 'FS0']: # paper
             frameon=False
         else: # supplementary
             frameon=True
+        if WC in ['FT0', 'FM0', 'FS0']:
+            fontsize=22
+        else:
+            fontsize=24
         ax.legend(handles_ordered,
                   labels_ordered,
                   handlelength=1.0,
-                  frameon=frameon, loc='upper right', fontsize=24, ncol=2,
+                  frameon=frameon, loc='upper right', fontsize=fontsize, ncol=2,
                   bbox_to_anchor=(1.0, 1.0), columnspacing=0.4)
     else:
         handles, labels = ax.get_legend_handles_labels()
@@ -322,7 +330,7 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
         handles_ordered = [handles[order[0]], dummy, handles[order[1]], handles[order[2]]]
         labels_ordered = [labels[order[0]], "", labels[order[1]], labels[order[2]]]
         # Apply the reordered legend
-        if WC in ['cW', 'FT0']: # paper
+        if WC in ['cW', 'FT0', 'FM0', 'FS0']: # paper
             frameon=False
         else: # supplementary
             frameon=True
@@ -343,6 +351,8 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
     ax.set_xlim([xl, xm])
     # save
     savefile = plot_dir + f'fig_data_{WC}_clipping'
+    if unitarity:
+        savefile += '_and_unitarity'
     fig.savefig(savefile+'.pdf')
     fig.savefig(savefile+'.png')
     # json
@@ -350,6 +360,8 @@ def make_clipping_plot(ddir_out, plot_dir, WC, YRANGE, CL, clip_inds, clip_point
         json.dump(output_json, json_file, indent=4)
     # update x range
     savefile = plot_dir + f'fig_data_{WC}_clipping_tightx'
+    if unitarity:
+        savefile += '_and_unitarity'
     xrange_orig = ax.get_xlim()
     if WC in dim6_WCs:
         xma = 2.5
