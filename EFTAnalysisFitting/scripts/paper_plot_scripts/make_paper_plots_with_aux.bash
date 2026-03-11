@@ -20,8 +20,8 @@ conda activate HCOMB
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHq3 -f y
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHq3 -f n
 # run all
-#python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f y
-#python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f n
+# python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f y
+# python Fig12_2D_contour_plots.py -w1 all_paper -w2 all_paper -f n
 
 
 # Fig 13 (clipping)
@@ -31,11 +31,11 @@ conda activate HCOMB
 #python Fig13_clipping_plots.py -w all_paper
 
 # Fig 14 (template fit)
-#python Fig14_template_fit.py
+# python Fig14_template_fit.py
 
 # Fig 15 (SM sensitivity)
 # -w "WC" -U "unblind directory" -a "Asimov" -OD "OverlayData"
-#python Fig15_summary_NLL_limits_plot.py -w sm -U y -a y -OD y
+python Fig15_summary_NLL_limits_plot.py -w sm -U y -a y -OD y
 
 ### AUX FIGURES ###
 # Fig 11 (yield summary) -- cHl3 and cHW
@@ -51,13 +51,13 @@ conda activate HCOMB
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f y -aux y
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f n -aux y
 # run all
-#python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f y -aux y
-#python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f n -aux y
+# python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f y -aux y
+# python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f n -aux y
 
 # Fig 13 (with unitarity)
-python Fig13_clipping_plots.py -w FT0 -aux y -uni y
-python Fig13_clipping_plots.py -w FM0 -aux y -uni y
-python Fig13_clipping_plots.py -w FS0 -aux y -uni y
+# python Fig13_clipping_plots.py -w FT0 -aux y -uni y
+# python Fig13_clipping_plots.py -w FM0 -aux y -uni y
+# python Fig13_clipping_plots.py -w FS0 -aux y -uni y
 
 # Fig 15 (channel sensitivity for WCs)
 # -w "WC" -U "unblind directory" -a "Asimov" -OD "OverlayData"

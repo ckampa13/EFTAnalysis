@@ -32,7 +32,7 @@ from tools.extract_limits_multi_interval import get_lims, get_lims_w_best, CL_1s
 from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title, numerical_formatter, numerical_formatter_with_ndec_return
 
 config_plots()
-plt.rcParams['figure.constrained_layout.use'] = True
+#plt.rcParams['figure.constrained_layout.use'] = True
 
 #colors_list = ['black', 'red', 'green', 'blue', 'purple', 'orange']
 
@@ -84,7 +84,16 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     else:
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
-    fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
+    if SignalInject or WC != 'sm':
+        plt.rcParams['figure.constrained_layout.use'] = True
+        fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
+    else:
+        # Adjust padding for the Y-axis label
+        # ax.yaxis.label.set_pad(1) # Increase the padding
+        # Adjust padding for the X-axis label (if needed)
+        # ax.xaxis.label.set_pad(1)
+        pass
+
     # CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
     CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
     if WC == 'sm':
@@ -313,8 +322,24 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         else:
             #fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
             #fig.legend(loc='outside lower left', ncol=4, fontsize=18.0)
-            fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
-                       handlelength=1.5, columnspacing=1.0)
+            # fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
+            #            handlelength=1.5, columnspacing=1.0)
+            # aligned -- left
+            ax_pos = ax.get_position()
+            fig.legend(loc='lower left',
+                      bbox_to_anchor=(ax_pos.x0 - 0.045, ax_pos.y0 - 0.11),   # left aligned to axis
+                      bbox_transform=fig.transFigure,
+                      ncol=3,
+                      fontsize=24.0,
+                      handlelength=1.5,
+                      columnspacing=1.45
+                      )
+            fig.subplots_adjust(
+                                left=0.095,
+                                right=0.9875,
+                                top=0.9625,
+                                bottom=0.515,
+                                )   # tune this
         # separate axis
         #handles, labels = ax.get_legend_handles_labels()
         #ncol_ = ncol
@@ -337,6 +362,9 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         fig.savefig(savefile+'.pdf')
         fig.savefig(savefile+'.png')
 
+    # tight layout?
+    # if not SignalInject or WC == 'sm':
+    #     fig.tight_layout(pad=0.0, w_pad=0.0, h_pad=0.0)
     # includes savefile override for paper
     if not savefile is None:
         with open(savefile+'.json', 'w') as json_file:

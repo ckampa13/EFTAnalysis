@@ -93,7 +93,12 @@ def make_template_fit_plot(ddir_out, plot_dir, bin_edges_rebin, bin_centers_rebi
         hold = get_fit_values(ddir_out, file_suff, replace_absurd=False)
         s_vals, se_vals, se_vals_U, se_vals_D, se_vals_U_cleaned, se_vals_D_cleaned = hold
         # step style (no vertical lines)
-        ax.hist(bin_centers_rebin/1000., bins=bin_edges_rebin/1000., weights=s_vals, histtype='step', linewidth=1., color=c, zorder=zorder)
+        # ax.hist(bin_centers_rebin/1000., bins=bin_edges_rebin/1000., weights=s_vals, histtype='step', linewidth=1., color=c, zorder=zorder)
+        # without left and right edges
+        #x = bin_edges_rebin[:-1] / 1000.   # left bin edges
+        x = bin_edges_rebin / 1000.
+        y = np.concatenate([s_vals, [s_vals[-1]]])
+        ax.step(x, y, where='post', linewidth=1., color=c, zorder=zorder)
         output_json[legend_label]['y_vec'] = s_vals.tolist()
         # labels
         if data:

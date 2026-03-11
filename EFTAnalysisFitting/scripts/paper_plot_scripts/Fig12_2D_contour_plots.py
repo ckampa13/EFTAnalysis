@@ -138,10 +138,10 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False):
     UL_1_s = numerical_formatter(UL_1)
     UL_2_s = numerical_formatter(UL_2)
 
-    output_json['legend'][f'{WC1}_LL_95CL'] = float(LL_1_s)
-    output_json['legend'][f'{WC1}_UL_95CL'] = float(UL_1_s)
-    output_json['legend'][f'{WC2}_LL_95CL'] = float(LL_2_s)
-    output_json['legend'][f'{WC2}_UL_95CL'] = float(UL_2_s)
+    # output_json['legend'][f'{WC1}_LL_95CL'] = float(LL_1_s)
+    # output_json['legend'][f'{WC1}_UL_95CL'] = float(UL_1_s)
+    # output_json['legend'][f'{WC2}_LL_95CL'] = float(LL_2_s)
+    # output_json['legend'][f'{WC2}_UL_95CL'] = float(UL_2_s)
 
     handles, labels = cr.legend_elements()
     labels= [r'68$\%$ CL', r'95$\%$ CL']
@@ -149,14 +149,19 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False):
     handles = hs + handles
     labels = ls + labels
 
-    limits_label = '\n'+ rf'$[{LL_1_s}, {UL_1_s}]$' + rf' $(${WC1_p_}$/\Lambda^{{2}})$' + '\n'\
-    + rf'$[{LL_2_s}, {UL_2_s}]$' + rf' $(${WC2_p_}$/\Lambda^{{2}})$'
-    labels[-1] += limits_label
+    # limits_label = '\n'+ rf'$[{LL_1_s}, {UL_1_s}]$' + rf' $(${WC1_p_}$/\Lambda^{{2}})$' + '\n'\
+    # + rf'$[{LL_2_s}, {UL_2_s}]$' + rf' $(${WC2_p_}$/\Lambda^{{2}})$'
+    # labels[-1] += limits_label
 
-    ax.legend(handles, labels, loc='upper right', fontsize=legend_fontsize,
+    # ax.legend(handles, labels, loc='upper right', fontsize=legend_fontsize,
+    #           ncol=2, columnspacing=1.0, handlelength=1.5,
+    #           labelspacing=1.25, frameon=False,
+    #           bbox_to_anchor=(0.99, 0.925))
+
+    ax.legend(handles, labels, loc='upper center', fontsize=legend_fontsize,
               ncol=2, columnspacing=1.0, handlelength=1.5,
-              labelspacing=1.25,
-              bbox_to_anchor=(0.99, 0.925))
+              labelspacing=1.25, frameon=False,
+              bbox_to_anchor=(0.5, 0.925))
 
     # tick format
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))
