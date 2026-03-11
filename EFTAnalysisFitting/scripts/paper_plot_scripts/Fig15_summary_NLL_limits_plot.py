@@ -61,7 +61,7 @@ CH_MAP = {
     '0L_2FJ': '0Lepton_2VTJ',
 }
 
-def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True, title_on=False, SignalInject=False, Asimov=True):
+def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], plot_stat_only=False, savefile=None, sort_by_lim=True, ncol=2, legend=True, title_on=False, SignalInject=False, Asimov=True, aux=False):
     output_json = {'points': {}, 'legend': {}}
     # plot
     # if ncol <= 2:
@@ -84,7 +84,7 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
     else:
         fig, ax = plt.subplots(figsize=(12, 14))
     #fig, ax = plt.subplots()
-    if SignalInject or WC != 'sm':
+    if SignalInject:
         plt.rcParams['figure.constrained_layout.use'] = True
         fig.set_constrained_layout_pads(h_pad=0.075, w_pad=0.0417)
     else:
@@ -94,8 +94,12 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         # ax.xaxis.label.set_pad(1)
         pass
 
+    if aux:
+        supp = True
+    else:
+        supp = False
     # CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True, inside_frame=False)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False, supp=supp)
     if WC == 'sm':
         WC_l = 'SM'
     else:
@@ -317,8 +321,24 @@ def make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=[0.95], 
         if (not SignalInject) and (not WC == 'sm'):
             #fig.legend(loc='outside lower left', ncol=3, fontsize=20.0)
             #fig.legend(loc='outside lower left', ncol=4, fontsize=20.0)
-            fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
-                       handlelength=1.5, columnspacing=1.0)
+            # fig.legend(loc='outside lower center', ncol=3, fontsize=24.0,
+            #            handlelength=1.5, columnspacing=1.0)
+            # aligned -- left
+            ax_pos = ax.get_position()
+            fig.legend(loc='lower left',
+                      bbox_to_anchor=(ax_pos.x0 - 0.045, ax_pos.y0 - 0.11),   # left aligned to axis
+                      bbox_transform=fig.transFigure,
+                      ncol=3,
+                      fontsize=24.0,
+                      handlelength=1.5,
+                      columnspacing=1.45
+                      )
+            fig.subplots_adjust(
+                                left=0.095,
+                                right=0.9875,
+                                top=0.9625,
+                                bottom=0.515,
+                                )   # tune this
         else:
             #fig.legend(loc='outside lower left', ncol=3, fontsize=18.0)
             #fig.legend(loc='outside lower left', ncol=4, fontsize=18.0)
@@ -516,7 +536,7 @@ def run_NLL_plot_analysis_channel(WC, datacard_dict, CL_list, plot_stat_only, Si
         else:
             ncol = 2
         title_on = False
-    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend, title_on=title_on, SignalInject=SignalInject, Asimov=Asimov)
+    fig, ax = make_limit_NLL_summary_plot(WC, root_file_dict_full, title, CL_list=CL_list, plot_stat_only=plot_stat_only, savefile=plotfile, sort_by_lim=True, ncol=ncol, legend=legend, title_on=title_on, SignalInject=SignalInject, Asimov=Asimov, aux=aux)
     return fig, ax
 
 

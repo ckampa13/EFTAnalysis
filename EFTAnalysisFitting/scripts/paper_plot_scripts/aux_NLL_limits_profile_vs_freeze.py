@@ -34,7 +34,7 @@ config_plots(grid=True)
 plt.rcParams['figure.constrained_layout.use'] = True
 
 # FIXME! Is "ScanType" needed in this function?
-def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefile=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False):
+def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefile=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False, aux=False):
     output_json = {'points': {}, 'legend': {}}
     # colors
     if 'Asimov' in root_file_dict['freeze']:
@@ -48,7 +48,11 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefi
     #fig = plt.figure(figsize=(16, 8))
     #ax = fig.add_axes([0.1, 0.1, 0.55, 0.75])
     fig, ax = plt.subplots()
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False)
+    if aux:
+        supp = True
+    else:
+        supp = False
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, inside_frame=False, supp=supp)
     WC_l = WC_pretty_print_dict[WC]
     # get limits and plot
     if 'prof' in root_file_dict.keys():
@@ -162,7 +166,7 @@ def make_limit_plot(WC, root_file_dict, title, CL_list=[CL_1sigma, 0.95], savefi
 
     return fig, ax
 
-def run_lim_plot_analysis(WC, datacard_dict, CL_list, version=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False, Asimov=True, Unblind=False):
+def run_lim_plot_analysis(WC, datacard_dict, CL_list, version=None, legend=True, tight_layout=False, xlim_force=None, limits_legend=False, Asimov=True, Unblind=False, aux=False):
     scan_dir = 'compare'
     FS_suff = ''
     WC_l = WC_pretty_print_dict[WC]
@@ -201,7 +205,7 @@ def run_lim_plot_analysis(WC, datacard_dict, CL_list, version=None, legend=True,
     #title = 'Limits on '+WC_l+f' {scan_title}\nChannel: All; Bin: All'
     title = 'Limits on '+WC_l+f'\nChannel: All; Bin: All'
     fig, ax = make_limit_plot(WC, root_file_dict, title, CL_list=CL_list, savefile=plotfile,
-                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend)
+                              legend=legend, tight_layout=tight_layout, xlim_force=xlim_force, limits_legend=limits_legend, aux=aux)
     return fig, ax
 
 
@@ -265,7 +269,7 @@ if __name__=='__main__':
                 print(f'Include stat-only? {pstat}')
                 fig, ax = run_lim_plot_analysis(WC, datacard_dict, CL_list, legend=legend, tight_layout=tight_layout,
                                                 xlim_force=xlim_force, limits_legend=limits_legend,
-                                                Asimov=Asimov, Unblind=Unblind)
+                                                Asimov=Asimov, Unblind=Unblind, aux=True)
             print("=========================================================\n")
     # plt.show()
 

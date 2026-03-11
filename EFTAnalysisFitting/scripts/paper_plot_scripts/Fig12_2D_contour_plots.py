@@ -35,7 +35,7 @@ config_plots()
 plt.rcParams['figure.constrained_layout.use'] = True
 
 
-def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False):
+def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False, aux=False):
     output_json = {'contours': {}, 'legend': {}}
     type_str = '_tricontour'
     legend_fontsize = 26
@@ -89,7 +89,11 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False):
     fsize = (12, 10)
     fig, ax = plt.subplots(figsize=fsize, layout='constrained')
     fig.set_constrained_layout_pads(h_pad=0.0417, w_pad=0.075)
-    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False)
+    if aux:
+        supp = True
+    else:
+        supp = False
+    CMSify_title(ax, lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, supp=supp)
     xlim, ylim = XYLIM
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
@@ -249,5 +253,5 @@ if __name__=='__main__':
         print(f'{WC1}, {WC2}')
         XYLIM = XYLIMS_dict[f'{WC1}_{WC2}']
         WC_pair = [WC1, WC2]
-        fig, ax = make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=freeze, Asimov=False)
+        fig, ax = make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=freeze, Asimov=False, aux=aux)
     print('Done.')

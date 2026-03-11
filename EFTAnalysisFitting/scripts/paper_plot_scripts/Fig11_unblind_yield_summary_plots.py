@@ -35,7 +35,7 @@ from tools.plotting_AN import config_plots, ticks_in, ticks_sizes, CMSify_title
 
 config_plots()
 
-def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=False, channel_rank=False, limit_rank=True, sm_significance=False, savefile=None, NTOYS=200, Unblind=True, use_fit='postfit', use_fit_pretty='post-fit'):
+def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=False, channel_rank=False, limit_rank=True, sm_significance=False, savefile=None, NTOYS=200, Unblind=True, use_fit='postfit', use_fit_pretty='post-fit', aux=False):
     output_json = {'top': {}, 'bottom': {}}
     # load table
     # add option to creat on the fly?
@@ -191,8 +191,12 @@ def bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_di
     #axs.append(fig.add_axes((0.1, 0.20+dy, 0.6, 0.22))) #, sharex=ax1)
     axs.append(fig.add_axes((0.1, 0.44+dy, 0.58, 0.45)))
     axs.append(fig.add_axes((0.1, 0.20+dy, 0.58, 0.22))) #, sharex=ax1)
+    if aux:
+        supp = True
+    else:
+        supp = False
     # CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=True)
-    CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False)
+    CMSify_title(axs[0], lumi='138', lumi_unit='fb', energy='13 TeV', prelim=False, supp=supp)
     ticks_in(axs[0])
     ticks_in(axs[1])
     # for the combined limit bin
@@ -465,5 +469,5 @@ if __name__=='__main__':
             for logy, log_str in zip([True], ['_logy']):
                 print(f'channel_rank={channel_rank} & logy={logy}', end='\n')
                 savefile = plot_dir+f'fig_yield_{WC}{ch_str}{log_str}'
-                _ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=logy, channel_rank=channel_rank, limit_rank=True, sm_significance=False, savefile=savefile, NTOYS=NTOYS, Unblind=Unblind, use_fit='postfit', use_fit_pretty='post-fit')
+                _ = bin_ranked_yield_histo_bkg_combined(tablepkl, WC, datacard_dict, versions_dict, logy=logy, channel_rank=channel_rank, limit_rank=True, sm_significance=False, savefile=savefile, NTOYS=NTOYS, Unblind=Unblind, use_fit='postfit', use_fit_pretty='post-fit', aux=aux)
         print()
