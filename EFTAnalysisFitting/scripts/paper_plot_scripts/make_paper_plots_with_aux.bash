@@ -51,8 +51,8 @@ conda activate HCOMB
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f y -aux y
 # python Fig12_2D_contour_plots.py -w1 cW -w2 cHW -f n -aux y
 # run all
-# python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f y -aux y
-# python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f n -aux y
+python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f y -aux y
+python Fig12_2D_contour_plots.py -w1 all_aux -w2 all_aux -f n -aux y
 
 # Fig 13 (with unitarity)
 # python Fig13_clipping_plots.py -w FT0 -aux y -uni y
@@ -71,4 +71,4 @@ conda activate HCOMB
 # test 1 WC
 # python aux_NLL_limits_profile_vs_freeze.py -w cW
 # run all
-python aux_NLL_limits_profile_vs_freeze.py -w all_aux
+# python aux_NLL_limits_profile_vs_freeze.py -w all_aux

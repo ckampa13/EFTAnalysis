@@ -7,6 +7,7 @@ import ROOT
 #from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, MultipleLocator, AutoMinorLocator
+from matplotlib.lines import Line2D
 import json
 
 # local imports
@@ -146,12 +147,23 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False, 
     # output_json['legend'][f'{WC1}_UL_95CL'] = float(UL_1_s)
     # output_json['legend'][f'{WC2}_LL_95CL'] = float(LL_2_s)
     # output_json['legend'][f'{WC2}_UL_95CL'] = float(UL_2_s)
-
+    dummy = Line2D([], [], color='none')
+    #dummy = Line2D([],[], linestyle='none')
+    # option 1
     handles, labels = cr.legend_elements()
-    labels= [r'68$\%$ CL', r'95$\%$ CL']
+    handles = [dummy, handles[1], handles[0]]
+    labels = ["", r'95$\%$ CL', r'68$\%$ CL']
     hs, ls = ax.get_legend_handles_labels()
     handles = hs + handles
     labels = ls + labels
+    # option 2
+    # handles, labels = cr.legend_elements()
+    # labels = [r'68$\%$ CL', r'95$\%$ CL']
+    # hs, ls = ax.get_legend_handles_labels()
+    # handles = [dummy] + hs + handles
+    # labels = [""] + ls + labels
+
+
 
     # limits_label = '\n'+ rf'$[{LL_1_s}, {UL_1_s}]$' + rf' $(${WC1_p_}$/\Lambda^{{2}})$' + '\n'\
     # + rf'$[{LL_2_s}, {UL_2_s}]$' + rf' $(${WC2_p_}$/\Lambda^{{2}})$'
@@ -162,10 +174,22 @@ def make_2D_plot(ddir_out, plot_dir, WC_pair, XYLIM, freeze=True, Asimov=False, 
     #           labelspacing=1.25, frameon=False,
     #           bbox_to_anchor=(0.99, 0.925))
 
-    ax.legend(handles, labels, loc='upper center', fontsize=legend_fontsize,
-              ncol=2, columnspacing=1.0, handlelength=1.5,
-              labelspacing=1.25, frameon=False,
-              bbox_to_anchor=(0.5, 0.925))
+    leg = ax.legend(handles, labels, loc='upper center', fontsize=legend_fontsize,
+                    ncol=2, columnspacing=1.0, handlelength=1.5,
+                    labelspacing=1.8,
+                    #labelspacing=1.25, # original
+                    frameon=False,
+                    bbox_to_anchor=(0.5, 0.925))
+    # nudge entries for vertical alignment
+    # for i in [2, 3]:
+    #    leg.legend_handles[i].set_ydata([20.0])
+    # leg.legend_handles[i]
+    # align top
+    for i in [0]:
+        #leg.get_texts()[i].set_verticalalignment('top')
+        leg.get_texts()[i].set_verticalalignment('center_baseline')
+
+    #print(repr(leg.get_texts()[0].get_text()))
 
     # tick format
     ax.xaxis.set_minor_locator(AutoMinorLocator(5))
